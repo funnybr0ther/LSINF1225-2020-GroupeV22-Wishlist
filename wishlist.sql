@@ -1,5 +1,5 @@
 --
--- File generated with SQLiteStudio v3.2.1 on ven. mars 6 19:14:57 2020
+-- File generated with SQLiteStudio v3.2.1 on ven. mars 6 20:16:33 2020
 --
 -- Text encoding used: ISO-8859-4
 --
@@ -12,9 +12,9 @@ INSERT INTO amis (num_suiveur, num_suivi, relation) VALUES (192764, 437625, 'pro
 INSERT INTO amis (num_suiveur, num_suivi, relation) VALUES (437625, 192764, 'proche');
 INSERT INTO amis (num_suiveur, num_suivi, relation) VALUES (437625, 108494, 'ami ');
 INSERT INTO amis (num_suiveur, num_suivi, relation) VALUES (437625, 837679, 'ami');
-INSERT INTO amis (num_suiveur, num_suivi, relation) VALUES (108494, 437625, NULL);
+INSERT INTO amis (num_suiveur, num_suivi, relation) VALUES (108494, 437625, 'ami');
 INSERT INTO amis (num_suiveur, num_suivi, relation) VALUES (837679, 437625, 'ami');
-INSERT INTO amis (num_suiveur, num_suivi, relation) VALUES (287591, 289183, NULL);
+INSERT INTO amis (num_suiveur, num_suivi, relation) VALUES (287591, 289183, 'ami');
 INSERT INTO amis (num_suiveur, num_suivi, relation) VALUES (289183, 287591, 'coll?gue');
 INSERT INTO amis (num_suiveur, num_suivi, relation) VALUES (740618, 108494, 'proche');
 
@@ -31,11 +31,12 @@ INSERT INTO "contenu wishlist" ("num wishlist", "num produit", quantité) VALUES 
 -- Table: envie
 CREATE TABLE envie ("num utilisateur" INT REFERENCES utilisateur ("user id") NOT NULL, "num produit" INT REFERENCES produit ("num produit") NOT NULL, évaluation INT NOT NULL);
 INSERT INTO envie ("num utilisateur", "num produit", évaluation) VALUES (108494, 13783, 4);
-INSERT INTO envie ("num utilisateur", "num produit", évaluation) VALUES (108494, 378294, 3);
+INSERT INTO envie ("num utilisateur", "num produit", évaluation) VALUES (108494, 378294, 4);
 INSERT INTO envie ("num utilisateur", "num produit", évaluation) VALUES (740618, 64091, 5);
 INSERT INTO envie ("num utilisateur", "num produit", évaluation) VALUES (192764, 64291, 4);
 INSERT INTO envie ("num utilisateur", "num produit", évaluation) VALUES (437625, 86482, 1);
 INSERT INTO envie ("num utilisateur", "num produit", évaluation) VALUES (287591, 86482, 3);
+INSERT INTO envie ("num utilisateur", "num produit", évaluation) VALUES (108494, 86482, 2);
 
 -- Table: historique
 CREATE TABLE historique ("num acheteur" INT NOT NULL REFERENCES utilisateur ("user id"), "num receveur" INT NOT NULL REFERENCES utilisateur ("user id"), "num produit" INT NOT NULL REFERENCES produit ("num produit"), date DATE NOT NULL, quantité INT NOT NULL, "num achat" INT NOT NULL);
