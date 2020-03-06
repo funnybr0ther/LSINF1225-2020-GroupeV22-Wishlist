@@ -77,18 +77,18 @@ FROM wishlist W, "contenu wishlist" C, utilisateur U
 WHERE W."num utilisateur"==U."user id" AND W."num wishlist"==C."num wishlist")
 
 
-Nombre de souhaits de catégorie jeux vidéo de chaque utilisateur (aucun objet de catégorie sport donc nous avons choisie une autre catégorie):
+Nombre de souhaits de catégorie jeux de chaque utilisateur (aucun objet de catégorie sport donc nous avons choisie une autre catégorie):
 
 SELECT U.prénom,U.nom, COUNT( P."num produit") AS "nombre de souhaits"
 FROM wishlist W, "contenu wishlist" C, utilisateur U, produit P
-WHERE W."num utilisateur"==U."user id" AND W."num wishlist"==C."num wishlist" AND P."num produit"==C."num produit" AND P.catégorie=="jeux vidéo"
+WHERE W."num utilisateur"==U."user id" AND W."num wishlist"==C."num wishlist" AND P."num produit"==C."num produit" AND P.catégorie=="jeux"
 GROUP BY U."user id"
 UNION 
 SELECT U.prénom, U.nom,0
 FROM utilisateur U
 WHERE  U."user id" NOT IN (SELECT U."user id" 
 FROM wishlist W, "contenu wishlist" C, utilisateur U, produit P
-WHERE W."num utilisateur"==U."user id" AND W."num wishlist"==C."num wishlist" AND P."num produit"==C."num produit" AND P.catégorie=="jeux vidéo")
+WHERE W."num utilisateur"==U."user id" AND W."num wishlist"==C."num wishlist" AND P."num produit"==C."num produit" AND P.catégorie=="jeux")
 
 
 Prix total de tous les souhaits pour chaque utilisateur:
@@ -109,7 +109,7 @@ WHERE W."num utilisateur"==U."user id"
 
 Idées supplémentaires:
 
-Lister l'évaluation moyenne de tous les produits:
+Lister l'évaluation moyenne de chaque produit:
 
 SELECT P.nom, AVG(E.évaluation)
 FROM  produit P, envie E

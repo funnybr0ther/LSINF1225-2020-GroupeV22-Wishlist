@@ -1,5 +1,5 @@
 --
--- File generated with SQLiteStudio v3.2.1 on ven. mars 6 20:16:33 2020
+-- File generated with SQLiteStudio v3.2.1 on ven. mars 6 20:49:54 2020
 --
 -- Text encoding used: ISO-8859-4
 --
@@ -47,13 +47,13 @@ INSERT INTO historique ("num acheteur", "num receveur", "num produit", date, qua
 -- Table: produit
 CREATE TABLE produit ("num produit" INT PRIMARY KEY NOT NULL, nom NOT NULL, prix DOUBLE NOT NULL, catégorie, poids DOUBLE, image, dimension, description);
 INSERT INTO produit ("num produit", nom, prix, catégorie, poids, image, dimension, description) VALUES (45937, 'Thinkpad T590', 1690.0, 'informatique', 1.75, 'image1.jpg', '32.9 x 22.7 x 1.91 [cm]', 'un des meilleurs ordinateurs portables sur le marché, il est rapide, puissant et a une excellente batterie');
-INSERT INTO produit ("num produit", nom, prix, catégorie, poids, image, dimension, description) VALUES (64291, 'paquet carte pokemon', 5.99, 'jeux et jouet', 0.005, 'image3.jpg', '14.3 x 4.7 x 0.05 [cm]', 'Ces boosters Pokémon contiennent 10 cartes issues de l''extension Soleil & Lune 4');
-INSERT INTO produit ("num produit", nom, prix, catégorie, poids, image, dimension, description) VALUES (13783, 'Xbox', 337.0, 'jeux vidéo', '', 'image7.jpg', NULL, NULL);
-INSERT INTO produit ("num produit", nom, prix, catégorie, poids, image, dimension, description) VALUES (378294, 'Volant Mercedes w10', 2670.0, 'sport automobile', 0.254, 'image2.jpg', NULL, NULL);
+INSERT INTO produit ("num produit", nom, prix, catégorie, poids, image, dimension, description) VALUES (64291, 'paquet carte pokemon', 5.99, 'jeux', 0.005, 'image3.jpg', '14.3 x 4.7 x 0.05 [cm]', 'Ces boosters Pokémon contiennent 10 cartes issues de l''extension Soleil & Lune 4');
+INSERT INTO produit ("num produit", nom, prix, catégorie, poids, image, dimension, description) VALUES (13783, 'Xbox', 337.0, 'jeux', '', 'image7.jpg', NULL, NULL);
+INSERT INTO produit ("num produit", nom, prix, catégorie, poids, image, dimension, description) VALUES (378294, 'Volant Mercedes w10', 2670.0, 'auto-moto', 0.254, 'image2.jpg', NULL, NULL);
 INSERT INTO produit ("num produit", nom, prix, catégorie, poids, image, dimension, description) VALUES (21890, 'Câbles HDMI', 24.9, 'informatique', NULL, NULL, NULL, NULL);
-INSERT INTO produit ("num produit", nom, prix, catégorie, poids, image, dimension, description) VALUES (86482, 'Playstation 4', 289.0, 'jeux vidéo', NULL, 'image4.jpg', NULL, NULL);
-INSERT INTO produit ("num produit", nom, prix, catégorie, poids, image, dimension, description) VALUES (64091, 'Parasol', 13.95, 'jardin', NULL, 'image6.jpg', NULL, NULL);
-INSERT INTO produit ("num produit", nom, prix, catégorie, poids, image, dimension, description) VALUES (54061, 'guirlandes', 5.0, 'décoration', NULL, 'image7.jpg', NULL, NULL);
+INSERT INTO produit ("num produit", nom, prix, catégorie, poids, image, dimension, description) VALUES (86482, 'Playstation 4', 289.0, 'jeux', NULL, 'image4.jpg', NULL, NULL);
+INSERT INTO produit ("num produit", nom, prix, catégorie, poids, image, dimension, description) VALUES (64091, 'Parasol', 13.95, 'nature', NULL, 'image6.jpg', NULL, NULL);
+INSERT INTO produit ("num produit", nom, prix, catégorie, poids, image, dimension, description) VALUES (54061, 'guirlandes', 5.0, 'mobilier', NULL, 'image7.jpg', NULL, NULL);
 
 -- Table: utilisateur
 CREATE TABLE utilisateur ("adresse mail" NOT NULL UNIQUE, "mot de passe" VARCHAR (255) NOT NULL, "user id" INT NOT NULL UNIQUE PRIMARY KEY, prénom NOT NULL, nom NOT NULL, adresse NOT NULL, notification BOOLEAN DEFAULT (TRUE), "date de naissance" DATE NOT NULL, taille, photo, "couleur préférée", pointure DOUBLE);
