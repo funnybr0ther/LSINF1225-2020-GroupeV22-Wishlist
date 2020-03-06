@@ -1,5 +1,5 @@
 --
--- File generated with SQLiteStudio v3.2.1 on ven. mars 6 20:49:54 2020
+-- File generated with SQLiteStudio v3.2.1 on ven. mars 6 23:12:15 2020
 --
 -- Text encoding used: ISO-8859-4
 --
