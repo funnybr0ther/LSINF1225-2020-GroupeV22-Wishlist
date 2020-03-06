@@ -1,5 +1,5 @@
 --
--- File generated with SQLiteStudio v3.2.1 on dim. mars 1 18:59:16 2020
+-- File generated with SQLiteStudio v3.2.1 on ven. mars 6 15:01:38 2020
 --
 -- Text encoding used: ISO-8859-4
 --
@@ -24,6 +24,7 @@ INSERT INTO "contenu wishlist" ("num wishlist", "num produit", quantité) VALUES 
 -- Table: envie
 CREATE TABLE envie ("num utilisateur" INT REFERENCES utilisateur ("user id") NOT NULL, "num produit" INT REFERENCES produit ("num produit") NOT NULL, évaluation INT NOT NULL);
 INSERT INTO envie ("num utilisateur", "num produit", évaluation) VALUES (108494, 13783, 4);
+INSERT INTO envie ("num utilisateur", "num produit", évaluation) VALUES (108494, 378294, 3);
 
 -- Table: historique
 CREATE TABLE historique ("num acheteur" INT NOT NULL REFERENCES utilisateur ("user id"), "num receveur" INT NOT NULL REFERENCES utilisateur ("user id"), "num produit" INT NOT NULL REFERENCES produit ("num produit"), date DATE NOT NULL, quantité INT NOT NULL, "num achat" INT NOT NULL);
@@ -31,28 +32,21 @@ INSERT INTO historique ("num acheteur", "num receveur", "num produit", date, qua
 INSERT INTO historique ("num acheteur", "num receveur", "num produit", date, quantité, "num achat") VALUES (437625, 192764, 64291, '5 février', 2, 3);
 
 -- Table: produit
-CREATE TABLE produit ("num produit" INT PRIMARY KEY NOT NULL, nom NOT NULL, prix DOUBLE NOT NULL, catégorie NOT NULL DEFAULT autre, poids DOUBLE, image, dimension, description);
+CREATE TABLE produit ("num produit" INT PRIMARY KEY NOT NULL, nom NOT NULL, prix DOUBLE NOT NULL, catégorie, poids DOUBLE, image, dimension, description);
 INSERT INTO produit ("num produit", nom, prix, catégorie, poids, image, dimension, description) VALUES (45937, 'Thinkpad T590', 1690.0, 'informatique', 1.75, NULL, '32.9 x 22.7 x 1.91 [cm]', 'un des meilleurs ordinateurs portables sur le marché, il est rapide, puissant et a une excellente batterie');
 INSERT INTO produit ("num produit", nom, prix, catégorie, poids, image, dimension, description) VALUES (64291, 'paquet carte pokemon', 5.99, 'jeux et jouet', 0.005, NULL, '14.3 x 4.7 x 0.05 [cm]', 'Ces boosters Pokémon contiennent 10 cartes issues de l''extension Soleil & Lune 4');
 INSERT INTO produit ("num produit", nom, prix, catégorie, poids, image, dimension, description) VALUES (13783, 'Xbox', 337.0, 'jeux vidéo', '', NULL, NULL, NULL);
 INSERT INTO produit ("num produit", nom, prix, catégorie, poids, image, dimension, description) VALUES (378294, 'Volant Mercedes w10', 2670.0, 'sport automobile', 0.254, NULL, NULL, NULL);
 
--- Table: profil
-CREATE TABLE profil (prénom NOT NULL, nom NOT NULL, adresse NOT NULL, "adresse mail" NOT NULL PRIMARY KEY UNIQUE, notification BOOLEAN NOT NULL DEFAULT (TRUE), taille NOT NULL, photo, pointure DOUBLE, "date de naissance" DATE, "couleur préférée");
-INSERT INTO profil (prénom, nom, adresse, "adresse mail", notification, taille, photo, pointure, "date de naissance", "couleur préférée") VALUES ('Fran?ois', 'Ferard', 'Avenue Charles Bachman 42,
-1410 Waterloo
-Belgique', 'francois.ferard@gmail.com', 'TRUE', 'L', NULL, 42.0, '20 juillet 1969', 'orange');
-INSERT INTO profil (prénom, nom, adresse, "adresse mail", notification, taille, photo, pointure, "date de naissance", "couleur préférée") VALUES ('Alain', 'Dupont', 'Chemin de Brangais 2, 1400 Nivelles Belgique', 'alain.dupont@gmail.com', 'TRUE', 'M', NULL, 41.0, '13 aout 1997', 'bleu');
-INSERT INTO profil (prénom, nom, adresse, "adresse mail", notification, taille, photo, pointure, "date de naissance", "couleur préférée") VALUES ('Lewis', 'Hamilton', 'Hopewell Street 34, London UK', 'hamilton44@gmail.com', 'FALSE', 'NULL', NULL, 'NULL', '7 janvier 1985', NULL);
-INSERT INTO profil (prénom, nom, adresse, "adresse mail", notification, taille, photo, pointure, "date de naissance", "couleur préférée") VALUES ('Sebastian ', 'Vettel', 'Plauener 
-Straße 17, 44139 Dortmund Germany', 'vettel.ferrari@gmail.com', 'TRUE', 'M', NULL, 44.0, '3 juillet 1987', 'rouge');
-
 -- Table: utilisateur
-CREATE TABLE utilisateur ("adresse mail" NOT NULL UNIQUE REFERENCES profil ("adresse mail"), "mot de passe" VARCHAR (255) NOT NULL, "user id" INT NOT NULL UNIQUE PRIMARY KEY);
-INSERT INTO utilisateur ("adresse mail", "mot de passe", "user id") VALUES ('francois.ferard@gmail.com', 'jl34527VD', 437625);
-INSERT INTO utilisateur ("adresse mail", "mot de passe", "user id") VALUES ('alain.dupont@gmail.com', 'algu729bdJ', 192764);
-INSERT INTO utilisateur ("adresse mail", "mot de passe", "user id") VALUES ('hamilton44@gmail.com', 'm6824HDZLG', 108494);
-INSERT INTO utilisateur ("adresse mail", "mot de passe", "user id") VALUES ('vettel.ferrari@gmail.com', 'alday232OHKEDV', 837679);
+CREATE TABLE utilisateur ("adresse mail" NOT NULL UNIQUE, "mot de passe" VARCHAR (255) NOT NULL, "user id" INT NOT NULL UNIQUE PRIMARY KEY, prénom NOT NULL, nom NOT NULL, adresse NOT NULL, notification BOOLEAN DEFAULT (TRUE), "date de naissance" DATE NOT NULL, taille, photo, "couleur préférée", pointure DOUBLE);
+INSERT INTO utilisateur ("adresse mail", "mot de passe", "user id", prénom, nom, adresse, notification, "date de naissance", taille, photo, "couleur préférée", pointure) VALUES ('francois.ferard@gmail.com', 'jl34527VD', 437625, 'Fran?ois', 'Ferard', 'Avenue Charles Bachman 42,
+1410 Waterloo
+Belgique', 1, '20 juillet 1969', 'L', NULL, 'orange', 42.0);
+INSERT INTO utilisateur ("adresse mail", "mot de passe", "user id", prénom, nom, adresse, notification, "date de naissance", taille, photo, "couleur préférée", pointure) VALUES ('alain.dupont@gmail.com', 'algu729bdJ', 192764, 'Alain', 'Dupont', 'Chemin de Brangais 2, 1400 Nivelles Belgique', 1, '13 aout 1997', 'M', NULL, 'bleu', 41.0);
+INSERT INTO utilisateur ("adresse mail", "mot de passe", "user id", prénom, nom, adresse, notification, "date de naissance", taille, photo, "couleur préférée", pointure) VALUES ('hamilton44@gmail.com', 'm6824HDZLG', 108494, 'Lewis', 'Hamilton', 'Hopewell Street 34, London UK', 1, '7 janvier 1985', NULL, NULL, NULL, NULL);
+INSERT INTO utilisateur ("adresse mail", "mot de passe", "user id", prénom, nom, adresse, notification, "date de naissance", taille, photo, "couleur préférée", pointure) VALUES ('vettel.ferrari@gmail.com', 'alday232OHKEDV', 837679, 'Sebastian', 'Vettel', 'Plauener 
+Straße 17, 44139 Dortmund Germany', 1, '3 juillet 1987', 'M', NULL, 'rouge', 44.0);
 
 -- Table: wishlist
 CREATE TABLE wishlist (nom NOT NULL, "num utilisateur" INT NOT NULL REFERENCES utilisateur ("user id"), "num wishlist" INT PRIMARY KEY);
