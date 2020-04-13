@@ -30,7 +30,7 @@
         android:text="@string/chooseFromMemory"
         android:textColor="@color/black"
         android:textSize="18sp"
-        android:id="@+id/changePhotoMemory"/>
+        android:id="@+id/photoFromMemory"/>
 
     <RelativeLayout
         android:layout_width="wrap_content"

@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_create_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp">
+
+            <include layout="@layout/create_profile_toolbar" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -24,9 +40,8 @@
                     android:layout_height="200dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="30dp"
-                    android:src="@drawable/ic_default_photo"
                     app:civ_border_color="@color/black"
-                    app:civ_border_width="1dp" />
+                    app:civ_border_width="1dp"/>
 
                 <ImageView
                     android:id="@+id/logoCamera"
@@ -50,17 +65,19 @@
                     android:textSize="16sp"
                     android:textColor="@color/black"
                     android:text="@string/firstName"
-                    android:id="@+id/textFirstName"
+                    android:id="@+id/newMail"
                     android:layout_centerVertical="true"/>
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/textFirstName"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/newMail"
                     android:layout_centerVertical="true"
-                    android:layout_alignBaseline="@+id/textFirstName"
-                    android:textSize="16dp"
+                    android:layout_alignBaseline="@+id/newMail"
+                    android:textSize="16sp"
                     android:textColor="@color/black"
-                    android:id="@+id/getFirstName"/>
+                    android:id="@+id/newmail"/>
 
             </RelativeLayout>
             <RelativeLayout
@@ -80,6 +97,8 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="10dp"
                     android:textSize="16sp"
                     android:textColor="@color/black"
                     android:layout_alignBaseline="@id/textLastName"
@@ -104,6 +123,8 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/textAddressLine1"
                     android:id="@+id/getAddressLine1"
                     android:textColor="@color/black"
@@ -129,6 +150,8 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/textAddressLine2"
                     android:id="@+id/getAddressLine2"
                     android:textColor="@color/black"
@@ -154,6 +177,8 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/textCity"
                     android:textColor="@color/black"
                     android:textSize="16sp"
@@ -179,6 +204,8 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/textPostalCode"
                     android:textSize="16sp"
                     android:textColor="@color/black"
@@ -205,6 +232,8 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/textCountry"
                     android:layout_centerVertical="true"
                     android:textColor="@color/black"
@@ -229,6 +258,7 @@
                     android:id="@+id/textSize"/>
                 <Spinner
                     android:layout_width="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/textSize"
                     android:entries="@array/size"
@@ -252,6 +282,7 @@
                 <Spinner
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/textShoeSize"
                     android:entries="@array/shoeSize"
                     android:id="@+id/spinnerShoeSize"/>
@@ -325,22 +356,13 @@
                 <Spinner
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:entries="@array/favoriteColor"
                     android:layout_toRightOf="@id/textFavoriteColor"
                     android:id="@+id/spinnerFavoriteColor"/>
             </RelativeLayout>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/layout13"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="30dp"
-                android:text="@string/CreateProfile"
-                android:onClick="createUser"/>
-
-
         </RelativeLayout>
 
     </ScrollView>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

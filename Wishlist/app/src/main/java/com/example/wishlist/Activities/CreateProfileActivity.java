@@ -5,10 +5,12 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -22,16 +24,23 @@ import com.example.wishlist.Class.DatabaseHelper;
 import com.example.wishlist.Fragment.ChangePhotoDialog;
 import com.example.wishlist.Class.User;
 import com.example.wishlist.R;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.sql.Date;
+import java.util.Calendar;
 
-public class CreateProfileActivity extends AppCompatActivity {
+import de.hdodenhof.circleimageview.CircleImageView;
+
+public class CreateProfileActivity extends AppCompatActivity implements ChangePhotoDialog.OnPhotoReceivedListener {
     //email and password get from CreateNewAccountActivity
     private String email;
     private String password;
     private final int MY_PERMISSIONS_REQUEST = 1;
+    private String imagePath;
+    private CircleImageView profilePhoto;
 
-    @Override//TODO Check if possible to remove that
+   /* @Override//TODO Check if possible to remove that -> done I don't see any difference
     public void onRequestPermissionsResult(int requestCode,
                                            String[] permissions, int[] grantResults) {
         switch (requestCode) {
@@ -43,18 +52,9 @@ public class CreateProfileActivity extends AppCompatActivity {
                 return;
             }
         }
-    }
+    }*/
 
-    /*
-    * Function to set a bitmap in photo
-    * Only used by fragment ChangePhotoDialog
-     */
-    public void changedPhoto(Bitmap bitmap){
-        ImageView imageView=findViewById(R.id.profilePhoto);
-        //Compress?  https://codingwithmitch.com/courses/android-sqlite-for-beginners/new-camera-image/ 10:05
-        imageView.setImageBitmap(bitmap);
-    }
-
+    @TargetApi(21)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +62,10 @@ public class CreateProfileActivity extends AppCompatActivity {
         email=intent.getStringExtra("mail");
         password=intent.getStringExtra("password");
         setContentView(R.layout.activity_create_profile);
+        //Set the photo
+        profilePhoto= findViewById(R.id.profilePhoto);
+        profilePhoto.setImageDrawable(getDrawable(R.drawable.ic_default_photo));
+
         //Check permission to take photo and access storage then create ChangePhotoDialog
         ImageView cameraLogo = findViewById(R.id.logoCamera);
         cameraLogo.setOnClickListener(new View.OnClickListener() {
@@ -101,6 +105,24 @@ public class CreateProfileActivity extends AppCompatActivity {
         return str.length() > 0;
     }
 
+    public int transformMonth(String month){
+        switch (month){
+            case "January" :return 1;
+            case "February" : return 2;
+            case "March":return 3;
+            case "April": return 4;
+            case "May": return 5;
+            case "June":return 6;
+            case "July": return 7;
+            case "Augustus": return 8;
+            case "September" : return  9;
+            case "October" : return 10;
+            case "November" : return 11;
+            case "December" : return 12;
+            default: return -1;
+        }
+    }
+
 
     /*
     * Firstly we collect the information given by the user
@@ -111,7 +133,7 @@ public class CreateProfileActivity extends AppCompatActivity {
     public void createUser(View view) {
         int numberError = 0;
         //Get the information
-        EditText editTextFirstName = (EditText) findViewById(R.id.getFirstName);
+        EditText editTextFirstName = (EditText) findViewById(R.id.newmail);
         String firstName = editTextFirstName.getText().toString();
         EditText editTextLastName = (EditText) findViewById(R.id.getLastName);
         String lastName = editTextLastName.getText().toString();
@@ -183,13 +205,15 @@ public class CreateProfileActivity extends AppCompatActivity {
 
         //Check the birthDate
         TextView wrongDate = findViewById(R.id.wrongBirthdate);
+        int yearInt=-1;
+        int dayInt=-1;
 
         if (year.equals("Year") || day.equals("Day") || month.equals("Month")) {
             wrongDate.setText(getResources().getText(R.string.wrongDate));
             numberError++;
         } else {
-            int yearInt = Integer.parseInt(year);
-            int dayInt = Integer.parseInt(day);
+             yearInt = Integer.parseInt(year);
+             dayInt = Integer.parseInt(day);
             if (!checkDate(dayInt, month, yearInt)) {
                 wrongDate.setText(getResources().getText(R.string.wrongDate));
                 numberError++;
@@ -203,20 +227,46 @@ public class CreateProfileActivity extends AppCompatActivity {
             Address userAddress=new Address(addressLine1,city,country,postalCode);
             if(checkStringIsCorrect(addressLine2)) userAddress.setAddressLine2(addressLine2);
             //create an User
-            User user=new User(userAddress,firstName,lastName,email,new Date(0),password);
+            Calendar calendar= Calendar.getInstance();
+            calendar.set(yearInt,transformMonth(month),dayInt);
+            User user=new User(userAddress,firstName,lastName,email,calendar.getTime(),password);
             if (!favoriteColor.equals("Undefined"))user.setFavoriteColor(favoriteColor);
             if (!size.equals("Undefined")) user.setSize(size);
             if (!shoeSize.equals("Undefined")) user.setShoeSize(Integer.parseInt(shoeSize));
             DatabaseHelper dbHelper= new DatabaseHelper(getApplicationContext());
             if(dbHelper.addUser(user)){
-                Toast toast=Toast.makeText(this,"Account Create",Toast.LENGTH_SHORT);
-                toast.show();
+                int userID=dbHelper.checkUser(email,password);
+                if(userID==-1){
+                    Toast toast=Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT);
+                    toast.show();
+                }else{
+                    Toast toast=Toast.makeText(this,"Account Create",Toast.LENGTH_SHORT);
+                    toast.show();
+                    Intent intent=new Intent(this,MainMenuActivity.class);
+                    intent.putExtra("userID",userID);
+                    startActivity(intent);
+                }
             }else {
                 Toast toast=Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT);
                 toast.show();
             }
         } else {
-            //Error
+            Toast toast=Toast.makeText(this,"The information with a * are required",Toast.LENGTH_LONG);
+            toast.show();
+        }
+    }
+
+    @Override
+    public void getBitmapImage(Bitmap bitmap) {
+        if(bitmap!=null){
+            profilePhoto.setImageBitmap(bitmap);
+        }
+    }
+
+    @Override
+    public void getUriImage(Uri uri) {
+        if(uri!=null){
+            profilePhoto.setImageURI(uri);
         }
     }
 }

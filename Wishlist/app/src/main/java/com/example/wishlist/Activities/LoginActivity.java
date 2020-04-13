@@ -1,7 +1,9 @@
 package com.example.wishlist.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,13 +12,15 @@ import android.widget.TextView;
 
 import com.example.wishlist.Class.DatabaseHelper;
 import com.example.wishlist.R;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class LoginActivity extends AppCompatActivity {
 
+    @TargetApi(21)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.login_v2);
     }
 
 
@@ -26,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     public void checkUserAccess(View view){
         EditText editTextMail= (EditText)findViewById(R.id.username);
         String mail= editTextMail.getText().toString();
-        EditText editTextPassword=(EditText)findViewById(R.id.email);
+        EditText editTextPassword=(EditText)findViewById(R.id.password);
         String password=editTextPassword.getText().toString();
         //TextView textViewMessage=(TextView) findViewById(R.id.wrongLogin);
         DatabaseHelper dbHelper=new DatabaseHelper(getApplicationContext());

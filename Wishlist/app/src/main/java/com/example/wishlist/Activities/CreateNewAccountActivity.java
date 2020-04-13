@@ -18,7 +18,7 @@ public class CreateNewAccountActivity extends AppCompatActivity {
     @TargetApi(26)
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_new_account);
+        setContentView(R.layout.create_new_account_v2);
         EditText editTextMail= (EditText)findViewById(R.id.newmail);
         editTextMail.setAutofillHints(View.AUTOFILL_HINT_EMAIL_ADDRESS);//Je sais pas ce que c'est autofill
     }

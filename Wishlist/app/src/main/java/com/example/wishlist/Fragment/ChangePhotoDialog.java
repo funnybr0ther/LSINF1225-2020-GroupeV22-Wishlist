@@ -1,6 +1,7 @@
 package com.example.wishlist.Fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -18,11 +19,27 @@ import androidx.fragment.app.DialogFragment;
 import com.example.wishlist.Activities.CreateProfileActivity;
 import com.example.wishlist.R;
 
-import java.io.File;
-
 public class ChangePhotoDialog extends DialogFragment {
     public final int CAMERA_REQUEST_CODE=3;
     public final int MEMORY_REQUEST_CODE=456;
+    private CreateProfileActivity activity;
+
+    public interface OnPhotoReceivedListener{
+        public void getBitmapImage(Bitmap bitmap);
+        public void getUriImage(Uri uri);
+    }
+    OnPhotoReceivedListener onPhotoReceivedListener;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {onPhotoReceivedListener=(OnPhotoReceivedListener) getActivity();
+
+        }catch (ClassCastException e){
+
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -42,16 +59,19 @@ public class ChangePhotoDialog extends DialogFragment {
             public void onClick(View v) {
                 Intent cameraIntent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent,CAMERA_REQUEST_CODE);
+                //getDialog().dismiss();
             }
         });
 
         //Choose Photo From Memory
-        TextView selectPhoto=view.findViewById(R.id.changePhotoMemory);
+        TextView selectPhoto=view.findViewById(R.id.photoFromMemory);
         selectPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("image/*");
+                Intent memoryIntent= new Intent(Intent.ACTION_GET_CONTENT);
+                memoryIntent.setType("image/*");
+                startActivityForResult(memoryIntent,MEMORY_REQUEST_CODE);
+                //getDialog().dismiss();
             }
         });
         return view;
@@ -64,12 +84,15 @@ public class ChangePhotoDialog extends DialogFragment {
         if(requestCode==CAMERA_REQUEST_CODE&&resultCode== Activity.RESULT_OK){
             CreateProfileActivity activity= (CreateProfileActivity) getActivity();
             Bitmap bitmap=(Bitmap) data.getExtras().get("data");
-            activity.changedPhoto(bitmap);
+            onPhotoReceivedListener.getBitmapImage(bitmap);
+            getDialog().dismiss();
         }
         //Result if choose photo from Memory
         if(requestCode==MEMORY_REQUEST_CODE&&resultCode== Activity.RESULT_OK){
             Uri selectedImageUri=data.getData();
-            File file= new File(selectedImageUri.toString());
+            //File file= new File(selectedImageUri.toString());
+            onPhotoReceivedListener.getUriImage(selectedImageUri);
+            getDialog().dismiss();
         }
     }
 }
