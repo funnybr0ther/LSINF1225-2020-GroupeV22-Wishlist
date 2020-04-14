@@ -16,7 +16,8 @@
             android:id="@+id/backArrowCreateProfile"
             android:src="@drawable/ic_arrow_back_white_30dp"
             android:background="?attr/selectableItemBackground"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:onClick="onBackPressed"/>
     </RelativeLayout>
     <TextView
         android:layout_width="0dp"

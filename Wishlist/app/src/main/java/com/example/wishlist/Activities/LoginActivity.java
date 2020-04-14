@@ -15,12 +15,18 @@ import com.example.wishlist.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class LoginActivity extends AppCompatActivity {
+    private EditText editTextMail;
+    private EditText editTextPassword;
+    private TextView wrongLogin;
 
     @TargetApi(21)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_v2);
+        editTextMail= (EditText)findViewById(R.id.username);
+        editTextPassword=(EditText)findViewById(R.id.password);
+        wrongLogin=(TextView) findViewById(R.id.wrongLogin);
     }
 
 
@@ -28,9 +34,8 @@ public class LoginActivity extends AppCompatActivity {
     * Check if couple mail-password exist then go to main menu if it with userID in Extra
      */
     public void checkUserAccess(View view){
-        EditText editTextMail= (EditText)findViewById(R.id.username);
+
         String mail= editTextMail.getText().toString();
-        EditText editTextPassword=(EditText)findViewById(R.id.password);
         String password=editTextPassword.getText().toString();
         //TextView textViewMessage=(TextView) findViewById(R.id.wrongLogin);
         DatabaseHelper dbHelper=new DatabaseHelper(getApplicationContext());
@@ -42,8 +47,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         }
         else{
-            TextView textViewMessage=(TextView) findViewById(R.id.wrongLogin);
-            textViewMessage.setText("Wrong password or email");
+            wrongLogin.setText("Wrong password or email");
         }
     }
 

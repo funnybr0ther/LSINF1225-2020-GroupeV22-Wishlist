@@ -14,13 +14,32 @@ import com.example.wishlist.R;
 
 public class CreateNewAccountActivity extends AppCompatActivity {
 
+    private EditText editTextMail;
+    private EditText editTextPassword;
+    private EditText editTextConfPswrd;
+    private TextView textViewPassword;
+    private TextView textViewEmail;
+    private TextView textViewConfPassword=(TextView) findViewById(R.id.wrongConfirmPassword);;
+
     @Override
     @TargetApi(26)
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_new_account_v2);
-        EditText editTextMail= (EditText)findViewById(R.id.newmail);
-        editTextMail.setAutofillHints(View.AUTOFILL_HINT_EMAIL_ADDRESS);//Je sais pas ce que c'est autofill
+        //Set different view/Edit
+        editTextMail= (EditText)findViewById(R.id.newmail);
+        editTextPassword= (EditText)findViewById(R.id.newPswrd);
+        editTextConfPswrd= (EditText) findViewById(R.id.confirmPswrd);
+        textViewPassword=(TextView) findViewById(R.id.wrongPassword);
+        textViewEmail=(TextView) findViewById(R.id.wrongEmail);
+        textViewConfPassword=(TextView) findViewById(R.id.wrongConfirmPassword);
+
+        //Je sais pas ce que c'est autofill mais ça à l'air stylé -> à voir
+        editTextMail.setAutofillHints(View.AUTOFILL_HINT_EMAIL_ADDRESS);
+    }
+
+    public void onBackPressed(View view) {
+        onBackPressed();
     }
 
     public boolean containsNumber(String string){
@@ -38,7 +57,6 @@ public class CreateNewAccountActivity extends AppCompatActivity {
     * Show some text or not depending of that
      */
     public boolean checkPassword(String password){
-        TextView textViewPassword=(TextView) findViewById(R.id.wrongPassword);
         if (password.length()<5){
             textViewPassword.setText("Your password must contain at least 5 characters");
             return false;
@@ -61,7 +79,6 @@ public class CreateNewAccountActivity extends AppCompatActivity {
     * Show some text or not depending of that
     */
     public boolean checkEmail(String email){
-        TextView textViewEmail=(TextView) findViewById(R.id.wrongEmail);
         DatabaseHelper dbHelper= new DatabaseHelper(getApplicationContext());
         if(!email.contains("@")||email.length()<5){
             textViewEmail.setText("Please insert a correct email");
@@ -83,11 +100,8 @@ public class CreateNewAccountActivity extends AppCompatActivity {
     * Do nothing in the other case (just show some text to help the user)
      */
     public void checkSignInInfo(View view){
-        EditText editTextMail= (EditText)findViewById(R.id.newmail);
         String mail= editTextMail.getText().toString();
-        EditText editTextPassword= (EditText)findViewById(R.id.newPswrd);
         String password= editTextPassword.getText().toString();
-        EditText editTextConfPswrd= (EditText) findViewById(R.id.confirmPswrd);
         String confirmPassword=editTextConfPswrd.getText().toString();
         if(checkEmail(mail)&checkPassword(password)){
             if(password.equals(confirmPassword)){
@@ -97,7 +111,6 @@ public class CreateNewAccountActivity extends AppCompatActivity {
                 startActivity(intent);
             }
             else{
-                TextView textViewConfPassword=(TextView) findViewById(R.id.wrongConfirmPassword);
                 textViewConfPassword.setText("You don't write the same password");
             }
         }

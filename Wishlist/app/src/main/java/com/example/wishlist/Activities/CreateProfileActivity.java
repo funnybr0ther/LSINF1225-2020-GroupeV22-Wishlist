@@ -33,14 +33,31 @@ import java.util.Calendar;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CreateProfileActivity extends AppCompatActivity implements ChangePhotoDialog.OnPhotoReceivedListener {
-    //email and password get from CreateNewAccountActivity
     private String email;
     private String password;
-    private final int MY_PERMISSIONS_REQUEST = 1;
+    private final int MY_PERMISSIONS_REQUEST = 37;
     private String imagePath;
     private CircleImageView profilePhoto;
+    private ImageView cameraLogo;
+    private EditText editTextFirstName;
+    private  EditText editTextLastName;
+    private EditText editTextAddressLine1;
+    private EditText editTextAddressLine2;
+    private EditText editTextCity;
+    private EditText editTextCountry;
+    private EditText editTextPostalCode;
+    private Spinner spinnerSize;
+    private Spinner spinnerShoeSize;
+    private Spinner spinnerFavoriteColor;
+    private Spinner spinnerDay;
+    private Spinner spinnerMonth;
+    private Spinner spinnerYear;
+
+
+
 
    /* @Override//TODO Check if possible to remove that -> done I don't see any difference
+     *Je le laisse ici au cas où
     public void onRequestPermissionsResult(int requestCode,
                                            String[] permissions, int[] grantResults) {
         switch (requestCode) {
@@ -58,16 +75,34 @@ public class CreateProfileActivity extends AppCompatActivity implements ChangePh
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_create_profile);
+
+        //Get information pass with Extra in intent
         Intent intent=getIntent();
         email=intent.getStringExtra("mail");
         password=intent.getStringExtra("password");
-        setContentView(R.layout.activity_create_profile);
-        //Set the photo
+
+        //Set the different View/Edit/Spinner variable
         profilePhoto= findViewById(R.id.profilePhoto);
+        cameraLogo = findViewById(R.id.logoCamera);
+        editTextFirstName = (EditText) findViewById(R.id.newmail);
+        editTextLastName = (EditText) findViewById(R.id.getLastName);
+        editTextAddressLine1 = (EditText) findViewById(R.id.getAddressLine1);
+        editTextAddressLine2 = (EditText) findViewById(R.id.getAddressLine2);
+        editTextCity = (EditText) findViewById(R.id.getLocality);
+        editTextCountry = (EditText) findViewById(R.id.getCountry);
+        editTextPostalCode = (EditText) findViewById(R.id.getPostalCode);
+        spinnerSize = (Spinner) findViewById(R.id.spinnerSize);
+        spinnerShoeSize = (Spinner) findViewById(R.id.spinnerShoeSize);
+        spinnerFavoriteColor = (Spinner) findViewById(R.id.spinnerFavoriteColor);
+        spinnerDay = (Spinner) findViewById(R.id.spinnerDay);
+        spinnerMonth = (Spinner) findViewById(R.id.spinnerMonth);
+        spinnerYear = (Spinner) findViewById(R.id.spinnerYear);
+
+        //Set the default photo
         profilePhoto.setImageDrawable(getDrawable(R.drawable.ic_default_photo));
 
         //Check permission to take photo and access storage then create ChangePhotoDialog
-        ImageView cameraLogo = findViewById(R.id.logoCamera);
         cameraLogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,6 +124,10 @@ public class CreateProfileActivity extends AppCompatActivity implements ChangePh
             }
 
         });
+    }
+
+    public void onBackPressed(View view) {
+        onBackPressed();
     }
 
     public boolean checkDate(int day, String month, int year) {
@@ -133,19 +172,12 @@ public class CreateProfileActivity extends AppCompatActivity implements ChangePh
     public void createUser(View view) {
         int numberError = 0;
         //Get the information
-        EditText editTextFirstName = (EditText) findViewById(R.id.newmail);
         String firstName = editTextFirstName.getText().toString();
-        EditText editTextLastName = (EditText) findViewById(R.id.getLastName);
         String lastName = editTextLastName.getText().toString();
-        EditText editTextAddressLine1 = (EditText) findViewById(R.id.getAddressLine1);
         String addressLine1 = editTextAddressLine1.getText().toString();
-        EditText editTextAddressLine2 = (EditText) findViewById(R.id.getAddressLine2);
         String addressLine2 = editTextAddressLine2.getText().toString();
-        EditText editTextCity = (EditText) findViewById(R.id.getLocality);
         String city = editTextCity.getText().toString();
-        EditText editTextCountry = (EditText) findViewById(R.id.getCountry);
         String country = editTextCountry.getText().toString();
-        EditText editTextPostalCode = (EditText) findViewById(R.id.getPostalCode);
         int postalCode=0;
         try {
             postalCode = (int) Integer.parseInt(editTextPostalCode.getText().toString());
@@ -156,19 +188,12 @@ public class CreateProfileActivity extends AppCompatActivity implements ChangePh
         }
 
 
-        Spinner spinnerSize = (Spinner) findViewById(R.id.spinnerSize);
         String size = spinnerSize.getSelectedItem().toString();
-        Spinner spinnerShoeSize = (Spinner) findViewById(R.id.spinnerShoeSize);
         String shoeSize = spinnerShoeSize.getSelectedItem().toString();
-        Spinner spinnerFavoriteColor = (Spinner) findViewById(R.id.spinnerFavoriteColor);
         String favoriteColor = spinnerFavoriteColor.getSelectedItem().toString();
-        Spinner spinnerDay = (Spinner) findViewById(R.id.spinnerDay);
         String day = spinnerDay.getSelectedItem().toString();
-        Spinner spinnerMonth = (Spinner) findViewById(R.id.spinnerMonth);
         String month = spinnerMonth.getSelectedItem().toString();
-        Spinner spinnerYear = (Spinner) findViewById(R.id.spinnerYear);
         String year = spinnerYear.getSelectedItem().toString();
-
 
         //Check if any required missing
         if (!checkStringIsCorrect(firstName)) {
@@ -228,7 +253,7 @@ public class CreateProfileActivity extends AppCompatActivity implements ChangePh
             if(checkStringIsCorrect(addressLine2)) userAddress.setAddressLine2(addressLine2);
             //create an User
             Calendar calendar= Calendar.getInstance();
-            calendar.set(yearInt,transformMonth(month),dayInt);
+            calendar.set(yearInt,transformMonth(month)-1,dayInt);
             User user=new User(userAddress,firstName,lastName,email,calendar.getTime(),password);
             if (!favoriteColor.equals("Undefined"))user.setFavoriteColor(favoriteColor);
             if (!size.equals("Undefined")) user.setSize(size);

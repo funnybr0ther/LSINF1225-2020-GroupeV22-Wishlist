@@ -10,7 +10,7 @@ public class Address {
     private int postalCode;
 
     /*
-    * 2 function to transform address into String and Strig into address to stock it in database
+    * 2 function to transform address into String and String into address to stock it in database
      */
     @NonNull
     public String toString(){
