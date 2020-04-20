@@ -19,11 +19,12 @@ public class CreateNewAccountActivity extends AppCompatActivity {
     private EditText editTextConfPswrd;
     private TextView textViewPassword;
     private TextView textViewEmail;
-    private TextView textViewConfPassword=(TextView) findViewById(R.id.wrongConfirmPassword);;
+    private TextView textViewConfPassword;
 
     @Override
     @TargetApi(26)
     protected void onCreate(Bundle savedInstanceState) {
+        //System.out.println("Test");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_new_account_v2);
         //Set different view/Edit
