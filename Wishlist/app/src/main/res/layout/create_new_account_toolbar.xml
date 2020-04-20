@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@color/colorPrimary"
+    android:layout_weight="100"
+    android:gravity="center_vertical">
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="10">
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/backArrowCreateNewAccount"
+            android:src="@drawable/ic_arrow_back_white_30dp"
+            android:background="?attr/selectableItemBackground"
+            android:layout_centerVertical="true"
+            android:onClick="onBackPressed"/>
+    </RelativeLayout>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="70"
+        android:text="Registration"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:gravity="center_vertical"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:layout_weight="17"
+        android:text="NEXT"
+        android:clickable="true"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:gravity="center_vertical"
+        android:onClick="checkSignInInfo"/>
+
+
+</LinearLayout>
