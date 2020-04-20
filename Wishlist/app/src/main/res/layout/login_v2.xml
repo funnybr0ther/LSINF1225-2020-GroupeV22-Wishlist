@@ -85,6 +85,7 @@
             android:layout_width="110dp"
             android:layout_height="22dp"
             android:clickable="true"
+            android:focusable="true"
             android:onClick="newAccount"
             android:text="@string/createAccount"
             android:textColor="#3F51B5"

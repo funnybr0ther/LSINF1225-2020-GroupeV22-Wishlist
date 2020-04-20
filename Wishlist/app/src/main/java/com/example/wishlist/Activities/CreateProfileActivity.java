@@ -24,10 +24,7 @@ import com.example.wishlist.Class.DatabaseHelper;
 import com.example.wishlist.Fragment.ChangePhotoDialog;
 import com.example.wishlist.Class.User;
 import com.example.wishlist.R;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
-import java.sql.Date;
 import java.util.Calendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -75,7 +72,7 @@ public class CreateProfileActivity extends AppCompatActivity implements ChangePh
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_profile);
+        setContentView(R.layout.create_profile);
 
         //Get information pass with Extra in intent
         Intent intent=getIntent();
@@ -293,5 +290,10 @@ public class CreateProfileActivity extends AppCompatActivity implements ChangePh
         if(uri!=null){
             profilePhoto.setImageURI(uri);
         }
+    }
+
+    @Override
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }
