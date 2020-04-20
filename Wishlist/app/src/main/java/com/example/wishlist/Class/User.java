@@ -11,7 +11,7 @@ public class User {
     private String email;
     private Date birthDate;
     private String password;
-    private String profilePhoto;
+    private String profilePhoto;  //oui en effet
     private boolean notification=true;
 
     public boolean isNotification() {
