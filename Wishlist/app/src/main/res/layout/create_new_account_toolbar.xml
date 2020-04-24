@@ -36,6 +36,7 @@
         android:layout_weight="17"
         android:text="NEXT"
         android:clickable="true"
+        android:layout_marginRight="10pt"
         android:textColor="@color/white"
         android:textSize="25sp"
         android:gravity="center_vertical"

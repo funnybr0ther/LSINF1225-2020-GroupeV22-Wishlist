@@ -240,4 +240,10 @@
     <string name="takeNewPhoto">Take new photo</string>
     <string name="chooseFromMemory">Choose from memory</string>
     <string name="Cancel">Cancel</string>
+    <string name="newProductToolbarText">New Object</string>
+    <string name="viewProductToolbarText">View Product</string>
+    <string name="todoContentDescription">TODO : ContentDescription</string>
+    <string name="productDescriptionTitle"><u>Description</u></string>
+    <string name="productCategoriesTitle">Category</string>
+    <string name="productInfoTitle">Extra information</string>
 </resources>
