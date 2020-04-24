@@ -106,7 +106,7 @@ public class CreateProfileActivity extends AppCompatActivity implements ChangePh
                 //check permission
                 int numberOfPermission = 0;
                 String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
-                for (int i=0;i<2;i++) {
+                for (int i=0;i<permissions.length;i++) {
                     if (ContextCompat.checkSelfPermission(CreateProfileActivity.this, permissions[i])
                             != PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions(CreateProfileActivity.this, new String[]{permissions[i]},
@@ -262,7 +262,7 @@ public class CreateProfileActivity extends AppCompatActivity implements ChangePh
                     Toast toast=Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT);
                     toast.show();
                 }else{
-                    Toast toast=Toast.makeText(this,"Account Create",Toast.LENGTH_SHORT);
+                    Toast toast=Toast.makeText(this,"Account Creation Success!",Toast.LENGTH_SHORT);
                     toast.show();
                     Intent intent=new Intent(this,MainMenuActivity.class);
                     intent.putExtra("userID",userID);
