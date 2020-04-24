@@ -2,6 +2,6 @@
 <resources>
     <dimen name="productImageSize">70pt</dimen>
     <dimen name="contextMenuWidth">35dp</dimen>
-    <dimen name="contextMenuHeight">35</dimen>
-    <dimen name="productTitleMinViewSize">20</dimen>
+    <dimen name="contextMenuHeight">35dp</dimen>
+    <dimen name="productTitleMinViewSize">20dp</dimen>
 </resources>

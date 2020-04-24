@@ -7,6 +7,7 @@ import androidx.core.app.ActivityCompat;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,5 +30,7 @@ public class MainMenuActivity extends AppCompatActivity {
             //Toast toast=new Toast(this,);
             Intent backToLogin=new Intent(this,LoginActivity.class);
         }
+        Intent intent1=new Intent(this, ViewProductActivity.class);
+        startActivity(intent1);
     }
 }
