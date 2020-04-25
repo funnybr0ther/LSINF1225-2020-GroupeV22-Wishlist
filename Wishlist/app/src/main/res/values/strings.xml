@@ -9,11 +9,16 @@
     <string name="createAccount">Still not register ?</string>
     <string name="next">Next</string>
     <string name="firstName">First name * :</string>
+    <string name="firstNameWithout">First name :</string>
     <string name="lastName">Last name * :</string>
+    <string name="lastNameWithout">Last name :</string>
     <string name="addressLine1">Address line 1 * :</string>
+    <string name="addressLine1Without">Address line 1 :</string>
     <string name="addressLine2">Address line 2 :</string>
     <string name="city">City * :</string>
+    <string name="cityWithout">City :</string>
     <string name="postalCode">Postal code * :</string>
+    <string name="postalCodeWithout">Postal code :</string>
     <string-array name="size">
         <item>Undefined</item>
         <item>XS</item>
@@ -217,8 +222,10 @@
         <item>1900</item>
     </string-array>
     <string name="country">Country * :</string>
+    <string name="countryWithout">Country :</string>
     <string name="size">Size :</string>
     <string name="birthdate">Birthdate * :</string>
+    <string name="birthdateWithout">Birthdate :</string>
     <string name="shoeSize">Shoe size :</string>
     <string name="CreateProfile">Register</string>
     <string name="favoriteColor">Favorite Color :</string>
