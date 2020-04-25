@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="productImageSize">70pt</dimen>
+    <dimen name="contextMenuWidth">35dp</dimen>
+    <dimen name="contextMenuHeight">35dp</dimen>
+    <dimen name="productTitleMinViewSize">20dp</dimen>
+</resources>

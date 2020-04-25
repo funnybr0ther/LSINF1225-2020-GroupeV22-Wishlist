@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/productViewToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp">
+
+        <include layout="@layout/view_product_toolbar" />
+    </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <TextView
+        android:id="@+id/productName"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10pt"
+        android:layout_marginTop="10pt"
+        android:layout_marginRight="10pt"
+        android:text="productName"
+        android:textAllCaps="true"
+        android:textAppearance="@style/TextAppearance.AppCompat.ProductTitle" />
+
+    <TextView
+        android:id="@+id/priceTag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="price" />
+
+    <ImageButton
+        android:id="@+id/productPhoto"
+        android:layout_width="@dimen/productImageSize"
+        android:layout_height="@dimen/productImageSize"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10pt"
+        android:contentDescription="@string/todoContentDescription"
+        android:visibility="visible"
+        app:srcCompat="@android:drawable/btn_star_big_on"
+        tools:srcCompat="@android:drawable/btn_star_big_on"
+        tools:visibility="visible" />
+    <RatingBar
+        android:id="@+id/rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:numStars="5"
+        android:rating="4"
+        android:stepSize="1.0"
+        android:isIndicator="true"
+    ></RatingBar>
+    <TextView
+        android:id="@+id/boughtAmount"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bought : am / tot"
+        />
+    <TextView
+        android:id="@+id/descriptionTitle"
+        android:layout_width="match_parent"
+        android:layout_height="31dp"
+        android:layout_marginTop="5pt"
+        android:layout_marginLeft="3pt"
+        android:gravity="left"
+        android:text="@string/productDescriptionTitle"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:visibility="visible"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="7pt"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2pt"
+        android:gravity="left"
+        android:text="descriptionContent" />
+
+    <TextView
+        android:id="@+id/categoryTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5pt"
+        android:layout_marginLeft="3pt"
+        android:gravity="left"
+        android:text="@string/productCategoriesTitle"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:visibility="visible"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="7pt"
+        android:layout_marginTop="2pt"
+        android:gravity="left"
+        android:text="descriptionContent" />
+
+    <TextView
+        android:id="@+id/infoTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5pt"
+        android:layout_marginLeft="3pt"
+        android:gravity="left"
+        android:text="@string/productInfoTitle"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:visibility="visible"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="7pt"
+        android:layout_marginTop="2pt"
+        android:gravity="left"
+        android:text="infoContent" />
+
+</LinearLayout>
