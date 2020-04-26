@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
@@ -14,8 +13,8 @@
         <ImageButton
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:id="@+id/backArrowCreateNewAccount"
-            app:srcCompat="@drawable/ic_arrow_back_white_30dp"
+            android:id="@+id/backArrowEditProfile"
+            android:src="@drawable/ic_arrow_back_white_30dp"
             android:background="?attr/selectableItemBackground"
             android:layout_centerVertical="true"
             android:onClick="onBackPressed"/>
@@ -24,24 +23,30 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="70"
-        android:text="Registration"
+        android:text="My Profile"
         android:textColor="@color/white"
         android:textSize="25sp"
         android:gravity="center_vertical"
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"/>
-    <TextView
+    <ImageButton
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="end"
-        android:layout_weight="17"
-        android:text="NEXT"
-        android:clickable="true"
-        android:layout_marginRight="10pt"
-        android:textColor="@color/white"
-        android:textSize="25sp"
-        android:gravity="center_vertical"
-        android:onClick="checkSignInInfo"/>
+        android:id="@+id/modifyProfile"
+        android:layout_height="wrap_content"
+        android:layout_weight="15"
+        android:visibility="gone"
+        android:src="@drawable/ic_check_black_24dp"
+        android:onClick="updateUser"
+        android:background="?attr/selectableItemBackground"/>
+    <ImageButton
+        android:layout_width="0dp"
+        android:id="@+id/modifyMode"
+        android:layout_height="wrap_content"
+        android:onClick="editMode"
+        android:layout_weight="15"
+        android:visibility="visible"
+        android:src="@drawable/ic_mode_edit_white_30dp"
+        android:background="?attr/selectableItemBackground"/>
 
 
 </LinearLayout>

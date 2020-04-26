@@ -18,7 +18,7 @@ public class Address {
     }
 
     public static Address fromString(String str){
-        String[]l=str.split("_",-1);
+        String[]l=str.split("_/",-1);
         return new Address(l[0],l[1],l[2],l[3],Integer.parseInt(l[4]));
     }
 

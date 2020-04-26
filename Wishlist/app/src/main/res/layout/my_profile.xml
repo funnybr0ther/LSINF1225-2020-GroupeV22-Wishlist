@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -17,7 +16,7 @@
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp">
 
-            <include layout="@layout/create_profile_toolbar" />
+            <include layout="@layout/my_profile_toolbar" />
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -47,14 +46,15 @@
                     android:id="@+id/logoCamera"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_below="@+id/profilePhoto"
+                    android:layout_below="@id/profilePhoto"
                     android:layout_toRightOf="@id/profilePhoto"
                     android:layout_marginLeft="20dp"
-                    app:srcCompat="@drawable/ic_camera" />
+                    android:src="@drawable/ic_camera"
+                    android:visibility="invisible"/>
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:id="@+id/layout2"
                 android:layout_below="@id/layout1"
                 android:padding="10dp">
@@ -65,24 +65,36 @@
                     android:textSize="16sp"
                     android:textColor="@color/black"
                     android:text="@string/firstName"
-                    android:id="@+id/newMail"
+                    android:id="@+id/FirstName"
                     android:layout_centerVertical="true"/>
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/newMail"
+                    android:layout_toRightOf="@id/FirstName"
                     android:layout_centerVertical="true"
-                    android:layout_alignBaseline="@+id/newMail"
+                    android:layout_alignBaseline="@id/FirstName"
                     android:textSize="16sp"
                     android:textColor="@color/black"
-                    android:id="@+id/newmail"/>
+                    android:id="@+id/editFirstName"
+                    android:visibility="gone"/>
+                <TextView
+                    android:layout_toRightOf="@id/FirstName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="16sp"
+                    android:layout_alignBaseline="@id/FirstName"
+                    android:textColor="@color/black"
+                    android:id="@+id/actualFirstName"
+                    android:visibility="visible"
+                    android:gravity="center_vertical"/>
 
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:id="@+id/layout3"
                 android:layout_below="@id/layout2"
                 android:padding="10dp">
@@ -93,7 +105,7 @@
                     android:textSize="16sp"
                     android:text="@string/lastName"
                     android:layout_centerVertical="true"
-                    android:id="@+id/textLastName"/>
+                    android:id="@+id/LastName"/>
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -101,14 +113,26 @@
                     android:layout_marginLeft="10dp"
                     android:textSize="16sp"
                     android:textColor="@color/black"
-                    android:layout_alignBaseline="@id/textLastName"
-                    android:layout_toRightOf="@id/textLastName"
+                    android:layout_alignBaseline="@id/LastName"
+                    android:layout_toRightOf="@id/LastName"
                     android:layout_centerVertical="true"
-                    android:id="@+id/getLastName"/>
+                    android:id="@+id/editLastName"
+                    android:visibility="gone"/>
+                <TextView
+                    android:layout_toRightOf="@id/LastName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="16sp"
+                    android:layout_alignBaseline="@id/LastName"
+                    android:textColor="@color/black"
+                    android:id="@+id/actualLastName"
+                    android:visibility="visible"
+                    android:gravity="center_vertical"/>
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:id="@+id/layout4"
                 android:layout_below="@id/layout3"
                 android:padding="10dp">
@@ -118,24 +142,36 @@
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:layout_centerVertical="true"
-                    android:id="@+id/textAddressLine1"
+                    android:id="@+id/AddressLine1"
                     android:text="@string/addressLine1"/>
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/textAddressLine1"
-                    android:id="@+id/getAddressLine1"
+                    android:layout_toRightOf="@id/AddressLine1"
+                    android:id="@+id/editAddressLine1"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:layout_alignBaseline="@id/textAddressLine1"
-                    android:layout_centerVertical="true"/>
+                    android:layout_alignBaseline="@id/AddressLine1"
+                    android:layout_centerVertical="true"
+                    android:visibility="gone"/>
+                <TextView
+                    android:layout_toRightOf="@+id/AddressLine1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_alignBaseline="@id/AddressLine1"
+                    android:id="@+id/actualAddressLine1"
+                    android:visibility="visible"
+                    android:gravity="center_vertical"/>
 
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:id="@+id/layoutAddressLine2"
                 android:layout_below="@id/layout4"
                 android:padding="10dp">
@@ -145,24 +181,36 @@
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:layout_centerVertical="true"
-                    android:id="@+id/textAddressLine2"
+                    android:id="@+id/AddressLine2"
                     android:text="@string/addressLine2"/>
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/textAddressLine2"
-                    android:id="@+id/getAddressLine2"
+                    android:layout_toRightOf="@id/AddressLine2"
+                    android:id="@+id/editAddressLine2"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:layout_alignBaseline="@id/textAddressLine2"
-                    android:layout_centerVertical="true"/>
+                    android:layout_alignBaseline="@id/AddressLine2"
+                    android:layout_centerVertical="true"
+                    android:visibility="gone"/>
+                <TextView
+                    android:layout_toRightOf="@+id/AddressLine2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_alignBaseline="@id/AddressLine2"
+                    android:id="@+id/actualAddressLine2"
+                    android:visibility="visible"
+                    android:gravity="center_vertical"/>
 
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:id="@+id/layout6"
                 android:layout_below="@id/layoutAddressLine2"
                 android:padding="10dp">
@@ -172,24 +220,36 @@
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:layout_centerVertical="true"
-                    android:id="@+id/textCity"
+                    android:id="@+id/City"
                     android:text="@string/city"/>
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/textCity"
+                    android:layout_toRightOf="@id/City"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:id="@+id/getLocality"
-                    android:layout_alignBaseline="@id/textCity"
-                    android:layout_centerVertical="true"/>
+                    android:id="@+id/editCity"
+                    android:layout_alignBaseline="@id/City"
+                    android:layout_centerVertical="true"
+                    android:visibility="gone"/>
+                <TextView
+                    android:layout_toRightOf="@id/City"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_alignBaseline="@id/City"
+                    android:id="@+id/actualCity"
+                    android:visibility="visible"
+                    android:gravity="center_vertical"/>
 
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:id="@+id/layout7"
                 android:layout_below="@id/layout6"
                 android:padding="10dp">
@@ -198,7 +258,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:id="@+id/textPostalCode"
+                    android:id="@+id/PostalCode"
                     android:text="@string/postalCode"
                     android:layout_centerVertical="true"/>
                 <EditText
@@ -206,18 +266,31 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/textPostalCode"
+                    android:layout_toRightOf="@id/PostalCode"
                     android:textSize="16sp"
                     android:textColor="@color/black"
                     android:inputType="number"
                     android:layout_centerVertical="true"
-                    android:layout_alignBaseline="@id/textPostalCode"
-                    android:id="@+id/getPostalCode"/>
+                    android:layout_alignBaseline="@id/PostalCode"
+                    android:id="@+id/editPostalCode"
+                    android:visibility="gone"/>
+                <TextView
+                    android:layout_toRightOf="@id/PostalCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_alignBaseline="@id/PostalCode"
+                    android:id="@+id/actualPostalCode"
+                    android:visibility="visible"
+                    android:gravity="center_vertical"/>
+
 
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:id="@+id/layout8"
                 android:layout_below="@id/layout7"
                 android:padding="10dp">
@@ -227,24 +300,37 @@
                     android:textSize="16sp"
                     android:textColor="@color/black"
                     android:text="@string/country"
-                    android:id="@+id/textCountry"
+                    android:id="@+id/Country"
                     android:layout_centerVertical="true"/>
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/textCountry"
+                    android:layout_toRightOf="@id/Country"
                     android:layout_centerVertical="true"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:id="@+id/getCountry"
-                    android:layout_alignBaseline="@id/textCountry"/>
+                    android:id="@+id/editCountry"
+                    android:layout_alignBaseline="@id/Country"
+                    android:visibility="gone"/>
+                <TextView
+                    android:layout_toRightOf="@id/Country"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_alignBaseline="@id/Country"
+                    android:id="@+id/actualCountry"
+                    android:visibility="visible"
+                    android:gravity="center_vertical"/>
+
 
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:id="@+id/layoutSize"
                 android:layout_below="@id/layout8"
                 android:padding="10dp">
@@ -255,19 +341,33 @@
                     android:textColor="@color/black"
                     android:text="@string/size"
                     android:layout_centerVertical="true"
-                    android:id="@+id/textSize"/>
+                    android:id="@+id/Size"/>
                 <Spinner
                     android:layout_width="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/textSize"
+                    android:layout_toRightOf="@id/Size"
                     android:entries="@array/size"
-                    android:id="@+id/spinnerSize"/>
+                    android:layout_alignBaseline="@id/Size"
+                    android:id="@+id/spinnerSize"
+                    android:visibility="gone"/>
+                <TextView
+                    android:layout_toRightOf="@id/Size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_alignBaseline="@id/Size"
+                    android:id="@+id/actualSize"
+                    android:visibility="visible"
+                    android:gravity="center_vertical"/>
+
 
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:id="@+id/layoutShoeSize"
                 android:layout_below="@id/layoutSize"
                 android:padding="10dp">
@@ -277,21 +377,72 @@
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:layout_centerVertical="true"
-                    android:id="@+id/textShoeSize"
+                    android:id="@+id/ShoeSize"
                     android:text="@string/shoeSize"/>
                 <Spinner
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/textShoeSize"
+                    android:layout_toRightOf="@id/ShoeSize"
+                    android:layout_alignBaseline="@id/ShoeSize"
                     android:entries="@array/shoeSize"
+                    android:visibility="gone"
                     android:id="@+id/spinnerShoeSize"/>
+                <TextView
+                    android:layout_toRightOf="@id/ShoeSize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_alignBaseline="@id/ShoeSize"
+                    android:id="@+id/actualShoeSize"
+                    android:visibility="visible"
+                    android:gravity="center_vertical"/>
+
             </RelativeLayout>
             <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/layout11"
+                android:id="@+id/layoutFavoriteColor"
                 android:layout_below="@id/layoutShoeSize"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/FavoriteColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/favoriteColor"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <Spinner
+                    android:id="@+id/spinnerFavoriteColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_alignBaseline="@id/FavoriteColor"
+                    android:layout_toRightOf="@id/FavoriteColor"
+                    android:entries="@array/favoriteColor"
+                    android:visibility="gone"/>
+                <TextView
+                    android:layout_toRightOf="@id/FavoriteColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_alignBaseline="@id/FavoriteColor"
+                    android:id="@+id/actualFavoriteColor"
+                    android:visibility="visible"
+                    android:gravity="center_vertical"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:id="@+id/layout11"
+                android:layout_below="@id/layoutFavoriteColor"
                 android:padding="10dp">
                 <TextView
                     android:layout_width="wrap_content"
@@ -300,15 +451,15 @@
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:layout_centerVertical="true"
-                    android:id="@+id/textBirthDate"/>
+                    android:id="@+id/BirthDate"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/textBirthDate"
+                    android:layout_toRightOf="@id/BirthDate"
                     android:textColor="@color/wrongInformation"
                     android:textSize="16sp"
                     android:id="@+id/wrongBirthdate"
-                    android:layout_alignBaseline="@id/textBirthDate"
+                    android:layout_alignBaseline="@id/BirthDate"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"/>
 
@@ -316,9 +467,10 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/layout12"
+                android:id="@+id/layoutSpinnersDate"
                 android:layout_below="@id/layout11"
-                android:padding="5dp">
+                android:padding="5dp"
+                android:visibility="gone">
                 <Spinner
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -339,30 +491,12 @@
                     android:entries="@array/year"
                     android:id="@+id/spinnerYear"/>
             </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/layout13"
-                android:layout_below="@id/layout12"
-                android:padding="10dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:text="@string/favoriteColor"
-                    android:id="@+id/textFavoriteColor"
-                    android:layout_centerVertical="true"/>
-                <Spinner
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:entries="@array/favoriteColor"
-                    android:layout_toRightOf="@id/textFavoriteColor"
-                    android:id="@+id/spinnerFavoriteColor"/>
-            </RelativeLayout>
+
+
         </RelativeLayout>
 
     </ScrollView>
+
+
 
 </LinearLayout>
