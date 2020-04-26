@@ -10,6 +10,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+
+import java.util.Calendar;
+import java.util.Date;
+
 public class UserDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME="wishlist.db";
@@ -43,7 +47,7 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
                 USER_COL5 + " TEXT NOT NULL, "+
                 USER_COL6 + " DATE NOT NULL, "+
                 USER_COL7 + " TEXT,"+
-                USER_COL8 + " INTEGER, "+
+                USER_COL8 + " TEXT, "+
                 USER_COL9 + " TEXT, "+
                 USER_COL10 + " TEXT, "+
                 USER_COL11 + " TEXT)";
@@ -106,6 +110,7 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         return sol;
     }
+
     public User getUserFromID(int userID){
         SQLiteDatabase db=getReadableDatabase();
         String[] projection={USER_COL0,USER_COL1,USER_COL2};
@@ -149,5 +154,4 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         int err=db.update(USER_TABLE_NAME,contentValues,USER_COL0+" = ?",new String[]{String.valueOf(userID)});
         return err!=-1;
     }
-
 }

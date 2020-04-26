@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wishlist.Class.Address;
-import com.example.wishlist.Class.DatabaseHelper;
+import com.example.wishlist.Class.UserDatabaseHelper;
 import com.example.wishlist.Class.DateWish;
 import com.example.wishlist.Class.User;
 import com.example.wishlist.Class.UserDatabaseHelper;
@@ -94,7 +94,8 @@ public class MyProfileActivity extends AppCompatActivity {
         setContentView(R.layout.my_profile);
         Intent intent=getIntent();
         userID=intent.getIntExtra("userID",-1);
-        UserDatabaseHelper dbHelper= new UserDataaseHelper(getApplicationContext());
+        UserDatabaseHelper dbHelper= new UserDatabaseHelper(getApplicationContext());
+
         user=dbHelper.getUserFromID(userID);
 
         modifyButton=findViewById(R.id.modifyProfile);

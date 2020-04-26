@@ -21,6 +21,11 @@ import android.widget.Toast;
 
 import com.example.wishlist.Class.Address;
 import com.example.wishlist.Class.UserDatabaseHelper;
+
+import com.example.wishlist.Class.DateWish;
+
+import com.example.wishlist.Class.DateWish;
+
 import com.example.wishlist.Fragment.ChangePhotoDialog;
 import com.example.wishlist.Class.User;
 import com.example.wishlist.R;
@@ -251,10 +256,10 @@ public class CreateProfileActivity extends AppCompatActivity implements ChangePh
             //create an User
             Calendar calendar= Calendar.getInstance();
             calendar.set(yearInt,transformMonth(month)-1,dayInt);
-            User user=new User(userAddress,firstName,lastName,email,calendar.getTime(),password);
+            User user=new User(userAddress,firstName,lastName,email,new DateWish(calendar.getTime()),password);
             if (!favoriteColor.equals("Undefined"))user.setFavoriteColor(favoriteColor);
             if (!size.equals("Undefined")) user.setSize(size);
-            if (!shoeSize.equals("Undefined")) user.setShoeSize(Integer.parseInt(shoeSize));
+            if (!shoeSize.equals("Undefined")) user.setShoeSize(shoeSize);
             UserDatabaseHelper dbHelper= new UserDatabaseHelper(getApplicationContext());
             if(dbHelper.addUser(user)){
                 int userID=dbHelper.checkUser(email,password);
