@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.example.wishlist.Class.Address;
 import com.example.wishlist.Class.UserDatabaseHelper;
 import com.example.wishlist.Class.DateWish;
+
 import com.example.wishlist.Fragment.ChangePhotoDialog;
 import com.example.wishlist.Class.User;
 import com.example.wishlist.R;
@@ -167,7 +168,7 @@ public class CreateProfileActivity extends AppCompatActivity implements ChangePh
     * If something goes wrong we stay at this activity and put some information to help the user
     * If nothing goes wrong we go to the main menu
      */
-    public void createUser(View view) throws Exception{
+    public void createUser(View view) {
         int numberError = 0;
         //Get the information
         String firstName = editTextFirstName.getText().toString();
@@ -198,31 +199,31 @@ public class CreateProfileActivity extends AppCompatActivity implements ChangePh
             editTextFirstName.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
             numberError++;
         } else {
-            editTextFirstName.setBackgroundColor(getResources().getColor(R.color.white));
+            editTextFirstName.setBackgroundColor(Color.rgb(255, 255, 255));
         }
         if (!checkStringIsCorrect(lastName)) {
             editTextLastName.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
             numberError++;
         } else {
-            editTextLastName.setBackgroundColor(getResources().getColor(R.color.white));
+            editTextLastName.setBackgroundColor(Color.rgb(255, 255, 255));
         }
         if (!checkStringIsCorrect(addressLine1)) {
             editTextAddressLine1.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
             numberError++;
         } else {
-            editTextAddressLine1.setBackgroundColor(getResources().getColor(R.color.white));
+            editTextAddressLine1.setBackgroundColor(Color.rgb(255, 255, 255));
         }
         if (!checkStringIsCorrect(city)) {
             editTextCity.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
             numberError++;
         } else {
-            editTextCity.setBackgroundColor(getResources().getColor(R.color.white));
+            editTextCity.setBackgroundColor(Color.rgb(255, 255, 255));
         }
         if (!checkStringIsCorrect(country)) {
             editTextCountry.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
             numberError++;
         } else {
-            editTextCountry.setBackgroundColor(getResources().getColor(R.color.white));
+            editTextCountry.setBackgroundColor(Color.rgb(255, 255, 255));
         }
 
 
@@ -250,9 +251,9 @@ public class CreateProfileActivity extends AppCompatActivity implements ChangePh
             Address userAddress=new Address(addressLine1,city,country,postalCode);
             if(checkStringIsCorrect(addressLine2)) userAddress.setAddressLine2(addressLine2);
             //create an User
-            DateWish birthdate=new DateWish();
-            birthdate.setDate(dayInt,month,yearInt);
-            User user=new User(userAddress,firstName,lastName,email,birthdate,password);
+            Calendar calendar= Calendar.getInstance();
+            calendar.set(yearInt,transformMonth(month)-1,dayInt);
+            User user=new User(userAddress,firstName,lastName,email,calendar.getTime(),password);
             if (!favoriteColor.equals("Undefined"))user.setFavoriteColor(favoriteColor);
             if (!size.equals("Undefined")) user.setSize(size);
             if (!shoeSize.equals("Undefined")) user.setShoeSize(shoeSize);

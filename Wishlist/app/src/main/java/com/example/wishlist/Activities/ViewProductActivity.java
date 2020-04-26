@@ -1,13 +1,12 @@
 package com.example.wishlist.Activities;
 
-import android.content.Intent;
-import android.media.Rating;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,10 +15,7 @@ import com.example.wishlist.Class.Product;
 import com.example.wishlist.R;
 
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import org.w3c.dom.Text;
 
 public class ViewProductActivity extends AppCompatActivity {
     String TAG = "sortTag";
@@ -30,6 +26,7 @@ public class ViewProductActivity extends AppCompatActivity {
     private RatingBar desireBar;
     private TextView price;
     private TextView amountBought;
+    private ImageView productImage;
 
     private String[] testCategoryList = {"Garden","Kids"};
     private Product testProduct = new Product("BALANCOIRE",null,"Ceci est une balançoire",testCategoryList,2000,250,4,"40x30x60cm",5,33,12);
@@ -45,6 +42,7 @@ public class ViewProductActivity extends AppCompatActivity {
         desireBar = (RatingBar)findViewById(R.id.rating);
         price = (TextView)findViewById(R.id.priceTag);
         amountBought = (TextView)findViewById(R.id.boughtAmount);
+        productImage = (ImageView)findViewById(R.id.productPhoto);
         displayProductInfo(testProduct);
     }
 
@@ -58,7 +56,7 @@ public class ViewProductActivity extends AppCompatActivity {
         String pricePoint = Integer.toString(product.getPrice());
         String amount = Integer.toString(product.getAmount());
         String purchased = Integer.toString(product.getPurchased());
-        String photo = product.getPhoto();
+        Bitmap photo = product.getPhoto();
         if(name=="Undefined"){
             Toast.makeText(this, "Something went wrong:\n Missing name", Toast  .LENGTH_SHORT).show();
         }
@@ -96,7 +94,10 @@ public class ViewProductActivity extends AppCompatActivity {
         info.setText(spannableString);
         desireBar.setRating((float)desire);
         amountBought.setText("Amount Bought : " + purchased + " / " + amount);
-
+//        productImage.setImageURI();
+    }
+    public void onBackPressed(View view) {
+        onBackPressed();
     }
 
 

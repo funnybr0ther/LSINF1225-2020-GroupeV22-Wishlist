@@ -1,7 +1,6 @@
 package com.example.wishlist.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 
 import com.example.wishlist.Class.UserDatabaseHelper;
 import com.example.wishlist.R;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText editTextMail;
