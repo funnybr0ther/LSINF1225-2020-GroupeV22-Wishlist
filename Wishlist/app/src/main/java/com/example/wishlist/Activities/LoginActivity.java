@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.wishlist.Class.DatabaseHelper;
+import com.example.wishlist.Class.UserDatabaseHelper;
 import com.example.wishlist.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         String mail= editTextMail.getText().toString();
         String password=editTextPassword.getText().toString();
         //TextView textViewMessage=(TextView) findViewById(R.id.wrongLogin);
-        DatabaseHelper dbHelper=new DatabaseHelper(getApplicationContext());
+        UserDatabaseHelper dbHelper=new UserDatabaseHelper(getApplicationContext());
         int userID=dbHelper.checkUser(mail,password);
         if (userID!=-1){
 

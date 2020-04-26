@@ -13,7 +13,7 @@ import androidx.annotation.Nullable;
 import java.util.Calendar;
 import java.util.Date;
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+public class UserDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME="wishlist.db";
     private static final String USER_TABLE_NAME="user";
@@ -30,7 +30,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String USER_COL10="profilePhoto";
     public static final String USER_COL11="notification";
 
-    public DatabaseHelper(@Nullable Context context) {
+    public UserDatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
 
@@ -136,7 +136,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String shoeSize=cursor.getString(cursor.getColumnIndex(USER_COL8));
         return new User(address,firstName,lastName,email,birthDate,password,profilePhoto,favoriteColor,size,shoeSize);
     }
-
     public boolean updateUser(User user, int userID){
         SQLiteDatabase db=getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -154,4 +153,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int err=db.update(USER_TABLE_NAME,contentValues,USER_COL0+" = ?",new String[]{String.valueOf(userID)});
         return err!=-1;
     }
+
 }

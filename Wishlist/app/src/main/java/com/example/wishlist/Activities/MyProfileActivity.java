@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wishlist.Class.Address;
-import com.example.wishlist.Class.DatabaseHelper;
+import com.example.wishlist.Class.UserDatabaseHelper;
 import com.example.wishlist.Class.DateWish;
 import com.example.wishlist.Class.User;
 import com.example.wishlist.R;
@@ -92,7 +92,7 @@ public class MyProfileActivity extends AppCompatActivity {
         setContentView(R.layout.my_profile);
         Intent intent=getIntent();
         userID=intent.getIntExtra("userID",-1);
-        DatabaseHelper dbHelper= new DatabaseHelper(getApplicationContext());
+        UserDatabaseHelper dbHelper= new UserDatabaseHelper(getApplicationContext());
         user=dbHelper.getUserFromID(userID);
 
         modifyButton=findViewById(R.id.modifyProfile);
@@ -406,7 +406,7 @@ public class MyProfileActivity extends AppCompatActivity {
             user.setFavoriteColor(favoriteColor);
             user.setSize(size);
             user.setShoeSize(shoeSize);
-            DatabaseHelper dbHelper= new DatabaseHelper(getApplicationContext());
+            UserDatabaseHelper dbHelper= new UserDatabaseHelper(getApplicationContext());
             if(dbHelper.updateUser(user,userID)){
                 if(userID==-1){
                     Toast toast=Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT);
