@@ -22,9 +22,14 @@ import android.widget.Toast;
 import com.example.wishlist.Class.Address;
 import com.example.wishlist.Class.UserDatabaseHelper;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import com.example.wishlist.Class.DateWish;
 >>>>>>> login
+=======
+import com.example.wishlist.Class.DateWish;
+
+>>>>>>> 30ce52a8f3dbe0e2bb078110dc5d09125954b8af
 import com.example.wishlist.Fragment.ChangePhotoDialog;
 import com.example.wishlist.Class.User;
 import com.example.wishlist.R;
@@ -259,10 +264,14 @@ public class CreateProfileActivity extends AppCompatActivity implements ChangePh
             if (!favoriteColor.equals("Undefined"))user.setFavoriteColor(favoriteColor);
             if (!size.equals("Undefined")) user.setSize(size);
 <<<<<<< HEAD
+<<<<<<< HEAD
             if (!shoeSize.equals("Undefined")) user.setShoeSize(Integer.parseInt(shoeSize));
 =======
             if (!shoeSize.equals("Undefined")) user.setShoeSize(shoeSize);
 >>>>>>> login
+=======
+            if (!shoeSize.equals("Undefined")) user.setShoeSize(shoeSize);
+>>>>>>> 30ce52a8f3dbe0e2bb078110dc5d09125954b8af
             UserDatabaseHelper dbHelper= new UserDatabaseHelper(getApplicationContext());
             if(dbHelper.addUser(user)){
                 int userID=dbHelper.checkUser(email,password);
