@@ -10,6 +10,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+
+import java.util.Calendar;
+import java.util.Date;
+
 public class UserDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME="wishlist.db";
@@ -105,6 +109,50 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         boolean sol=cursor.getCount()==0;
         cursor.close();
         return sol;
+    }
+    
+    public User getUserFromID(int userID){
+        SQLiteDatabase db=getReadableDatabase();
+        String[] projection={USER_COL0,USER_COL1,USER_COL2};
+        String[] condition ={String.valueOf(userID)};
+        String selection=USER_COL0+" =?";
+        Cursor cursor=db.query(USER_TABLE_NAME,null,selection,condition,null,null,null);
+        if (cursor.getCount()==0){
+            cursor.close();
+            return null;
+        }
+        cursor.moveToFirst();
+        String addressString=cursor.getString(cursor.getColumnIndex(USER_COL5));
+        Address address=Address.fromString(addressString);
+        String firstName=cursor.getString(cursor.getColumnIndex(USER_COL3));
+        String lastName=cursor.getString(cursor.getColumnIndex(USER_COL4));
+        String email=cursor.getString(cursor.getColumnIndex(USER_COL1));
+        DateWish birthDate= new DateWish();
+        birthDate.setDate(cursor.getString(cursor.getColumnIndex(USER_COL6)));
+        String password=cursor.getString(cursor.getColumnIndex(USER_COL2));
+        String profilePhoto=cursor.getString(cursor.getColumnIndex(USER_COL10));
+        boolean notification=true;
+        String favoriteColor=cursor.getString(cursor.getColumnIndex(USER_COL9));
+        String size=cursor.getString(cursor.getColumnIndex(USER_COL7));
+        String shoeSize=cursor.getString(cursor.getColumnIndex(USER_COL8));
+        return new User(address,firstName,lastName,email,birthDate,password,profilePhoto,favoriteColor,size,shoeSize);
+    }
+    public boolean updateUser(User user, int userID){
+        SQLiteDatabase db=getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(USER_COL1,user.getEmail());
+        contentValues.put(USER_COL2,user.getPassword());
+        contentValues.put(USER_COL3,user.getFirstName());
+        contentValues.put(USER_COL4,user.getLastName());
+        contentValues.put(USER_COL5,user.getAddress().toString());
+        contentValues.put(USER_COL6,user.getBirthDate().toString());
+        contentValues.put(USER_COL7,user.getSize());
+        contentValues.put(USER_COL8,user.getShoeSize());
+        contentValues.put(USER_COL9,user.getFavoriteColor());
+        contentValues.put(USER_COL10,user.getProfilePhoto());
+        contentValues.put(USER_COL11,user.isNotification());
+        int err=db.update(USER_TABLE_NAME,contentValues,USER_COL0+" = ?",new String[]{String.valueOf(userID)});
+        return err!=-1;
     }
 
 }
