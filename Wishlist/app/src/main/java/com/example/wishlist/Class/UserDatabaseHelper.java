@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+public class UserDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME="wishlist.db";
     private static final String USER_TABLE_NAME="user";
@@ -27,7 +27,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String USER_COL10="profilePhoto";
     public static final String USER_COL11="notification";
 
-    public DatabaseHelper(@Nullable Context context) {
+    public UserDatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
 

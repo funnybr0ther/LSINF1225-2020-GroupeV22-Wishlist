@@ -13,4 +13,15 @@
         android:text="TextView"
         tools:layout_editor_absoluteX="155dp"
         tools:layout_editor_absoluteY="183dp" />
+
+    <Button
+        android:id="@+id/productButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="711dp"
+        android:layout_marginBottom="777dp"
+        android:text="@string/dummyProduct"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="535dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

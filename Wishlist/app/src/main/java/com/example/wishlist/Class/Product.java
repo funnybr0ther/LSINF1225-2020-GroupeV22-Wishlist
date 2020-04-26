@@ -1,10 +1,10 @@
 package com.example.wishlist.Class;
 
-import android.media.Image;
+import android.graphics.Bitmap;
 
 public class Product {
     private String name;
-    private String photo;
+    private Bitmap photo;
     private String description;
     private String[] category;
     private int weight;
@@ -15,7 +15,7 @@ public class Product {
     private int amount;
     private int purchased;
 
-    public Product(String name, String photo, String description, String[] category, int weight, int price, int desire, String dimensions, int rating, int amount, int purchased) {
+    public Product(String name, Bitmap photo, String description, String[] category, int weight, int price, int desire, String dimensions, int rating, int amount, int purchased) {
         this.name = name;
         this.photo = photo;
         this.description = description;
@@ -37,11 +37,11 @@ public class Product {
         this.name = name;
     }
 
-    public String getPhoto() {
+    public Bitmap getPhoto() {
         return photo;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(Bitmap photo) {
         this.photo = photo;
     }
 

@@ -41,7 +41,7 @@
         android:layout_marginTop="10dp"
         android:text="price" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/productPhoto"
         android:layout_width="@dimen/productImageSize"
         android:layout_height="@dimen/productImageSize"

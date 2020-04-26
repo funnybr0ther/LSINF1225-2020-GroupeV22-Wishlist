@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.wishlist.Class.DatabaseHelper;
+import com.example.wishlist.Class.UserDatabaseHelper;
 import com.example.wishlist.R;
 
 public class CreateNewAccountActivity extends AppCompatActivity {
@@ -80,7 +80,7 @@ public class CreateNewAccountActivity extends AppCompatActivity {
     * Show some text or not depending of that
     */
     public boolean checkEmail(String email){
-        DatabaseHelper dbHelper= new DatabaseHelper(getApplicationContext());
+        UserDatabaseHelper dbHelper= new UserDatabaseHelper(getApplicationContext());
         if(!email.contains("@")||email.length()<5){
             textViewEmail.setText("Please insert a correct email");
             return false;

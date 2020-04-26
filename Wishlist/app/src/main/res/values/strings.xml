@@ -246,4 +246,5 @@
     <string name="productDescriptionTitle"><u>Description</u></string>
     <string name="productCategoriesTitle"><u>Category</u></string>
     <string name="productInfoTitle"><u>Extra information</u></string>
+    <string name="dummyProduct">Show Dummy Product</string>
 </resources>
