@@ -4,6 +4,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-feature android:name="android.hardware.camera"
+        android:required="false" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_logo_wishlist_v2"
@@ -14,6 +16,7 @@
         <activity android:name=".Activities.CreateProfileActivity"></activity>
         <activity android:name=".Activities.CreateNewAccountActivity"></activity>
         <activity android:name=".Activities.MainMenuActivity"></activity>
+        <activity android:name=".Activities.MyProfileActivity"></activity>
         <activity android:name=".Activities.ViewProductActivity"></activity>
         <activity android:name=".Activities.LoginActivity">
             <intent-filter>
@@ -21,6 +24,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.android.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_path"></meta-data>
+        </provider>
     </application>
 
 </manifest>

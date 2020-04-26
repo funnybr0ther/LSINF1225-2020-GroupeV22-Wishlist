@@ -2,6 +2,7 @@ package com.example.wishlist.Class;
 
 import com.example.wishlist.Class.Address;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class User {
@@ -9,10 +10,13 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
-    private Date birthDate;
+    private DateWish birthDate;
     private String password;
     private String profilePhoto;
     private boolean notification=true;
+    private String favoriteColor;
+    private String size;
+    private String shoeSize;
 
     public boolean isNotification() {
         return notification;
@@ -30,7 +34,7 @@ public class User {
         this.profilePhoto = profilePhoto;
     }
 
-    public User(Address address, String firstName, String lastName, String email, Date birthDate, String password, String profilePhoto, String favoriteColor, String size, int shoeSize) {
+    public User(Address address, String firstName, String lastName, String email, DateWish birthDate, String password, String profilePhoto, String favoriteColor, String size, String shoeSize) {
         this.address = address;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -43,7 +47,7 @@ public class User {
         this.shoeSize = shoeSize;
     }
 
-    public User(Address address, String firstName, String lastName, String email, Date birthDate, String password) {
+    public User(Address address, String firstName, String lastName, String email, DateWish birthDate, String password) {
         this.address = address;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -60,15 +64,11 @@ public class User {
         this.password = password;
     }
 
-    private String favoriteColor;
-    private String size;
-    private int shoeSize;
-
-    public int getShoeSize() {
+    public String getShoeSize() {
         return shoeSize;
     }
 
-    public void setShoeSize(int shoeSize) {
+    public void setShoeSize(String shoeSize) {
         this.shoeSize = shoeSize;
     }
 
@@ -108,11 +108,11 @@ public class User {
         this.email = email;
     }
 
-    public Date getBirthDate() {
+    public DateWish getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(DateWish birthDate) {
         this.birthDate = birthDate;
     }
 

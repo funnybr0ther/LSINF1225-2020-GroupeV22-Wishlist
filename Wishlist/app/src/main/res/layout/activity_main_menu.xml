@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,17 +11,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="50dp"
+        android:textSize="40sp"
         tools:layout_editor_absoluteX="155dp"
         tools:layout_editor_absoluteY="183dp" />
-
     <Button
-        android:id="@+id/productButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="711dp"
-        android:layout_marginBottom="777dp"
-        android:text="@string/dummyProduct"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="535dp" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:text="My Profile"
+        android:id="@+id/MyProfile"
+        android:layout_below="@id/textView"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:textSize="40sp"
+        android:onClick="MyProfile"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ex. Product"
+        android:layout_below="@id/MyProfile"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:textSize="40sp"
+        android:onClick="exampleProduct"/>
+
+</RelativeLayout>
