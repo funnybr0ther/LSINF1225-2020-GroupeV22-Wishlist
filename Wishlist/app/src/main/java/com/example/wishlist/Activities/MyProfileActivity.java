@@ -26,9 +26,13 @@ import com.example.wishlist.Class.Address;
 import com.example.wishlist.Class.UserDatabaseHelper;
 import com.example.wishlist.Class.DateWish;
 import com.example.wishlist.Class.User;
+
+import com.example.wishlist.Class.UserDatabaseHelper;
 import com.example.wishlist.Fragment.ChangePhotoDialog;
 import com.example.wishlist.Fragment.ChangePhotoDialogEdit;
 import com.example.wishlist.R;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyProfileActivity extends AppCompatActivity implements ChangePhotoDialogEdit.OnPhotoReceivedListener {
     private User user;
@@ -40,18 +44,14 @@ public class MyProfileActivity extends AppCompatActivity implements ChangePhotoD
     private ImageButton backArrow;
     private ImageView cameraLogo;
 
-    private ImageView profilePhoto;
+    private CircleImageView profilePhoto;
     //TexView : "Information :"
     private TextView textViewFirstName;
     private TextView textViewLastName;
     private TextView textViewAddressLine1;
-    private TextView textViewAddressLine2;
     private TextView textViewCity;
     private TextView textViewPostalCode;
     private TextView textViewCountry;
-    private TextView textViewSize;
-    private TextView textViewShoeSize;
-    private TextView textViewFavoriteColor;
     private TextView textViewBirthDate;
     //TextView : "actualInformation"
     private TextView actualFirstName;
@@ -79,20 +79,23 @@ public class MyProfileActivity extends AppCompatActivity implements ChangePhotoD
     private Spinner spinnerDay;
     private Spinner spinnerMonth;
     private Spinner spinnerYear;
-    //RelativeLayout
+    //RelativeLayout (group textViews and editText/Spinner of a specific information)
     private RelativeLayout relativeLayoutAddressLine2;
     private RelativeLayout relativeLayoutSize;
     private RelativeLayout relativeLayoutShoeSize;
     private RelativeLayout relativeLayoutFavoriteColor;
     private RelativeLayout relativeLayoutSpinnersDate;
 
+    /*
+     * get the index of a string in a specified spinner
+     * Set 0 (->default item of the spinner) if string isn't in the spinner
+     */
     private int getIndex(Spinner spinner, String myString){
         for (int i=0;i<spinner.getCount();i++){
             if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){
                 return i;
             }
         }
-
         return 0;
     }
 
@@ -105,11 +108,14 @@ public class MyProfileActivity extends AppCompatActivity implements ChangePhotoD
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_profile);
+        //Get the userID then create user with information in db relative to that ID
         Intent intent=getIntent();
         userID=intent.getIntExtra("userID",-1);
         UserDatabaseHelper dbHelper= new UserDatabaseHelper(getApplicationContext());
+
         user=dbHelper.getUserFromID(userID);
 
+        //Rely variable with layout
         profilePhoto=findViewById(R.id.profilePhoto);
         modifyButton=findViewById(R.id.modifyProfile);
         activeEditModeButton=findViewById(R.id.modifyMode);
@@ -119,13 +125,9 @@ public class MyProfileActivity extends AppCompatActivity implements ChangePhotoD
         textViewFirstName=findViewById(R.id.FirstName);
         textViewLastName=findViewById(R.id.LastName);
         textViewAddressLine1=findViewById(R.id.AddressLine1);
-        textViewAddressLine2=findViewById(R.id.AddressLine2);
         textViewCity=findViewById(R.id.City);
         textViewPostalCode=findViewById(R.id.PostalCode);
         textViewCountry=findViewById(R.id.Country);
-        textViewSize=findViewById(R.id.Size);
-        textViewShoeSize=findViewById(R.id.ShoeSize);
-        textViewFavoriteColor=findViewById(R.id.FavoriteColor);
         textViewBirthDate=findViewById(R.id.BirthDate);
 
         actualFirstName=findViewById(R.id.actualFirstName);
@@ -159,9 +161,11 @@ public class MyProfileActivity extends AppCompatActivity implements ChangePhotoD
         relativeLayoutShoeSize=findViewById(R.id.layoutShoeSize);
         relativeLayoutSize=findViewById(R.id.layoutSize);
         relativeLayoutSpinnersDate=findViewById(R.id.layoutSpinnersDate);
+        //Set the mode to view
         visibleMode();
-        //Check permission to take photo and access storage then create ChangePhotoDialogEdit
+        //Set function onclick of camera logo
         cameraLogo.setOnClickListener(new View.OnClickListener() {
+            //Check permission to take photo and access storage then create ChangePhotoDialogEdit
             @Override
             public void onClick(View v) {
                 //check permission
@@ -179,13 +183,20 @@ public class MyProfileActivity extends AppCompatActivity implements ChangePhotoD
                     }
                 }
             }
-
         });
     }
-    public void editMode(View view){
 
+    /*
+     *Make some change in the layout to able edit profile :
+     * -change visibility of layout
+     * -change some text (add * for required information)
+     * -fill editTexts and spinners with actual information
+     * -eventually set some layout visible if there where not in view mode
+     */
+    public void editMode(View view){
         activeEditModeButton.setVisibility(View.GONE);
         modifyButton.setVisibility(View.VISIBLE);
+        //set visibleMode when click on backArrow (-> no change in profile)
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -251,6 +262,14 @@ public class MyProfileActivity extends AppCompatActivity implements ChangePhotoD
         visibleMode();
     }
 
+    /*
+     *Make some change in the layout for the view profile :
+     * -change visibility of layout
+     * -change some text (take off * of required information)
+     * -fill textViews with actual information
+     * -eventually set visibility of some layout to gone if we have no information about that
+     * (ex : shoesize is undefined -> we don't see "Shoe size :")
+     */
     @TargetApi(21)
     public void visibleMode(){
         textViewFirstName.setText(R.string.firstNameWithout);
@@ -265,13 +284,14 @@ public class MyProfileActivity extends AppCompatActivity implements ChangePhotoD
         }else{
             profilePhoto.setImageDrawable(getDrawable(R.drawable.ic_default_photo));
         }
-        //Set Visibility
+        //Set normal onBackPressed function when we click on back arrow
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
+        //Set Visibility
         activeEditModeButton.setVisibility(View.VISIBLE);
         modifyButton.setVisibility(View.GONE);
         cameraLogo.setVisibility(View.GONE);
@@ -360,6 +380,11 @@ public class MyProfileActivity extends AppCompatActivity implements ChangePhotoD
         return str.length() > 0;
     }
 
+    /*
+     * Update User in the database with the new information collected
+     * Give some information to the user if he doesn't fill anything well
+     * Almost same function than createUser in CreateProfileActivity
+     */
     public void updateUser(View view){
         int numberError = 0;
         //Get the information
@@ -418,7 +443,6 @@ public class MyProfileActivity extends AppCompatActivity implements ChangePhotoD
             editTextCountry.setBackgroundColor(getResources().getColor(R.color.design_default_color_background));
         }
 
-
         //Check the birthDate
         int yearInt=-1;
         int dayInt=-1;
@@ -472,6 +496,10 @@ public class MyProfileActivity extends AppCompatActivity implements ChangePhotoD
         }
     }
 
+    /*
+     * 2 functions to modify the profile photo of the user
+     * Called by ChangeDialogEdit (override public interface of this class)
+     */
     @TargetApi(21)
     @Override
     public void getBitmapImage(Bitmap bitmap) {
@@ -483,7 +511,6 @@ public class MyProfileActivity extends AppCompatActivity implements ChangePhotoD
         }
         user.setProfilePhoto(bitmap);
     }
-
     @TargetApi(21)
     @Override
     public void getUriImage(Uri uri) {
