@@ -1,5 +1,7 @@
 package com.example.wishlist.Class;
 
+import android.graphics.Bitmap;
+
 import com.example.wishlist.Class.Address;
 
 import java.util.Calendar;
@@ -12,7 +14,7 @@ public class User {
     private String email;
     private DateWish birthDate;
     private String password;
-    private String profilePhoto;
+    private Bitmap profilePhoto;
     private boolean notification=true;
     private String favoriteColor;
     private String size;
@@ -26,15 +28,15 @@ public class User {
         this.notification = notification;
     }
 
-    public String getProfilePhoto() {
+    public Bitmap getProfilePhoto() {
         return profilePhoto;
     }
 
-    public void setProfilePhoto(String profilePhoto) {
+    public void setProfilePhoto(Bitmap profilePhoto) {
         this.profilePhoto = profilePhoto;
     }
 
-    public User(Address address, String firstName, String lastName, String email, DateWish birthDate, String password, String profilePhoto, String favoriteColor, String size, String shoeSize) {
+    public User(Address address, String firstName, String lastName, String email, DateWish birthDate, String password, Bitmap profilePhoto, String favoriteColor, String size, String shoeSize) {
         this.address = address;
         this.firstName = firstName;
         this.lastName = lastName;

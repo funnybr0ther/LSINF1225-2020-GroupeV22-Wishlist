@@ -49,7 +49,7 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
                 USER_COL7 + " TEXT,"+
                 USER_COL8 + " TEXT, "+
                 USER_COL9 + " TEXT, "+
-                USER_COL10 + " TEXT, "+
+                USER_COL10 + " BLOB, "+
                 USER_COL11 + " TEXT)";
         db.execSQL(sqlCommand);
     }
@@ -72,7 +72,9 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(USER_COL7,user.getSize());
         contentValues.put(USER_COL8,user.getShoeSize());
         contentValues.put(USER_COL9,user.getFavoriteColor());
-        contentValues.put(USER_COL10,user.getProfilePhoto());
+        if(user.getProfilePhoto()!=null){
+            contentValues.put(USER_COL10,ImageHelper.getBytes(user.getProfilePhoto()));
+        }
         contentValues.put(USER_COL11,user.isNotification());
         long err=db.insert(USER_TABLE_NAME,null,contentValues);
         return err!=-1;
@@ -130,12 +132,12 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         DateWish birthDate= new DateWish();
         birthDate.setDate(cursor.getString(cursor.getColumnIndex(USER_COL6)));
         String password=cursor.getString(cursor.getColumnIndex(USER_COL2));
-        String profilePhoto=cursor.getString(cursor.getColumnIndex(USER_COL10));
+        byte[] profilePhoto=cursor.getBlob(cursor.getColumnIndex(USER_COL10));
         boolean notification=true;
         String favoriteColor=cursor.getString(cursor.getColumnIndex(USER_COL9));
         String size=cursor.getString(cursor.getColumnIndex(USER_COL7));
         String shoeSize=cursor.getString(cursor.getColumnIndex(USER_COL8));
-        return new User(address,firstName,lastName,email,birthDate,password,profilePhoto,favoriteColor,size,shoeSize);
+        return new User(address,firstName,lastName,email,birthDate,password,ImageHelper.getImage(profilePhoto),favoriteColor,size,shoeSize);
     }
     public boolean updateUser(User user, int userID){
         SQLiteDatabase db=getWritableDatabase();
@@ -149,7 +151,9 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(USER_COL7,user.getSize());
         contentValues.put(USER_COL8,user.getShoeSize());
         contentValues.put(USER_COL9,user.getFavoriteColor());
-        contentValues.put(USER_COL10,user.getProfilePhoto());
+        if(user.getProfilePhoto()!=null){
+            contentValues.put(USER_COL10,ImageHelper.getBytes(user.getProfilePhoto()));
+        }
         contentValues.put(USER_COL11,user.isNotification());
         int err=db.update(USER_TABLE_NAME,contentValues,USER_COL0+" = ?",new String[]{String.valueOf(userID)});
         return err!=-1;
