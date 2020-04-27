@@ -10,7 +10,7 @@ public class DataBase_Purchase {
     private static final String PURCHASE_COL4 = "quantité";
     private static final String PURCHASE_COL5 = "num achat";
 
-    public DataBase_Purchase(@Nullable Context context) {  // Ctrl-c  Ctrl-v
+    public DataBase_Purchase(@Nullable Context context) {  
         super(context, DATABASE_NAME, null, 1);
     }
 
