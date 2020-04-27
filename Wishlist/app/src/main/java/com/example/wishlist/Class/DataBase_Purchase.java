@@ -14,7 +14,7 @@ public class DataBase_Purchase {
         super(context, DATABASE_NAME, null, 1);
     }
 
-    public void CreateDB(SQLiteDatabase db){    // Faut peut-etre "onCreate" ?
+    public void onCreate(SQLiteDatabase db){    
         String sqlCommand = "CREATE TABLE " +
                 PURCHASE_TABLE_NAME + " ( " +
                 PURCHASE_COL0 + " INT NOT NULL REFERENCES utilisateur ('user id') "+
@@ -26,12 +26,12 @@ public class DataBase_Purchase {
         db.execSQlL(sqlCommand);
     }
 
-    public Boolean AddPurchase(Purchase achat) {
+    public Boolean addPurchase(Purchase achat) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentvalues = new ContentValues();
         contentvalues.put(PURCHASE_COL0, achat.getSender());
         contentvalues.put(PURCHASE_COL1, achat.getReceiver());
-        // contentvalues.put(PURCHASE_COL2,achat.getProduct().number?); dépendra de la classe Produit
+        contentvalues.put(PURCHASE_COL2,achat.getProduct().number?)
         contentvalues.put(PURCHASE_COL3, achat.getDate());
         contentvalues.put(PURCHASE_COL4, achat.getQuantity());
         contentvalues.put(PURCHASE_COL5, achat.getPurchaseId()); // A moins que la bdd génère elle même un numéro aléatoire ?
