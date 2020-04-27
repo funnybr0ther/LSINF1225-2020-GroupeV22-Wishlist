@@ -6,30 +6,22 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.FileProvider;
 import androidx.fragment.app.DialogFragment;
 
-import com.example.wishlist.Activities.CreateProfileActivity;
+import com.example.wishlist.Activities.MyProfileActivity;
 import com.example.wishlist.R;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-public class ChangePhotoDialog extends DialogFragment {
-    public final int CAMERA_REQUEST_CODE = 3;
-    public final int MEMORY_REQUEST_CODE = 456;
+public class ChangePhotoDialogEdit extends DialogFragment {
+    public final int CAMERA_REQUEST_CODE = 2903;
+    public final int MEMORY_REQUEST_CODE = 13;
 
     public interface OnPhotoReceivedListener {
         public void getBitmapImage(Bitmap bitmap);
@@ -59,7 +51,7 @@ public class ChangePhotoDialog extends DialogFragment {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ChangePhotoDialog.this.getDialog().dismiss();
+                ChangePhotoDialogEdit.this.getDialog().dismiss();
             }
         });
         //Take Photo
@@ -90,7 +82,7 @@ public class ChangePhotoDialog extends DialogFragment {
         super.onActivityResult(requestCode, resultCode, data);
         //Result if take a new Photo
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            CreateProfileActivity activity = (CreateProfileActivity) getActivity();
+            MyProfileActivity activity = (MyProfileActivity) getActivity();
             Bundle extras = data.getExtras();
             Bitmap bitmap = (Bitmap) extras.get("data");
             onPhotoReceivedListener.getBitmapImage(bitmap);
