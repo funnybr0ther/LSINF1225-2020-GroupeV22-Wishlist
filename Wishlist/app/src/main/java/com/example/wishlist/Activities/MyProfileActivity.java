@@ -1,13 +1,22 @@
 package com.example.wishlist.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -17,15 +26,21 @@ import com.example.wishlist.Class.Address;
 import com.example.wishlist.Class.UserDatabaseHelper;
 import com.example.wishlist.Class.DateWish;
 import com.example.wishlist.Class.User;
+import com.example.wishlist.Fragment.ChangePhotoDialog;
+import com.example.wishlist.Fragment.ChangePhotoDialogEdit;
 import com.example.wishlist.R;
 
-public class MyProfileActivity extends AppCompatActivity {
+public class MyProfileActivity extends AppCompatActivity implements ChangePhotoDialogEdit.OnPhotoReceivedListener {
     private User user;
     private int userID;
+    private int MY_PERMISSIONS_REQUEST=45;
     //Button
     private ImageButton modifyButton;
     private ImageButton activeEditModeButton;
     private ImageButton backArrow;
+    private ImageView cameraLogo;
+
+    private ImageView profilePhoto;
     //TexView : "Information :"
     private TextView textViewFirstName;
     private TextView textViewLastName;
@@ -95,9 +110,11 @@ public class MyProfileActivity extends AppCompatActivity {
         UserDatabaseHelper dbHelper= new UserDatabaseHelper(getApplicationContext());
         user=dbHelper.getUserFromID(userID);
 
+        profilePhoto=findViewById(R.id.profilePhoto);
         modifyButton=findViewById(R.id.modifyProfile);
         activeEditModeButton=findViewById(R.id.modifyMode);
         backArrow=findViewById(R.id.backArrowEditProfile);
+        cameraLogo=findViewById(R.id.logoCamera);
 
         textViewFirstName=findViewById(R.id.FirstName);
         textViewLastName=findViewById(R.id.LastName);
@@ -143,6 +160,27 @@ public class MyProfileActivity extends AppCompatActivity {
         relativeLayoutSize=findViewById(R.id.layoutSize);
         relativeLayoutSpinnersDate=findViewById(R.id.layoutSpinnersDate);
         visibleMode();
+        //Check permission to take photo and access storage then create ChangePhotoDialogEdit
+        cameraLogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //check permission
+                String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+                for (int i=0;i<2;i++) {
+                    if (ContextCompat.checkSelfPermission(MyProfileActivity.this, permissions[i])
+                            != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(MyProfileActivity.this, new String[]{permissions[i]},
+                                MY_PERMISSIONS_REQUEST);
+                    } else {
+                        if(i==1){
+                            ChangePhotoDialogEdit dialog = new ChangePhotoDialogEdit();
+                            dialog.show(MyProfileActivity.this.getSupportFragmentManager(), "ha");
+                        }
+                    }
+                }
+            }
+
+        });
     }
     public void editMode(View view){
 
@@ -154,6 +192,7 @@ public class MyProfileActivity extends AppCompatActivity {
                 visibleMode();
             }
         });
+        cameraLogo.setVisibility(View.VISIBLE);
         relativeLayoutShoeSize.setVisibility(View.VISIBLE);
         relativeLayoutSize.setVisibility(View.VISIBLE);
         relativeLayoutFavoriteColor.setVisibility(View.VISIBLE);
@@ -212,7 +251,21 @@ public class MyProfileActivity extends AppCompatActivity {
         visibleMode();
     }
 
+    @TargetApi(21)
     public void visibleMode(){
+        textViewFirstName.setText(R.string.firstNameWithout);
+        textViewLastName.setText(R.string.lastNameWithout);
+        textViewAddressLine1.setText(R.string.addressLine1Without);
+        textViewCity.setText(R.string.cityWithout);
+        textViewCountry.setText(R.string.countryWithout);
+        textViewPostalCode.setText(R.string.postalCodeWithout);
+        textViewBirthDate.setText(R.string.birthdateWithout);
+        if(user.getProfilePhoto()!=null) {
+            profilePhoto.setImageBitmap(user.getProfilePhoto());
+        }else{
+            profilePhoto.setImageDrawable(getDrawable(R.drawable.ic_default_photo));
+        }
+        //Set Visibility
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -221,14 +274,7 @@ public class MyProfileActivity extends AppCompatActivity {
         });
         activeEditModeButton.setVisibility(View.VISIBLE);
         modifyButton.setVisibility(View.GONE);
-        textViewFirstName.setText(R.string.firstNameWithout);
-        textViewLastName.setText(R.string.lastNameWithout);
-        textViewAddressLine1.setText(R.string.addressLine1Without);
-        textViewCity.setText(R.string.cityWithout);
-        textViewCountry.setText(R.string.countryWithout);
-        textViewPostalCode.setText(R.string.postalCodeWithout);
-        textViewBirthDate.setText(R.string.birthdateWithout);
-        //Set Visibility
+        cameraLogo.setVisibility(View.GONE);
         editTextFirstName.setVisibility(View.GONE);
         editTextLastName.setVisibility(View.GONE);
         editTextAddressLine1.setVisibility(View.GONE);
@@ -345,31 +391,31 @@ public class MyProfileActivity extends AppCompatActivity {
             editTextFirstName.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
             numberError++;
         } else {
-            editTextFirstName.setBackgroundColor(getResources().getColor(R.color.white));
+            editTextFirstName.setBackgroundColor(getResources().getColor(R.color.design_default_color_background));
         }
         if (!checkStringIsCorrect(lastName)) {
             editTextLastName.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
             numberError++;
         } else {
-            editTextLastName.setBackgroundColor(getResources().getColor(R.color.white));
+            editTextLastName.setBackgroundColor(getResources().getColor(R.color.design_default_color_background));
         }
         if (!checkStringIsCorrect(addressLine1)) {
             editTextAddressLine1.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
             numberError++;
         } else {
-            editTextAddressLine1.setBackgroundColor(getResources().getColor(R.color.white));
+            editTextAddressLine1.setBackgroundColor(getResources().getColor(R.color.design_default_color_background));
         }
         if (!checkStringIsCorrect(city)) {
             editTextCity.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
             numberError++;
         } else {
-            editTextCity.setBackgroundColor(getResources().getColor(R.color.white));
+            editTextCity.setBackgroundColor(getResources().getColor(R.color.design_default_color_background));
         }
         if (!checkStringIsCorrect(country)) {
             editTextCountry.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
             numberError++;
         } else {
-            editTextCountry.setBackgroundColor(getResources().getColor(R.color.white));
+            editTextCountry.setBackgroundColor(getResources().getColor(R.color.design_default_color_background));
         }
 
 
@@ -423,6 +469,36 @@ public class MyProfileActivity extends AppCompatActivity {
         } else {
             Toast toast=Toast.makeText(this,"The information with a * are required",Toast.LENGTH_LONG);
             toast.show();
+        }
+    }
+
+    @TargetApi(21)
+    @Override
+    public void getBitmapImage(Bitmap bitmap) {
+        if(bitmap==null){
+            profilePhoto.setImageDrawable(getDrawable(R.drawable.ic_default_photo));
+        }
+        else {
+            profilePhoto.setImageBitmap(bitmap);
+        }
+        user.setProfilePhoto(bitmap);
+    }
+
+    @TargetApi(21)
+    @Override
+    public void getUriImage(Uri uri) {
+        if(uri!=null){
+            profilePhoto.setImageURI(uri);
+            try{
+                user.setProfilePhoto(MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri));
+            }
+            catch (Exception e){
+                Toast toast=Toast.makeText(this,"something went wrong with the image",Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        }
+        else{
+            profilePhoto.setImageDrawable(getDrawable(R.drawable.ic_default_photo));
         }
     }
 }

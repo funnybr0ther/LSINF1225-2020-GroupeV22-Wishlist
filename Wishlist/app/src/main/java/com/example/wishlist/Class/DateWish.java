@@ -16,6 +16,9 @@ public class DateWish {
     public DateWish(Date date) {
         this.date = date;
     }
+    public DateWish(int day, String month, int year){
+        setDate( day,  month,  year);
+    }
 
     public DateWish() {
     }
