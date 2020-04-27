@@ -90,7 +90,6 @@ public class MyProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.my_profile);
         Intent intent=getIntent();
         userID=intent.getIntExtra("userID",-1);

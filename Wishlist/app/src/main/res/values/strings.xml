@@ -254,4 +254,14 @@
     <string name="productCategoriesTitle"><u>Category</u></string>
     <string name="productInfoTitle"><u>Extra information</u></string>
     <string name="dummyProduct">Show Dummy Product</string>
+    <string name="editProductToolbarText">Edit Product</string>
+    <string name="productName">Product Name</string>
+    <string name="productDescription">Description</string>
+    <string name="productCategories">Categories: </string>
+    <string name="categoryPH">Category</string>
+    <string name="removeButton">Remove</string>
+    <string name="textPrice">Price:</string>
+    <string name="newProductDescription">"Description: "</string>
+    <string name="newWeight">Weight (grams):</string>
+    <string name="newDimensions">Dimensions (cm):</string>
 </resources>

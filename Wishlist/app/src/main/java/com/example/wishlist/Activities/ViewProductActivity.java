@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.example.wishlist.Class.Product;
 import com.example.wishlist.R;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,6 +29,7 @@ public class ViewProductActivity extends AppCompatActivity {
     private TextView price;
     private TextView amountBought;
     private ImageView productImage;
+    private ChipGroup chipGroup;
 
     private String[] testCategoryList = {"Garden","Kids"};
     private Product testProduct = new Product("BALANCOIRE",null,"Ceci est une balançoire",testCategoryList,2000,250,4,"40x30x60cm",5,33,12);
@@ -35,14 +38,15 @@ public class ViewProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_product);
         
-        description = (TextView)findViewById(R.id.description);
-        category = (TextView)findViewById(R.id.category);
-        info = (TextView)findViewById(R.id.info);
-        productName = (TextView)findViewById(R.id.productName);
-        desireBar = (RatingBar)findViewById(R.id.rating);
-        price = (TextView)findViewById(R.id.priceTag);
-        amountBought = (TextView)findViewById(R.id.boughtAmount);
-        productImage = (ImageView)findViewById(R.id.productPhoto);
+        description = findViewById(R.id.description);
+        category = findViewById(R.id.category);
+        info = findViewById(R.id.info);
+        productName = findViewById(R.id.productName);
+        desireBar = findViewById(R.id.rating);
+        price = findViewById(R.id.priceTag);
+        amountBought = findViewById(R.id.boughtAmount);
+        productImage = findViewById(R.id.productPhoto);
+        chipGroup = findViewById(R.id.categoriesGroup);
         displayProductInfo(testProduct);
     }
 
@@ -77,9 +81,10 @@ public class ViewProductActivity extends AppCompatActivity {
         else{
             String categoryString = "";
             for (int i=0;i<categoryStrings.length;i++){
-                categoryString += (categoryStrings[i] + "\t");
+                Chip chip = new Chip(this);
+                chip.setText(categoryStrings[i]);
+                chipGroup.addView(chip);
             }
-            category.setText(categoryString);
         }
         String infoString = "";
         if(dimensionsString!="Undefined"){
