@@ -24,7 +24,6 @@ public class CreateNewAccountActivity extends AppCompatActivity {
     @Override
     @TargetApi(26)
     protected void onCreate(Bundle savedInstanceState) {
-        //System.out.println("Test");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_new_account_v2);
         //Set different view/Edit
@@ -35,7 +34,7 @@ public class CreateNewAccountActivity extends AppCompatActivity {
         textViewEmail=(TextView) findViewById(R.id.wrongEmail);
         textViewConfPassword=(TextView) findViewById(R.id.wrongConfirmPassword);
 
-        //Je sais pas ce que c'est autofill mais ça à l'air stylé -> à voir
+        //Je sais pas ce que c'est autofill mais ça à l'air stylé -> à voir plus tard
         editTextMail.setAutofillHints(View.AUTOFILL_HINT_EMAIL_ADDRESS);
     }
 
