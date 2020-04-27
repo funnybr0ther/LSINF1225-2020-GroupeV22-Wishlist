@@ -5,12 +5,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.example.lepl1225.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +15,6 @@ public class PurchaseListe extends ArrayAdapter<Purchase>{
 
     private LayoutInflater inflater;
     private List<Purchase> purchases = null;
-    private ArrayList<Purchase> arrayList; // Employé pour la recherche
     private int LayoutRessource;
     private Context context;
     private String append;
@@ -31,8 +27,6 @@ public class PurchaseListe extends ArrayAdapter<Purchase>{
         this.context = context;
         append = ajouter;
         this.purchases = purchases;
-        arrayList = new ArrayList<Purchase>();
-        this.arrayList.addAll(purchases);
     }
 
     private static class ViewHolder{

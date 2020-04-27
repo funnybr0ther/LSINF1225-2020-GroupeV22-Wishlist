@@ -1,5 +1,3 @@
-
-
 public class Purchase {
     private static long compteur = 0; // Variable de Classe  > Permet de donner un numéro de commande unique
     private String acheteur;
