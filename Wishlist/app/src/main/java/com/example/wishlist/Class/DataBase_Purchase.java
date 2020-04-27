@@ -1,5 +1,5 @@
 import android.database.sqlite.SQLiteDatabase;
-/*
+
 public class DataBase_Purchase {
 
     private static final String PURCHASE_TABLE_NAME = "Purchase";
@@ -39,4 +39,4 @@ public class DataBase_Purchase {
         return err != -1;
     }
 
-}*/
+}
