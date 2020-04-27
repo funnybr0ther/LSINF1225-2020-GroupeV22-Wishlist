@@ -254,6 +254,7 @@
     <string name="productCategoriesTitle"><u>Category</u></string>
     <string name="productInfoTitle"><u>Extra information</u></string>
     <string name="dummyProduct">Show Dummy Product</string>
+    <string name="my_profile">My Profile</string>
     <string name="editProductToolbarText">Edit Product</string>
     <string name="productName">Product Name</string>
     <string name="productDescription">Description</string>

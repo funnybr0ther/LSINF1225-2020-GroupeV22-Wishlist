@@ -40,4 +40,8 @@ public class MainMenuActivity extends AppCompatActivity {
         Intent intent1=new Intent(this, ViewProductActivity.class);
         startActivity(intent1);
     }
+    public void disconnect(View view){
+        Intent intent2 = new Intent(this, LoginActivity.class);
+        startActivity(intent2);
+    }
 }
