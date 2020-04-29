@@ -1,3 +1,5 @@
+package com.example.wishlist.Class;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,12 +11,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.lepl1225.R;
+import com.example.wishlist.Class.Purchase;
+import com.example.wishlist.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PurchaseListe extends ArrayAdapter<Purchase>{
+public class PurchaseList extends ArrayAdapter<Purchase>{
 
     private LayoutInflater inflater;
     private List<Purchase> purchases = null;
@@ -24,7 +27,7 @@ public class PurchaseListe extends ArrayAdapter<Purchase>{
     private String append;
 
 
-    public PurchaseListe(@NonNull Context context, int resource, @NonNull List<Purchase> purchases, String ajouter) {
+    public PurchaseList(@NonNull Context context, int resource, @NonNull List<Purchase> purchases, String ajouter) {
         super(context, resource, purchases);
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LayoutRessource = resource;
@@ -57,7 +60,7 @@ public class PurchaseListe extends ArrayAdapter<Purchase>{
             holder = (ViewHolder) convertView.getTag();
         }
 
-        String date_ = getItem(position).getDate();
+        String date_ = getItem(position).getDate().toString();
         holder.name.setText(date_);
 
         return convertView;
