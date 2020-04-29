@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.wishlist.Class.DatabaseHelper;
+import com.example.wishlist.Class.UserDatabaseHelper;
 import com.example.wishlist.R;
 
 public class CreateNewAccountActivity extends AppCompatActivity {
@@ -24,7 +24,6 @@ public class CreateNewAccountActivity extends AppCompatActivity {
     @Override
     @TargetApi(26)
     protected void onCreate(Bundle savedInstanceState) {
-        //System.out.println("Test");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_new_account_v2);
         //Set different view/Edit
@@ -35,7 +34,7 @@ public class CreateNewAccountActivity extends AppCompatActivity {
         textViewEmail=(TextView) findViewById(R.id.wrongEmail);
         textViewConfPassword=(TextView) findViewById(R.id.wrongConfirmPassword);
 
-        //Je sais pas ce que c'est autofill mais ça à l'air stylé -> à voir
+        //Je sais pas ce que c'est autofill mais ça à l'air stylé -> à voir plus tard
         editTextMail.setAutofillHints(View.AUTOFILL_HINT_EMAIL_ADDRESS);
     }
 
@@ -80,7 +79,7 @@ public class CreateNewAccountActivity extends AppCompatActivity {
     * Show some text or not depending of that
     */
     public boolean checkEmail(String email){
-        DatabaseHelper dbHelper= new DatabaseHelper(getApplicationContext());
+        UserDatabaseHelper dbHelper= new UserDatabaseHelper(getApplicationContext());
         if(!email.contains("@")||email.length()<5){
             textViewEmail.setText("Please insert a correct email");
             return false;

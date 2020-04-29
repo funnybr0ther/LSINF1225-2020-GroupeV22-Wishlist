@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -20,7 +21,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wishlist.Class.Address;
-import com.example.wishlist.Class.DatabaseHelper;
+import com.example.wishlist.Class.UserDatabaseHelper;
+
+import com.example.wishlist.Class.DateWish;
+
+import com.example.wishlist.Class.DateWish;
+
 import com.example.wishlist.Fragment.ChangePhotoDialog;
 import com.example.wishlist.Class.User;
 import com.example.wishlist.R;
@@ -33,7 +39,7 @@ public class CreateProfileActivity extends AppCompatActivity implements ChangePh
     private String email;
     private String password;
     private final int MY_PERMISSIONS_REQUEST = 37;
-    private String imagePath;
+    private Bitmap image=null;
     private CircleImageView profilePhoto;
     private ImageView cameraLogo;
     private EditText editTextFirstName;
@@ -51,22 +57,6 @@ public class CreateProfileActivity extends AppCompatActivity implements ChangePh
     private Spinner spinnerYear;
 
 
-
-
-   /* @Override//TODO Check if possible to remove that -> done I don't see any difference
-     *Je le laisse ici au cas où
-    public void onRequestPermissionsResult(int requestCode,
-                                           String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                } else {
-                }
-                return;
-            }
-        }
-    }*/
 
     @TargetApi(21)
     @Override
@@ -97,14 +87,16 @@ public class CreateProfileActivity extends AppCompatActivity implements ChangePh
         spinnerYear = (Spinner) findViewById(R.id.spinnerYear);
 
         //Set the default photo
-        profilePhoto.setImageDrawable(getDrawable(R.drawable.ic_default_photo));
+        if(image==null){
+            profilePhoto.setImageDrawable(getDrawable(R.drawable.ic_default_photo));
+        }
 
-        //Check permission to take photo and access storage then create ChangePhotoDialog
+        //Set function onclick of camera logo
         cameraLogo.setOnClickListener(new View.OnClickListener() {
+            //Check permission to take photo and access storage then create ChangePhotoDialog
             @Override
             public void onClick(View v) {
                 //check permission
-                int numberOfPermission = 0;
                 String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
                 for (int i=0;i<2;i++) {
                     if (ContextCompat.checkSelfPermission(CreateProfileActivity.this, permissions[i])
@@ -136,37 +128,22 @@ public class CreateProfileActivity extends AppCompatActivity implements ChangePh
         return true;
     }
 
+    /*
+    *Check if the string without strange character as #/? is not empty
+     */
     public boolean checkStringIsCorrect(String str) {
         str = str.replaceAll("[^\\w]", "");
         return str.length() > 0;
     }
 
-    public int transformMonth(String month){
-        switch (month){
-            case "January" :return 1;
-            case "February" : return 2;
-            case "March":return 3;
-            case "April": return 4;
-            case "May": return 5;
-            case "June":return 6;
-            case "July": return 7;
-            case "Augustus": return 8;
-            case "September" : return  9;
-            case "October" : return 10;
-            case "November" : return 11;
-            case "December" : return 12;
-            default: return -1;
-        }
-    }
-
-
     /*
-    * Firstly we collect the information given by the user
-    * Then we check if nothing necessary is missing and if birthdate is ok
-    * If something goes wrong we stay at this activity and put some information to help the user
-    * If nothing goes wrong we go to the main menu
+     * Function called onclick of check mark
+     * Firstly we collect the information given by the user
+     * Then we check if nothing necessary is missing and if birthdate is ok
+     * If something goes wrong we stay at this activity and put some information to help the user
+     * If nothing goes wrong we go to the main menu
      */
-    public void createUser(View view) {
+    public void createUser(View view) throws Exception{
         int numberError = 0;
         //Get the information
         String firstName = editTextFirstName.getText().toString();
@@ -184,7 +161,6 @@ public class CreateProfileActivity extends AppCompatActivity implements ChangePh
             numberError++;
         }
 
-
         String size = spinnerSize.getSelectedItem().toString();
         String shoeSize = spinnerShoeSize.getSelectedItem().toString();
         String favoriteColor = spinnerFavoriteColor.getSelectedItem().toString();
@@ -192,38 +168,37 @@ public class CreateProfileActivity extends AppCompatActivity implements ChangePh
         String month = spinnerMonth.getSelectedItem().toString();
         String year = spinnerYear.getSelectedItem().toString();
 
-        //Check if any required missing
+        //Check if any required is missing
         if (!checkStringIsCorrect(firstName)) {
             editTextFirstName.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
             numberError++;
         } else {
-            editTextFirstName.setBackgroundColor(Color.rgb(255, 255, 255));
+            editTextFirstName.setBackgroundColor(getResources().getColor(R.color.design_default_color_background));
         }
         if (!checkStringIsCorrect(lastName)) {
             editTextLastName.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
             numberError++;
         } else {
-            editTextLastName.setBackgroundColor(Color.rgb(255, 255, 255));
+            editTextLastName.setBackgroundColor(getResources().getColor(R.color.design_default_color_background));
         }
         if (!checkStringIsCorrect(addressLine1)) {
             editTextAddressLine1.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
             numberError++;
         } else {
-            editTextAddressLine1.setBackgroundColor(Color.rgb(255, 255, 255));
+            editTextAddressLine1.setBackgroundColor(getResources().getColor(R.color.design_default_color_background));
         }
         if (!checkStringIsCorrect(city)) {
             editTextCity.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
             numberError++;
         } else {
-            editTextCity.setBackgroundColor(Color.rgb(255, 255, 255));
+            editTextCity.setBackgroundColor(getResources().getColor(R.color.design_default_color_background));
         }
         if (!checkStringIsCorrect(country)) {
             editTextCountry.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
             numberError++;
         } else {
-            editTextCountry.setBackgroundColor(Color.rgb(255, 255, 255));
+            editTextCountry.setBackgroundColor(getResources().getColor(R.color.design_default_color_background));
         }
-
 
         //Check the birthDate
         TextView wrongDate = findViewById(R.id.wrongBirthdate);
@@ -234,8 +209,8 @@ public class CreateProfileActivity extends AppCompatActivity implements ChangePh
             wrongDate.setText(getResources().getText(R.string.wrongDate));
             numberError++;
         } else {
-             yearInt = Integer.parseInt(year);
-             dayInt = Integer.parseInt(day);
+            yearInt = Integer.parseInt(year);
+            dayInt = Integer.parseInt(day);
             if (!checkDate(dayInt, month, yearInt)) {
                 wrongDate.setText(getResources().getText(R.string.wrongDate));
                 numberError++;
@@ -248,14 +223,15 @@ public class CreateProfileActivity extends AppCompatActivity implements ChangePh
             //Create an Address
             Address userAddress=new Address(addressLine1,city,country,postalCode);
             if(checkStringIsCorrect(addressLine2)) userAddress.setAddressLine2(addressLine2);
+            //Create a DateWish with representing birthdate
+            DateWish birthdate=new DateWish(dayInt,month,yearInt);
             //create an User
-            Calendar calendar= Calendar.getInstance();
-            calendar.set(yearInt,transformMonth(month)-1,dayInt);
-            User user=new User(userAddress,firstName,lastName,email,calendar.getTime(),password);
+            User user=new User(userAddress,firstName,lastName,email,birthdate,password);
             if (!favoriteColor.equals("Undefined"))user.setFavoriteColor(favoriteColor);
             if (!size.equals("Undefined")) user.setSize(size);
-            if (!shoeSize.equals("Undefined")) user.setShoeSize(Integer.parseInt(shoeSize));
-            DatabaseHelper dbHelper= new DatabaseHelper(getApplicationContext());
+            if(image!=null) user.setProfilePhoto(image);
+            if (!shoeSize.equals("Undefined")) user.setShoeSize(shoeSize);
+            UserDatabaseHelper dbHelper= new UserDatabaseHelper(getApplicationContext());
             if(dbHelper.addUser(user)){
                 int userID=dbHelper.checkUser(email,password);
                 if(userID==-1){
@@ -282,6 +258,7 @@ public class CreateProfileActivity extends AppCompatActivity implements ChangePh
     public void getBitmapImage(Bitmap bitmap) {
         if(bitmap!=null){
             profilePhoto.setImageBitmap(bitmap);
+            image=bitmap;
         }
     }
 
@@ -289,11 +266,15 @@ public class CreateProfileActivity extends AppCompatActivity implements ChangePh
     public void getUriImage(Uri uri) {
         if(uri!=null){
             profilePhoto.setImageURI(uri);
+            try{
+                image= MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+            }
+            catch (Exception e){
+                Toast toast=Toast.makeText(this,"something went wrong with the image",Toast.LENGTH_SHORT);
+                toast.show();
+            }
         }
     }
 
-    @Override
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
 }
+

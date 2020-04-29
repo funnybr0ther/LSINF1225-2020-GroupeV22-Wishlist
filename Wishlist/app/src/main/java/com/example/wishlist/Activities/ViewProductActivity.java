@@ -1,0 +1,109 @@
+package com.example.wishlist.Activities;
+
+import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.wishlist.Class.Product;
+import com.example.wishlist.R;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
+
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class ViewProductActivity extends AppCompatActivity {
+    String TAG = "sortTag";
+    private TextView description;
+    private TextView category;
+    private TextView info;
+    private TextView productName;
+    private RatingBar desireBar;
+    private TextView price;
+    private TextView amountBought;
+    private ImageView productImage;
+    private ChipGroup chipGroup;
+
+    private String[] testCategoryList = {"Garden","Kids"};
+    private Product testProduct = new Product("BALANCOIRE",null,"Ceci est une balançoire",testCategoryList,2000,250,4,"40x30x60cm",5,33,12);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.view_product);
+        
+        description = findViewById(R.id.description);
+        category = findViewById(R.id.category);
+        info = findViewById(R.id.info);
+        productName = findViewById(R.id.productName);
+        desireBar = findViewById(R.id.rating);
+        price = findViewById(R.id.priceTag);
+        amountBought = findViewById(R.id.boughtAmount);
+        productImage = findViewById(R.id.productPhoto);
+        chipGroup = findViewById(R.id.categoriesGroup);
+        displayProductInfo(testProduct);
+    }
+
+    public void displayProductInfo(Product product){
+        String descriptionString = product.getDescription();
+        String name = product.getName();
+        String[] categoryStrings = product.getCategory();
+        String dimensionsString = product.getDimensions();
+        String weightString = Integer.toString(product.getWeight());
+        Integer desire = product.getDesire();
+        String pricePoint = Integer.toString(product.getPrice());
+        String amount = Integer.toString(product.getAmount());
+        String purchased = Integer.toString(product.getPurchased());
+        Bitmap photo = product.getPhoto();
+        if(name=="Undefined"){
+            Toast.makeText(this, "Something went wrong:\n Missing name", Toast  .LENGTH_SHORT).show();
+        }
+        else{
+            productName.setText(name);
+        }
+        price.setText(pricePoint + "€");
+        if(descriptionString=="Undefined") {
+            Log.d(TAG, "displayProductInfo: descriptionString was undefined");
+            description.setVisibility(View.GONE);
+        }
+        else{
+            description.setText(descriptionString);
+        }
+        if(categoryStrings.length==0) {
+            category.setText("");
+        }
+        else{
+            String categoryString = "";
+            for (int i=0;i<categoryStrings.length;i++){
+                Chip chip = new Chip(this);
+                chip.setText(categoryStrings[i]);
+                chipGroup.addView(chip);
+            }
+        }
+        String infoString = "";
+        if(dimensionsString!="Undefined"){
+            infoString += "Dimensions:\n" + "\t" + dimensionsString + "\n";
+        }
+        if(weightString != "0"){
+            infoString+= "Weight:\n" +"\t" + weightString + " grams\n";
+        }
+        SpannableString spannableString = new SpannableString(infoString);
+        spannableString.setSpan(new UnderlineSpan(), 0, "Dimensions:".length(), 0);
+        spannableString.setSpan(new UnderlineSpan(), ("Dimensions:\n" + "\t" + dimensionsString + "\n").length(), ("Dimensions:\n" + "\t" + dimensionsString + "\n").length() + "Weight:".length(), 0);
+        info.setText(spannableString);
+        desireBar.setRating((float)desire);
+        amountBought.setText("Amount Bought : " + purchased + " / " + amount);
+//        productImage.setImageURI();
+    }
+    public void onBackPressed(View view) {
+        onBackPressed();
+    }
+
+
+}

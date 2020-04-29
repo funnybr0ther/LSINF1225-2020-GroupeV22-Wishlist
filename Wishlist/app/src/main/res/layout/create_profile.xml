@@ -50,7 +50,7 @@
                     android:layout_below="@+id/profilePhoto"
                     android:layout_toRightOf="@id/profilePhoto"
                     android:layout_marginLeft="20dp"
-                    android:src="@drawable/ic_camera" />
+                    app:srcCompat="@drawable/ic_camera" />
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -136,7 +136,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/layout5"
+                android:id="@+id/layoutAddressLine2"
                 android:layout_below="@id/layout4"
                 android:padding="10dp">
                 <TextView
@@ -164,7 +164,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/layout6"
-                android:layout_below="@id/layout5"
+                android:layout_below="@id/layoutAddressLine2"
                 android:padding="10dp">
                 <TextView
                     android:layout_width="wrap_content"
@@ -245,7 +245,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/layout9"
+                android:id="@+id/layoutSize"
                 android:layout_below="@id/layout8"
                 android:padding="10dp">
                 <TextView
@@ -268,8 +268,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/layout10"
-                android:layout_below="@id/layout9"
+                android:id="@+id/layoutShoeSize"
+                android:layout_below="@id/layoutSize"
                 android:padding="10dp">
                 <TextView
                     android:layout_width="wrap_content"
@@ -291,7 +291,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:id="@+id/layout11"
-                android:layout_below="@id/layout10"
+                android:layout_below="@id/layoutShoeSize"
                 android:padding="10dp">
                 <TextView
                     android:layout_width="wrap_content"

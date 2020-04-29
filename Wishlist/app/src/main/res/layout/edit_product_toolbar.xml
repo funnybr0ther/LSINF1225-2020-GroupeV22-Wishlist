@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:layout_weight="100"
+    android:background="@color/colorPrimary"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="10">
+
+        <ImageButton
+            android:id="@+id/ValidateEditProduct"
+            android:layout_width="@dimen/contextMenuHeight"
+            android:layout_height="@dimen/contextMenuHeight"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:onClick="saveProductModif"
+            android:background="@color/colorPrimary"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/ic_check_black_24dp" />
+
+        <TextView
+            android:id="@+id/productToolbarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/backArrowEditproduct"
+            android:gravity="center_vertical"
+            android:scaleType="fitCenter"
+            android:text="@string/editProductToolbarText"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <ImageButton
+            android:id="@+id/backArrowEditproduct"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="TODO"
+            android:onClick="onBackPressed"
+            app:srcCompat="@drawable/ic_arrow_back_white_30dp" />
+    </RelativeLayout>
+
+
+</LinearLayout>
