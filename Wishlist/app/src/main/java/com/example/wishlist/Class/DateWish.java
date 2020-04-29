@@ -21,6 +21,7 @@ public class DateWish {
     }
 
     public DateWish() {
+
     }
 
     public void setDate(int day, String month, int year ){
