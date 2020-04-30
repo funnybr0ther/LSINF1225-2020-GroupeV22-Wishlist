@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.wishlist.Fragment.ChangePasswordOrEmailDialog;
 import com.example.wishlist.R;
 
 public class MainMenuActivity extends AppCompatActivity {
@@ -39,5 +40,12 @@ public class MainMenuActivity extends AppCompatActivity {
     public void exampleProduct(View view){
         Intent intent1=new Intent(this, ViewProductActivity.class);
         startActivity(intent1);
+    }
+    public void changePasswordOrEmail(View view){
+        ChangePasswordOrEmailDialog dialog=new ChangePasswordOrEmailDialog();
+        Bundle args = new Bundle();
+        args.putInt("userID", userID);
+        dialog.setArguments(args);
+        dialog.show(MainMenuActivity.this.getSupportFragmentManager(),"he");
     }
 }

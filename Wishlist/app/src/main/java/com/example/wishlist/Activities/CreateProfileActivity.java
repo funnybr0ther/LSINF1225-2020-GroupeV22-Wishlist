@@ -25,17 +25,13 @@ import com.example.wishlist.Class.UserDatabaseHelper;
 
 import com.example.wishlist.Class.DateWish;
 
-import com.example.wishlist.Class.DateWish;
-
-import com.example.wishlist.Fragment.ChangePhotoDialog;
+import com.example.wishlist.Fragment.AddPhotoDialog;
 import com.example.wishlist.Class.User;
 import com.example.wishlist.R;
 
-import java.util.Calendar;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class CreateProfileActivity extends AppCompatActivity implements ChangePhotoDialog.OnPhotoReceivedListener {
+public class CreateProfileActivity extends AppCompatActivity implements AddPhotoDialog.OnPhotoReceivedListener {
     private String email;
     private String password;
     private final int MY_PERMISSIONS_REQUEST = 37;
@@ -105,7 +101,7 @@ public class CreateProfileActivity extends AppCompatActivity implements ChangePh
                                 MY_PERMISSIONS_REQUEST);
                     } else {
                         if(i==1){
-                            ChangePhotoDialog dialog = new ChangePhotoDialog();
+                            AddPhotoDialog dialog = new AddPhotoDialog();
                             dialog.show(CreateProfileActivity.this.getSupportFragmentManager(), "ha");
                         }
                     }
