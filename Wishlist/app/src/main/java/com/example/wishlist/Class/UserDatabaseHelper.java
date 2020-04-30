@@ -10,7 +10,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+
+import java.util.Calendar;
+import java.util.Date;
+
+public class UserDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME="wishlist.db";
     private static final String USER_TABLE_NAME="user";
@@ -27,7 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String USER_COL10="profilePhoto";
     public static final String USER_COL11="notification";
 
-    public DatabaseHelper(@Nullable Context context) {
+    public UserDatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
 
@@ -43,9 +47,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 USER_COL5 + " TEXT NOT NULL, "+
                 USER_COL6 + " DATE NOT NULL, "+
                 USER_COL7 + " TEXT,"+
-                USER_COL8 + " INTEGER, "+
+                USER_COL8 + " TEXT, "+
                 USER_COL9 + " TEXT, "+
-                USER_COL10 + " TEXT, "+
+                USER_COL10 + " BLOB, "+
                 USER_COL11 + " TEXT)";
         db.execSQL(sqlCommand);
     }
@@ -68,7 +72,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(USER_COL7,user.getSize());
         contentValues.put(USER_COL8,user.getShoeSize());
         contentValues.put(USER_COL9,user.getFavoriteColor());
-        contentValues.put(USER_COL10,user.getProfilePhoto());
+        if(user.getProfilePhoto()!=null){
+            contentValues.put(USER_COL10,ImageHelper.getBytes(user.getProfilePhoto()));
+        }
         contentValues.put(USER_COL11,user.isNotification());
         long err=db.insert(USER_TABLE_NAME,null,contentValues);
         return err!=-1;
@@ -107,4 +113,49 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return sol;
     }
 
+    public User getUserFromID(int userID){
+        SQLiteDatabase db=getReadableDatabase();
+        String[] projection={USER_COL0,USER_COL1,USER_COL2};
+        String[] condition ={String.valueOf(userID)};
+        String selection=USER_COL0+" =?";
+        Cursor cursor=db.query(USER_TABLE_NAME,null,selection,condition,null,null,null);
+        if (cursor.getCount()==0){
+            cursor.close();
+            return null;
+        }
+        cursor.moveToFirst();
+        String addressString=cursor.getString(cursor.getColumnIndex(USER_COL5));
+        Address address=Address.fromString(addressString);
+        String firstName=cursor.getString(cursor.getColumnIndex(USER_COL3));
+        String lastName=cursor.getString(cursor.getColumnIndex(USER_COL4));
+        String email=cursor.getString(cursor.getColumnIndex(USER_COL1));
+        DateWish birthDate= new DateWish();
+        birthDate.setDate(cursor.getString(cursor.getColumnIndex(USER_COL6)));
+        String password=cursor.getString(cursor.getColumnIndex(USER_COL2));
+        byte[] profilePhoto=cursor.getBlob(cursor.getColumnIndex(USER_COL10));
+        boolean notification=true;
+        String favoriteColor=cursor.getString(cursor.getColumnIndex(USER_COL9));
+        String size=cursor.getString(cursor.getColumnIndex(USER_COL7));
+        String shoeSize=cursor.getString(cursor.getColumnIndex(USER_COL8));
+        return new User(address,firstName,lastName,email,birthDate,password,ImageHelper.getImage(profilePhoto),favoriteColor,size,shoeSize);
+    }
+    public boolean updateUser(User user, int userID){
+        SQLiteDatabase db=getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(USER_COL1,user.getEmail());
+        contentValues.put(USER_COL2,user.getPassword());
+        contentValues.put(USER_COL3,user.getFirstName());
+        contentValues.put(USER_COL4,user.getLastName());
+        contentValues.put(USER_COL5,user.getAddress().toString());
+        contentValues.put(USER_COL6,user.getBirthDate().toString());
+        contentValues.put(USER_COL7,user.getSize());
+        contentValues.put(USER_COL8,user.getShoeSize());
+        contentValues.put(USER_COL9,user.getFavoriteColor());
+        if(user.getProfilePhoto()!=null){
+            contentValues.put(USER_COL10,ImageHelper.getBytes(user.getProfilePhoto()));
+        }
+        contentValues.put(USER_COL11,user.isNotification());
+        int err=db.update(USER_TABLE_NAME,contentValues,USER_COL0+" = ?",new String[]{String.valueOf(userID)});
+        return err!=-1;
+    }
 }

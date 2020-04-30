@@ -9,7 +9,8 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "androidx.activity_create_profile.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.create_profile.runner.AndroidJUnitRunner"
+        android.defaultConfig.vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {

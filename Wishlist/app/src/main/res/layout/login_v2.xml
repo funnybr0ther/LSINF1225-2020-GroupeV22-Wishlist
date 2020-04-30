@@ -75,7 +75,7 @@
             android:layout_width="187dp"
             android:layout_height="19dp"
             android:layout_marginTop="12dp"
-            android:textColor="#F44336"
+            android:textColor="@color/wrongInformation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/password" />
@@ -85,6 +85,7 @@
             android:layout_width="110dp"
             android:layout_height="22dp"
             android:clickable="true"
+            android:focusable="true"
             android:onClick="newAccount"
             android:text="@string/createAccount"
             android:textColor="#3F51B5"
