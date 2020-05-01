@@ -75,5 +75,15 @@
         android:layout_marginRight="50dp"
         android:textSize="40sp"
         android:onClick="changePasswordOrEmail"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View History"
+        android:layout_below="@id/ExampleProduct"
+        android:layout_marginTop="200dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:textSize="40sp"
+        android:onClick="viewHistory"/>
 
 </RelativeLayout>

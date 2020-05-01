@@ -59,4 +59,9 @@ public class MainMenuActivity extends AppCompatActivity {
         dialog.setArguments(args);
         dialog.show(MainMenuActivity.this.getSupportFragmentManager(),"he");
     }
+      
+    public void viewHistory(View view){
+        Intent intent = new Intent(this, PurchaseViewActivity.class);
+        startActivity(intent);
+    }
 }
