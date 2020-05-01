@@ -28,8 +28,8 @@ import com.example.wishlist.Class.DateWish;
 import com.example.wishlist.Class.User;
 
 import com.example.wishlist.Fragment.EditPhotoDialog;
-import com.example.wishlist.Fragment.ChangePhotoDialog;
-import com.example.wishlist.Fragment.ChangePhotoDialogEdit;
+import com.example.wishlist.Fragment.AddPhotoDialog;
+import com.example.wishlist.Fragment.EditPhotoDialog;
 
 import com.example.wishlist.R;
 
