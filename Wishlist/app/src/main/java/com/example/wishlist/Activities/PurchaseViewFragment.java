@@ -22,6 +22,9 @@ import com.example.wishlist.Class.PurchaseList;
 import com.example.wishlist.R;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class PurchaseViewFragment extends Fragment {
     private static final String TAG = "PurchaseViewFragment";
@@ -34,29 +37,38 @@ public class PurchaseViewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_viewhistorique,container,false);
         purchaselist = (ListView) view.findViewById(R.id.HistoriqueItems);
         Log.d(TAG, "onCreateView: started");
-        SetUpPurchaselist();
+        //SetUpPurchaselist(UserID);  -> Cfr l'userID qu'on se passe par Singleton/Bundle/... ?
 
         return view;
     }
 
-    private void SetUpPurchaselist(){
+    private void SetUpPurchaselist(int UserID){
         final ArrayList<Purchase> purhcases = new ArrayList<>();
         PurchaseDatabaseHelper databaseHelper = new PurchaseDatabaseHelper(getActivity());
-        Cursor cursor = databaseHelper.getAllPurchases();
+        Cursor cursor = databaseHelper.getAllPurchases(UserID);
         if (!cursor.moveToNext()){
             Toast.makeText(getActivity()," No purchase has been made !", Toast.LENGTH_LONG).show();
         }
-
         while (cursor.moveToNext()){    //getX où X est le type de donnée stockée
-            String[] date = cursor.getString(2).split(" ");
+            String[] date = cursor.getString(5).split(" ");
+            DateWish day = new DateWish(Integer.getInteger(date[0]),date[1],Integer.getInteger(date[2]));
             purhcases.add(new Purchase(
-                    cursor.getInt(0),   // ID Acheteur
-                    cursor.getInt(1),   // ID Receveur
-                    new DateWish(Integer.parseInt(date[1]), date[2],Integer.parseInt(date[3])),    // DateWish
-                    cursor.getInt(3),   // Quantity
-                    cursor.getString(4)));  // ProductName
+                    cursor.getInt(1),   // ID Acheteur
+                    cursor.getInt(2),   // ID Receveur
+                    cursor.getInt(3),    //  Product
+                    cursor.getInt(4),   // quantité
+                    day));  // DateWish
         }
 
+        // On trie les Purchase selon leur date sous le format : (YYYY MM DD) !!!
+        Collections.sort(purhcases, new Comparator<Purchase>() {
+            @Override
+            public int compare(Purchase A, Purchase B) {
+                String dateA = A.getDate().toString();
+                String dateB = B.getDate().toString();
+                return dateA.compareTo(dateB);
+            }
+        });
 
         adapter = new PurchaseList(getActivity(),R.layout.historique_liste,purhcases,"");
         purchaselist.setAdapter(adapter);

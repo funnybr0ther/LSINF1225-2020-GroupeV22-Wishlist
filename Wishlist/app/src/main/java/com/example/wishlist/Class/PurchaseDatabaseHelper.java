@@ -45,16 +45,23 @@ public class PurchaseDatabaseHelper extends SQLiteOpenHelper {
         contentvalues.put(PURCHASE_COL0, achat.getPurchaseId());    // Purchase ID
         contentvalues.put(PURCHASE_COL1, achat.getSender());    // Acheteur
         contentvalues.put(PURCHASE_COL2, achat.getReceiver());  //Receveur
-        contentvalues.put(PURCHASE_COL3,achat.getProduct());    // Produit
+        contentvalues.put(PURCHASE_COL3,achat.getProductID());    // Produit
         contentvalues.put(PURCHASE_COL4, achat.getQuantity());   // Quantité
         contentvalues.put(PURCHASE_COL5, achat.getDate().toString());  // Date
         long err = db.insert(PURCHASE_TABLE_NAME, null, contentvalues);
         return err != -1;
     }
 
-    public Cursor getAllPurchases(){
+    public Cursor getAllPurchases(int UserID){
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.rawQuery("SELECT * FROM " + PURCHASE_TABLE_NAME, null);
+        String[] condition = {String.valueOf(UserID)};
+        String selection = PURCHASE_COL1 +" =?";
+        Cursor cursor = db.query(PURCHASE_TABLE_NAME,null,selection,condition,null,null,null);
+        if(cursor.getCount() == -1){
+            cursor.close();
+            return null;
+        }
+        return cursor;
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
