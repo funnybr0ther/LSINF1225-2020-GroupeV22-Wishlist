@@ -27,14 +27,15 @@ import com.example.wishlist.Class.UserDatabaseHelper;
 import com.example.wishlist.Class.DateWish;
 import com.example.wishlist.Class.User;
 
-import com.example.wishlist.Class.UserDatabaseHelper;
-import com.example.wishlist.Fragment.ChangePhotoDialog;
-import com.example.wishlist.Fragment.ChangePhotoDialogEdit;
+import com.example.wishlist.Fragment.EditPhotoDialog;
+import com.example.wishlist.Fragment.AddPhotoDialog;
+import com.example.wishlist.Fragment.EditPhotoDialog;
+
 import com.example.wishlist.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MyProfileActivity extends AppCompatActivity implements ChangePhotoDialogEdit.OnPhotoReceivedListener {
+public class MyProfileActivity extends AppCompatActivity implements EditPhotoDialog.OnPhotoReceivedListener {
     private User user;
     private int userID;
     private int MY_PERMISSIONS_REQUEST=45;
@@ -177,7 +178,7 @@ public class MyProfileActivity extends AppCompatActivity implements ChangePhotoD
                                 MY_PERMISSIONS_REQUEST);
                     } else {
                         if(i==1){
-                            ChangePhotoDialogEdit dialog = new ChangePhotoDialogEdit();
+                            EditPhotoDialog dialog = new EditPhotoDialog();
                             dialog.show(MyProfileActivity.this.getSupportFragmentManager(), "ha");
                         }
                     }

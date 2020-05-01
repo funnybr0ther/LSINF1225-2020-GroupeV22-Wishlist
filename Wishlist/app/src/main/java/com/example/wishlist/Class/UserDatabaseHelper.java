@@ -158,4 +158,13 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         int err=db.update(USER_TABLE_NAME,contentValues,USER_COL0+" = ?",new String[]{String.valueOf(userID)});
         return err!=-1;
     }
+    public boolean checkPassword(int userID, String password){
+        SQLiteDatabase db=getReadableDatabase();
+        String[] condition ={String.valueOf(userID),password};
+        String selection=USER_COL0+"=? AND "+USER_COL2+" =?";
+        Cursor cursor=db.query(USER_TABLE_NAME,null,selection,condition,null,null,null);
+        boolean sol=cursor.getCount()==1;
+        cursor.close();
+        return sol;
+    }
 }
