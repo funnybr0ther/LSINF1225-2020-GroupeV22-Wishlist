@@ -36,7 +36,6 @@ public class PurchaseList extends ArrayAdapter<Purchase>{
 
     private static class ViewHolder{
         TextView name;
-        ProgressBar progressBar;
     }
 
     @NonNull
@@ -49,7 +48,6 @@ public class PurchaseList extends ArrayAdapter<Purchase>{
             convertView = inflater.inflate(LayoutRessource,parent,false);
             holder = new ViewHolder();  // Crée un widget
             holder.name = (TextView) convertView.findViewById(R.id.HistoriqueItems); // HistoriqueItems > voir historique_liste.xml
-            holder.progressBar = (ProgressBar) convertView.findViewById(R.id.ProgresseBarHistorique); // " "
             convertView.setTag(holder); // Affiche le widegt
         }
         else{
