@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     /*
-    * Check if couple mail-password exist then go to main menu if it with userID in Extra
+    * Check if couple mail-password exist then go to main menu if true with userID in Extra
      */
     public void checkUserAccess(View view){
 
@@ -39,8 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         UserDatabaseHelper dbHelper=new UserDatabaseHelper(getApplicationContext());
         int userID=dbHelper.checkUser(mail,password);
         if (userID!=-1){
-
-        Intent intent=new Intent(this,MainMenuActivity.class);
+            Intent intent=new Intent(this,MainMenuActivity.class);
             intent.putExtra("userID",userID);
             startActivity(intent);
         }
@@ -49,7 +48,8 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void newAccount(View view){//function called when touch text "Still not Register"
+    //function called onclick of text "Still not Register"
+    public void newAccount(View view){
         Intent intent=new Intent(this,CreateNewAccountActivity.class);
         startActivity(intent);
     }

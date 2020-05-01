@@ -25,17 +25,13 @@ import com.example.wishlist.Class.UserDatabaseHelper;
 
 import com.example.wishlist.Class.DateWish;
 
-import com.example.wishlist.Class.DateWish;
-
-import com.example.wishlist.Fragment.ChangePhotoDialog;
+import com.example.wishlist.Fragment.AddPhotoDialog;
 import com.example.wishlist.Class.User;
 import com.example.wishlist.R;
 
-import java.util.Calendar;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class CreateProfileActivity extends AppCompatActivity implements ChangePhotoDialog.OnPhotoReceivedListener {
+public class CreateProfileActivity extends AppCompatActivity implements AddPhotoDialog.OnPhotoReceivedListener {
     private String email;
     private String password;
     private final int MY_PERMISSIONS_REQUEST = 37;
@@ -90,16 +86,13 @@ public class CreateProfileActivity extends AppCompatActivity implements ChangePh
         if(image==null){
             profilePhoto.setImageDrawable(getDrawable(R.drawable.ic_default_photo));
         }
-        /*else {
-            profilePhoto.setImageBitmap(image);
-        }*/
 
-        //Check permission to take photo and access storage then create ChangePhotoDialog
+        //Set function onclick of camera logo
         cameraLogo.setOnClickListener(new View.OnClickListener() {
+            //Check permission to take photo and access storage then create ChangePhotoDialog
             @Override
             public void onClick(View v) {
                 //check permission
-                //int numberOfPermission = 0;
                 String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
                 for (int i=0;i<2;i++) {
                     if (ContextCompat.checkSelfPermission(CreateProfileActivity.this, permissions[i])
@@ -108,7 +101,7 @@ public class CreateProfileActivity extends AppCompatActivity implements ChangePh
                                 MY_PERMISSIONS_REQUEST);
                     } else {
                         if(i==1){
-                            ChangePhotoDialog dialog = new ChangePhotoDialog();
+                            AddPhotoDialog dialog = new AddPhotoDialog();
                             dialog.show(CreateProfileActivity.this.getSupportFragmentManager(), "ha");
                         }
                     }
@@ -131,12 +124,16 @@ public class CreateProfileActivity extends AppCompatActivity implements ChangePh
         return true;
     }
 
+    /*
+    *Check if the string without strange character as #/? is not empty
+     */
     public boolean checkStringIsCorrect(String str) {
         str = str.replaceAll("[^\\w]", "");
         return str.length() > 0;
     }
 
     /*
+     * Function called onclick of check mark
      * Firstly we collect the information given by the user
      * Then we check if nothing necessary is missing and if birthdate is ok
      * If something goes wrong we stay at this activity and put some information to help the user
@@ -160,7 +157,6 @@ public class CreateProfileActivity extends AppCompatActivity implements ChangePh
             numberError++;
         }
 
-
         String size = spinnerSize.getSelectedItem().toString();
         String shoeSize = spinnerShoeSize.getSelectedItem().toString();
         String favoriteColor = spinnerFavoriteColor.getSelectedItem().toString();
@@ -168,7 +164,7 @@ public class CreateProfileActivity extends AppCompatActivity implements ChangePh
         String month = spinnerMonth.getSelectedItem().toString();
         String year = spinnerYear.getSelectedItem().toString();
 
-        //Check if any required missing
+        //Check if any required is missing
         if (!checkStringIsCorrect(firstName)) {
             editTextFirstName.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
             numberError++;
@@ -199,7 +195,6 @@ public class CreateProfileActivity extends AppCompatActivity implements ChangePh
         } else {
             editTextCountry.setBackgroundColor(getResources().getColor(R.color.design_default_color_background));
         }
-
 
         //Check the birthDate
         TextView wrongDate = findViewById(R.id.wrongBirthdate);

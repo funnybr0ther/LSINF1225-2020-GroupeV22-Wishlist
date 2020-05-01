@@ -19,7 +19,7 @@ import androidx.fragment.app.DialogFragment;
 import com.example.wishlist.Activities.MyProfileActivity;
 import com.example.wishlist.R;
 
-public class ChangePhotoDialogEdit extends DialogFragment {
+public class EditPhotoDialog extends DialogFragment {
     public final int CAMERA_REQUEST_CODE = 2903;
     public final int MEMORY_REQUEST_CODE = 13;
 
@@ -51,7 +51,7 @@ public class ChangePhotoDialogEdit extends DialogFragment {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ChangePhotoDialogEdit.this.getDialog().dismiss();
+                EditPhotoDialog.this.getDialog().dismiss();
             }
         });
         //Take Photo

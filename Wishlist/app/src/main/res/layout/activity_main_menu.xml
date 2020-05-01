@@ -6,6 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".Activities.MainMenuActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/productViewToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp">
+
+            <include layout="@layout/main_menu_toolbar" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -19,7 +34,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="My Profile"
+        android:text="@string/my_profile"
         android:id="@+id/MyProfile"
         android:layout_below="@id/textView"
         android:layout_marginTop="50dp"
@@ -28,6 +43,7 @@
         android:textSize="40sp"
         android:onClick="MyProfile"/>
     <Button
+        android:id="@+id/ExampleProduct"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Ex. Product"
@@ -48,5 +64,16 @@
         android:layout_marginRight="50dp"
         android:textSize="40sp"
         android:onClick="myWishlist"/>
+        android:onClick="changePasswordOrEmail"/>
+      <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Change Password"
+        android:layout_below="@id/ExampleProduct"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:textSize="40sp"
+        android:onClick="changePasswordOrEmail"/>
 
 </RelativeLayout>

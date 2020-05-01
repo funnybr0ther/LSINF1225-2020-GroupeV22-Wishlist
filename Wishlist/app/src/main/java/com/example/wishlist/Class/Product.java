@@ -29,6 +29,10 @@ public class Product {
         this.purchased = purchased;
     }
 
+    public Product(){
+
+    }
+
     public String getName() {
         return name;
     }
