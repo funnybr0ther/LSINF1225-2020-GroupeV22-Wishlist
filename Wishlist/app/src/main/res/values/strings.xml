@@ -254,4 +254,22 @@
     <string name="productCategoriesTitle"><u>Category</u></string>
     <string name="productInfoTitle"><u>Extra information</u></string>
     <string name="dummyProduct">Show Dummy Product</string>
+    <string name="my_profile">My Profile</string>
+    <string name="editProductToolbarText">Edit Product</string>
+    <string name="productName">Product Name</string>
+    <string name="productDescription">Description</string>
+    <string name="productCategories">Categories: </string>
+    <string name="categoryPH">Category</string>
+    <string name="removeButton">Remove</string>
+    <string name="textPrice">Price:</string>
+    <string name="newProductDescription">"Description: "</string>
+    <string name="newWeight">Weight (grams):</string>
+    <string name="newDimensions">Dimensions (cm):</string>
+
+    <string name="wishlistToolbarText">Whishlist</string>
+    <string name="addWishlistDesc">add a Wishlist</string>
+    <string name="backWishlistMenu">back to main menu</string>
+    <string name="strWishlistName">Name of your wishlist:</string>
+    <string name="NewWishlistFragment">Create a new wishlist :</string>
+    <string name="createWishlistButton">Create</string>
 </resources>
