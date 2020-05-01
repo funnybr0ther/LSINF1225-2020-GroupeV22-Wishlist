@@ -23,7 +23,7 @@ public class PurchaseDatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, 1);
     }
     @Override
-    public void onCreate(SQLiteDatabase db){    // Faut peut-etre "onCreate" ?
+    public void onCreate(SQLiteDatabase db){
         String sqlCommand = "CREATE TABLE "+
                 PURCHASE_TABLE_NAME + " (" +
                 PURCHASE_COL0 + " INTEGER NOT NULL REFERENCES utilisateur(userId), "+

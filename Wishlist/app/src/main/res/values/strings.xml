@@ -265,4 +265,8 @@
     <string name="newProductDescription">"Description: "</string>
     <string name="newWeight">Weight (grams):</string>
     <string name="newDimensions">Dimensions (cm):</string>
+    <string name="desire">Desire:</string>
+    <string name="newAmounts">"Amounts: "</string>
+    <string name="amountReceived">Received</string>
+    <string name="amountTotal">Total</string>
 </resources>
