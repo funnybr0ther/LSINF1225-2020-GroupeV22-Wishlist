@@ -26,7 +26,11 @@ import com.example.wishlist.Class.Address;
 import com.example.wishlist.Class.UserDatabaseHelper;
 import com.example.wishlist.Class.DateWish;
 import com.example.wishlist.Class.User;
+
 import com.example.wishlist.Fragment.EditPhotoDialog;
+import com.example.wishlist.Fragment.ChangePhotoDialog;
+import com.example.wishlist.Fragment.ChangePhotoDialogEdit;
+
 import com.example.wishlist.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -109,6 +113,7 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
         Intent intent=getIntent();
         userID=intent.getIntExtra("userID",-1);
         UserDatabaseHelper dbHelper= new UserDatabaseHelper(getApplicationContext());
+
         user=dbHelper.getUserFromID(userID);
 
         //Rely variable with layout

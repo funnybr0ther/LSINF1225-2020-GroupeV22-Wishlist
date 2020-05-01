@@ -9,16 +9,11 @@
     <string name="createAccount">Still not register ?</string>
     <string name="next">Next</string>
     <string name="firstName">First name * :</string>
-    <string name="firstNameWithout">First name :</string>
     <string name="lastName">Last name * :</string>
-    <string name="lastNameWithout">Last name :</string>
     <string name="addressLine1">Address line 1 * :</string>
-    <string name="addressLine1Without">Address line 1 :</string>
     <string name="addressLine2">Address line 2 :</string>
     <string name="city">City * :</string>
-    <string name="cityWithout">City :</string>
     <string name="postalCode">Postal code * :</string>
-    <string name="postalCodeWithout">Postal code :</string>
     <string-array name="size">
         <item>Undefined</item>
         <item>XS</item>
@@ -222,10 +217,8 @@
         <item>1900</item>
     </string-array>
     <string name="country">Country * :</string>
-    <string name="countryWithout">Country :</string>
     <string name="size">Size :</string>
     <string name="birthdate">Birthdate * :</string>
-    <string name="birthdateWithout">Birthdate :</string>
     <string name="shoeSize">Shoe size :</string>
     <string name="CreateProfile">Register</string>
     <string name="favoriteColor">Favorite Color :</string>
@@ -247,23 +240,4 @@
     <string name="takeNewPhoto">Take new photo</string>
     <string name="chooseFromMemory">Choose from memory</string>
     <string name="Cancel">Cancel</string>
-    <string name="newProductToolbarText">New Object</string>
-    <string name="viewProductToolbarText">View Product</string>
-    <string name="todoContentDescription">TODO : ContentDescription</string>
-    <string name="productDescriptionTitle"><u>Description</u></string>
-    <string name="productCategoriesTitle"><u>Category</u></string>
-    <string name="productInfoTitle"><u>Extra information</u></string>
-    <string name="enterPassword">Enter your password to continue</string>
-    <string name="dummyProduct">Show Dummy Product</string>
-    <string name="my_profile">My Profile</string>
-    <string name="editProductToolbarText">Edit Product</string>
-    <string name="productName">Product Name</string>
-    <string name="productDescription">Description</string>
-    <string name="productCategories">Categories: </string>
-    <string name="categoryPH">Category</string>
-    <string name="removeButton">Remove</string>
-    <string name="textPrice">Price:</string>
-    <string name="newProductDescription">"Description: "</string>
-    <string name="newWeight">Weight (grams):</string>
-    <string name="newDimensions">Dimensions (cm):</string>
 </resources>
