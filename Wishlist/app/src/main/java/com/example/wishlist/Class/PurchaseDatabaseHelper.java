@@ -17,13 +17,13 @@ public class PurchaseDatabaseHelper extends SQLiteOpenHelper {
     private static final String PURCHASE_COL3 = "date";
     private static final String PURCHASE_COL4 = "quantité";
     private static final String PURCHASE_COL5 = "numAchat";
-    private static final String DATABASE_NAME = "";
+    private static final String DATABASE_NAME = "wishlit.db";
 
     public PurchaseDatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
     @Override
-    public void onCreate(SQLiteDatabase db){    // Faut peut-etre "onCreate" ?
+    public void onCreate(SQLiteDatabase db){
         String sqlCommand = "CREATE TABLE "+
                 PURCHASE_TABLE_NAME + " (" +
                 PURCHASE_COL0 + " INTEGER NOT NULL REFERENCES utilisateur(userId), "+
@@ -40,7 +40,7 @@ public class PurchaseDatabaseHelper extends SQLiteOpenHelper {
         ContentValues contentvalues = new ContentValues();
         contentvalues.put(PURCHASE_COL0, achat.getSender());
         contentvalues.put(PURCHASE_COL1, achat.getReceiver());
-        // contentvalues.put(PURCHASE_COL2,achat.getProduct().number?); dépendra de la classe Produit
+        contentvalues.put(PURCHASE_COL2,achat.getProduct().getName());
         contentvalues.put(PURCHASE_COL3, achat.getDate().toString());
         contentvalues.put(PURCHASE_COL4, achat.getQuantity());
         contentvalues.put(PURCHASE_COL5, achat.getPurchaseId()); // A moins que la bdd génère elle même un numéro aléatoire ?

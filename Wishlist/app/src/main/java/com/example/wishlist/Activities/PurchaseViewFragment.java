@@ -20,8 +20,8 @@ import com.example.wishlist.R;
 
 import java.util.ArrayList;
 
-public class PurchaseViewActivity extends AppCompatActivity {
-    private static final String TAG = "PurchaseViewActivity";
+public class PurchaseViewFragment extends Fragment {
+    private static final String TAG = "PurchaseViewFragment";
     private PurchaseList adapter;
     private ListView purchaselist;
 
