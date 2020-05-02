@@ -117,7 +117,7 @@
                 <com.google.android.material.chip.ChipGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/categoriesGroups"
+                    android:id="@+id/newCategoriesGroup"
                     app:chipSpacingHorizontal="25dp">
                 </com.google.android.material.chip.ChipGroup>
             </LinearLayout>
@@ -141,7 +141,7 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/textPrice"
-                    android:id="@+id/getAddressLine2"
+                    android:id="@+id/newPrice"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:layout_alignBaseline="@id/textPrice"
@@ -160,19 +160,19 @@
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:layout_centerVertical="true"
-                    android:id="@+id/newWeight"
+                    android:id="@+id/weightTitle"
                     android:text="@string/newWeight"/>
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/newWeight"
+                    android:layout_toRightOf="@id/weightTitle"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:inputType="number"
-                    android:id="@+id/weight"
-                    android:layout_alignBaseline="@id/newWeight"
+                    android:id="@+id/newWeight"
+                    android:layout_alignBaseline="@id/weightTitle"
                     android:layout_centerVertical="true"/>
             </RelativeLayout>
             <RelativeLayout
@@ -196,6 +196,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <EditText
+                        android:id="@+id/dimensionsX"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:inputType="number">
@@ -209,6 +210,7 @@
                         android:layout_gravity="center_vertical">
                     </TextView>
                     <EditText
+                        android:id="@+id/dimensionsY"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:inputType="number">
@@ -222,6 +224,7 @@
                         android:layout_gravity="center_vertical">
                     </TextView>
                     <EditText
+                        android:id="@+id/dimensionsZ"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:inputType="number">
@@ -239,7 +242,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:id="@+id/newDesire"
+                    android:id="@+id/desireTitle"
                     android:text="@string/desire"
                     android:layout_centerVertical="true">
                 </TextView>
@@ -251,7 +254,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:id="@+id/desire"
+                        android:id="@+id/newDesire"
                         android:numStars="5"
                         android:stepSize="1.0"
                         android:isIndicator="false"
@@ -287,7 +290,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:inputType="number"
-                        android:id="@+id/receivedField">
+                        android:id="@+id/newReceived">
                     </EditText>
                     <TextView
                         android:layout_width="wrap_content"
@@ -304,7 +307,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:inputType="number"
-                        android:id="@+id/totalField">
+                        android:id="@+id/newTotal">
                     </EditText>
                 </LinearLayout>
             </RelativeLayout>

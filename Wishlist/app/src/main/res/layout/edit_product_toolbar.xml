@@ -14,7 +14,7 @@
         android:layout_weight="10">
 
         <ImageButton
-            android:id="@+id/ValidateEditProduct"
+            android:id="@+id/validateEditProduct"
             android:layout_width="@dimen/contextMenuHeight"
             android:layout_height="@dimen/contextMenuHeight"
             android:layout_alignParentTop="true"

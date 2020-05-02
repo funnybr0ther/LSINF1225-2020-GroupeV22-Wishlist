@@ -241,6 +241,27 @@
         <item>White</item>
         <item>Yellow</item>
     </string-array>
+    <string-array name="categories">
+        <item>Garden</item>
+        <item>Clothes</item>
+        <item>Music</item>
+        <item>Videogames</item>
+        <item>Computer</item>
+        <item>Games</item>
+        <item>Jewelry</item>
+        <item>Travel</item>
+        <item>Children</item>
+        <item>Crafting</item>
+        <item>School Furniture</item>
+        <item>Home Appliance</item>
+        <item>Cooking</item>
+        <item>Automotive</item>
+        <item>Books</item>
+        <item>Movies and TV</item>
+        <item>Audio and Multimedia</item>
+        <item>Sports</item>
+        <item>Pet</item>
+    </string-array>
     <string name="Consigne">Fill in these informations to complete your registration. These with a * are required, the others are optionnal</string>
     <string name="wrongDate">Please insert a valid Date</string>
     <string name="changePhoto">Change Photo</string>
