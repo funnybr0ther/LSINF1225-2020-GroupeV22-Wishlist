@@ -23,13 +23,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wishlist.Class.Address;
+import com.example.wishlist.Class.ImageHelper;
 import com.example.wishlist.Class.UserDatabaseHelper;
 import com.example.wishlist.Class.DateWish;
 import com.example.wishlist.Class.User;
 
 import com.example.wishlist.Fragment.EditPhotoDialog;
-import com.example.wishlist.Fragment.ChangePhotoDialog;
-import com.example.wishlist.Fragment.ChangePhotoDialogEdit;
 
 import com.example.wishlist.R;
 
@@ -39,6 +38,8 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
     private User user;
     private int userID;
     private int MY_PERMISSIONS_REQUEST=45;
+    private Bitmap image;
+    private boolean editMode;
     //Button
     private ImageButton modifyButton;
     private ImageButton activeEditModeButton;
@@ -163,7 +164,7 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
         relativeLayoutSize=findViewById(R.id.layoutSize);
         relativeLayoutSpinnersDate=findViewById(R.id.layoutSpinnersDate);
         //Set the mode to view
-        visibleMode();
+        if(!editMode)visibleMode();
         //Set function onclick of camera logo
         cameraLogo.setOnClickListener(new View.OnClickListener() {
             //Check permission to take photo and access storage then create ChangePhotoDialogEdit
@@ -194,7 +195,8 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
      * -fill editTexts and spinners with actual information
      * -eventually set some layout visible if there where not in view mode
      */
-    public void editMode(View view){
+    public void editMode(){
+        editMode=true;
         activeEditModeButton.setVisibility(View.GONE);
         modifyButton.setVisibility(View.VISIBLE);
         //set visibleMode when click on backArrow (-> no change in profile)
@@ -273,6 +275,7 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
      */
     @TargetApi(21)
     public void visibleMode(){
+        editMode=false;
         textViewFirstName.setText(R.string.firstNameWithout);
         textViewLastName.setText(R.string.lastNameWithout);
         textViewAddressLine1.setText(R.string.addressLine1Without);
@@ -280,8 +283,9 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
         textViewCountry.setText(R.string.countryWithout);
         textViewPostalCode.setText(R.string.postalCodeWithout);
         textViewBirthDate.setText(R.string.birthdateWithout);
-        if(user.getProfilePhoto()!=null) {
-            profilePhoto.setImageBitmap(user.getProfilePhoto());
+        if (image==null)image=user.getProfilePhoto();
+        if(image!=null) {
+            profilePhoto.setImageBitmap(image);
         }else{
             profilePhoto.setImageDrawable(getDrawable(R.drawable.ic_default_photo));
         }
@@ -381,6 +385,7 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
         return str.length() > 0;
     }
 
+    public void editMode(View view){editMode();}
     /*
      * Update User in the database with the new information collected
      * Give some information to the user if he doesn't fill anything well
@@ -477,6 +482,8 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
             user.setFavoriteColor(favoriteColor);
             user.setSize(size);
             user.setShoeSize(shoeSize);
+            user.setProfilePhoto(image);
+
             UserDatabaseHelper dbHelper= new UserDatabaseHelper(getApplicationContext());
             if(dbHelper.updateUser(user,userID)){
                 if(userID==-1){
@@ -510,7 +517,7 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
         else {
             profilePhoto.setImageBitmap(bitmap);
         }
-        user.setProfilePhoto(bitmap);
+        image=bitmap;
     }
     @TargetApi(21)
     @Override
@@ -518,7 +525,7 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
         if(uri!=null){
             profilePhoto.setImageURI(uri);
             try{
-                user.setProfilePhoto(MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri));
+                image= ImageHelper.compress(MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri));
             }
             catch (Exception e){
                 Toast toast=Toast.makeText(this,"something went wrong with the image",Toast.LENGTH_SHORT);
@@ -528,5 +535,20 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
         else{
             profilePhoto.setImageDrawable(getDrawable(R.drawable.ic_default_photo));
         }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        image = savedInstanceState.getParcelable("BitmapImage");
+        editMode=savedInstanceState.getBoolean("EditMode");
+        if(editMode) editMode();
+        profilePhoto.setImageBitmap(image);
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+    @Override
+    protected void onSaveInstanceState (Bundle savedInstanceState) {
+        savedInstanceState.putParcelable("BitmapImage", image);
+        savedInstanceState.putBoolean("EditMode",editMode);
+        super.onSaveInstanceState(savedInstanceState);
     }
 }

@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wishlist.Class.Address;
+import com.example.wishlist.Class.ImageHelper;
 import com.example.wishlist.Class.UserDatabaseHelper;
 
 import com.example.wishlist.Class.DateWish;
@@ -35,7 +36,7 @@ public class CreateProfileActivity extends AppCompatActivity implements AddPhoto
     private String email;
     private String password;
     private final int MY_PERMISSIONS_REQUEST = 37;
-    private Bitmap image=null;
+    private Bitmap image;
     private CircleImageView profilePhoto;
     private ImageView cameraLogo;
     private EditText editTextFirstName;
@@ -261,15 +262,26 @@ public class CreateProfileActivity extends AppCompatActivity implements AddPhoto
     @Override
     public void getUriImage(Uri uri) {
         if(uri!=null){
-            profilePhoto.setImageURI(uri);
             try{
-                image= MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                image= ImageHelper.compress(MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri));
+                profilePhoto.setImageBitmap(image);
             }
             catch (Exception e){
                 Toast toast=Toast.makeText(this,"something went wrong with the image",Toast.LENGTH_SHORT);
                 toast.show();
             }
         }
+    }
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        image =ImageHelper.getImage( savedInstanceState.getByteArray("bytesImage"));
+        profilePhoto.setImageBitmap(image);
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+    @Override
+    protected void onSaveInstanceState (Bundle savedInstanceState) {
+        savedInstanceState.putByteArray("bytesImage", ImageHelper.getBytes(image));
+        super.onSaveInstanceState(savedInstanceState);
     }
 
 }
