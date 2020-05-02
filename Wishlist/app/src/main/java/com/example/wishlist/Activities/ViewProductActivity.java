@@ -1,5 +1,6 @@
 package com.example.wishlist.Activities;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wishlist.Class.Product;
+import com.example.wishlist.Class.ProductDatabaseHelper;
 import com.example.wishlist.R;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -31,11 +33,17 @@ public class ViewProductActivity extends AppCompatActivity {
     private ImageView productImage;
     private ChipGroup chipGroup;
 
+    private int userID;
+
     private String[] testCategoryList = {"Garden","Kids"};
-    private Product testProduct = new Product("BALANCOIRE",null,"Ceci est une balançoire",testCategoryList,2000,250,4,"40x30x60cm",5,33,12);
+    private Product testProduct = new Product("BALANCOIRE",null,"Ceci est une balançoire",testCategoryList,2000,250,4,"40,30,60", 33,12);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ProductDatabaseHelper productDatabaseHelper = new ProductDatabaseHelper(getApplicationContext());
+        productDatabaseHelper.addProduct(testProduct);
         super.onCreate(savedInstanceState);
+        Intent intent=getIntent();
+        userID=intent.getIntExtra("userID",-1);
         setContentView(R.layout.view_product);
         
         description = findViewById(R.id.description);
@@ -58,7 +66,7 @@ public class ViewProductActivity extends AppCompatActivity {
         String weightString = Integer.toString(product.getWeight());
         Integer desire = product.getDesire();
         String pricePoint = Integer.toString(product.getPrice());
-        String amount = Integer.toString(product.getAmount());
+        String amount = Integer.toString(product.getTotal());
         String purchased = Integer.toString(product.getPurchased());
         Bitmap photo = product.getPhoto();
         if(name=="Undefined"){
@@ -100,6 +108,10 @@ public class ViewProductActivity extends AppCompatActivity {
         desireBar.setRating((float)desire);
         amountBought.setText("Amount Bought : " + purchased + " / " + amount);
 //        productImage.setImageURI();
+    }
+
+    void editProduct(Product pID){
+
     }
     public void onBackPressed(View view) {
         onBackPressed();

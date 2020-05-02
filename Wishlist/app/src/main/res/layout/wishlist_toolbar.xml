@@ -10,11 +10,11 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="10">
 
         <ImageButton
-            android:id="@+id/editProduct"
+            android:id="@+id/contextMenuWishlist"
             android:layout_width="@dimen/contextMenuHeight"
             android:layout_height="@dimen/contextMenuHeight"
             android:layout_alignParentTop="true"
@@ -23,29 +23,30 @@
             android:layout_weight="1"
             android:background="@color/colorPrimary"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_product_edit_mode"
-            android:onClick=""/>
+            android:contentDescription="@string/addWishlistDesc"
+            app:srcCompat="@drawable/ic_add_button"
+            android:onClick="pressAddButton"/>
 
         <TextView
-            android:id="@+id/productToolbarTitle"
+            android:id="@+id/wishlistToolbarTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@id/backArrowViewproduct"
+            android:layout_toRightOf="@id/backArrowWishlist"
             android:gravity="center_vertical"
             android:scaleType="fitCenter"
-            android:text="@string/viewProductToolbarText"
+            android:text="@string/wishlistToolbarText"
             android:textColor="@color/white"
             android:textSize="20sp" />
 
         <ImageButton
-            android:id="@+id/backArrowViewproduct"
+            android:id="@+id/backArrowWishlist"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_centerVertical="true"
             android:background="?attr/selectableItemBackground"
-            android:contentDescription="TODO"
+            android:contentDescription="@string/backWishlistMenu"
             android:onClick="onBackPressed"
             app:srcCompat="@drawable/ic_arrow_back_white_30dp" />
     </RelativeLayout>

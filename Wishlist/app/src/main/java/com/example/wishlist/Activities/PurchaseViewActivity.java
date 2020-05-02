@@ -28,9 +28,9 @@ public class PurchaseViewActivity extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_viewhistorique,container,false);
-        purchaselistt = (ListView) view.findViewById(R.id.HistoriqueItems);
+        /*purchaselistt = (ListView) view.findViewById(R.id.HistoriqueItems);
         Log.d(TAG, "onCreateView: started");
-        SetUpPurchaselist();
+        SetUpPurchaselist();*/
 
         return view;
     }

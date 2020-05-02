@@ -41,9 +41,20 @@ public class MainMenuActivity extends AppCompatActivity {
     }
     public void exampleProduct(View view){
         Intent intent1=new Intent(this, ViewProductActivity.class);
+        intent1.putExtra("productID",1);
         startActivity(intent1);
     }
 
+    public void myWishlist(View view){
+        Intent gotToWishlist=new Intent(this,ListWishlistActivity.class);
+        gotToWishlist.putExtra("userID",userID);
+        startActivity(gotToWishlist);
+    }
+
+    public void disconnect(View view) {
+        Intent intent2 = new Intent(this, LoginActivity.class);
+        startActivity(intent2);
+    }
     public void changePasswordOrEmail(View view){
         ChangePasswordOrEmailDialog dialog=new ChangePasswordOrEmailDialog();
         Bundle args = new Bundle();
@@ -51,9 +62,9 @@ public class MainMenuActivity extends AppCompatActivity {
         dialog.setArguments(args);
         dialog.show(MainMenuActivity.this.getSupportFragmentManager(),"he");
     }
-    public void disconnect(View view){
-        Intent intent2 = new Intent(this, LoginActivity.class);
-        startActivity(intent2);
-
+      
+    public void viewHistory(View view){
+        Intent intent = new Intent(this, PurchaseViewActivity.class);
+        startActivity(intent);
     }
 }

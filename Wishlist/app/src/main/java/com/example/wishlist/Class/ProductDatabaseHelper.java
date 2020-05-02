@@ -6,9 +6,16 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import static android.content.ContentValues.TAG;
+
+/**
+ * A helper class to manage products in the database. It allows the creation of the table, as well
+ * as the creation, edition and deletion of products in the table.
+ */
 public class ProductDatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME="wishlist.db";
     private static final String PRODUCT_TABLE_NAME ="product";
@@ -25,11 +32,18 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
     public static final String PRODUCT_COL10 ="purchased";
 
     public ProductDatabaseHelper(@Nullable Context context) {
+        /**
+         * Constructor for product database helper
+         */
         super(context, DATABASE_NAME, null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        /**
+         * Creation of the product database table
+         */
+        Log.d(TAG, "onCreate: database Created");
         String sqlCommand="CREATE TABLE "+
                 PRODUCT_TABLE_NAME + " ("+
                 PRODUCT_COL0 + " INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT, "+
@@ -48,11 +62,17 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        /**
+            Drop table to create new "upgraded" table format
+         */
         String sqlCommand="DROP IF TABLE EXISTS " + PRODUCT_TABLE_NAME;
         onCreate(db);
     }
 
     public boolean addProduct(Product product){
+        /**
+            Add Product product to the database
+         */
         SQLiteDatabase db=getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(PRODUCT_COL1,product.getName());
@@ -63,13 +83,17 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(PRODUCT_COL6,product.getDimensions());
         contentValues.put(PRODUCT_COL7,product.getDescription());
         contentValues.put(PRODUCT_COL8,product.getDesire());
-        contentValues.put(PRODUCT_COL9,product.getAmount());
+        contentValues.put(PRODUCT_COL9,product.getTotal());
         contentValues.put(PRODUCT_COL10,product.getPurchased());
         long err=db.insert(PRODUCT_TABLE_NAME,null,contentValues);
         return err!=-1;
     }
 
     public Product getProductFromID(int productID){
+        /**
+         * Retrieves product with ID productID. If productID isn't a valid productID or there is
+         * no matching line in the database, returns null.
+         */
         SQLiteDatabase db= getReadableDatabase();
         String[] condition = {String.valueOf(productID)};
         String selection = PRODUCT_COL0 +" =?";
@@ -89,10 +113,14 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         Integer desire = cursor.getInt(cursor.getColumnIndex(PRODUCT_COL8));
         Integer amount = cursor.getInt(cursor.getColumnIndex(PRODUCT_COL9));
         Integer purchased = cursor.getInt(cursor.getColumnIndex(PRODUCT_COL10));
-        return new Product(name,picture,description,categories,weight,price,desire,dimensions,0,amount,purchased);
+        return new Product(name,picture,description,categories,weight,price,desire,dimensions, amount,purchased);
     }
 
     public boolean updateProduct(Product product, int productID){
+        /**
+         * Updates the columns of the first line matching productID with the fields of
+         * Product product. Return true if the operation succeeded, false otherwise.
+         */
         SQLiteDatabase db=getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(PRODUCT_COL1,product.getName());
@@ -103,13 +131,19 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(PRODUCT_COL6,product.getDimensions());
         contentValues.put(PRODUCT_COL7,product.getDescription());
         contentValues.put(PRODUCT_COL8,product.getDesire());
-        contentValues.put(PRODUCT_COL9,product.getAmount());
+        contentValues.put(PRODUCT_COL9,product.getTotal());
         contentValues.put(PRODUCT_COL10,product.getPurchased());
         int err=db.update(PRODUCT_TABLE_NAME,contentValues,PRODUCT_COL0+" = ?",new String[]{String.valueOf(productID)});
         return err!=-1;
     }
+    /*
+        Conversion of String[] to String using a comma "," as a separator
+     */
     public static String strSeparator = "__,__";
     public static String convertArrayToString(String[] array){
+        /**
+         * String[] -> String
+         */
         String str = "";
         for (int i = 0;i<array.length; i++) {
             str = str+array[i];
@@ -120,7 +154,11 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         }
         return str;
     }
+
     public static String[] convertStringToArray(String str){
+        /**
+         * String -> String[]
+         */
         String[] arr = str.split(strSeparator);
         return arr;
     }

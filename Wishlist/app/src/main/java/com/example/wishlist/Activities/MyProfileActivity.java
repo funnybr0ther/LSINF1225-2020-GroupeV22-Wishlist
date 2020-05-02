@@ -29,6 +29,8 @@ import com.example.wishlist.Class.DateWish;
 import com.example.wishlist.Class.User;
 
 import com.example.wishlist.Fragment.EditPhotoDialog;
+import com.example.wishlist.Fragment.AddPhotoDialog;
+import com.example.wishlist.Fragment.EditPhotoDialog;
 
 import com.example.wishlist.R;
 
@@ -283,9 +285,8 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
         textViewCountry.setText(R.string.countryWithout);
         textViewPostalCode.setText(R.string.postalCodeWithout);
         textViewBirthDate.setText(R.string.birthdateWithout);
-        if (image==null)image=user.getProfilePhoto();
-        if(image!=null) {
-            profilePhoto.setImageBitmap(image);
+        if(user.getProfilePhoto()!=null) {
+            profilePhoto.setImageBitmap(user.getProfilePhoto());
         }else{
             profilePhoto.setImageDrawable(getDrawable(R.drawable.ic_default_photo));
         }
