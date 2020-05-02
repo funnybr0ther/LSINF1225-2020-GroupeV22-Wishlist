@@ -30,7 +30,8 @@
         android:layout_marginTop="50dp"
         android:textSize="40sp"
         tools:layout_editor_absoluteX="155dp"
-        tools:layout_editor_absoluteY="183dp" />
+        tools:layout_editor_absoluteY="183dp">
+    </TextView>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,40 +48,43 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Ex. Product"
-        android:id="@+id/ExempleProduct"
         android:layout_below="@id/MyProfile"
         android:layout_marginTop="50dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:textSize="40sp"
-        android:onClick="exampleProduct"/>
+        android:onClick="exampleProduct">
+    </Button>
     <Button
+        android:id="@+id/viewWishlist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Wishlist"
-        android:layout_below="@id/ExempleProduct"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:textSize="40sp"
-        android:onClick="myWishlist"/>
-        android:onClick="changePasswordOrEmail"/>
-      <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Change Password"
         android:layout_below="@id/ExampleProduct"
         android:layout_marginTop="50dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:textSize="40sp"
-        android:onClick="changePasswordOrEmail"/>
+        android:onClick="myWishlist">
+    </Button>
+    <Button
+        android:id="@+id/passwordUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Change Password"
+        android:layout_below="@id/viewWishlist"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:textSize="40sp"
+        android:onClick="changePasswordOrEmail">
+    </Button>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="View History"
-        android:layout_below="@id/ExampleProduct"
-        android:layout_marginTop="200dp"
+        android:layout_below="@id/passwordUpdate"
+        android:layout_marginTop="50dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:textSize="40sp"

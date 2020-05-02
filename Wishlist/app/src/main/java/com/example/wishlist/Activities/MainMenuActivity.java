@@ -39,6 +39,7 @@ public class MainMenuActivity extends AppCompatActivity {
     }
     public void exampleProduct(View view){
         Intent intent1=new Intent(this, ViewProductActivity.class);
+        intent1.putExtra("productID",1);
         startActivity(intent1);
     }
 
@@ -48,10 +49,10 @@ public class MainMenuActivity extends AppCompatActivity {
         startActivity(gotToWishlist);
     }
 
-    public void disconnect(View view){
+    public void disconnect(View view) {
         Intent intent2 = new Intent(this, LoginActivity.class);
         startActivity(intent2);
-
+    }
     public void changePasswordOrEmail(View view){
         ChangePasswordOrEmailDialog dialog=new ChangePasswordOrEmailDialog();
         Bundle args = new Bundle();

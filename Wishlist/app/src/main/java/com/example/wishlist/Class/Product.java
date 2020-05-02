@@ -11,11 +11,10 @@ public class Product {
     private int price;
     private int desire;
     private String dimensions;
-    private int rating; //useful?
-    private int amount;
+    private int total;
     private int purchased;
 
-    public Product(String name, Bitmap photo, String description, String[] category, int weight, int price, int desire, String dimensions, int rating, int amount, int purchased) {
+    public Product(String name, Bitmap photo, String description, String[] category, int weight, int price, int desire, String dimensions, int amount, int purchased) {
         this.name = name;
         this.photo = photo;
         this.description = description;
@@ -24,8 +23,7 @@ public class Product {
         this.price = price;
         this.desire = desire;
         this.dimensions = dimensions;
-        this.rating = rating;
-        this.amount = amount;
+        this.total = amount;
         this.purchased = purchased;
     }
 
@@ -97,20 +95,12 @@ public class Product {
         this.dimensions = dimensions;
     }
 
-    public int getRating() {
-        return rating;
+    public int getTotal() {
+        return total;
     }
 
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public void setTotal(int amount) {
+        this.total = amount;
     }
 
     public int getPurchased() {
