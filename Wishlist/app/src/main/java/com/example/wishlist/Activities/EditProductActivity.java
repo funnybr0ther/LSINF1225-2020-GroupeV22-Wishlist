@@ -56,7 +56,6 @@ public class EditProductActivity extends AppCompatActivity {
     private ArrayList<String> checkedCategories;
 
     public void onBackPressed(View view) {
-        Log.d("franfreluche", "onBackPressed: truc");
         Intent returnIntent = new Intent();
         returnIntent.putExtra("modifications",true);
         setResult(RESULT_OK,returnIntent);
@@ -120,9 +119,7 @@ public class EditProductActivity extends AppCompatActivity {
         productDatabaseHelper = new ProductDatabaseHelper(getApplicationContext());
         if(productId==-1){
             String TAG="bill";
-            Log.d(TAG, "onCreate: billll");
         }
-        Log.d("Sérendipicité", "onCreate: " + productId);
         product = productDatabaseHelper.getProductFromID(productId);
         editProduct(product);
     }
@@ -153,7 +150,6 @@ public class EditProductActivity extends AppCompatActivity {
 
     public void editProduct(Product product) {
         String productName = product.getName();
-        Log.d("atchoum", "editProduct: "+ productName);
         Bitmap image = product.getPhoto();
         String description = product.getDescription();
         String[] categories = product.getCategory();
@@ -170,7 +166,6 @@ public class EditProductActivity extends AppCompatActivity {
         }
         nameField.setText(productName);
         descriptionField.setText(description);
-        Log.d("horseradish", "editProduct: checkedCategories = " + checkedCategories.toString());
         for (int i = 0; i < categoriesList.length; i++) {
             Chip chip = new Chip(this);
             chip.setCheckable(true);
@@ -182,7 +177,6 @@ public class EditProductActivity extends AppCompatActivity {
             chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton view, boolean isChecked) {
-                    Log.d("TAG", "onCheckedChanged: status Changed");
                     if (isChecked) {
                         if (checkedCategories.contains(view.getText())) {
 
@@ -197,7 +191,6 @@ public class EditProductActivity extends AppCompatActivity {
 
                         }
                     }
-                    Log.d("bilibuuuuuuuu", "editProduct: checkedCategories = " + checkedCategories.toString());
                 }
             });
         }
