@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.wishlist.Class.ProductDatabaseHelper;
 import com.example.wishlist.Fragment.ChangePasswordOrEmailDialog;
 import com.example.wishlist.R;
 
@@ -65,4 +66,25 @@ public class MainMenuActivity extends AppCompatActivity {
         Intent intent = new Intent(this, PurchaseViewActivity.class);
         startActivity(intent);
     }
+
+    public void addProduct(View view){
+        Intent intent = new Intent(this,EditProductActivity.class);
+        intent.putExtra("productID",-1);
+        startActivityForResult(intent,1);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+
+            if (resultCode == RESULT_OK) {
+                long pID =  data.getLongExtra("newProduct",-1);
+                Toast.makeText(this, "Product ID= "+pID, Toast.LENGTH_SHORT).show();
+            }
+            if (resultCode == RESULT_CANCELED) {
+                //Do nothing?
+            }
+        }
+    }//onActivityResult
 }

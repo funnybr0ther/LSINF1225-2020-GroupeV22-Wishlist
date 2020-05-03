@@ -22,7 +22,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:onClick="saveProductModif"
+            android:onClick="saveProduct"
             android:background="@color/colorPrimary"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/ic_check_black_24dp" />

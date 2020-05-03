@@ -38,7 +38,7 @@ public class ViewProductActivity extends AppCompatActivity {
     long tempProductID;
 
     private String[] testCategoryList = {"Garden","Children"};
-    private Product testProduct = new Product("BALANCOIRE",null,"Ceci est une balançoire",testCategoryList,2000,250,4,"40,30,60", 33,12);
+    private Product testProduct = new Product("BALANCOIRE",null,"Ceci est une balançoire",testCategoryList,2000,250,4,ProductDatabaseHelper.convertArrayToString(new String[]{"45","46","47"}),33,12);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ProductDatabaseHelper productDatabaseHelper = new ProductDatabaseHelper(getApplicationContext());
