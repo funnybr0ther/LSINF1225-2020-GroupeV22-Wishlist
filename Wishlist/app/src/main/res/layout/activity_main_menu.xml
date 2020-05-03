@@ -31,6 +31,7 @@
         android:textSize="40sp"
         tools:layout_editor_absoluteX="155dp"
         tools:layout_editor_absoluteY="183dp" />
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,7 +48,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Ex. Product"
-        android:id="@+id/ExempleProduct"
         android:layout_below="@id/MyProfile"
         android:layout_marginTop="50dp"
         android:layout_marginLeft="50dp"
@@ -55,10 +55,11 @@
         android:textSize="40sp"
         android:onClick="exampleProduct"/>
     <Button
+        android:id="@+id/myWishlist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Wishlist"
-        android:layout_below="@id/ExempleProduct"
+        android:layout_below="@id/ExampleProduct"
         android:layout_marginTop="50dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
@@ -66,10 +67,11 @@
         android:onClick="myWishlist"/>
         android:onClick="changePasswordOrEmail"/>
       <Button
+        android:id="@+id/changePass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Change Password"
-        android:layout_below="@id/ExampleProduct"
+        android:layout_below="@id/myWishlist"
         android:layout_marginTop="50dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
@@ -79,7 +81,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="View History"
-        android:layout_below="@id/ExampleProduct"
+        android:layout_below="@id/changePass"
         android:layout_marginTop="200dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
