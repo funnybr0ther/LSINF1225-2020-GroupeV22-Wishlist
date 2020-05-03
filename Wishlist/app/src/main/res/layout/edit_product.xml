@@ -118,7 +118,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/newCategoriesGroup"
-                    app:chipSpacingHorizontal="25dp">
+                    app:chipSpacingHorizontal="25dp"
+                    style="@style/Widget.MaterialComponents.ChipGroup">
                 </com.google.android.material.chip.ChipGroup>
             </LinearLayout>
             <RelativeLayout

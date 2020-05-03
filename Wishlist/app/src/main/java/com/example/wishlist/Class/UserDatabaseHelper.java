@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-    
+
 
 import java.util.Calendar;
 import java.util.Date;
@@ -34,6 +34,7 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
     public UserDatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {

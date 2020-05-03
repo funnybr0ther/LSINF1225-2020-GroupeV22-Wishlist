@@ -24,7 +24,7 @@
             android:background="@color/colorPrimary"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/ic_product_edit_mode"
-            android:onClick=""/>
+            android:onClick="switchToEdit"/>
 
         <TextView
             android:id="@+id/productToolbarTitle"
