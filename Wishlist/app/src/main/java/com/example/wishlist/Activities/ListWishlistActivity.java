@@ -55,10 +55,17 @@ public class ListWishlistActivity extends AppCompatActivity {
         //transaction.addToBackStack(null);
         //transaction.commit();
 
-        Button wishlist = new Button(this);
+        /*Button wishlist = new Button(this);
         wishlist.setText("ajout");
         wishlist.setWidth(200);
-        myLayout.addView(wishlist);
+        myLayout.addView(wishlist);*/
+
+        AddWishlistFragment dialog=new AddWishlistFragment();
+        Bundle args = new Bundle();
+        args.putInt("userID", userID);
+        dialog.setArguments(args);
+        dialog.show(ListWishlistActivity.this.getSupportFragmentManager(),"Add list");
+
     }
 
     public void printWishlist(String name){

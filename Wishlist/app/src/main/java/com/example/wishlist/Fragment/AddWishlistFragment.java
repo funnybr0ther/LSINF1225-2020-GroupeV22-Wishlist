@@ -9,12 +9,13 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import com.example.wishlist.Class.WishlistDatabaseHelper;
 import com.example.wishlist.R;
 
-
-public class AddWishlistFragment extends Fragment {
+public class AddWishlistFragment extends DialogFragment {
 
     private EditText txtName;
     private Button btnCreate;
@@ -32,11 +33,11 @@ public class AddWishlistFragment extends Fragment {
 
 
 
-    /*public void PressBtnCreate(View view){
+    public void PressBtnCreate(View view){
         if(txtName.getText().toString() != "") {
             WishlistDatabaseHelper db = new WishlistDatabaseHelper(getContext());
 
         }
-    }*/
+    }
 
 }
