@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -31,7 +33,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EditProductActivity extends AppCompatActivity {
 //    CategoriesAdapter categoriesAdapter = new CategoriesAdapter(null,EditProductActivity.this);
-    int productId;
+    long productId;
     Product product;
     private ProductDatabaseHelper productDatabaseHelper;
     private ImageButton saveProduct;
@@ -48,14 +50,17 @@ public class EditProductActivity extends AppCompatActivity {
     private RatingBar desireField;
     private EditText amountPurchasedField;
     private EditText amountTotalField;
-    private String[] categoriesList = getResources().getStringArray(R.array.categories);
+    private String[] categoriesList;
 
     private static int RESULT_LOAD_IMAGE = 1;
+    private ArrayList<String> checkedCategories;
 
     public void onBackPressed(View view) {
-        if(product == null){
-            onBackPressed();
-        }
+        Log.d("franfreluche", "onBackPressed: truc");
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("modifications",true);
+        setResult(RESULT_OK,returnIntent);
+        finish();
     }
 
     @Override
@@ -74,7 +79,6 @@ public class EditProductActivity extends AppCompatActivity {
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
             productImage.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-
         }
 
 
@@ -98,7 +102,7 @@ public class EditProductActivity extends AppCompatActivity {
         desireField = findViewById(R.id.newDesire);
         amountPurchasedField = findViewById(R.id.newReceived);
         amountTotalField = findViewById(R.id.newTotal);
-
+        categoriesList = getResources().getStringArray(R.array.categories);
         newImage.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -112,20 +116,44 @@ public class EditProductActivity extends AppCompatActivity {
             }
         });
         Intent intent = getIntent();
-        productId = intent.getIntExtra("productId",-1);
+        productId = intent.getLongExtra("productID",-1);
         productDatabaseHelper = new ProductDatabaseHelper(getApplicationContext());
         if(productId==-1){
-
+            String TAG="bill";
+            Log.d(TAG, "onCreate: billll");
         }
+        Log.d("Sérendipicité", "onCreate: " + productId);
         product = productDatabaseHelper.getProductFromID(productId);
+        editProduct(product);
     }
 
-    public void saveProductModif(){
-
+    public void saveProductModif(View view){
+        String newName = nameField.getText().toString();
+        String newDescription = descriptionField.getText().toString();
+        String[] newCategories = checkedCategories.toArray(new String[0]);
+        int newPrice = Integer.parseInt(priceField.getText().toString());
+        int newWeight = Integer.parseInt(weightField.getText().toString());
+        String[] dimensionsArray = new String[]{dimensionsXField.getText().toString(),dimensionsYField.getText().toString(),dimensionsZField.getText().toString()};
+        String newDimensions = ProductDatabaseHelper.convertArrayToString(dimensionsArray);
+        int newDesire = (int) desireField.getRating();
+        int newPurchased = Integer.parseInt(amountPurchasedField.getText().toString());
+        int newTotal = Integer.parseInt(amountTotalField.getText().toString());
+        BitmapDrawable imageBitmapDrawable = (BitmapDrawable) productImage.getDrawable();
+        Bitmap newImage = null;
+        if(imageBitmapDrawable != null){
+            newImage = (imageBitmapDrawable).getBitmap();
+        }
+        product = new Product(newName,newImage,newDescription,newCategories,newWeight,newPrice,newDesire,newDimensions,newTotal,newPurchased);
+        productDatabaseHelper.updateProduct(product,productId);
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("modifications",true);
+        setResult(RESULT_OK,returnIntent);
+        finish();
     }
 
     public void editProduct(Product product) {
         String productName = product.getName();
+        Log.d("atchoum", "editProduct: "+ productName);
         Bitmap image = product.getPhoto();
         String description = product.getDescription();
         String[] categories = product.getCategory();
@@ -135,23 +163,26 @@ public class EditProductActivity extends AppCompatActivity {
         String dimensions = product.getDimensions();
         int total = product.getTotal();
         int purchased = product.getPurchased();
-        final ArrayList<String> checkedCategories = new ArrayList<String>(Arrays.asList(categories));
+
+        checkedCategories = new ArrayList<String>(Arrays.asList(categories));
         if(image!=null){
-        newImage.setImageBitmap(image);
+        productImage.setImageBitmap(image);
         }
         nameField.setText(productName);
         descriptionField.setText(description);
-
+        Log.d("horseradish", "editProduct: checkedCategories = " + checkedCategories.toString());
         for (int i = 0; i < categoriesList.length; i++) {
-            Chip chip = new Chip(getApplicationContext());
-            chip.setText(categories[i]);
-            if (checkedCategories.contains(categories[i])) {
+            Chip chip = new Chip(this);
+            chip.setCheckable(true);
+            chip.setText(categoriesList[i]);
+            if (checkedCategories.contains(categoriesList[i])) {
                 chip.setChecked(true);
             }
             categoriesField.addView(chip);
             chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton view, boolean isChecked) {
+                    Log.d("TAG", "onCheckedChanged: status Changed");
                     if (isChecked) {
                         if (checkedCategories.contains(view.getText())) {
 
@@ -166,6 +197,7 @@ public class EditProductActivity extends AppCompatActivity {
 
                         }
                     }
+                    Log.d("bilibuuuuuuuu", "editProduct: checkedCategories = " + checkedCategories.toString());
                 }
             });
         }

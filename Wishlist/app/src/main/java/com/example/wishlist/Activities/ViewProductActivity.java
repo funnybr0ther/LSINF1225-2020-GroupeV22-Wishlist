@@ -7,6 +7,7 @@ import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -32,18 +33,20 @@ public class ViewProductActivity extends AppCompatActivity {
     private TextView amountBought;
     private ImageView productImage;
     private ChipGroup chipGroup;
+    private ImageButton editButton;
 
-    private int userID;
+    long tempProductID;
 
-    private String[] testCategoryList = {"Garden","Kids"};
+    private String[] testCategoryList = {"Garden","Children"};
     private Product testProduct = new Product("BALANCOIRE",null,"Ceci est une balançoire",testCategoryList,2000,250,4,"40,30,60", 33,12);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ProductDatabaseHelper productDatabaseHelper = new ProductDatabaseHelper(getApplicationContext());
-        productDatabaseHelper.addProduct(testProduct);
+
+        tempProductID = productDatabaseHelper.addProduct(testProduct);
         super.onCreate(savedInstanceState);
         Intent intent=getIntent();
-        userID=intent.getIntExtra("userID",-1);
+        final long productID=intent.getIntExtra("productID",-1);
         setContentView(R.layout.view_product);
         
         description = findViewById(R.id.description);
@@ -55,10 +58,19 @@ public class ViewProductActivity extends AppCompatActivity {
         amountBought = findViewById(R.id.boughtAmount);
         productImage = findViewById(R.id.productPhoto);
         chipGroup = findViewById(R.id.categoriesGroup);
-        displayProductInfo(testProduct);
+        editButton = findViewById(R.id.editProduct);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchToEdit(tempProductID);
+            }
+        });
+        Log.d(TAG, "onCreate: tempProductID = " +tempProductID );
+        displayProductInfo(productDatabaseHelper.getProductFromID(tempProductID));
     }
 
     public void displayProductInfo(Product product){
+        Log.d(TAG, "displayProductInfo: bilibu updated");
         String descriptionString = product.getDescription();
         String name = product.getName();
         String[] categoryStrings = product.getCategory();
@@ -88,6 +100,7 @@ public class ViewProductActivity extends AppCompatActivity {
         }
         else{
             String categoryString = "";
+            chipGroup.removeAllViews();
             for (int i=0;i<categoryStrings.length;i++){
                 Chip chip = new Chip(this);
                 chip.setText(categoryStrings[i]);
@@ -101,6 +114,9 @@ public class ViewProductActivity extends AppCompatActivity {
         if(weightString != "0"){
             infoString+= "Weight:\n" +"\t" + weightString + " grams\n";
         }
+        if(photo!=null){
+            productImage.setImageBitmap(photo);
+        }
         SpannableString spannableString = new SpannableString(infoString);
         spannableString.setSpan(new UnderlineSpan(), 0, "Dimensions:".length(), 0);
         spannableString.setSpan(new UnderlineSpan(), ("Dimensions:\n" + "\t" + dimensionsString + "\n").length(), ("Dimensions:\n" + "\t" + dimensionsString + "\n").length() + "Weight:".length(), 0);
@@ -110,12 +126,29 @@ public class ViewProductActivity extends AppCompatActivity {
 //        productImage.setImageURI();
     }
 
-    void editProduct(Product pID){
-
+    void switchToEdit(long pID){
+        Intent intent1=new Intent(this, EditProductActivity.class);
+        intent1.putExtra("productID",pID);
+        startActivityForResult(intent1,1);
     }
     public void onBackPressed(View view) {
         onBackPressed();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+
+            if (resultCode == RESULT_OK) {
+                ProductDatabaseHelper productDatabaseHelper = new ProductDatabaseHelper(this);
+                displayProductInfo(productDatabaseHelper.getProductFromID(tempProductID));
+            }
+            if (resultCode == RESULT_CANCELED) {
+                //Do nothing?
+            }
+        }
+    }//onActivityResult
 
 }
