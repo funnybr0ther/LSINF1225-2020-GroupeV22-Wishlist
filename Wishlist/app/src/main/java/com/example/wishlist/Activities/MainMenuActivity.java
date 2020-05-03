@@ -39,6 +39,7 @@ public class MainMenuActivity extends AppCompatActivity {
     }
     public void exampleProduct(View view){
         Intent intent1=new Intent(this, ViewProductActivity.class);
+        intent1.putExtra("productID",1);
         startActivity(intent1);
     }
 

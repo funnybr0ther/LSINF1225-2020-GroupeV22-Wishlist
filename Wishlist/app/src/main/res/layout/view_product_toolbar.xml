@@ -14,7 +14,7 @@
         android:layout_weight="10">
 
         <ImageButton
-            android:id="@+id/contextMenuProduct"
+            android:id="@+id/editProduct"
             android:layout_width="@dimen/contextMenuHeight"
             android:layout_height="@dimen/contextMenuHeight"
             android:layout_alignParentTop="true"
@@ -23,7 +23,8 @@
             android:layout_weight="1"
             android:background="@color/colorPrimary"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_contextmenu" />
+            app:srcCompat="@drawable/ic_product_edit_mode"
+            android:onClick="switchToEdit"/>
 
         <TextView
             android:id="@+id/productToolbarTitle"
