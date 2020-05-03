@@ -43,10 +43,10 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         /**
          * Creation of the product database table
          */
-        Log.d(TAG, "onCreate: database Created");
+        Log.d(TAG, "onCreate: ");
         String sqlCommand="CREATE TABLE "+
                 PRODUCT_TABLE_NAME + " ("+
-                PRODUCT_COL0 + " INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT, "+
+                PRODUCT_COL0 + " LONG NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT, "+
                 PRODUCT_COL1 + " TEXT NOT NULL, "+
                 PRODUCT_COL2 + " INTEGER NOT NULL, "+
                 PRODUCT_COL3 + " TEXT, "+
@@ -61,6 +61,25 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
     }
 
     @Override
+    public void onOpen(SQLiteDatabase db) {
+        String sqlCommand="CREATE TABLE IF NOT EXISTS "+
+                PRODUCT_TABLE_NAME + " ("+
+                PRODUCT_COL0 + " LONG NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT, "+
+                PRODUCT_COL1 + " TEXT NOT NULL, "+
+                PRODUCT_COL2 + " INTEGER NOT NULL, "+
+                PRODUCT_COL3 + " TEXT, "+
+                PRODUCT_COL4 + " BLOB, "+
+                PRODUCT_COL5 + " INTEGER, "+
+                PRODUCT_COL6 + " STRING, "+
+                PRODUCT_COL7 + " TEXT," +
+                PRODUCT_COL8 + " INTEGER, "+
+                PRODUCT_COL9 + " INTEGER, "+
+                PRODUCT_COL10 + " INTEGER)";
+        db.execSQL(sqlCommand);
+        super.onOpen(db);
+    }
+
+    @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         /**
             Drop table to create new "upgraded" table format
@@ -69,7 +88,7 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean addProduct(Product product){
+    public long addProduct(Product product){
         /**
             Add Product product to the database
          */
@@ -86,10 +105,10 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(PRODUCT_COL9,product.getTotal());
         contentValues.put(PRODUCT_COL10,product.getPurchased());
         long err=db.insert(PRODUCT_TABLE_NAME,null,contentValues);
-        return err!=-1;
+        return err;
     }
 
-    public Product getProductFromID(int productID){
+    public Product getProductFromID(long productID){
         /**
          * Retrieves product with ID productID. If productID isn't a valid productID or there is
          * no matching line in the database, returns null.
@@ -116,7 +135,7 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         return new Product(name,picture,description,categories,weight,price,desire,dimensions, amount,purchased);
     }
 
-    public boolean updateProduct(Product product, int productID){
+    public boolean updateProduct(Product product, long productID){
         /**
          * Updates the columns of the first line matching productID with the fields of
          * Product product. Return true if the operation succeeded, false otherwise.
