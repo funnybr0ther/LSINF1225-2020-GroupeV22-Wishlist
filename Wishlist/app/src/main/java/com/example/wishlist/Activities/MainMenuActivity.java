@@ -75,7 +75,7 @@ public class MainMenuActivity extends AppCompatActivity {
     }
       
     public void viewHistory(View view){
-        Intent intent = new Intent(this, PurchaseViewActivity.class);
+        Intent intent = new Intent(this, MainHistoriqueActivity.class);
         startActivity(intent);
     }
     public void viewFollowList(View view){

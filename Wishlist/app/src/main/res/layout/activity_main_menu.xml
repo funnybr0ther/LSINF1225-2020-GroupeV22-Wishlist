@@ -107,6 +107,7 @@
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:textSize="40sp"
+        android:id="@+id/addProduct"
         android:onClick="addProduct">
     </Button>
     <Button
