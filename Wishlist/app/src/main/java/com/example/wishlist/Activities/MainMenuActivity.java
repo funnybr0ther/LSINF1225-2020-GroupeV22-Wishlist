@@ -1,13 +1,10 @@
 package com.example.wishlist.Activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -23,14 +20,24 @@ public class MainMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent=getIntent();
-        if (intent.hasExtra("userID")){
-            userID= intent.getIntExtra("userID",-1);
+        SharedPreferences prefs = this.getSharedPreferences(
+                "com.example.app", Context.MODE_PRIVATE);
+        int tmpUserID=prefs.getInt("userID",-1);
+        if (tmpUserID!=-1){
+            userID=tmpUserID;
             setContentView(R.layout.activity_main_menu);
             TextView textView=findViewById(R.id.textView);
             textView.setText(Integer.toString(userID));
         }
+        /*if (intent.hasExtra("userID")){
+            userID= intent.getIntExtra("userID",-1);
+            setContentView(R.layout.activity_main_menu);
+            TextView textView=findViewById(R.id.textView);
+            textView.setText(Integer.toString(userID));
+        }*/
         else{//If no userID go back to LoginActivity
-            //Toast toast=new Toast(this,);
+            Toast toast=Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT);
+            toast.show();
             Intent backToLogin=new Intent(this,LoginActivity.class);
         }
     }
@@ -53,6 +60,9 @@ public class MainMenuActivity extends AppCompatActivity {
 
     public void disconnect(View view) {
         Intent intent2 = new Intent(this, LoginActivity.class);
+        SharedPreferences prefs = this.getSharedPreferences(
+                "com.example.app", Context.MODE_PRIVATE);
+        prefs.edit().remove("userID").apply();
         startActivity(intent2);
     }
     public void changePasswordOrEmail(View view){

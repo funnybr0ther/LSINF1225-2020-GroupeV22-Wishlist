@@ -517,8 +517,8 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
         }
         else {
             profilePhoto.setImageBitmap(bitmap);
+            image=bitmap;
         }
-        image=bitmap;
     }
     @TargetApi(21)
     @Override
@@ -526,7 +526,7 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
         if(uri!=null){
             profilePhoto.setImageURI(uri);
             try{
-                image= ImageHelper.compress(MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri));
+                image= MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
             }
             catch (Exception e){
                 Toast toast=Toast.makeText(this,"something went wrong with the image",Toast.LENGTH_SHORT);
@@ -537,19 +537,5 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
             profilePhoto.setImageDrawable(getDrawable(R.drawable.ic_default_photo));
         }
     }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        image = savedInstanceState.getParcelable("BitmapImage");
-        editMode=savedInstanceState.getBoolean("EditMode");
-        if(editMode) editMode();
-        profilePhoto.setImageBitmap(image);
-        super.onRestoreInstanceState(savedInstanceState);
-    }
-    @Override
-    protected void onSaveInstanceState (Bundle savedInstanceState) {
-        savedInstanceState.putParcelable("BitmapImage", image);
-        savedInstanceState.putBoolean("EditMode",editMode);
-        super.onSaveInstanceState(savedInstanceState);
-    }
+    
 }

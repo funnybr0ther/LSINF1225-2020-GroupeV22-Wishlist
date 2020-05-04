@@ -6,7 +6,9 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -237,6 +239,9 @@ public class CreateProfileActivity extends AppCompatActivity implements AddPhoto
                 }else{
                     Toast toast=Toast.makeText(this,"Account Create",Toast.LENGTH_SHORT);
                     toast.show();
+                    SharedPreferences prefs = this.getSharedPreferences(
+                            "com.example.app", Context.MODE_PRIVATE);
+                    prefs.edit().putInt("userID",userID).apply();
                     Intent intent=new Intent(this,MainMenuActivity.class);
                     intent.putExtra("userID",userID);
                     startActivity(intent);
@@ -271,17 +276,6 @@ public class CreateProfileActivity extends AppCompatActivity implements AddPhoto
                 toast.show();
             }
         }
-    }
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        image =ImageHelper.getImage( savedInstanceState.getByteArray("bytesImage"));
-        profilePhoto.setImageBitmap(image);
-        super.onRestoreInstanceState(savedInstanceState);
-    }
-    @Override
-    protected void onSaveInstanceState (Bundle savedInstanceState) {
-        savedInstanceState.putByteArray("bytesImage", ImageHelper.getBytes(image));
-        super.onSaveInstanceState(savedInstanceState);
     }
 
 }
