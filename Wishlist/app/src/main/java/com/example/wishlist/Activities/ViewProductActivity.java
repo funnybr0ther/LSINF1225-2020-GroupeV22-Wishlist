@@ -38,7 +38,7 @@ public class ViewProductActivity extends AppCompatActivity {
     long tempProductID;
 
     private String[] testCategoryList = {"Garden","Children"};
-    private Product testProduct = new Product("BALANCOIRE",null,"Ceci est une balançoire",testCategoryList,2000,250,4,"40,30,60", 33,12);
+    private Product testProduct = new Product("BALANCOIRE",null,"Ceci est une balançoire",testCategoryList,2000,250,4,ProductDatabaseHelper.convertArrayToString(new String[]{"45","46","47"}),33,12);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ProductDatabaseHelper productDatabaseHelper = new ProductDatabaseHelper(getApplicationContext());
@@ -74,7 +74,11 @@ public class ViewProductActivity extends AppCompatActivity {
         String descriptionString = product.getDescription();
         String name = product.getName();
         String[] categoryStrings = product.getCategory();
-        String dimensionsString = product.getDimensions();
+        String[] dimensionsStringArray = ProductDatabaseHelper.convertStringToArray(product.getDimensions());
+        String dimensionsString = "";
+        if(dimensionsStringArray[0] != ""){
+            dimensionsString = dimensionsStringArray[0] + " by " + dimensionsStringArray[1] + " by " + dimensionsStringArray[2];
+        }
         String weightString = Integer.toString(product.getWeight());
         Integer desire = product.getDesire();
         String pricePoint = Integer.toString(product.getPrice());
@@ -123,7 +127,6 @@ public class ViewProductActivity extends AppCompatActivity {
         info.setText(spannableString);
         desireBar.setRating((float)desire);
         amountBought.setText("Amount Bought : " + purchased + " / " + amount);
-//        productImage.setImageURI();
     }
 
     void switchToEdit(long pID){

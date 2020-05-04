@@ -26,7 +26,7 @@ public class EditPhotoDialog extends DialogFragment {
     public interface OnPhotoReceivedListener {
         public void getBitmapImage(Bitmap bitmap);
 
-        public void getUriImage(Uri uri);
+        public void setUriImage(Uri uri);
     }
 
     OnPhotoReceivedListener onPhotoReceivedListener;
@@ -91,7 +91,7 @@ public class EditPhotoDialog extends DialogFragment {
         //Result if choose photo from Memory
         if (requestCode == MEMORY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             Uri selectedImageUri = data.getData();
-            onPhotoReceivedListener.getUriImage(selectedImageUri);
+            onPhotoReceivedListener.setUriImage(selectedImageUri);
             getDialog().dismiss();
         }
     }

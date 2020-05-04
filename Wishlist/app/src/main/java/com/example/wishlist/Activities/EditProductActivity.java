@@ -1,5 +1,6 @@
 package com.example.wishlist.Activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -15,8 +16,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 //import com.example.wishlist.Class.CategoriesAdapter;
@@ -35,6 +38,7 @@ public class EditProductActivity extends AppCompatActivity {
 //    CategoriesAdapter categoriesAdapter = new CategoriesAdapter(null,EditProductActivity.this);
     long productId;
     Product product;
+    private boolean newProduct;
     private ProductDatabaseHelper productDatabaseHelper;
     private ImageButton saveProduct;
     private CircleImageView productImage;
@@ -56,10 +60,25 @@ public class EditProductActivity extends AppCompatActivity {
     private ArrayList<String> checkedCategories;
 
     public void onBackPressed(View view) {
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra("modifications",true);
-        setResult(RESULT_OK,returnIntent);
-        finish();
+        final Intent returnIntent = new Intent();
+        final DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        returnIntent.putExtra("newProduct", -1);
+                        finish();
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        break;
+                    case DialogInterface.BUTTON_NEUTRAL:
+                        saveProduct(null);
+                }
+            }
+        };
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Quit without saving?").setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener).setNeutralButton("Save",dialogClickListener).show();
     }
 
     @Override
@@ -118,13 +137,18 @@ public class EditProductActivity extends AppCompatActivity {
         productId = intent.getLongExtra("productID",-1);
         productDatabaseHelper = new ProductDatabaseHelper(getApplicationContext());
         if(productId==-1){
-            String TAG="bill";
+            newProduct=true;
+            editCategories(new String[]{});
         }
-        product = productDatabaseHelper.getProductFromID(productId);
-        editProduct(product);
+        else{
+            newProduct=false;
+            product = productDatabaseHelper.getProductFromID(productId);
+            editProduct(product);
+        }
+
     }
 
-    public void saveProductModif(View view){
+    public void saveProduct(View view){
         String newName = nameField.getText().toString();
         String newDescription = descriptionField.getText().toString();
         String[] newCategories = checkedCategories.toArray(new String[0]);
@@ -141,11 +165,19 @@ public class EditProductActivity extends AppCompatActivity {
             newImage = (imageBitmapDrawable).getBitmap();
         }
         product = new Product(newName,newImage,newDescription,newCategories,newWeight,newPrice,newDesire,newDimensions,newTotal,newPurchased);
-        productDatabaseHelper.updateProduct(product,productId);
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra("modifications",true);
-        setResult(RESULT_OK,returnIntent);
-        finish();
+        if(!newProduct){
+            productDatabaseHelper.updateProduct(product,productId);
+            Intent returnIntent = new Intent();
+            setResult(RESULT_OK,returnIntent);
+            finish();
+        }
+        else{
+            productId = productDatabaseHelper.addProduct(product);
+            Intent returnIntent = new Intent();
+            setResult(RESULT_OK,returnIntent);
+            returnIntent.putExtra("newProduct",productId);
+            finish();
+        }
     }
 
     public void editProduct(Product product) {
@@ -159,18 +191,33 @@ public class EditProductActivity extends AppCompatActivity {
         String dimensions = product.getDimensions();
         int total = product.getTotal();
         int purchased = product.getPurchased();
-
-        checkedCategories = new ArrayList<String>(Arrays.asList(categories));
+        editCategories(categories);
         if(image!=null){
         productImage.setImageBitmap(image);
         }
         nameField.setText(productName);
         descriptionField.setText(description);
-        for (int i = 0; i < categoriesList.length; i++) {
+        priceField.setText(String.valueOf(price));
+        desireField.setRating(desire);
+        amountPurchasedField.setText(String.valueOf(purchased));
+        amountTotalField.setText(String.valueOf(total));
+
+        String[] dimensionsArray = ProductDatabaseHelper.convertStringToArray(dimensions);
+        dimensionsXField.setText(dimensionsArray[0]);
+        dimensionsYField.setText(dimensionsArray[1]);
+        dimensionsZField.setText(dimensionsArray[2]);
+        if(weight!=0){
+            weightField.setText(String.valueOf(weight));
+        }
+    }
+
+    public void editCategories(String[] categories){
+        checkedCategories = new ArrayList<String>(Arrays.asList(categories));
+        for (String s : categoriesList) {
             Chip chip = new Chip(this);
             chip.setCheckable(true);
-            chip.setText(categoriesList[i]);
-            if (checkedCategories.contains(categoriesList[i])) {
+            chip.setText(s);
+            if (checkedCategories.contains(s)) {
                 chip.setChecked(true);
             }
             categoriesField.addView(chip);
@@ -194,18 +241,6 @@ public class EditProductActivity extends AppCompatActivity {
                 }
             });
         }
-        priceField.setText(String.valueOf(price));
-        desireField.setRating(desire);
-        amountPurchasedField.setText(String.valueOf(purchased));
-        amountTotalField.setText(String.valueOf(total));
-
-        String[] dimensionsArray = ProductDatabaseHelper.convertStringToArray(dimensions);
-        if(weight!=0){
-            weightField.setText(String.valueOf(weight));
-        }
     }
-        public void newProduct(){
-
-        }
 
 }
