@@ -10,13 +10,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wishlist.Class.Address;
 import com.example.wishlist.Class.DateWish;
-import com.example.wishlist.Class.FollowRecyclerAdapter;
+import com.example.wishlist.Adapters.FollowRecyclerAdapter;
+import com.example.wishlist.Class.FollowListItemDecorator;
 import com.example.wishlist.Class.User;
 import com.example.wishlist.R;
 
 import java.util.ArrayList;
 
-public class ViewFollowsActivity extends AppCompatActivity {
+public class FollowListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
 
@@ -48,6 +49,8 @@ public class ViewFollowsActivity extends AppCompatActivity {
     private void initRecyclerView(){
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
+        FollowListItemDecorator deco = new FollowListItemDecorator(10);
+        recyclerView.addItemDecoration(deco);
         followRecyclerAdapter = new FollowRecyclerAdapter(followed_list);
         recyclerView.setAdapter(followRecyclerAdapter);
     }

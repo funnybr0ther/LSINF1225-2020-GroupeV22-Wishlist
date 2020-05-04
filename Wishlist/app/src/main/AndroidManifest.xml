@@ -45,7 +45,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_path" />
         </provider>
-        <activity android:name=".Activities.ViewFollowsActivity"></activity>
+        <activity android:name=".Activities.FollowListActivity"></activity>
     </application>
 
 </manifest>

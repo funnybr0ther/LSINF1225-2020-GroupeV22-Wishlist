@@ -1,15 +1,11 @@
 package com.example.wishlist.Activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.wishlist.Fragment.ChangePasswordOrEmailDialog;
 import com.example.wishlist.R;
@@ -67,7 +63,7 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     public void viewFollowList(View view){
-        Intent intent = new Intent(this,ViewFollowsActivity.class);
+        Intent intent = new Intent(this, FollowListActivity.class);
         startActivity(intent);
     }
 }
