@@ -52,7 +52,7 @@ public class WishlistDatabaseHelper extends SQLiteOpenHelper {
         String sqlCommand_B="CREATE TABLE "+
                 USER_TABLE_NAME_B + " ("+
                 USER_COL0_B + " INTEGER NOT NULL REFERENCES user (\"userID\"), "+
-                USER_COL1_B + " INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT, "+
+                USER_COL1_B + " INTEGER NOT NULL , "+
                 USER_COL2_B + " TEXT NOT NULL)";
         db.execSQL(sqlCommand_B);
     }
@@ -120,6 +120,17 @@ public class WishlistDatabaseHelper extends SQLiteOpenHelper {
         return quantityArray;
     }
 
+    //WISHLIST DETAIL
+    public boolean addProduct(int productID, int wishlistID, int quantity){
+        SQLiteDatabase db=getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(USER_COL0_A,wishlistID);
+        contentValues.put(USER_COL1_A,productID);
+        contentValues.put(USER_COL2_A,quantity);
+        long err=db.insert(USER_TABLE_NAME_A,null,contentValues);
+        return err!=-1;
+    }
+
     //WISHLIST
     public boolean addWishlist(String name, int userID){
 
@@ -143,7 +154,7 @@ public class WishlistDatabaseHelper extends SQLiteOpenHelper {
             int wishlistID = cursor.getInt(cursor.getColumnIndex(USER_COL1_B));
             String name = cursor.getString(cursor.getColumnIndex(USER_COL2_B));
             int[] productArray = getProducts(wishlistID);
-            int[] quantityArray = getProducts(wishlistID);
+            int[] quantityArray = getQuantity(wishlistID);
 
             Wishlist wishlist = new Wishlist(name,productArray.length, userID, productArray, quantityArray, wishlistID);
 

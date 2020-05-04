@@ -58,4 +58,14 @@ public class DetailWishlistActivity extends AppCompatActivity {
         return products;
     }
 
+    public void pressAddButton(View view){
+        Intent intent = new Intent(this,EditProductActivity.class);
+        intent.putExtra("productID",-1);
+        startActivityForResult(intent,1);
+
+    }
+
+    public void onBackPressed(View view) {
+        onBackPressed();
+    }
 }
