@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/wishlistDetailDynamicLayout">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/wishlist_toolbar"
+            android:id="@+id/wishlist_detail_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="0dp"
@@ -16,8 +17,15 @@
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp">
 
-            <include layout="@layout/wishlist_toolbar" />
+            <include layout="@layout/wishlist_detail_toolbar" />
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-</LinearLayout>
+    <ListView
+        android:id="@+id/wishlist_DetailView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp">
+    </ListView>
+
+</RelativeLayout>
