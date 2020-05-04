@@ -6,7 +6,9 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -21,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wishlist.Class.Address;
+import com.example.wishlist.Class.ImageHelper;
 import com.example.wishlist.Class.UserDatabaseHelper;
 
 import com.example.wishlist.Class.DateWish;
@@ -35,7 +38,7 @@ public class CreateProfileActivity extends AppCompatActivity implements AddPhoto
     private String email;
     private String password;
     private final int MY_PERMISSIONS_REQUEST = 37;
-    private Bitmap image=null;
+    private Bitmap image;
     private CircleImageView profilePhoto;
     private ImageView cameraLogo;
     private EditText editTextFirstName;
@@ -236,6 +239,9 @@ public class CreateProfileActivity extends AppCompatActivity implements AddPhoto
                 }else{
                     Toast toast=Toast.makeText(this,"Account Create",Toast.LENGTH_SHORT);
                     toast.show();
+                    SharedPreferences prefs = this.getSharedPreferences(
+                            "com.example.app", Context.MODE_PRIVATE);
+                    prefs.edit().putInt("userID",userID).apply();
                     Intent intent=new Intent(this,MainMenuActivity.class);
                     intent.putExtra("userID",userID);
                     startActivity(intent);
@@ -261,9 +267,9 @@ public class CreateProfileActivity extends AppCompatActivity implements AddPhoto
     @Override
     public void getUriImage(Uri uri) {
         if(uri!=null){
-            profilePhoto.setImageURI(uri);
             try{
-                image= MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                image= ImageHelper.compress(MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri));
+                profilePhoto.setImageBitmap(image);
             }
             catch (Exception e){
                 Toast toast=Toast.makeText(this,"something went wrong with the image",Toast.LENGTH_SHORT);
