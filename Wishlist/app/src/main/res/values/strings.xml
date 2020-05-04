@@ -301,4 +301,5 @@
     <string name="strWishlistName">Name of your wishlist:</string>
     <string name="NewWishlistFragment">Create a new wishlist :</string>
     <string name="createWishlistButton">Create</string>
+    <string name="wishlistItem_defaultName">Wishlist</string>
 </resources>

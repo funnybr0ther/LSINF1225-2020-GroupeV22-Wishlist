@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.example.wishlist.Activities.ListWishlistActivity;
+
 import java.util.ArrayList;
 
 public class WishlistDatabaseHelper extends SQLiteOpenHelper {
@@ -28,6 +30,16 @@ public class WishlistDatabaseHelper extends SQLiteOpenHelper {
 
     public WishlistDatabaseHelper(@Nullable Context context) { super(context, DATABASE_NAME, null, 1); }
 
+    /*
+
+    Creation de 2 tables de données dans la même classe, afin de respecter notre choix de conception de la BDD,
+    main en facilitant les echanges fréquents entre les 2 table.
+
+    A : Table avec le contenu des wishlists
+
+    B : Table avec la liste des wishlists
+     */
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         String sqlCommand_A="CREATE TABLE "+
@@ -43,7 +55,23 @@ public class WishlistDatabaseHelper extends SQLiteOpenHelper {
                 USER_COL1_B + " INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT, "+
                 USER_COL2_B + " TEXT NOT NULL)";
         db.execSQL(sqlCommand_B);
+    }
 
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        String sqlCommand_A="CREATE TABLE IF NOT EXISTS "+
+                USER_TABLE_NAME_A + " ("+
+                USER_COL0_A + " INTEGER REFERENCES wishlist (\"wishlistID\") NOT NULL, "+   // PAIRE UNIQUE
+                USER_COL1_A + " INTEGER REFERENCES product (\"productReference\") NOT NULL, "+
+                USER_COL2_A + " INTEGER DEFAULT (1))";
+        db.execSQL(sqlCommand_A);
+
+        String sqlCommand_B="CREATE TABLE IF NOT EXISTS "+
+                USER_TABLE_NAME_B + " ("+
+                USER_COL0_B + " INTEGER NOT NULL REFERENCES user (\"userID\"), "+
+                USER_COL1_B + " INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT, "+
+                USER_COL2_B + " TEXT NOT NULL)";
+        db.execSQL(sqlCommand_B);
     }
 
     @Override
@@ -83,7 +111,7 @@ public class WishlistDatabaseHelper extends SQLiteOpenHelper {
         int i = 0;
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            int quantity = cursor.getInt(cursor.getColumnIndex(USER_COL1_A));
+            int quantity = cursor.getInt(cursor.getColumnIndex(USER_COL2_A));
 
             quantityArray[i] = quantity;
             cursor.moveToNext();
@@ -108,8 +136,7 @@ public class WishlistDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db=getReadableDatabase();
         ArrayList<Wishlist> wishlists = new ArrayList<Wishlist>();
 
-
-        String strSql = "SELECT " + USER_COL1_B +", " + USER_COL2_B + " FROM " + USER_TABLE_NAME_B + " WHERE " + USER_COL0_B + " = '" + userID + "'";
+        String strSql = "SELECT " + USER_COL1_B +", " + USER_COL2_B + " FROM " + USER_TABLE_NAME_B + " WHERE " + USER_COL0_B + " = '" + userID + '\'' ;
         Cursor cursor = db.rawQuery(strSql, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
