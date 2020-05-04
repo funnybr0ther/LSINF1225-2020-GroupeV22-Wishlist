@@ -514,7 +514,7 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
     }
     @TargetApi(21)
     @Override
-    public void getUriImage(Uri uri) {
+    public void setUriImage(Uri uri) {
         if(uri!=null){
             profilePhoto.setImageURI(uri);
             try{

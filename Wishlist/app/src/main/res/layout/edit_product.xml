@@ -71,7 +71,8 @@
                     android:layout_alignBaseline="@+id/newName"
                     android:textSize="16sp"
                     android:textColor="@color/black"
-                    android:id="@+id/newNameEdit"/>
+                    android:id="@+id/newNameEdit"
+                    android:maxLines="1"/>
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -97,7 +98,8 @@
                     android:layout_alignBaseline="@id/newDescription"
                     android:layout_toRightOf="@id/newDescription"
                     android:layout_centerVertical="true"
-                    android:id="@+id/newDescriptionEdit"/>
+                    android:id="@+id/newDescriptionEdit"
+                    android:inputType="text"/>
             </RelativeLayout>
             <LinearLayout
                 android:layout_width="match_parent"
