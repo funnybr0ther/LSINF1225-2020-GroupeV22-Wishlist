@@ -17,6 +17,12 @@ public class ImageHelper {
         return stream.toByteArray();
     }
 
+    public static Bitmap compress(Bitmap bitmap){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 0, baos);
+        return bitmap;
+    }
+
     // convert from byte array to bitmap
     public static Bitmap getImage(byte[] image) {
         if(image==null)return null;

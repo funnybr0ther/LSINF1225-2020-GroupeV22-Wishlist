@@ -19,10 +19,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
       
-        <activity android:name=".Activities.CreateProfileActivity"></activity>
+        <activity android:name=".Activities.CreateProfileActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
         <activity android:name=".Activities.CreateNewAccountActivity"></activity>
         <activity android:name=".Activities.MainMenuActivity"></activity>
-        <activity android:name=".Activities.MyProfileActivity"></activity>
+        <activity android:name=".Activities.MyProfileActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
         <activity android:name=".Activities.ViewProductActivity"
             android:configChanges="keyboard|orientation|screenSize"></activity>
         <activity android:name=".Activities.ListWishlistActivity"></activity>
