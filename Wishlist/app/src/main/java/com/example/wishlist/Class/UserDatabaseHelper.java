@@ -116,7 +116,6 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
 
     public User getUserFromID(int userID){
         SQLiteDatabase db=getReadableDatabase();
-        String[] projection={USER_COL0,USER_COL1,USER_COL2};
         String[] condition ={String.valueOf(userID)};
         String selection=USER_COL0+" =?";
         Cursor cursor=db.query(USER_TABLE_NAME,null,selection,condition,null,null,null);

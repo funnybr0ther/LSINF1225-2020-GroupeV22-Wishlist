@@ -23,6 +23,11 @@ public class DateWish {
     public DateWish() {
     }
 
+    public DateWish(String str){
+        try{
+            this.date=formatterDateAndHour.parse(str);
+        }catch (Exception e){}
+    }
     public Date getDate() {
         return date;
     }
@@ -62,6 +67,8 @@ public class DateWish {
     }
 
     public String dateAndHourToString(){
+        if(this.date==null) return "Error";
+        Log.d(TAG, "toD&HString: ");
         return formatterDateAndHour.format(date);
     }
 }
