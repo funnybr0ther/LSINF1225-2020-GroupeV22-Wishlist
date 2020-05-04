@@ -106,6 +106,7 @@
         android:layout_marginTop="50dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
+        android:id="@+id/addProduct"
         android:textSize="40sp"
         android:onClick="addProduct">
     </Button>
@@ -114,7 +115,7 @@
         android:layout_height="wrap_content"
         android:text="Follow List"
         android:layout_below="@id/addProduct"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="50dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:textSize="40sp"
