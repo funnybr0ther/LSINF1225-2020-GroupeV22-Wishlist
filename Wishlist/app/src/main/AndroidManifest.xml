@@ -23,10 +23,12 @@
         <activity android:name=".Activities.CreateNewAccountActivity"></activity>
         <activity android:name=".Activities.MainMenuActivity"></activity>
         <activity android:name=".Activities.MyProfileActivity"></activity>
-        <activity android:name=".Activities.ViewProductActivity"></activity>
+        <activity android:name=".Activities.ViewProductActivity"
+            android:configChanges="keyboard|orientation|screenSize"></activity>
         <activity android:name=".Activities.ListWishlistActivity"></activity>
         <activity android:name=".Activities.ChangePasswordOrEmailActivity"></activity>
-        <activity android:name=".Activities.EditProductActivity"></activity>
+        <activity android:name=".Activities.EditProductActivity"
+            android:configChanges="keyboard|orientation|screenSize"></activity>
         <activity android:name=".Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
