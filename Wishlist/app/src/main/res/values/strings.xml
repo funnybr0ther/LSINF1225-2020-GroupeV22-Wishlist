@@ -255,7 +255,6 @@
     <string name="productInfoTitle"><u>Extra information</u></string>
     <string name="enterPassword">Enter your password to continue</string>
     <string name="dummyProduct">Show Dummy Product</string>
-    <string name="followListPPdescr">Followed Account\'s Profile Picture</string>
     <string name="my_profile">My Profile</string>
     <string name="editProductToolbarText">Edit Product</string>
     <string name="productName">Product Name</string>
@@ -267,6 +266,9 @@
     <string name="newProductDescription">"Description: "</string>
     <string name="newWeight">Weight (grams):</string>
     <string name="newDimensions">Dimensions (cm):</string>
+
+    <string name="followListPPdescr">Followed Account\'s Profile Picture</string>
+    <string name="followListToolbartext">Follow List</string>
 
     <string name="wishlistToolbarText">Whishlist</string>
     <string name="addWishlistDesc">add a Wishlist</string>

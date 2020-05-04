@@ -37,53 +37,66 @@
         android:text="@string/my_profile"
         android:id="@+id/MyProfile"
         android:layout_below="@id/textView"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:textSize="40sp"
+        android:textSize="12sp"
         android:onClick="MyProfile"/>
     <Button
         android:id="@+id/ExampleProduct"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Ex. Product"
-        android:id="@+id/ExempleProduct"
         android:layout_below="@id/MyProfile"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:textSize="40sp"
+        android:textSize="12sp"
         android:onClick="exampleProduct"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Wishlist"
-        android:layout_below="@id/ExempleProduct"
-        android:layout_marginTop="50dp"
+        android:layout_below="@id/ExampleProduct"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:textSize="40sp"
+        android:textSize="12sp"
+        android:id="@+id/wishlist"
         android:onClick="myWishlist"/>
-        android:onClick="changePasswordOrEmail"/>
+
       <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Change Password"
-        android:layout_below="@id/ExampleProduct"
-        android:layout_marginTop="50dp"
+        android:layout_below="@id/wishlist"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:textSize="40sp"
+        android:textSize="12sp"
+        android:id="@+id/changePassword"
         android:onClick="changePasswordOrEmail"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="View History"
-        android:layout_below="@id/ExampleProduct"
-        android:layout_marginTop="200dp"
+        android:layout_below="@id/changePassword"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:textSize="40sp"
+        android:id="@+id/history"
+        android:textSize="12sp"
         android:onClick="viewHistory"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Follow List"
+        android:layout_below="@id/history"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:textSize="12sp"
+        android:onClick="viewFollowList"/>
 
 </RelativeLayout>

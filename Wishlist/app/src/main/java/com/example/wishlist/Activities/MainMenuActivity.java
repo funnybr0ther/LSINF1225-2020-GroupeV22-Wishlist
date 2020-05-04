@@ -48,9 +48,10 @@ public class MainMenuActivity extends AppCompatActivity {
         startActivity(gotToWishlist);
     }
 
-    public void disconnect(View view){
+    public void disconnect(View view) {
         Intent intent2 = new Intent(this, LoginActivity.class);
         startActivity(intent2);
+    }
 
     public void changePasswordOrEmail(View view){
         ChangePasswordOrEmailDialog dialog=new ChangePasswordOrEmailDialog();
@@ -62,6 +63,11 @@ public class MainMenuActivity extends AppCompatActivity {
       
     public void viewHistory(View view){
         Intent intent = new Intent(this, PurchaseViewActivity.class);
+        startActivity(intent);
+    }
+
+    public void viewFollowList(View view){
+        Intent intent = new Intent(this,ViewFollowsActivity.class);
         startActivity(intent);
     }
 }

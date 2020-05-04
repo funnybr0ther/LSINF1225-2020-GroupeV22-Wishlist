@@ -33,7 +33,7 @@ public class FollowRecyclerAdapter extends RecyclerView.Adapter<FollowRecyclerAd
 
         String full_name = followList.get(position).getFirstName()+" "+followList.get(position).getLastName();
         holder.name.setText(full_name);
-        //holder.picture.set comment on set des images mdrrr?
+        holder.picture.setImageBitmap(followList.get(position).getProfilePhoto());
 
     }
 
