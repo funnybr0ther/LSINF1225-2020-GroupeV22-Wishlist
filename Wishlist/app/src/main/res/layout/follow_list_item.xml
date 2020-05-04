@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
+    android:orientation="horizontal"
+    android:weightSum="100">
+
+    <TextView
+        android:id="@+id/followName"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="100"
+        android:lines="1"
+        android:padding="15dp"
+        android:textColor="@color/design_default_color_on_primary"
+        android:textSize="30sp" />
+
+    <ImageView
+        android:id="@+id/followPicture"
+        android:contentDescription="@string/followListPPdescr"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginEnd="0dp" />
+
+
+</LinearLayout>

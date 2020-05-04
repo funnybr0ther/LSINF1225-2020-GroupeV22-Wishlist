@@ -18,7 +18,6 @@
         android:roundIcon="@mipmap/ic_logo_wishlist_v2_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-      
         <activity android:name=".Activities.CreateProfileActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"></activity>
         <activity android:name=".Activities.CreateNewAccountActivity"></activity>
@@ -29,6 +28,7 @@
             android:configChanges="keyboard|orientation|screenSize"></activity>
         <activity android:name=".Activities.ListWishlistActivity"></activity>
         <activity android:name=".Activities.ChangePasswordOrEmailActivity"></activity>
+        <activity android:name=".Activities.DetailWishlistActivity"></activity>
         <activity android:name=".Activities.EditProductActivity"
             android:configChanges="keyboard|orientation|screenSize"></activity>
         <activity android:name=".Activities.LoginActivity">
@@ -48,6 +48,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_path" />
         </provider>
+        <activity android:name=".Activities.ViewFollowsActivity"></activity>
     </application>
 
 </manifest>

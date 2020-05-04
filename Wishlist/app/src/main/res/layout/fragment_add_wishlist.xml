@@ -34,7 +34,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="100dp"
-        android:text="@string/createWishlistButton"
-        android:onClick="PressBtnCreate"/>
+        android:text="@string/createWishlistButton" />
 
 </LinearLayout>
