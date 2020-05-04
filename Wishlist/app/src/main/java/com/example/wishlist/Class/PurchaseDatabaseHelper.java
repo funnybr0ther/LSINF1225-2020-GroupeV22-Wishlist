@@ -27,8 +27,8 @@ public class PurchaseDatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, 1);
     }
     @Override
-    public void onCreate(SQLiteDatabase db){    // Faut pas avoir une KEY pour la db ??
-        String sqlCommand = "CREATE TABLE "+
+    public void onOpen(SQLiteDatabase db){    // Faut pas avoir une KEY pour la db ??
+        String sqlCommand = "CREATE TABLE IF NOT EXISTS "+
                 PURCHASE_TABLE_NAME + " (" +
                 PURCHASE_COL0 + " INTEGER NOT NULL, " +
                 PURCHASE_COL1 + " INTEGER NOT NULL REFERENCES utilisateur(userId), " +
@@ -63,6 +63,12 @@ public class PurchaseDatabaseHelper extends SQLiteOpenHelper {
         }
         return cursor;
     }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        onOpen(db); // C'est bon?
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + PURCHASE_TABLE_NAME);
