@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import com.example.wishlist.Activities.ListWishlistActivity;
 import com.example.wishlist.Class.WishlistDatabaseHelper;
 import com.example.wishlist.R;
 
@@ -21,12 +22,13 @@ public class AddWishlistFragment extends DialogFragment {
 
     private EditText txtName;
     private Button btnCreate;
+    private int userID;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate( R.layout.fragment_add_wishlist, container, false);
-
+        userID = getArguments().getInt("userID");
         txtName = (EditText) rootView.findViewById(R.id.nameCreateWishlist);
         btnCreate = (Button) rootView.findViewById(R.id.buttonCreateWishlist);
 
@@ -45,6 +47,9 @@ public class AddWishlistFragment extends DialogFragment {
                     toast.show();
                 }
                 AddWishlistFragment.this.getDialog().dismiss();
+                Intent intent = new Intent(getContext(), ListWishlistActivity.class);
+                intent.putExtra("userID",userID);
+                startActivity(intent);
             }
         });
         return rootView;

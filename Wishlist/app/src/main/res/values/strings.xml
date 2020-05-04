@@ -291,11 +291,11 @@
     <string name="newAmounts">"Amounts: "</string>
     <string name="amountReceived">Received</string>
     <string name="amountTotal">Total</string>
-
     <string name="wishlistToolbarText">Whishlist</string>
     <string name="addWishlistDesc">add a Wishlist</string>
     <string name="backWishlistMenu">back to main menu</string>
     <string name="strWishlistName">Name of your wishlist:</string>
     <string name="NewWishlistFragment">Create a new wishlist :</string>
     <string name="createWishlistButton">Create</string>
+    <string name="wishlistItem_defaultName">Wishlist</string>
 </resources>

@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.example.wishlist.Activities.ListWishlistActivity;
+
 import java.util.ArrayList;
 
 public class WishlistDatabaseHelper extends SQLiteOpenHelper {
@@ -109,7 +111,7 @@ public class WishlistDatabaseHelper extends SQLiteOpenHelper {
         int i = 0;
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            int quantity = cursor.getInt(cursor.getColumnIndex(USER_COL1_A));
+            int quantity = cursor.getInt(cursor.getColumnIndex(USER_COL2_A));
 
             quantityArray[i] = quantity;
             cursor.moveToNext();
@@ -134,8 +136,7 @@ public class WishlistDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db=getReadableDatabase();
         ArrayList<Wishlist> wishlists = new ArrayList<Wishlist>();
 
-
-        String strSql = "SELECT " + USER_COL1_B +", " + USER_COL2_B + " FROM " + USER_TABLE_NAME_B + " WHERE " + USER_COL0_B + " = '" + userID + "'";
+        String strSql = "SELECT " + USER_COL1_B +", " + USER_COL2_B + " FROM " + USER_TABLE_NAME_B + " WHERE " + USER_COL0_B + " = '" + userID + '\'' ;
         Cursor cursor = db.rawQuery(strSql, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {

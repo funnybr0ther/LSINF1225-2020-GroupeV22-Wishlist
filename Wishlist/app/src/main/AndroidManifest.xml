@@ -27,6 +27,7 @@
         <activity android:name=".Activities.ListWishlistActivity"></activity>
         <activity android:name=".Activities.ChangePasswordOrEmailActivity"></activity>
         <activity android:name=".Activities.EditProductActivity"></activity>
+        <activity android:name=".Activities.DetailWishlistActivity"></activity>
         <activity android:name=".Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

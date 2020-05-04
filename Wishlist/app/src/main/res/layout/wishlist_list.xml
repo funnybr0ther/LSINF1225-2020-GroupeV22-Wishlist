@@ -21,13 +21,11 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="50dp"
-        android:textSize="40sp" />
+    <ListView
+        android:id="@+id/wishlist_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp">
+    </ListView>
 
 </RelativeLayout>
