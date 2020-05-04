@@ -21,7 +21,10 @@ public class DateWish {
     }
 
     public DateWish() {
+    }
 
+    public Date getDate() {
+        return date;
     }
 
     public void setDate(int day, String month, int year ){
@@ -47,6 +50,17 @@ public class DateWish {
     public void setDateAndHour(Date time){
         date=time;
     }
+
+    public void setDateAndHourFromString(String str){
+        try{
+            date=formatterDateAndHour.parse(str);
+        }catch (Exception e){}
+    }
+
+    public int compareTo(DateWish date2){
+        return date.compareTo(date2.getDate());
+    }
+
     public String dateAndHourToString(){
         return formatterDateAndHour.format(date);
     }

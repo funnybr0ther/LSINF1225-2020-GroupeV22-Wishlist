@@ -50,23 +50,21 @@ public class PurchaseViewFragment extends Fragment {
             Toast.makeText(getActivity()," No purchase has been made !", Toast.LENGTH_LONG).show();
         }
         while (cursor.moveToNext()){    //getX où X est le type de donnée stockée
-            String[] date = cursor.getString(5).split(" ");
-            DateWish day = new DateWish(Integer.getInteger(date[0]),date[1],Integer.getInteger(date[2]));
+            DateWish date = new DateWish();
+            date.setDateAndHourFromString(cursor.getString(5));
             purhcases.add(new Purchase(
                     cursor.getInt(1),   // ID Acheteur
                     cursor.getInt(2),   // ID Receveur
                     cursor.getInt(3),    //  Product
                     cursor.getInt(4),   // quantité
-                    day));  // DateWish
+                    date));  // DateWish
         }
 
         // On trie les Purchase selon leur date sous le format : (YYYY MM DD) !!!
         Collections.sort(purhcases, new Comparator<Purchase>() {
             @Override
             public int compare(Purchase A, Purchase B) {
-                String dateA = A.getDate().toString();
-                String dateB = B.getDate().toString();
-                return dateA.compareTo(dateB);
+                return A.getDate().compareTo(B.getDate());
             }
         });
 

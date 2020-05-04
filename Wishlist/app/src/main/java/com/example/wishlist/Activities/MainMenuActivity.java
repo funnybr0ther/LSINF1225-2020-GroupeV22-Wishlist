@@ -51,6 +51,7 @@ public class MainMenuActivity extends AppCompatActivity {
     public void disconnect(View view){
         Intent intent2 = new Intent(this, LoginActivity.class);
         startActivity(intent2);
+    }
 
     public void changePasswordOrEmail(View view){
         ChangePasswordOrEmailDialog dialog=new ChangePasswordOrEmailDialog();
