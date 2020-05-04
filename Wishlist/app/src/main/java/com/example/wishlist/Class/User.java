@@ -8,7 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class User {
-    private Address address;
+    private Address address;  //commentraire
     private String firstName;
     private String lastName;
     private String email;

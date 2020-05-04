@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/wishlistDynamicLayout">
-
+    android:layout_height="match_parent">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/wishlist_toolbar"
             android:layout_width="match_parent"
@@ -16,16 +14,17 @@
             android:layout_marginLeft="0dp"
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp">
-
-            <include layout="@layout/wishlist_toolbar" />
+            <include layout="@layout/follow_list_toolbar" />
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <ListView
-        android:id="@+id/wishlist_listview"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewFollows"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="60dp">
-    </ListView>
+        android:orientation="vertical"
+        android:padding="5dp">
 
-</RelativeLayout>
+    </androidx.recyclerview.widget.RecyclerView>
+
+</LinearLayout>

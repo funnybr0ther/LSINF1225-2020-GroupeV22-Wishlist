@@ -19,10 +19,10 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
     <ScrollView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <RelativeLayout
@@ -45,7 +45,7 @@
                     android:layout_below="@+id/productEditPhoto"
                     android:layout_toRightOf="@id/productEditPhoto"
                     android:layout_marginLeft="20dp"
-                    app:srcCompat="@drawable/ic_camera" />
+                    app:srcCompat="@drawable/ic_image_black_24dp" />
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -71,7 +71,8 @@
                     android:layout_alignBaseline="@+id/newName"
                     android:textSize="16sp"
                     android:textColor="@color/black"
-                    android:id="@+id/newNameEdit"/>
+                    android:id="@+id/newNameEdit"
+                    android:maxLines="1"/>
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -97,7 +98,8 @@
                     android:layout_alignBaseline="@id/newDescription"
                     android:layout_toRightOf="@id/newDescription"
                     android:layout_centerVertical="true"
-                    android:id="@+id/newDescriptionEdit"/>
+                    android:id="@+id/newDescriptionEdit"
+                    android:inputType="text"/>
             </RelativeLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -117,8 +119,9 @@
                 <com.google.android.material.chip.ChipGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/categoriesGroups"
-                    app:chipSpacingHorizontal="25dp">
+                    android:id="@+id/newCategoriesGroup"
+                    app:chipSpacingHorizontal="25dp"
+                    style="@style/Widget.MaterialComponents.ChipGroup">
                 </com.google.android.material.chip.ChipGroup>
             </LinearLayout>
             <RelativeLayout
@@ -141,7 +144,7 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/textPrice"
-                    android:id="@+id/getAddressLine2"
+                    android:id="@+id/newPrice"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:layout_alignBaseline="@id/textPrice"
@@ -160,19 +163,19 @@
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:layout_centerVertical="true"
-                    android:id="@+id/newWeight"
+                    android:id="@+id/weightTitle"
                     android:text="@string/newWeight"/>
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/newWeight"
+                    android:layout_toRightOf="@id/weightTitle"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:inputType="number"
-                    android:id="@+id/weight"
-                    android:layout_alignBaseline="@id/newWeight"
+                    android:id="@+id/newWeight"
+                    android:layout_alignBaseline="@id/weightTitle"
                     android:layout_centerVertical="true"/>
             </RelativeLayout>
             <RelativeLayout
@@ -196,6 +199,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <EditText
+                        android:id="@+id/dimensionsX"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:inputType="number">
@@ -209,6 +213,7 @@
                         android:layout_gravity="center_vertical">
                     </TextView>
                     <EditText
+                        android:id="@+id/dimensionsY"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:inputType="number">
@@ -222,9 +227,90 @@
                         android:layout_gravity="center_vertical">
                     </TextView>
                     <EditText
+                        android:id="@+id/dimensionsZ"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:inputType="number">
+                    </EditText>
+                </LinearLayout>
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/desireField"
+                android:orientation="vertical"
+                android:padding="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:id="@+id/desireTitle"
+                    android:text="@string/desire"
+                    android:layout_centerVertical="true">
+                </TextView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal">
+                    <RatingBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:id="@+id/newDesire"
+                        android:numStars="5"
+                        android:stepSize="1.0"
+                        android:isIndicator="false"
+                        ></RatingBar>
+                </LinearLayout>
+            </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/boughtField"
+                android:layout_below="@id/desireField"
+                android:padding="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:id="@+id/newBought"
+                    android:text="@string/newAmounts"
+                    android:layout_centerVertical="true">
+                </TextView>
+                <LinearLayout
+                    android:layout_toRightOf="@id/newBought"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/amountReceived">
+                    </TextView>
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:id="@+id/newReceived">
+                    </EditText>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="/">
+                    </TextView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/amountTotal">
+                    </TextView>
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:id="@+id/newTotal">
                     </EditText>
                 </LinearLayout>
             </RelativeLayout>

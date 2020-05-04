@@ -36,18 +36,26 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profilePhoto"
+                    android:visibility="visible"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="30dp"
                     app:civ_border_color="@color/black"
                     app:civ_border_width="1dp"/>
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:id="@+id/profilePicture"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="30dp"
+                    android:visibility="gone"/>
 
                 <ImageView
                     android:id="@+id/logoCamera"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_below="@+id/profilePhoto"
+                    android:layout_below="@id/profilePhoto"
                     android:layout_toRightOf="@id/profilePhoto"
                     android:layout_marginLeft="20dp"
                     app:srcCompat="@drawable/ic_camera" />
@@ -75,6 +83,7 @@
                     android:layout_toRightOf="@id/newMail"
                     android:layout_centerVertical="true"
                     android:layout_alignBaseline="@+id/newMail"
+                    android:inputType="text"
                     android:textSize="16sp"
                     android:textColor="@color/black"
                     android:id="@+id/newmail"/>
@@ -99,6 +108,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
                     android:layout_marginLeft="10dp"
+                    android:inputType="text"
                     android:textSize="16sp"
                     android:textColor="@color/black"
                     android:layout_alignBaseline="@id/textLastName"
@@ -125,6 +135,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
                     android:layout_marginLeft="10dp"
+                    android:inputType="text"
                     android:layout_toRightOf="@id/textAddressLine1"
                     android:id="@+id/getAddressLine1"
                     android:textColor="@color/black"
@@ -152,6 +163,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
                     android:layout_marginLeft="10dp"
+                    android:inputType="text"
                     android:layout_toRightOf="@id/textAddressLine2"
                     android:id="@+id/getAddressLine2"
                     android:textColor="@color/black"
@@ -179,6 +191,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
                     android:layout_marginLeft="10dp"
+                    android:inputType="text"
                     android:layout_toRightOf="@id/textCity"
                     android:textColor="@color/black"
                     android:textSize="16sp"
@@ -237,6 +250,7 @@
                     android:layout_toRightOf="@id/textCountry"
                     android:layout_centerVertical="true"
                     android:textColor="@color/black"
+                    android:inputType="text"
                     android:textSize="16sp"
                     android:id="@+id/getCountry"
                     android:layout_alignBaseline="@id/textCountry"/>

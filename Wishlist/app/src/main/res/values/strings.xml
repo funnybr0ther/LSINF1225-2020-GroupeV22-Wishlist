@@ -241,6 +241,27 @@
         <item>White</item>
         <item>Yellow</item>
     </string-array>
+    <string-array name="categories">
+        <item>Garden</item>
+        <item>Clothes</item>
+        <item>Music</item>
+        <item>Videogames</item>
+        <item>Computer</item>
+        <item>Games</item>
+        <item>Jewelry</item>
+        <item>Travel</item>
+        <item>Children</item>
+        <item>Crafting</item>
+        <item>School Furniture</item>
+        <item>Home Appliance</item>
+        <item>Cooking</item>
+        <item>Automotive</item>
+        <item>Books</item>
+        <item>Movies and TV</item>
+        <item>Audio and Multimedia</item>
+        <item>Sports</item>
+        <item>Pet</item>
+    </string-array>
     <string name="Consigne">Fill in these informations to complete your registration. These with a * are required, the others are optionnal</string>
     <string name="wrongDate">Please insert a valid Date</string>
     <string name="changePhoto">Change Photo</string>
@@ -266,6 +287,13 @@
     <string name="newProductDescription">"Description: "</string>
     <string name="newWeight">Weight (grams):</string>
     <string name="newDimensions">Dimensions (cm):</string>
+    <string name="desire">Desire:</string>
+    <string name="newAmounts">"Amounts: "</string>
+    <string name="amountReceived">Received</string>
+    <string name="amountTotal">Total</string>
+
+    <string name="followListPPdescr">Followed Account\'s Profile Picture</string>
+    <string name="followListToolbartext">Follow List</string>
 
     <string name="wishlistToolbarText">Whishlist</string>
     <string name="addWishlistDesc">add a Wishlist</string>
@@ -273,4 +301,5 @@
     <string name="strWishlistName">Name of your wishlist:</string>
     <string name="NewWishlistFragment">Create a new wishlist :</string>
     <string name="createWishlistButton">Create</string>
+    <string name="wishlistItem_defaultName">Wishlist</string>
 </resources>

@@ -5,13 +5,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.wishlist.Adapters.WishlistAdapter;
+import com.example.wishlist.Class.Wishlist;
+import com.example.wishlist.Class.WishlistDatabaseHelper;
 import com.example.wishlist.Fragment.AddWishlistFragment;
 import com.example.wishlist.R;
+
+import java.util.ArrayList;
 
 public class ListWishlistActivity extends AppCompatActivity {
 
@@ -24,48 +30,37 @@ public class ListWishlistActivity extends AppCompatActivity {
         setContentView(R.layout.wishlist_list);
         Intent intent=getIntent();
 
+        //check si l'activité recoit bien le userID
         if (intent.hasExtra("userID")){
             userID = intent.getIntExtra("userID",-1);
-            TextView textView = findViewById(R.id.textView);
-            textView.setText(Integer.toString(userID));
-        }
-        else{//If no userID go back to LoginActivity
-            //Toast toast=new Toast(this,);
+        } else{
             Intent backToLogin=new Intent(this,LoginActivity.class);
         }
 
-        /*
-        this.myLayout = (LinearLayout) findViewById(R.id.wishlistDynamicLayout);
+        //Va chercher dans la BDD les wishlist d'un utilisateur grace a son userID
         WishlistDatabaseHelper db = new WishlistDatabaseHelper(getApplicationContext());
         ArrayList<Wishlist> list = db.getUserWishlist(userID);
-        for(int i = 0; i < list.size(); i++){
 
-        }*/
+        ListView wishlistListView = findViewById(R.id.wishlist_listview);
+        wishlistListView.setAdapter(new WishlistAdapter(this, list));
     }
 
     public void pressAddButton(View view){
-        //AddWishlist menu = new AddWishlist();
-        //menu.show(ListWishlistActivity.this.getSupportFragmentManager(), "ha");
+        AddWishlistFragment dialog=new AddWishlistFragment();
+        Bundle args = new Bundle();
+        args.putInt("userID", userID);
+        dialog.setArguments(args);
+        dialog.show(ListWishlistActivity.this.getSupportFragmentManager(),"Add list");
 
-        //AddWishlistFragment addMenu = new AddWishlistFragment();
-        //addMenu.onCreateView(getLayoutInflater(), null,null);
-        //FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        //transaction.replace(R.id.fragment_container, addMenu);
-        //transaction.add(R.id.fragment_container, addMenu).commit();
-        //transaction.addToBackStack(null);
-        //transaction.commit();
-
-        Button wishlist = new Button(this);
-        wishlist.setText("ajout");
-        wishlist.setWidth(200);
-        myLayout.addView(wishlist);
     }
 
-    public void printWishlist(String name){
-        Button wishlist = new Button(this);
-        wishlist.setText(name);
-        wishlist.setWidth(200);
-        myLayout.addView(wishlist);
+    public void printWishlist(){
+        //Va chercher dans la BDD les wishlist d'un utilisateur grace a son userID
+        WishlistDatabaseHelper db = new WishlistDatabaseHelper(getApplicationContext());
+        ArrayList<Wishlist> list = db.getUserWishlist(userID);
+
+        ListView wishlistListView = findViewById(R.id.wishlist_listview);
+        wishlistListView.setAdapter(new WishlistAdapter(this, db.getUserWishlist(userID)));
     }
 
     public void onBackPressed(View view) {

@@ -3,7 +3,9 @@ package com.example.wishlist.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -20,6 +22,13 @@ public class LoginActivity extends AppCompatActivity {
     @TargetApi(21)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences prefs = this.getSharedPreferences(
+                "com.example.app", Context.MODE_PRIVATE);
+        int tmpUserID=prefs.getInt("userID",-1);
+        if(tmpUserID!=-1){
+            Intent intent=new Intent(this,MainMenuActivity.class);
+            startActivity(intent);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_v2);
         editTextMail= (EditText)findViewById(R.id.username);
@@ -39,6 +48,9 @@ public class LoginActivity extends AppCompatActivity {
         UserDatabaseHelper dbHelper=new UserDatabaseHelper(getApplicationContext());
         int userID=dbHelper.checkUser(mail,password);
         if (userID!=-1){
+            SharedPreferences prefs = this.getSharedPreferences(
+                    "com.example.app", Context.MODE_PRIVATE);
+            prefs.edit().putInt("userID",userID).apply();
             Intent intent=new Intent(this,MainMenuActivity.class);
             intent.putExtra("userID",userID);
             startActivity(intent);
