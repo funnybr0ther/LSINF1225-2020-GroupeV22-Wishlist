@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -36,7 +37,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EditProductActivity extends AppCompatActivity {
 //    CategoriesAdapter categoriesAdapter = new CategoriesAdapter(null,EditProductActivity.this);
-    long productId;
+    int productId;
     Product product;
     private boolean newProduct;
     private ProductDatabaseHelper productDatabaseHelper;
@@ -134,9 +135,10 @@ public class EditProductActivity extends AppCompatActivity {
             }
         });
         Intent intent = getIntent();
-        productId = intent.getLongExtra("productID",-1);
+        productId = intent.getIntExtra("productID",-1);
         productDatabaseHelper = new ProductDatabaseHelper(getApplicationContext());
         if(productId==-1){
+            Log.d("BILIBU", "onCreate: NEW PRODUCT");
             newProduct=true;
             editCategories(new String[]{});
         }
@@ -150,6 +152,9 @@ public class EditProductActivity extends AppCompatActivity {
 
     public void saveProduct(View view){
         String newName = nameField.getText().toString();
+        if(newName.length()<=0){
+            nameField.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
+        }
         String newDescription = descriptionField.getText().toString();
         String[] newCategories = checkedCategories.toArray(new String[0]);
         int newPrice = Integer.parseInt(priceField.getText().toString());

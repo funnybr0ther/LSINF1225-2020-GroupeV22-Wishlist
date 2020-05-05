@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wishlist.Class.Address;
 import com.example.wishlist.Class.DateWish;
-import com.example.wishlist.Class.FollowRecyclerAdapter;
+import com.example.wishlist.Adapters.FollowRecyclerAdapter;
 import com.example.wishlist.Class.User;
 import com.example.wishlist.R;
 
