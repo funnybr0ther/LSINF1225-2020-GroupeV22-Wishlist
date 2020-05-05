@@ -10,15 +10,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.wishlist.Class.DateWish;
-import com.example.wishlist.Class.Product;
 import com.example.wishlist.Class.ProductDatabaseHelper;
-import com.example.wishlist.Class.Purchase;
-import com.example.wishlist.Class.PurchaseDatabaseHelper;
 import com.example.wishlist.Fragment.ChangePasswordOrEmailDialog;
 import com.example.wishlist.R;
-
-import java.util.Date;
 
 public class MainMenuActivity extends AppCompatActivity {
     private int userID;
@@ -79,7 +73,7 @@ public class MainMenuActivity extends AppCompatActivity {
         dialog.setArguments(args);
         dialog.show(MainMenuActivity.this.getSupportFragmentManager(),"he");
     }
-      
+
     public void viewHistory(View view){
         Intent intent = new Intent(this, PurchaseViewActivity.class);
         startActivity(intent);
@@ -92,18 +86,6 @@ public class MainMenuActivity extends AppCompatActivity {
         Intent intent = new Intent(this,EditProductActivity.class);
         intent.putExtra("productID",-1);
         startActivityForResult(intent,1);
-    }
-    public void addPurchase(View view){
-        String[] str={"Garden"};
-        Product product=new Product("Xbox",null,null,str,100,100,2,null,2,3);
-        ProductDatabaseHelper productDatabaseHelper=new ProductDatabaseHelper(getApplicationContext());
-        productDatabaseHelper.addProduct(product);
-        Date date=new Date();
-        DateWish dateWish=new DateWish(date);
-        TextView textView=findViewById(R.id.textView);
-        textView.setText(dateWish.dateAndHourToString());
-        PurchaseDatabaseHelper purchaseDatabaseHelper=new PurchaseDatabaseHelper(getApplicationContext());
-        purchaseDatabaseHelper.addPurchase(new Purchase(userID,userID,1,1,dateWish));
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
