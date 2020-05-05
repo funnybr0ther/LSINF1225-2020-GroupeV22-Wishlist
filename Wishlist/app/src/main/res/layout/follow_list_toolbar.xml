@@ -23,7 +23,7 @@
             android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="@color/colorPrimary"
-            android:onClick="onBackPressed"
+            android:onClick="searchUser"
             android:scaleType="fitCenter"
             app:srcCompat="@android:drawable/ic_menu_search" />
         <!-- foutre une vraie fonction on click -->

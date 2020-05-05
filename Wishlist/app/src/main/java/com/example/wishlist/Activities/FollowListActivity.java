@@ -13,6 +13,7 @@ import com.example.wishlist.Class.DateWish;
 import com.example.wishlist.Adapters.FollowRecyclerAdapter;
 import com.example.wishlist.Class.FollowListItemDecorator;
 import com.example.wishlist.Class.User;
+import com.example.wishlist.Fragment.SearchUserDialog;
 import com.example.wishlist.R;
 
 import java.util.ArrayList;
@@ -57,5 +58,12 @@ public class FollowListActivity extends AppCompatActivity {
 
     public void onBackPressed(View view) {
         onBackPressed();
+    }
+
+    public void searchUser(View view){
+        SearchUserDialog dialog = new SearchUserDialog();
+        Bundle args = new Bundle();
+        dialog.setArguments(args);
+        dialog.show(FollowListActivity.this.getSupportFragmentManager(),"hein");
     }
 }
