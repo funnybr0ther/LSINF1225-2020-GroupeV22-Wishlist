@@ -15,6 +15,8 @@ import com.example.wishlist.Class.PurchaseDatabaseHelper;
 import com.example.wishlist.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class PurchaseViewActivity extends AppCompatActivity {
@@ -31,6 +33,13 @@ public class PurchaseViewActivity extends AppCompatActivity {
         int userID=prefs.getInt("userID",-1);
         PurchaseDatabaseHelper dbHelper=new PurchaseDatabaseHelper(getApplicationContext());
         ArrayList<Purchase> list=dbHelper.getUserHistory(userID);
+        Comparator<Purchase> byDateNewestFirst=new Comparator<Purchase>() {
+            @Override
+            public int compare(Purchase o1, Purchase o2) {
+                return o2.getDate().compareTo(o1.getDate());
+            }
+        };
+        Collections.sort(list,byDateNewestFirst);
         listViewPurchases.setAdapter(new PurchaseAdapter(this,list));
 
     }
