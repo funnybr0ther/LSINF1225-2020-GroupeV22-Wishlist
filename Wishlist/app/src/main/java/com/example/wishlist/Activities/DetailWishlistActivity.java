@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -24,11 +25,13 @@ public class DetailWishlistActivity extends AppCompatActivity {
 
     private int userID;
     private int wishlistID;
+    WishlistDatabaseHelper dbWishlist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wishlist_detail);
+        dbWishlist = new WishlistDatabaseHelper(getApplicationContext());
         Intent intent=getIntent();
 
         //check que les elements necessaire à l'activite sont present
@@ -48,7 +51,6 @@ public class DetailWishlistActivity extends AppCompatActivity {
         }
 
         //Va chercher dans la BDD les product d'une wishlist grace a sa wishlistID
-        WishlistDatabaseHelper dbWishlist = new WishlistDatabaseHelper(getApplicationContext());
         int[] productID = dbWishlist.getProducts(wishlistID);
     }
 
@@ -61,8 +63,22 @@ public class DetailWishlistActivity extends AppCompatActivity {
     public void pressAddButton(View view){
         Intent intent = new Intent(this,EditProductActivity.class);
         intent.putExtra("productID",-1);
-        startActivityForResult(intent,1);
+        startActivityForResult(intent,4);
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1){
+            if (resultCode == RESULT_OK) {
+                if(data.hasExtra("newProduct")) {
+                    int productID = data.getIntExtra("newProduct", -1);
+                    dbWishlist.addProduct(productID,wishlistID);
+                    //TODO quantity
+                }
+            }
+        }
     }
 
     public void onBackPressed(View view) {

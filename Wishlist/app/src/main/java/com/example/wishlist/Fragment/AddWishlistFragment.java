@@ -53,6 +53,7 @@ public class AddWishlistFragment extends DialogFragment {
                 intent.putExtra("userID",userID);
                 startActivity(intent);
             */
+                // A suprimer si le code en dessous fonctionne
                 ListWishlistActivity callingActivity = (ListWishlistActivity) getActivity();
                 callingActivity.fragmentReturn();
                 dismiss();
