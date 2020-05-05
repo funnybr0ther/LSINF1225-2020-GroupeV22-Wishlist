@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -36,9 +37,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EditProductActivity extends AppCompatActivity {
 //    CategoriesAdapter categoriesAdapter = new CategoriesAdapter(null,EditProductActivity.this);
-    long productId;
+    int productId;
     Product product;
     private boolean newProduct;
+    private boolean copyProduct;
+
     private ProductDatabaseHelper productDatabaseHelper;
     private ImageButton saveProduct;
     private CircleImageView productImage;
@@ -134,9 +137,11 @@ public class EditProductActivity extends AppCompatActivity {
             }
         });
         Intent intent = getIntent();
-        productId = intent.getLongExtra("productID",-1);
+        productId = intent.getIntExtra("productID",-1);
+        copyProduct = intent.getBooleanExtra("copyProduct",false);
         productDatabaseHelper = new ProductDatabaseHelper(getApplicationContext());
         if(productId==-1){
+            Log.d("BILIBU", "onCreate: NEW PRODUCT");
             newProduct=true;
             editCategories(new String[]{});
         }
@@ -149,8 +154,14 @@ public class EditProductActivity extends AppCompatActivity {
     }
 
     public void saveProduct(View view){
+        boolean error = false;
         String newName = nameField.getText().toString();
+        if(newName.length()<=0){
+            error=true;
+            nameField.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
+        }
         String newDescription = descriptionField.getText().toString();
+
         String[] newCategories = checkedCategories.toArray(new String[0]);
         int newPrice = Integer.parseInt(priceField.getText().toString());
         int newWeight = Integer.parseInt(weightField.getText().toString());
@@ -164,19 +175,20 @@ public class EditProductActivity extends AppCompatActivity {
         if(imageBitmapDrawable != null){
             newImage = (imageBitmapDrawable).getBitmap();
         }
-        product = new Product(newName,newImage,newDescription,newCategories,newWeight,newPrice,newDesire,newDimensions,newTotal,newPurchased);
-        if(!newProduct){
-            productDatabaseHelper.updateProduct(product,productId);
-            Intent returnIntent = new Intent();
-            setResult(RESULT_OK,returnIntent);
-            finish();
-        }
-        else{
-            productId = productDatabaseHelper.addProduct(product);
-            Intent returnIntent = new Intent();
-            setResult(RESULT_OK,returnIntent);
-            returnIntent.putExtra("newProduct",productId);
-            finish();
+        if(!error) {
+            product = new Product(newName, newImage, newDescription, newCategories, newWeight, newPrice, newDesire, newDimensions, newTotal, newPurchased);
+            if (!newProduct && !copyProduct) {
+                productDatabaseHelper.updateProduct(product, productId);
+                Intent returnIntent = new Intent();
+                setResult(RESULT_OK, returnIntent);
+                finish();
+            } else {
+                productId = productDatabaseHelper.addProduct(product);
+                Intent returnIntent = new Intent();
+                setResult(RESULT_OK, returnIntent);
+                returnIntent.putExtra("newProduct", productId);
+                finish();
+            }
         }
     }
 

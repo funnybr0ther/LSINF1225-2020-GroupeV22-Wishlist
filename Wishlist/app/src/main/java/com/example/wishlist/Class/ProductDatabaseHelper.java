@@ -46,7 +46,7 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         Log.d(TAG, "onCreate: ");
         String sqlCommand="CREATE TABLE "+
                 PRODUCT_TABLE_NAME + " ("+
-                PRODUCT_COL0 + " LONG NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT, "+
+                PRODUCT_COL0 + " INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT, "+
                 PRODUCT_COL1 + " TEXT NOT NULL, "+
                 PRODUCT_COL2 + " INTEGER NOT NULL, "+
                 PRODUCT_COL3 + " TEXT, "+
@@ -64,7 +64,7 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
     public void onOpen(SQLiteDatabase db) {
         String sqlCommand="CREATE TABLE IF NOT EXISTS "+
                 PRODUCT_TABLE_NAME + " ("+
-                PRODUCT_COL0 + " LONG NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT, "+
+                PRODUCT_COL0 + " INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT, "+
                 PRODUCT_COL1 + " TEXT NOT NULL, "+
                 PRODUCT_COL2 + " INTEGER NOT NULL, "+
                 PRODUCT_COL3 + " TEXT, "+
@@ -88,7 +88,7 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public long addProduct(Product product){
+    public int addProduct(Product product){
         /**
             Add Product product to the database
          */
@@ -104,7 +104,7 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(PRODUCT_COL8,product.getDesire());
         contentValues.put(PRODUCT_COL9,product.getTotal());
         contentValues.put(PRODUCT_COL10,product.getPurchased());
-        long err=db.insert(PRODUCT_TABLE_NAME,null,contentValues);
+        int err= (int) db.insert(PRODUCT_TABLE_NAME,null,contentValues);
         return err;
     }
 
