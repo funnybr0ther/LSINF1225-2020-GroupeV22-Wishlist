@@ -6,7 +6,9 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -114,7 +116,20 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
         setContentView(R.layout.my_profile);
         //Get the userID then create user with information in db relative to that ID
         Intent intent=getIntent();
-        userID=intent.getIntExtra("userID",-1);
+
+        //Get UserID and go back to login if there is no
+        SharedPreferences prefs = this.getSharedPreferences(
+                "com.example.app", Context.MODE_PRIVATE);
+        int tmpUserID=prefs.getInt("userID",-1);
+        if (tmpUserID!=-1){
+            userID=tmpUserID;
+        }
+        else{//If no userID go back to LoginActivity
+            Toast toast=Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT);
+            toast.show();
+            Intent backToLogin=new Intent(this,LoginActivity.class);
+        }
+
         UserDatabaseHelper dbHelper= new UserDatabaseHelper(getApplicationContext());
 
         user=dbHelper.getUserFromID(userID);
@@ -483,7 +498,6 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
             user.setFavoriteColor(favoriteColor);
             user.setSize(size);
             user.setShoeSize(shoeSize);
-            user.setProfilePhoto(image);
 
             UserDatabaseHelper dbHelper= new UserDatabaseHelper(getApplicationContext());
             if(dbHelper.updateUser(user,userID)){
@@ -518,6 +532,7 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
         else {
             profilePhoto.setImageBitmap(bitmap);
             image=bitmap;
+            user.setProfilePhoto(image);
         }
     }
     @TargetApi(21)
@@ -527,6 +542,7 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
             profilePhoto.setImageURI(uri);
             try{
                 image= MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                user.setProfilePhoto(image);
             }
             catch (Exception e){
                 Toast toast=Toast.makeText(this,"something went wrong with the image",Toast.LENGTH_SHORT);

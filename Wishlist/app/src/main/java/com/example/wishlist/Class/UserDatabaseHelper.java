@@ -61,6 +61,7 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    //Add user in db return false if something went wrong
     public boolean addUser(User user){
         SQLiteDatabase db=getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -81,6 +82,7 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         return err!=-1;
     }
 
+    //Check if any user is register with this mail and this password
     public int checkUser(String mail, String password){
         SQLiteDatabase db=getReadableDatabase();
         String[] projection={USER_COL0,USER_COL1,USER_COL2};
@@ -103,6 +105,7 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    //Check if mail isn't used by another user
     public boolean checkMail(String mail){
         SQLiteDatabase db=getReadableDatabase();
         String[] projection={USER_COL0,USER_COL1,USER_COL2};
@@ -140,6 +143,7 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         String shoeSize=cursor.getString(cursor.getColumnIndex(USER_COL8));
         return new User(address,firstName,lastName,email,birthDate,password,ImageHelper.getImage(profilePhoto),favoriteColor,size,shoeSize);
     }
+
     public boolean updateUser(User user, int userID){
         SQLiteDatabase db=getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -159,6 +163,7 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         int err=db.update(USER_TABLE_NAME,contentValues,USER_COL0+" = ?",new String[]{String.valueOf(userID)});
         return err!=-1;
     }
+    //Check if the couple password UserID is present in the db
     public boolean checkPassword(int userID, String password){
         SQLiteDatabase db=getReadableDatabase();
         String[] condition ={String.valueOf(userID),password};
@@ -167,5 +172,10 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         boolean sol=cursor.getCount()==1;
         cursor.close();
         return sol;
+    }
+    //return number of row delete (here max 1 as userID is a primary key)
+    public int delete(int userID){
+        SQLiteDatabase db=getWritableDatabase();
+        return db.delete(USER_TABLE_NAME,USER_COL0+"=?",new String[]{String.valueOf(userID)});
     }
 }

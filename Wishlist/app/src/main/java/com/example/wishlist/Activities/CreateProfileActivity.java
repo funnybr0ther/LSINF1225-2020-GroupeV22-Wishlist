@@ -243,7 +243,6 @@ public class CreateProfileActivity extends AppCompatActivity implements AddPhoto
                             "com.example.app", Context.MODE_PRIVATE);
                     prefs.edit().putInt("userID",userID).apply();
                     Intent intent=new Intent(this,MainMenuActivity.class);
-                    intent.putExtra("userID",userID);
                     startActivity(intent);
                 }
             }else {
