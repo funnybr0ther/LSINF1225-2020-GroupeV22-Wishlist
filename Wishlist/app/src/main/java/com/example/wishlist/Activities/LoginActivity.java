@@ -52,7 +52,6 @@ public class LoginActivity extends AppCompatActivity {
                     "com.example.app", Context.MODE_PRIVATE);
             prefs.edit().putInt("userID",userID).apply();
             Intent intent=new Intent(this,MainMenuActivity.class);
-            intent.putExtra("userID",userID);
             startActivity(intent);
         }
         else{
