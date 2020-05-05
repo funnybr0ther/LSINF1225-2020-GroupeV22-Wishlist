@@ -22,7 +22,7 @@ public class FollowListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
 
-    private ArrayList<User> followed_list = new ArrayList<>();
+    private ArrayList<User> followList = new ArrayList<>();
     private FollowRecyclerAdapter followRecyclerAdapter;
 
     @Override
@@ -40,10 +40,10 @@ public class FollowListActivity extends AppCompatActivity {
         User sieg = new User(new Address("Ici","La","Nob",12),"Siegfried","Nijsen","kim.mens@hotmail.com",new DateWish(11,"Janvier",1903),"1234aA");
         User jeandidou = new User(new Address("Ici","La","Nob",12),"Jean-Didou","Legat","kim.mens@hotmail.com",new DateWish(11,"Janvier",1903),"1234aA");
         User vincent = new User(new Address("Ici","La","Nob",12),"Vincent","Legat","kim.mens@hotmail.com",new DateWish(11,"Janvier",1903),"1234aA");
-        followed_list.add(kim);
-        followed_list.add(sieg);
-        followed_list.add(jeandidou);
-        followed_list.add(vincent);
+        followList.add(kim);
+        followList.add(sieg);
+        followList.add(jeandidou);
+        followList.add(vincent);
         followRecyclerAdapter.notifyDataSetChanged();
     }
 
@@ -52,7 +52,7 @@ public class FollowListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         FollowListItemDecorator deco = new FollowListItemDecorator(10);
         recyclerView.addItemDecoration(deco);
-        followRecyclerAdapter = new FollowRecyclerAdapter(followed_list);
+        followRecyclerAdapter = new FollowRecyclerAdapter(followList);
         recyclerView.setAdapter(followRecyclerAdapter);
     }
 
