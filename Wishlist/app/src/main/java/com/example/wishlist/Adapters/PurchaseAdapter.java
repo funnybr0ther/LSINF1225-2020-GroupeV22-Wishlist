@@ -67,13 +67,11 @@ public class PurchaseAdapter extends BaseAdapter {
         String purchaseText;
         if ( getUserID() == purchase.getSender()) {
             sender = "You ";
-            purchaseText = " bought " + product + " for ";
-
-        }
+            purchaseText = " bought " + product + " for ";}
         else{
             purchaseText = " bought " + product + " for ";
-            receiver = "you.";
-        }
+            receiver = "you.";}
+
         TextView textViewPurchaseSender = view.findViewById(R.id.PurchaseSender);
         textViewPurchaseSender.setText(sender);
 
@@ -82,7 +80,6 @@ public class PurchaseAdapter extends BaseAdapter {
 
         TextView textViewPurchaseReceiver = view.findViewById(R.id.PurchaseReceiver);
         textViewPurchaseReceiver.setText(receiver);
-
 
         TextView datePurchase=view.findViewById(R.id.DatePurchase);
         /*if (.equals("5 May 2020")){
