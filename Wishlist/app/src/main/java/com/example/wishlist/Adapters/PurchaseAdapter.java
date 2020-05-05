@@ -2,12 +2,14 @@ package com.example.wishlist.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.example.wishlist.Activities.DetailWishlistActivity;
 import com.example.wishlist.Class.DateWish;
@@ -29,6 +31,12 @@ public class PurchaseAdapter extends BaseAdapter {
         this.context = context;
         this.purchases = purchases;
         this.inflater = LayoutInflater.from(context);
+    }
+
+    public int getUserID() {
+        SharedPreferences prefs = context.getSharedPreferences(
+                "com.example.app", Context.MODE_PRIVATE);
+        return prefs.getInt("userID", -1);
     }
 
     @Override
@@ -56,8 +64,13 @@ public class PurchaseAdapter extends BaseAdapter {
         String sender=userDatabaseHelper.getUserFromID(purchase.getSender()).getFirstName();
         String receiver=userDatabaseHelper.getUserFromID(purchase.getReceiver()).getFirstName();
         String product=productDatabaseHelper.getProductFromID(purchase.getProductID()).getName();
-        String purchaseText= sender+" bought "+ product+" to "+receiver + ".";
-
+        String purchaseText;
+        if ( getUserID() == purchase.getSender()) {
+            purchaseText = "You bought " + product + " to " + receiver + ".";
+        }
+        else{
+            purchaseText = sender + " bought " + product + " for you.";
+        }
         TextView textViewPurchase = view.findViewById(R.id.PurchaseText);
         textViewPurchase.setText(purchaseText);
         TextView datePurchase=view.findViewById(R.id.DatePurchase);
