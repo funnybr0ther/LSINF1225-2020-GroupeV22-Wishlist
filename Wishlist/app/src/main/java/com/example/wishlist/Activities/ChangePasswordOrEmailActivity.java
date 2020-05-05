@@ -2,7 +2,9 @@ package com.example.wishlist.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -38,7 +40,20 @@ public class ChangePasswordOrEmailActivity extends AppCompatActivity {
         textViewConfPassword=findViewById(R.id.wrongConfirmPassword);
         dbHelper= new UserDatabaseHelper(getApplicationContext());
         Intent intent=getIntent();
-        userID= intent.getIntExtra("userID",-1);
+
+        //Get UserID and go back to login if there is no
+        SharedPreferences prefs = this.getSharedPreferences(
+                "com.example.app", Context.MODE_PRIVATE);
+        int tmpUserID=prefs.getInt("userID",-1);
+        if (tmpUserID!=-1){
+            userID=tmpUserID;
+        }
+        else{//If no userID go back to LoginActivity
+            Toast toast=Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT);
+            toast.show();
+            Intent backToLogin=new Intent(this,LoginActivity.class);
+        }
+
         user=dbHelper.getUserFromID(userID);
         editTextMail.setText(user.getEmail());
         editTextPassword.setText(user.getPassword());
