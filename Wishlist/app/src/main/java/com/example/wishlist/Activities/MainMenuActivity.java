@@ -50,6 +50,8 @@ public class MainMenuActivity extends AppCompatActivity {
     public void exampleProduct(View view){
         Intent intent1=new Intent(this, ViewProductActivity.class);
         intent1.putExtra("productID",1);
+        intent1.putExtra("userID",userID);
+        intent1.putExtra("isMyProduct",false);
         startActivity(intent1);
     }
 
@@ -94,7 +96,7 @@ public class MainMenuActivity extends AppCompatActivity {
         if (requestCode == 1) {
 
             if (resultCode == RESULT_OK) {
-                long pID =  data.getLongExtra("newProduct",-1);
+                int pID = data.getIntExtra("newProduct",-1);
                 Toast.makeText(this, "Product ID= "+pID, Toast.LENGTH_SHORT).show();
             }
             if (resultCode == RESULT_CANCELED) {
