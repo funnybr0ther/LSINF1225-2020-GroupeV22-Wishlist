@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -142,6 +143,31 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         String size=cursor.getString(cursor.getColumnIndex(USER_COL7));
         String shoeSize=cursor.getString(cursor.getColumnIndex(USER_COL8));
         return new User(address,firstName,lastName,email,birthDate,password,ImageHelper.getImage(profilePhoto),favoriteColor,size,shoeSize);
+    }
+    public ArrayList<User> getAllUser(){
+        SQLiteDatabase db=getReadableDatabase();
+        Cursor cursor=db.rawQuery("SELECT * FROM "+USER_TABLE_NAME,null);
+        ArrayList<User> users=new ArrayList<User>();
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()){
+            String addressString=cursor.getString(cursor.getColumnIndex(USER_COL5));
+            Address address=Address.fromString(addressString);
+            String firstName=cursor.getString(cursor.getColumnIndex(USER_COL3));
+            String lastName=cursor.getString(cursor.getColumnIndex(USER_COL4));
+            String email=cursor.getString(cursor.getColumnIndex(USER_COL1));
+            DateWish birthDate= new DateWish();
+            birthDate.setDate(cursor.getString(cursor.getColumnIndex(USER_COL6)));
+            String password=cursor.getString(cursor.getColumnIndex(USER_COL2));
+            byte[] profilePhoto=cursor.getBlob(cursor.getColumnIndex(USER_COL10));
+            boolean notification=true;
+            String favoriteColor=cursor.getString(cursor.getColumnIndex(USER_COL9));
+            String size=cursor.getString(cursor.getColumnIndex(USER_COL7));
+            String shoeSize=cursor.getString(cursor.getColumnIndex(USER_COL8));
+            users.add(new User(address,firstName,lastName,email,birthDate,password,ImageHelper.getImage(profilePhoto),favoriteColor,size,shoeSize));
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return users;
     }
 
     public boolean updateUser(User user, int userID){

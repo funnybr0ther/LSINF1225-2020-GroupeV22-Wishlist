@@ -1,7 +1,11 @@
 package com.example.wishlist.Activities;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +17,7 @@ import com.example.wishlist.Class.DateWish;
 import com.example.wishlist.Adapters.FollowRecyclerAdapter;
 import com.example.wishlist.Class.FollowListItemDecorator;
 import com.example.wishlist.Class.User;
+import com.example.wishlist.Class.UserDatabaseHelper;
 import com.example.wishlist.Fragment.SearchUserDialog;
 import com.example.wishlist.R;
 
@@ -21,18 +26,76 @@ import java.util.ArrayList;
 public class FollowListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-
-    private ArrayList<User> followed_list = new ArrayList<>();
+    private ArrayList<User> followed_list=new ArrayList<User>();
     private FollowRecyclerAdapter followRecyclerAdapter;
+    private LinearLayout searchToolbar;
+    private LinearLayout viewToolbar;
+    private EditText searchEditText;
+    private ArrayList<User> allUser;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follow_list);
         recyclerView = findViewById(R.id.recyclerViewFollows);
-
+        searchToolbar=findViewById(R.id.SearchToolbar);
+        viewToolbar=findViewById(R.id.FollowListToolbar);
+        searchEditText=findViewById(R.id.SearchEditText);
+        UserDatabaseHelper userDatabaseHelper= new UserDatabaseHelper(getApplicationContext());
+        allUser=userDatabaseHelper.getAllUser();/*new ArrayList<User>();
+        allUser.add(userDatabaseHelper.getUserFromID(1));
+        allUser.add(userDatabaseHelper.getUserFromID(2));
+        allUser.add(userDatabaseHelper.getUserFromID(1));
+        allUser.add(userDatabaseHelper.getUserFromID(2));*/
+        followed_list.addAll(allUser);
         initRecyclerView();
-        faireUsersOsef();
+        //followRecyclerAdapter.notifyDataSetChanged();
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                String str=searchEditText.getText().toString().toLowerCase();
+                filter(str);
+                followRecyclerAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String str=searchEditText.getText().toString().toLowerCase();
+                filter(str);
+                followRecyclerAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String str=searchEditText.getText().toString().toLowerCase();
+                filter(str);
+                followRecyclerAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+    public void filter(String string){
+        followed_list.clear();
+        if( string.length()==0){
+            followed_list.addAll(allUser);
+        }
+        else{
+            for (User user:allUser){
+                String names=user.getFirstName()+user.getLastName();
+                if(names.toLowerCase().contains(string.toLowerCase())){
+                    followed_list.add(user);
+                }
+            }
+        }
+    }
+
+    public void searchMode(View view){
+        searchToolbar.setVisibility(View.VISIBLE);
+        viewToolbar.setVisibility(View.GONE);
+    }
+
+    public void viewMode(View view){
+        searchToolbar.setVisibility(View.GONE);
+        viewToolbar.setVisibility(View.VISIBLE);
     }
 
     private void faireUsersOsef(){
