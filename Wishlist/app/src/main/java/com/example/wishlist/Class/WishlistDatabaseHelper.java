@@ -20,7 +20,7 @@ public class WishlistDatabaseHelper extends SQLiteOpenHelper {
     private static final String USER_TABLE_NAME_A="detailWishlist";
     public static final String USER_COL0_A="wishlistID";
     public static final String USER_COL1_A="productReference";
-    public static final String USER_COL2_A="quantity";
+
 
     //DEUXIEME TABLE
     private static final String USER_TABLE_NAME_B="wishlist";
@@ -45,14 +45,13 @@ public class WishlistDatabaseHelper extends SQLiteOpenHelper {
         String sqlCommand_A="CREATE TABLE "+
                 USER_TABLE_NAME_A + " ("+
                 USER_COL0_A + " INTEGER REFERENCES wishlist (\"wishlistID\") NOT NULL, "+   // PAIRE UNIQUE
-                USER_COL1_A + " INTEGER REFERENCES product (\"productReference\") NOT NULL, "+
-                USER_COL2_A + " INTEGER DEFAULT (1))";
+                USER_COL1_A + " INTEGER REFERENCES product (\"productReference\") NOT NULL)";
         db.execSQL(sqlCommand_A);
 
         String sqlCommand_B="CREATE TABLE "+
                 USER_TABLE_NAME_B + " ("+
                 USER_COL0_B + " INTEGER NOT NULL REFERENCES user (\"userID\"), "+
-                USER_COL1_B + " INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT, "+
+                USER_COL1_B + " INTEGER NOT NULL , "+
                 USER_COL2_B + " TEXT NOT NULL)";
         db.execSQL(sqlCommand_B);
     }
@@ -62,8 +61,7 @@ public class WishlistDatabaseHelper extends SQLiteOpenHelper {
         String sqlCommand_A="CREATE TABLE IF NOT EXISTS "+
                 USER_TABLE_NAME_A + " ("+
                 USER_COL0_A + " INTEGER REFERENCES wishlist (\"wishlistID\") NOT NULL, "+   // PAIRE UNIQUE
-                USER_COL1_A + " INTEGER REFERENCES product (\"productReference\") NOT NULL, "+
-                USER_COL2_A + " INTEGER DEFAULT (1))";
+                USER_COL1_A + " INTEGER REFERENCES product (\"productReference\") NOT NULL)";
         db.execSQL(sqlCommand_A);
 
         String sqlCommand_B="CREATE TABLE IF NOT EXISTS "+
@@ -101,7 +99,7 @@ public class WishlistDatabaseHelper extends SQLiteOpenHelper {
     }
 
     //WISHLIST DETAIL
-    public int[] getQuantity(int wishlistID){
+    /*public int[] getQuantity(int wishlistID){
         SQLiteDatabase db=getReadableDatabase();
         String strSql = "SELECT " + USER_COL2_A + " FROM " + USER_TABLE_NAME_A + " WHERE " + USER_COL0_A + " = '" + wishlistID + "'";
         Cursor cursor = db.rawQuery(strSql, null);
@@ -118,6 +116,16 @@ public class WishlistDatabaseHelper extends SQLiteOpenHelper {
             i++;
         }
         return quantityArray;
+    }*/
+
+    //WISHLIST DETAIL
+    public boolean addProduct(int productID, int wishlistID){
+        SQLiteDatabase db=getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(USER_COL0_A,wishlistID);
+        contentValues.put(USER_COL1_A,productID);
+        long err=db.insert(USER_TABLE_NAME_A,null,contentValues);
+        return err!=-1;
     }
 
     //WISHLIST
@@ -143,9 +151,8 @@ public class WishlistDatabaseHelper extends SQLiteOpenHelper {
             int wishlistID = cursor.getInt(cursor.getColumnIndex(USER_COL1_B));
             String name = cursor.getString(cursor.getColumnIndex(USER_COL2_B));
             int[] productArray = getProducts(wishlistID);
-            int[] quantityArray = getProducts(wishlistID);
 
-            Wishlist wishlist = new Wishlist(name,productArray.length, userID, productArray, quantityArray, wishlistID);
+            Wishlist wishlist = new Wishlist(name,productArray.length, userID, productArray, wishlistID);
 
             wishlists.add(wishlist);
             cursor.moveToNext();

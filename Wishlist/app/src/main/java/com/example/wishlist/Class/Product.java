@@ -7,14 +7,14 @@ public class Product {
     private Bitmap photo;
     private String description;
     private String[] category;
-    private int weight;
-    private int price;
-    private int desire;
+    private Integer weight;
+    private Integer price;
+    private Integer desire;
     private String dimensions;
-    private int total;
-    private int purchased;
+    private Integer total;
+    private Integer purchased;
 
-    public Product(String name, Bitmap photo, String description, String[] category, int weight, int price, int desire, String dimensions, int amount, int purchased) {
+    public Product(String name, Bitmap photo, String description, String[] category, Integer weight, Integer price, Integer desire, String dimensions, Integer amount, Integer purchased) {
         this.name = name;
         this.photo = photo;
         this.description = description;
@@ -63,7 +63,7 @@ public class Product {
         this.category = category;
     }
 
-    public int getWeight() {
+    public Integer getWeight() {
         return weight;
     }
 
@@ -71,7 +71,7 @@ public class Product {
         this.weight = weight;
     }
 
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
@@ -79,7 +79,7 @@ public class Product {
         this.price = price;
     }
 
-    public int getDesire() {
+    public Integer getDesire() {
         return desire;
     }
 
@@ -95,7 +95,7 @@ public class Product {
         this.dimensions = dimensions;
     }
 
-    public int getTotal() {
+    public Integer getTotal() {
         return total;
     }
 
@@ -103,7 +103,7 @@ public class Product {
         this.total = amount;
     }
 
-    public int getPurchased() {
+    public Integer getPurchased() {
         return purchased;
     }
 
