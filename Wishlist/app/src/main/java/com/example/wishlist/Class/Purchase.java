@@ -16,8 +16,6 @@ public class Purchase {
         this.quantity = quantity;
         this.date = date;
         this.productID = productid;
-        //compteur++;
-        //this.PurchaseId = compteur;
     }
 
     public int getReceiver() {return this.receiver;}
@@ -29,8 +27,6 @@ public class Purchase {
     public int getQuantity() {return this.quantity;}
 
     public DateWish getDate() {return this.date;} // Ou autre manière de stocker la date ?
-
-    //public long getPurchaseId() {return this.PurchaseId;}
 
     public String description() {
         return String.format("On the %s %s bought %s %s for %s.", getDate().toString(), getSender(), String.valueOf(getQuantity()), getProductID(), getReceiver());

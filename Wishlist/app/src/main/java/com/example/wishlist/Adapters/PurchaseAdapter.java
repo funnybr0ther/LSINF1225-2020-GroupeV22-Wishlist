@@ -52,10 +52,12 @@ public class PurchaseAdapter extends BaseAdapter {
         UserDatabaseHelper userDatabaseHelper=new UserDatabaseHelper(context.getApplicationContext());
         ProductDatabaseHelper productDatabaseHelper=new ProductDatabaseHelper(context.getApplicationContext());
         final Purchase purchase = getItem(position);
+
         String sender=userDatabaseHelper.getUserFromID(purchase.getSender()).getFirstName();
         String receiver=userDatabaseHelper.getUserFromID(purchase.getReceiver()).getFirstName();
         String product=productDatabaseHelper.getProductFromID(purchase.getProductID()).getName();
-        String purchaseText= sender+" bought "+product+" to "+receiver;
+        String purchaseText= sender+" bought "+ product+" to "+receiver + ".";
+
         TextView textViewPurchase = view.findViewById(R.id.PurchaseText);
         textViewPurchase.setText(purchaseText);
         TextView datePurchase=view.findViewById(R.id.DatePurchase);

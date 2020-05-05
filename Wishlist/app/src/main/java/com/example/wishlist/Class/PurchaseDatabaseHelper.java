@@ -34,8 +34,8 @@ public class PurchaseDatabaseHelper extends SQLiteOpenHelper {
         String sqlCommand = "CREATE TABLE IF NOT EXISTS "+
                 PURCHASE_TABLE_NAME + " (" +
                 PURCHASE_COL0 + " LONG NOT NULL PRIMARY KEY AUTOINCREMENT, " +
-                PURCHASE_COL1 + " INTEGER NOT NULL REFERENCES utilisateur(userId), " +
-                PURCHASE_COL2 + " INTEGER NOT NULL REFERENCES utilisateur(userId), " +
+                PURCHASE_COL1 + " INTEGER NOT NULL REFERENCES utilisateur(userId), " +  // Acheteur
+                PURCHASE_COL2 + " INTEGER NOT NULL REFERENCES utilisateur(userId), " +  // Bénéficiaire
                 PURCHASE_COL3 + " INTEGER NOT NULL REFERENCES produit (numProduit), " +
                 PURCHASE_COL4 + " INTEGER NOT NULL," +
                 PURCHASE_COL5 + " STRING NOT NULL )";
@@ -54,21 +54,29 @@ public class PurchaseDatabaseHelper extends SQLiteOpenHelper {
         return err != -1;
     }
 
-    public Cursor getAllPurchases(int UserID){
+    public ArrayList<Purchase> getAllPurchases(int UserID){  // Quand user = acheteur
         SQLiteDatabase db = this.getWritableDatabase();
+        ArrayList<Purchase> purchases = new ArrayList<Purchase>();
         String[] condition = {String.valueOf(UserID)};
         String selection = PURCHASE_COL1 +" =?";
         Cursor cursor = db.query(PURCHASE_TABLE_NAME,null,selection,condition,null,null,null);
-        if(cursor.getCount() == -1){
+        /*if(cursor.getCount() == -1){
             cursor.close();
-            return null;
+            return null; }*/
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            int purchaseID = cursor.getInt(cursor.getColumnIndex(PURCHASE_COL0));
+            Purchase purchase=getPurchaseFromID(purchaseID);
+            purchases.add(purchase);
+            cursor.moveToNext();
         }
-        return cursor;
+        cursor.close();
+        return purchases;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        onOpen(db); // C'est bon?
+        onOpen(db);
     }
 
     @Override
@@ -77,12 +85,16 @@ public class PurchaseDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public ArrayList<Purchase> getUserHistory(int userID){
+    public ArrayList<Purchase> getUserHistory(int userID){  // Quand bénéficiaire = user
         SQLiteDatabase db=getReadableDatabase();
         ArrayList<Purchase> purchases = new ArrayList<Purchase>();
         String[] condition ={String.valueOf(userID)};
         String selection=PURCHASE_COL2+" =?";
         Cursor cursor=db.query(PURCHASE_TABLE_NAME,null,selection,condition,null,null,null);
+        /*if(cursor.getCount() == -1){
+            cursor.close();
+            return null;
+        }*/
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             int purchaseID = cursor.getInt(cursor.getColumnIndex(PURCHASE_COL0));
@@ -90,10 +102,11 @@ public class PurchaseDatabaseHelper extends SQLiteOpenHelper {
             purchases.add(purchase);
             cursor.moveToNext();
         }
+        cursor.close();
         return purchases;
     }
 
-    public Purchase getPurchaseFromID(int purchaseID){
+    public Purchase getPurchaseFromID(int purchaseID){  // Pour accéder à un Purchase spécifique
         SQLiteDatabase db=getReadableDatabase();
         String[] condition ={String.valueOf(purchaseID)};
         String selection=PURCHASE_COL0+" =?";
