@@ -55,13 +55,13 @@ public class ListWishlistActivity extends AppCompatActivity {
 
     }
 
-    public void printWishlist(){
-        //Va chercher dans la BDD les wishlist d'un utilisateur grace a son userID
+    //methode appelé apres l'ajout d'une wishlist
+    public void fragmentReturn(){
         WishlistDatabaseHelper db = new WishlistDatabaseHelper(getApplicationContext());
         ArrayList<Wishlist> list = db.getUserWishlist(userID);
 
         ListView wishlistListView = findViewById(R.id.wishlist_listview);
-        wishlistListView.setAdapter(new WishlistAdapter(this, db.getUserWishlist(userID)));
+        wishlistListView.setAdapter(new WishlistAdapter(this, list));
     }
 
     public void onBackPressed(View view) {

@@ -1,5 +1,6 @@
 package com.example.wishlist.Fragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -46,10 +47,15 @@ public class AddWishlistFragment extends DialogFragment {
                     Toast toast=Toast.makeText(getContext(),"Wishlist " + listName + " created !",Toast.LENGTH_SHORT);
                     toast.show();
                 }
+                /*
                 AddWishlistFragment.this.getDialog().dismiss();
                 Intent intent = new Intent(getContext(), ListWishlistActivity.class);
                 intent.putExtra("userID",userID);
                 startActivity(intent);
+            */
+                ListWishlistActivity callingActivity = (ListWishlistActivity) getActivity();
+                callingActivity.fragmentReturn();
+                dismiss();
             }
         });
         return rootView;
