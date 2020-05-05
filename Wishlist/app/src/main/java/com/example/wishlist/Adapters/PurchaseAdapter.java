@@ -66,13 +66,24 @@ public class PurchaseAdapter extends BaseAdapter {
         String product=productDatabaseHelper.getProductFromID(purchase.getProductID()).getName();
         String purchaseText;
         if ( getUserID() == purchase.getSender()) {
-            purchaseText = "You bought " + product + " to " + receiver + ".";
+            sender = "You ";
+            purchaseText = " bought " + product + " for ";
+
         }
         else{
-            purchaseText = sender + " bought " + product + " for you.";
+            purchaseText = " bought " + product + " for ";
+            receiver = "you.";
         }
+        TextView textViewPurchaseSender = view.findViewById(R.id.PurchaseSender);
+        textViewPurchaseSender.setText(sender);
+
         TextView textViewPurchase = view.findViewById(R.id.PurchaseText);
         textViewPurchase.setText(purchaseText);
+
+        TextView textViewPurchaseReceiver = view.findViewById(R.id.PurchaseReceiver);
+        textViewPurchaseReceiver.setText(receiver);
+
+
         TextView datePurchase=view.findViewById(R.id.DatePurchase);
         /*if (.equals("5 May 2020")){
             Toast.makeText(context,"Bad",Toast.LENGTH_SHORT).show();
