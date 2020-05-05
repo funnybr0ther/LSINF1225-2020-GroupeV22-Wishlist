@@ -32,7 +32,9 @@ public class PurchaseViewActivity extends AppCompatActivity {
                 "com.example.app", Context.MODE_PRIVATE);
         int userID=prefs.getInt("userID",-1);
         PurchaseDatabaseHelper dbHelper=new PurchaseDatabaseHelper(getApplicationContext());
-        ArrayList<Purchase> list=dbHelper.getUserHistory(userID);
+        ArrayList<Purchase> list=dbHelper.getUserHistory(userID);   // Historique quand user = bénéficiaire
+        ArrayList<Purchase> list2 = dbHelper.getAllPurchases(userID);   // Historique quand user = acheteur
+        list.addAll(list2);
         Comparator<Purchase> byDateNewestFirst=new Comparator<Purchase>() {
             @Override
             public int compare(Purchase o1, Purchase o2) {
