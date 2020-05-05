@@ -11,9 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.wishlist.Class.Address;
 import com.example.wishlist.Class.DateWish;
 import com.example.wishlist.Adapters.FollowRecyclerAdapter;
+import com.example.wishlist.Class.FollowDatabaseHelper;
 import com.example.wishlist.Class.FollowListItemDecorator;
 import com.example.wishlist.Adapters.FollowRecyclerAdapter;
 import com.example.wishlist.Class.User;
+import com.example.wishlist.Class.UserDatabaseHelper;
 import com.example.wishlist.Fragment.SearchUserDialog;
 import com.example.wishlist.R;
 
@@ -22,6 +24,8 @@ import java.util.ArrayList;
 public class FollowListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
+
+    int userID; //comment on get cette merde?
 
     private ArrayList<User> followList = new ArrayList<>();
     private FollowRecyclerAdapter followRecyclerAdapter;
@@ -34,6 +38,7 @@ public class FollowListActivity extends AppCompatActivity {
 
         initRecyclerView();
         faireUsersOsef();
+        fillFollowList();
     }
 
     private void faireUsersOsef(){
@@ -45,6 +50,15 @@ public class FollowListActivity extends AppCompatActivity {
         followList.add(sieg);
         followList.add(jeandidou);
         followList.add(vincent);
+        followRecyclerAdapter.notifyDataSetChanged();
+    }
+
+    private void fillFollowList(){
+        FollowDatabaseHelper helperF = new FollowDatabaseHelper(getApplicationContext());
+        UserDatabaseHelper helperU = new UserDatabaseHelper(getApplicationContext());
+        for(int id:helperF.getFollows(userID)){
+            followList.add(helperU.getUserFromID(id));
+        }
         followRecyclerAdapter.notifyDataSetChanged();
     }
 
