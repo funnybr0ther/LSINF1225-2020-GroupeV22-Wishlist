@@ -33,7 +33,7 @@ public class PurchaseDatabaseHelper extends SQLiteOpenHelper {
     public void onOpen(SQLiteDatabase db){    // Faut pas avoir une KEY pour la db ??
         String sqlCommand = "CREATE TABLE IF NOT EXISTS "+
                 PURCHASE_TABLE_NAME + " (" +
-                PURCHASE_COL0 + " LONG NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+                PURCHASE_COL0 + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
                 PURCHASE_COL1 + " INTEGER NOT NULL REFERENCES utilisateur(userId), " +  // Acheteur
                 PURCHASE_COL2 + " INTEGER NOT NULL REFERENCES utilisateur(userId), " +  // Bénéficiaire
                 PURCHASE_COL3 + " INTEGER NOT NULL REFERENCES produit (numProduit), " +

@@ -18,8 +18,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.wishlist.Class.DateWish;
 import com.example.wishlist.Class.Product;
 import com.example.wishlist.Class.ProductDatabaseHelper;
+import com.example.wishlist.Class.Purchase;
+import com.example.wishlist.Class.PurchaseDatabaseHelper;
 import com.example.wishlist.Class.Wishlist;
 import com.example.wishlist.Class.WishlistDatabaseHelper;
 import com.example.wishlist.R;
@@ -51,12 +54,13 @@ public class ViewProductActivity extends AppCompatActivity {
     int userID;
 
     ProductDatabaseHelper productDatabaseHelper;
+    PurchaseDatabaseHelper purchaseDatabaseHelper;
     private String[] testCategoryList = {"Garden","Children"};
     private Product testProduct = new Product("BALANCOIRE",null,"Ceci est une balançoire",testCategoryList,2000,250,4,ProductDatabaseHelper.convertArrayToString(new String[]{"45","46","47"}),33,12);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         productDatabaseHelper = new ProductDatabaseHelper(getApplicationContext());
-
+        purchaseDatabaseHelper = new PurchaseDatabaseHelper(getApplicationContext());
         productID = productDatabaseHelper.addProduct(testProduct);
         super.onCreate(savedInstanceState);
         Intent intent=getIntent();
@@ -230,7 +234,9 @@ public class ViewProductActivity extends AppCompatActivity {
         }else{
             buyProduct.setPurchased(buyProduct.getPurchased() + amount);
             productDatabaseHelper.updateProduct(buyProduct,productID);
-            // Here, add in history
+            DateWish date = new DateWish(); // + Comment on récupère la date via l'appli ? psk ca me semble bizzare ..
+            //Purchase achat = new Purchase(userID,XXX,productID,amount,date);
+            //purchaseDatabaseHelper.addPurchase(achat);
             displayProductInfo(buyProduct);
         }
     }

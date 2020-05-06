@@ -31,6 +31,7 @@ public class PurchaseViewActivity extends AppCompatActivity {
         SharedPreferences prefs = this.getSharedPreferences(
                 "com.example.app", Context.MODE_PRIVATE);
         int userID=prefs.getInt("userID",-1);
+
         PurchaseDatabaseHelper dbHelper=new PurchaseDatabaseHelper(getApplicationContext());
         ArrayList<Purchase> list=dbHelper.getUserHistory(userID);   // Historique quand user = bénéficiaire
         ArrayList<Purchase> list2 = dbHelper.getAllPurchases(userID);   // Historique quand user = acheteur
@@ -43,7 +44,5 @@ public class PurchaseViewActivity extends AppCompatActivity {
         };
         Collections.sort(list,byDateNewestFirst);
         listViewPurchases.setAdapter(new PurchaseAdapter(this,list));
-
     }
-
 }
