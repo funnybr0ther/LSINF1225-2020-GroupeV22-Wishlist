@@ -19,6 +19,7 @@ import com.example.wishlist.Class.ProductDatabaseHelper;
 import com.example.wishlist.Class.Wishlist;
 import com.example.wishlist.Class.WishlistDatabaseHelper;
 import com.example.wishlist.Fragment.AddWishlistFragment;
+import com.example.wishlist.Fragment.ChangeWishlistNameFragment;
 import com.example.wishlist.R;
 
 import java.util.ArrayList;
@@ -52,6 +53,14 @@ public class DetailWishlistActivity extends AppCompatActivity {
             backToWishlist.putExtra("userID",userID);
             startActivity(backToWishlist);
         }
+        if (intent.hasExtra("wishlistName")){
+           String wishlistName = intent.getStringExtra("wishlistName");
+           TextView title = findViewById(R.id.wishlistToolbarTitle);
+           title.setText(wishlistName);
+        }
+
+
+
 
         //Va chercher dans la BDD les product d'une wishlist grace a sa wishlistID
         ListView wishlistListView = findViewById(R.id.wishlist_DetailView);
@@ -73,7 +82,20 @@ public class DetailWishlistActivity extends AppCompatActivity {
         Intent intent = new Intent(this,EditProductActivity.class);
         intent.putExtra("productID",-1);
         startActivityForResult(intent,4);
+    }
 
+    public void pressChangeButton(View view){
+        ChangeWishlistNameFragment dialog=new ChangeWishlistNameFragment();
+        Bundle args = new Bundle();
+        args.putInt("wishlistID", wishlistID);
+        args.putInt("userID", userID);
+        dialog.setArguments(args);
+        dialog.show(DetailWishlistActivity.this.getSupportFragmentManager(),"Change name");
+    }
+
+    public void fragmentReturn(String newName){
+        TextView title = findViewById(R.id.wishlistToolbarTitle);
+        title.setText(newName);
     }
 
     public void productDetail(int productPosition, boolean isMyProduct){
@@ -92,10 +114,17 @@ public class DetailWishlistActivity extends AppCompatActivity {
                 if(data.hasExtra("newProduct")) {
                     int productID = data.getIntExtra("newProduct", -1);
                     dbWishlist.addProduct(productID,wishlistID);
-                    //TODO quantity
+                    addProductReturn();
                 }
             }
         }
+    }
+
+    //methode appelé apres l'ajout d'un product
+    public void addProductReturn(){
+        ListView wishlistListView = findViewById(R.id.wishlist_DetailView);
+        products = getProductArray();
+        wishlistListView.setAdapter(new ProductAdapter(this, products));
     }
 
     public void onBackPressed(View view) {

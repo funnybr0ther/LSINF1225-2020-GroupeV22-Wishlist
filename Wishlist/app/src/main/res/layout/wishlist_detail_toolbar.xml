@@ -28,6 +28,21 @@
             app:srcCompat="@drawable/ic_add_button"
             android:onClick="pressAddButton"/>
 
+        <ImageButton
+            android:id="@+id/changeNameButton"
+            android:layout_width="@dimen/contextMenuHeight"
+            android:layout_height="@dimen/contextMenuHeight"
+            android:layout_marginRight="80dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:scaleType="fitCenter"
+            android:contentDescription="@string/changeWishlistDesc"
+            app:srcCompat="@drawable/ic_change_name_button"
+            android:onClick="pressChangeButton"/>
+
         <TextView
             android:id="@+id/wishlistToolbarTitle"
             android:layout_width="wrap_content"

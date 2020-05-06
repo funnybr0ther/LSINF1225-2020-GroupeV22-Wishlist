@@ -45,7 +45,7 @@ public class WishlistAdapter extends BaseAdapter {
     public View getView(int position, View view, ViewGroup parent) {
         view = inflater.inflate(R.layout.adapter_wishlist, null);
         final Wishlist list = getItem(position);
-        String name = list.getName();
+        final String name = list.getName();
         TextView itemNameView = view.findViewById(R.id.wishlistItem_name);
         itemNameView.setText(name);
 
@@ -55,6 +55,7 @@ public class WishlistAdapter extends BaseAdapter {
                 Intent goToDetail = new Intent(context, DetailWishlistActivity.class);
                 goToDetail.putExtra("wishlistID",list.getWishlistID());
                 goToDetail.putExtra("userID",list.getUserID());
+                goToDetail.putExtra("wishlistName",name);
                 context.startActivity(goToDetail);
             }
         });

@@ -98,6 +98,17 @@ public class WishlistDatabaseHelper extends SQLiteOpenHelper {
         return productArray;
     }
 
+    //WISHLIST
+    public boolean changeWishlistName(int wishlistID, String newName, int userID){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(USER_COL0_B,userID);
+        contentValues.put(USER_COL1_B,wishlistID);
+        contentValues.put(USER_COL2_B,newName);
+        int err=db.update(USER_TABLE_NAME_B,contentValues,USER_COL1_B+" = ?",new String[]{String.valueOf(wishlistID)});
+        return err!=-1;
+    }
+
     //WISHLIST DETAIL
     /*public int[] getQuantity(int wishlistID){
         SQLiteDatabase db=getReadableDatabase();
