@@ -30,7 +30,7 @@ import com.example.wishlist.R;
 
 import java.util.ArrayList;
 
-public class FollowListActivity extends AppCompatActivity {
+public class FollowListActivity extends AppCompatActivity implements FollowRecyclerAdapter.FollowerOnClickListener {
 
     private RecyclerView recyclerView;
 
@@ -115,17 +115,6 @@ public class FollowListActivity extends AppCompatActivity {
         viewToolbar.setVisibility(View.VISIBLE);
     }
 
-    private void faireUsersOsef(){
-        User kim = new User(new Address("Ici","La","Nob",12),"Kim","Mens","kim.mens@hotmail.com",new DateWish(11,"Janvier",1903),"1234aA");
-        User sieg = new User(new Address("Ici","La","Nob",12),"Siegfried","Nijsen","kim.mens@hotmail.com",new DateWish(11,"Janvier",1903),"1234aA");
-        User jeandidou = new User(new Address("Ici","La","Nob",12),"Jean-Didou","Legat","kim.mens@hotmail.com",new DateWish(11,"Janvier",1903),"1234aA");
-        User vincent = new User(new Address("Ici","La","Nob",12),"Vincent","Legat","kim.mens@hotmail.com",new DateWish(11,"Janvier",1903),"1234aA");
-        followList.add(kim);
-        followList.add(sieg);
-        followList.add(jeandidou);
-        followList.add(vincent);
-        followRecyclerAdapter.notifyDataSetChanged();
-    }
 
     private void fillFollowList(){
         FollowDatabaseHelper helperF = new FollowDatabaseHelper(getApplicationContext());
@@ -142,11 +131,18 @@ public class FollowListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         FollowListItemDecorator deco = new FollowListItemDecorator(10);
         recyclerView.addItemDecoration(deco);
-        followRecyclerAdapter = new FollowRecyclerAdapter(followList);
+        followRecyclerAdapter = new FollowRecyclerAdapter(followList,this);
         recyclerView.setAdapter(followRecyclerAdapter);
     }
 
     public void onBackPressed(View view) {
         onBackPressed();
+    }
+
+    @Override
+    public void onFollowerClick(int position) {
+        Intent otherProfileIntent=new Intent(this,OtherProfile.class);
+        otherProfileIntent.putExtra("otherUserID",followList.get(position).getUserID());
+        startActivity(otherProfileIntent);
     }
 }

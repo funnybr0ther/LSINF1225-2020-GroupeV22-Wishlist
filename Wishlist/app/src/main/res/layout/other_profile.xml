@@ -16,7 +16,7 @@
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp">
 
-            <include layout="@layout/my_profile_toolbar" />
+            <include layout="@layout/other_profile_toolbar" />
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -112,7 +112,7 @@
                     android:id="@+id/AddressLine1"
                     android:text="@string/addressLine1Without"/>
                 <TextView
-                    android:layout_toRightOf="@+id/AddressLine1"
+                    android:layout_toRightOf="@id/AddressLine1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -218,7 +218,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:textColor="@color/black"
-                    android:text="@string/country"
+                    android:text="@string/countryWithout"
                     android:id="@+id/Country"
                     android:layout_centerVertical="true"/>
                 <TextView
