@@ -30,8 +30,8 @@ public class FollowDatabaseHelper extends SQLiteOpenHelper {
         Log.d(TAG, "onCreate: ");
         String sqlCommand = "CREATE TABLE "+
                 FOLLOW_TABLE_NAME + " ( "+
-                FOLLOW_COL0 + " INTEGER NOT NULL, "+
-                FOLLOW_COL1 + " NTEGER NOT NULL, "+
+                FOLLOW_COL0 + " INTEGER REFERENCES user (userID) NOT NULL, "+
+                FOLLOW_COL1 + " NTEGER REFERENCES user (userID) NOT NULL, "+
                 FOLLOW_COL2 + " TEXT NOT NULL )";
         db.execSQL(sqlCommand);
     }
@@ -40,8 +40,8 @@ public class FollowDatabaseHelper extends SQLiteOpenHelper {
     public void onOpen(SQLiteDatabase db) {
         String sqlCommand="CREATE TABLE IF NOT EXISTS "+
                 FOLLOW_TABLE_NAME + " ( "+
-                FOLLOW_COL0 + " INTEGER NOT NULL, "+
-                FOLLOW_COL1 + " INTEGER NOT NULL, "+
+                FOLLOW_COL0 + " INTEGER REFERENCES user (userID) NOT NULL, "+
+                FOLLOW_COL1 + " INTEGER REFERENCES user (userID) NOT NULL, "+
                 FOLLOW_COL2 + " TEXT NOT NULL )";
         db.execSQL(sqlCommand);
         super.onOpen(db);
@@ -71,7 +71,8 @@ public class FollowDatabaseHelper extends SQLiteOpenHelper {
 
         ArrayList<Integer> followList = new ArrayList<>();
 
-        Cursor cursor = db.query(FOLLOW_TABLE_NAME,projection,selection,condition,null,null,null);
+        Cursor cursor = db.query(FOLLOW_TABLE_NAME,null,selection,condition,null,null,null);
+        cursor.moveToFirst();
         for(int i = 0;i<cursor.getCount();i++){
             followList.add(cursor.getInt(cursor.getColumnIndex(FOLLOW_COL1)));
             cursor.moveToNext();
