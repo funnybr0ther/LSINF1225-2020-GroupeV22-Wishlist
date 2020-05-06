@@ -85,6 +85,12 @@ public class MainMenuActivity extends AppCompatActivity {
         Intent intent = new Intent(this, FollowListActivity.class);
         startActivity(intent);
     }
+
+    public void viewAllUsers(View view){
+        Intent intent = new Intent(this, FindFollowActivity.class);
+        startActivity(intent);
+    }
+
     public void addProduct(View view){
         Intent intent = new Intent(this,EditProductActivity.class);
         intent.putExtra("productID",-1);

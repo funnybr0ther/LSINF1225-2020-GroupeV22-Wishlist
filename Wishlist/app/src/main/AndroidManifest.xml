@@ -49,6 +49,7 @@
                 android:resource="@xml/file_path" />
         </provider>
         <activity android:name=".Activities.FollowListActivity"></activity>
+        <activity android:name=".Activities.FindFollowActivity"></activity>
     </application>
 
 </manifest>

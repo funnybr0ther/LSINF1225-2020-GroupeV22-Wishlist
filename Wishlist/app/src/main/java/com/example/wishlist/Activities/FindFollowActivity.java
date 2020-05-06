@@ -30,7 +30,7 @@ import com.example.wishlist.R;
 
 import java.util.ArrayList;
 
-public class FollowListActivity extends AppCompatActivity {
+public class FindFollowActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
 
@@ -62,9 +62,10 @@ public class FollowListActivity extends AppCompatActivity {
         searchToolbar=findViewById(R.id.SearchToolbar);
         viewToolbar=findViewById(R.id.FollowListToolbar);
         searchEditText=findViewById(R.id.SearchEditText);
+        UserDatabaseHelper userDatabaseHelper= new UserDatabaseHelper(getApplicationContext());
+        allUser=userDatabaseHelper.getAllUser();
+        followList.addAll(allUser);
         initRecyclerView();
-        faireUsersOsef();
-        //fillFollowList();
         followRecyclerAdapter.notifyDataSetChanged();
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -109,30 +110,9 @@ public class FollowListActivity extends AppCompatActivity {
         viewToolbar.setVisibility(View.GONE);
     }
 
-    public void viewMode(View view){
+    public void viewMode(View view) {
         searchToolbar.setVisibility(View.GONE);
         viewToolbar.setVisibility(View.VISIBLE);
-    }
-
-    private void faireUsersOsef(){
-        User kim = new User(new Address("Ici","La","Nob",12),"Kim","Mens","kim.mens@hotmail.com",new DateWish(11,"Janvier",1903),"1234aA");
-        User sieg = new User(new Address("Ici","La","Nob",12),"Siegfried","Nijsen","kim.mens@hotmail.com",new DateWish(11,"Janvier",1903),"1234aA");
-        User jeandidou = new User(new Address("Ici","La","Nob",12),"Jean-Didou","Legat","kim.mens@hotmail.com",new DateWish(11,"Janvier",1903),"1234aA");
-        User vincent = new User(new Address("Ici","La","Nob",12),"Vincent","Legat","kim.mens@hotmail.com",new DateWish(11,"Janvier",1903),"1234aA");
-        followList.add(kim);
-        followList.add(sieg);
-        followList.add(jeandidou);
-        followList.add(vincent);
-        followRecyclerAdapter.notifyDataSetChanged();
-    }
-
-    private void fillFollowList(){
-        FollowDatabaseHelper helperF = new FollowDatabaseHelper(getApplicationContext());
-        UserDatabaseHelper helperU = new UserDatabaseHelper(getApplicationContext());
-        for(int id:helperF.getFollows(userID)){
-            followList.add(helperU.getUserFromID(id));
-        }
-        followRecyclerAdapter.notifyDataSetChanged();
     }
 
     private void initRecyclerView(){
@@ -147,4 +127,5 @@ public class FollowListActivity extends AppCompatActivity {
     public void onBackPressed(View view) {
         onBackPressed();
     }
+
 }
