@@ -88,6 +88,8 @@ public class MainMenuActivity extends AppCompatActivity {
     public void addProduct(View view){
         Intent intent = new Intent(this,EditProductActivity.class);
         intent.putExtra("productID",-1);
+        intent.putExtra("senderID",-1);
+        intent.putExtra("receiverID",-1);
         startActivityForResult(intent,1);
     }
 
