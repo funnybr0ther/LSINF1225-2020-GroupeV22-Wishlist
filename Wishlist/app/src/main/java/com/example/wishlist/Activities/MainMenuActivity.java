@@ -99,9 +99,6 @@ public class MainMenuActivity extends AppCompatActivity {
                 int pID = data.getIntExtra("newProduct",-1);
                 Toast.makeText(this, "Product ID= "+pID, Toast.LENGTH_SHORT).show();
             }
-            if (resultCode == RESULT_CANCELED) {
-                //Do nothing?
-            }
         }
     }//onActivityResult
 }
