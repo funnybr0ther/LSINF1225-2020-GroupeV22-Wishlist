@@ -23,6 +23,7 @@ import com.example.wishlist.Class.Product;
 import com.example.wishlist.Class.ProductDatabaseHelper;
 import com.example.wishlist.Class.Purchase;
 import com.example.wishlist.Class.PurchaseDatabaseHelper;
+import com.example.wishlist.Class.UserDatabaseHelper;
 import com.example.wishlist.Class.Wishlist;
 import com.example.wishlist.Class.WishlistDatabaseHelper;
 import com.example.wishlist.R;
@@ -34,6 +35,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class ViewProductActivity extends AppCompatActivity {
@@ -53,6 +55,7 @@ public class ViewProductActivity extends AppCompatActivity {
 
     int productID;
     int userID;
+    int receiverID;
 
     ProductDatabaseHelper productDatabaseHelper;
     PurchaseDatabaseHelper purchaseDatabaseHelper;
@@ -79,6 +82,7 @@ public class ViewProductActivity extends AppCompatActivity {
             });
         }
         else{
+            receiverID = intent.getIntExtra("receiverID",-1);
             setContentView(R.layout.view_one_product);
             addButton = findViewById(R.id.copyProduct);
             addButton.setOnClickListener(new View.OnClickListener() {
@@ -206,8 +210,9 @@ public class ViewProductActivity extends AppCompatActivity {
         linearLayout.setLayoutParams(params);
         linearLayout.addView(aNumberPicker,numPicerParams);
 
+        UserDatabaseHelper userDatabaseHelper = new UserDatabaseHelper(this);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setTitle("How many items?");
+        alertDialogBuilder.setTitle("How many items do you want to gift " + userDatabaseHelper.getUserFromID(receiverID).getFirstName() + "?");
         alertDialogBuilder.setView(linearLayout);
         alertDialogBuilder
                 .setCancelable(false)
@@ -235,9 +240,10 @@ public class ViewProductActivity extends AppCompatActivity {
         }else{
             buyProduct.setPurchased(buyProduct.getPurchased() + amount);
             productDatabaseHelper.updateProduct(buyProduct,productID);
-            Date d = new Date();
-            DateWish date = new DateWish(d);
-            Purchase achat = new Purchase(userID,134,productID,amount,date);
+            DateWish date = new DateWish(); // + Comment on récupère la date via l'appli ? psk ca me semble bizzare ..
+            Date currentTime = Calendar.getInstance().getTime();
+            date.setDateAndHour(currentTime);
+            Purchase achat = new Purchase(userID,receiverID,productID,amount,date);
             purchaseDatabaseHelper.addPurchase(achat);
             displayProductInfo(buyProduct);
         }

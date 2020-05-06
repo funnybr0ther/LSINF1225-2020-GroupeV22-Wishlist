@@ -52,6 +52,7 @@ public class MainMenuActivity extends AppCompatActivity {
         intent1.putExtra("productID",1);
         intent1.putExtra("userID",userID);
         intent1.putExtra("isMyProduct",false);
+        intent1.putExtra("receiverID",1);
         startActivity(intent1);
     }
 

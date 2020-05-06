@@ -121,6 +121,7 @@ public class PurchaseDatabaseHelper extends SQLiteOpenHelper {
         return new Purchase(cursor.getInt(1),cursor.getInt(2),
                 cursor.getInt(3),cursor.getInt(4),dateWish);
     }
+
     public int deletePurchase(int purchaseID){
         SQLiteDatabase db=this.getWritableDatabase();
         return db.delete(PURCHASE_TABLE_NAME,PURCHASE_COL0+"=?",new String[] {String.valueOf(purchaseID)});
