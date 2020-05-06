@@ -34,6 +34,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ViewProductActivity extends AppCompatActivity {
     String TAG = "sortTag";
@@ -234,9 +235,10 @@ public class ViewProductActivity extends AppCompatActivity {
         }else{
             buyProduct.setPurchased(buyProduct.getPurchased() + amount);
             productDatabaseHelper.updateProduct(buyProduct,productID);
-            DateWish date = new DateWish(); // + Comment on récupère la date via l'appli ? psk ca me semble bizzare ..
-            //Purchase achat = new Purchase(userID,XXX,productID,amount,date);
-            //purchaseDatabaseHelper.addPurchase(achat);
+            Date d = new Date();
+            DateWish date = new DateWish(d);
+            Purchase achat = new Purchase(userID,134,productID,amount,date);
+            purchaseDatabaseHelper.addPurchase(achat);
             displayProductInfo(buyProduct);
         }
     }
