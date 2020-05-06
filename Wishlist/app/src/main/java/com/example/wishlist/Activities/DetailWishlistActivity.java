@@ -3,6 +3,7 @@ package com.example.wishlist.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -30,6 +31,7 @@ public class DetailWishlistActivity extends AppCompatActivity {
     private int wishlistID;
     WishlistDatabaseHelper dbWishlist;
     ArrayList<Product> products;
+    private boolean isMyWishlist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +60,15 @@ public class DetailWishlistActivity extends AppCompatActivity {
            TextView title = findViewById(R.id.wishlistToolbarTitle);
            title.setText(wishlistName);
         }
-
+        if (intent.hasExtra("isMyWishlist")){
+            isMyWishlist = intent.getBooleanExtra("isMyWishlist",false);
+            if(!isMyWishlist){
+                View addProductBtn = findViewById(R.id.addProductBtn);
+                ((ViewGroup) addProductBtn.getParent()).removeView(addProductBtn);
+                View changeName = findViewById(R.id.changeNameButton);
+                ((ViewGroup) changeName.getParent()).removeView(changeName);
+            }
+        }
 
 
 
@@ -98,11 +108,11 @@ public class DetailWishlistActivity extends AppCompatActivity {
         title.setText(newName);
     }
 
-    public void productDetail(int productPosition, boolean isMyProduct){
+    public void productDetail(int productPosition){
         Intent intent1=new Intent(this, ViewProductActivity.class);
         intent1.putExtra("productID",dbWishlist.getProducts(wishlistID)[productPosition]);
         intent1.putExtra("userID",userID);
-        intent1.putExtra("isMyProduct",isMyProduct);
+        intent1.putExtra("isMyProduct",isMyWishlist);
         startActivity(intent1);
     }
 
@@ -126,6 +136,7 @@ public class DetailWishlistActivity extends AppCompatActivity {
         products = getProductArray();
         wishlistListView.setAdapter(new ProductAdapter(this, products));
     }
+
 
     public void onBackPressed(View view) {
         onBackPressed();

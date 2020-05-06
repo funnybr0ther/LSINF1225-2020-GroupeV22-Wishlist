@@ -14,7 +14,7 @@
         android:layout_weight="10">
 
         <ImageButton
-            android:id="@+id/contextMenuWishlist"
+            android:id="@+id/addProductBtn"
             android:layout_width="@dimen/contextMenuHeight"
             android:layout_height="@dimen/contextMenuHeight"
             android:layout_marginRight="20dp"

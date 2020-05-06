@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.wishlist.Activities.DetailWishlistActivity;
+import com.example.wishlist.Activities.ListWishlistActivity;
 import com.example.wishlist.Class.Wishlist;
 import com.example.wishlist.R;
 
@@ -52,11 +53,14 @@ public class WishlistAdapter extends BaseAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent goToDetail = new Intent(context, DetailWishlistActivity.class);
+                /*Intent goToDetail = new Intent(context, DetailWishlistActivity.class);
                 goToDetail.putExtra("wishlistID",list.getWishlistID());
                 goToDetail.putExtra("userID",list.getUserID());
                 goToDetail.putExtra("wishlistName",name);
-                context.startActivity(goToDetail);
+                goToDetail.putExtra("isMyWishlist",context.);
+                context.startActivity(goToDetail);*/
+                ListWishlistActivity call = (ListWishlistActivity) context;
+                call.wishlistAdapterReturn(list.getWishlistID(), list.getUserID(), name);
             }
         });
 

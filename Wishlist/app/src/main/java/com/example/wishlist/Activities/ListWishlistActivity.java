@@ -3,6 +3,7 @@ package com.example.wishlist.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 public class ListWishlistActivity extends AppCompatActivity {
 
     private int userID;
-
+    private boolean isMyWishlist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,13 @@ public class ListWishlistActivity extends AppCompatActivity {
         } else{
             Intent backToLogin=new Intent(this,LoginActivity.class);
             startActivity(backToLogin);
+        }
+        if (intent.hasExtra("isMyWishlist")){
+            isMyWishlist = intent.getBooleanExtra("isMyWishlist",false);
+            if(!isMyWishlist){
+                View addBtn = findViewById(R.id.contextMenuWishlist);
+                ((ViewGroup) addBtn.getParent()).removeView(addBtn);
+            }
         }
 
         //Va chercher dans la BDD les wishlist d'un utilisateur grace a son userID
@@ -62,6 +70,15 @@ public class ListWishlistActivity extends AppCompatActivity {
 
         ListView wishlistListView = findViewById(R.id.wishlist_listview);
         wishlistListView.setAdapter(new WishlistAdapter(this, list));
+    }
+
+    public void wishlistAdapterReturn(int wishlistID, int userID, String wishlistName){
+        Intent goToDetail = new Intent(this, DetailWishlistActivity.class);
+        goToDetail.putExtra("wishlistID",wishlistID);
+        goToDetail.putExtra("userID",userID);
+        goToDetail.putExtra("wishlistName",wishlistName);
+        goToDetail.putExtra("isMyWishlist",isMyWishlist);
+        this.startActivity(goToDetail);
     }
 
     public void onBackPressed(View view) {

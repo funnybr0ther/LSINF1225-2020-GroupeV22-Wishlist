@@ -56,7 +56,7 @@ public class ProductAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 DetailWishlistActivity detail = (DetailWishlistActivity) context;
-                detail.productDetail(position,true);    //modifier pour wishlist externe
+                detail.productDetail(position);    //modifier pour wishlist externe
             }
         });
 

@@ -58,6 +58,7 @@ public class MainMenuActivity extends AppCompatActivity {
     public void myWishlist(View view){
         Intent gotToWishlist=new Intent(this,ListWishlistActivity.class);
         gotToWishlist.putExtra("userID",userID);
+        gotToWishlist.putExtra("isMyWishlist",true);
         startActivity(gotToWishlist);
     }
 
@@ -88,6 +89,13 @@ public class MainMenuActivity extends AppCompatActivity {
         Intent intent = new Intent(this,EditProductActivity.class);
         intent.putExtra("productID",-1);
         startActivityForResult(intent,1);
+    }
+
+    public void goToFriendWishlist(View view){
+        Intent intent = new Intent(this,ListWishlistActivity.class);
+        intent.putExtra("userID",userID);
+        intent.putExtra("isMyWishlist",false);
+        startActivity(intent);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
