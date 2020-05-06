@@ -142,7 +142,10 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         String favoriteColor=cursor.getString(cursor.getColumnIndex(USER_COL9));
         String size=cursor.getString(cursor.getColumnIndex(USER_COL7));
         String shoeSize=cursor.getString(cursor.getColumnIndex(USER_COL8));
-        return new User(address,firstName,lastName,email,birthDate,password,ImageHelper.getImage(profilePhoto),favoriteColor,size,shoeSize);
+        User user=new User(address,firstName,lastName,email,birthDate,password,ImageHelper.getImage(profilePhoto),favoriteColor,size,shoeSize);
+        user.setUserID(cursor.getInt(0));
+        cursor.close();
+        return user;
     }
     public ArrayList<User> getAllUser(){
         SQLiteDatabase db=getReadableDatabase();
@@ -163,7 +166,9 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
             String favoriteColor=cursor.getString(cursor.getColumnIndex(USER_COL9));
             String size=cursor.getString(cursor.getColumnIndex(USER_COL7));
             String shoeSize=cursor.getString(cursor.getColumnIndex(USER_COL8));
-            users.add(new User(address,firstName,lastName,email,birthDate,password,ImageHelper.getImage(profilePhoto),favoriteColor,size,shoeSize));
+            User user =new User(address,firstName,lastName,email,birthDate,password,ImageHelper.getImage(profilePhoto),favoriteColor,size,shoeSize);
+            user.setUserID(cursor.getInt(cursor.getColumnIndex(USER_COL0)));
+            users.add(user);
             cursor.moveToNext();
         }
         cursor.close();

@@ -70,10 +70,9 @@ public class FollowDatabaseHelper extends SQLiteOpenHelper {
         String selection = FOLLOW_COL0+" =?";
 
         ArrayList<Integer> followList = new ArrayList<>();
-
         Cursor cursor = db.query(FOLLOW_TABLE_NAME,null,selection,condition,null,null,null);
         cursor.moveToFirst();
-        for(int i = 0;i<cursor.getCount();i++){
+        while (!cursor.isAfterLast()) {
             followList.add(cursor.getInt(cursor.getColumnIndex(FOLLOW_COL1)));
             cursor.moveToNext();
         }

@@ -30,7 +30,7 @@ import com.example.wishlist.R;
 
 import java.util.ArrayList;
 
-public class FollowListActivity extends AppCompatActivity {
+public class FollowListActivity extends AppCompatActivity implements FollowRecyclerAdapter.FollowerOnClickListener {
 
     private RecyclerView recyclerView;
 
@@ -147,11 +147,18 @@ public class FollowListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         FollowListItemDecorator deco = new FollowListItemDecorator(10);
         recyclerView.addItemDecoration(deco);
-        followRecyclerAdapter = new FollowRecyclerAdapter(followList);
+        followRecyclerAdapter = new FollowRecyclerAdapter(followList,this);
         recyclerView.setAdapter(followRecyclerAdapter);
     }
 
     public void onBackPressed(View view) {
         onBackPressed();
+    }
+
+    @Override
+    public void onFollowerClick(int position) {
+        Intent otherProfileIntent=new Intent(this,OtherProfile.class);
+        otherProfileIntent.putExtra("otherUserID",followList.get(position).getUserID());
+        startActivity(otherProfileIntent);
     }
 }
