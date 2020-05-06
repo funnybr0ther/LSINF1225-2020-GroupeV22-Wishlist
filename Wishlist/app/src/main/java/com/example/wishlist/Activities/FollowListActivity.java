@@ -63,8 +63,12 @@ public class FollowListActivity extends AppCompatActivity {
         viewToolbar=findViewById(R.id.FollowListToolbar);
         searchEditText=findViewById(R.id.SearchEditText);
         initRecyclerView();
-        faireUsersOsef();
+        //faireUsersOsef();
         //fillFollowList();
+
+        FollowDatabaseHelper helperF = new FollowDatabaseHelper(getApplicationContext());
+        if(!helperF.addFollow(1,2,"ami")) Toast.makeText(this,"AAAAAAAAAAA",Toast.LENGTH_SHORT).show();
+
         followRecyclerAdapter.notifyDataSetChanged();
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -129,6 +133,7 @@ public class FollowListActivity extends AppCompatActivity {
     private void fillFollowList(){
         FollowDatabaseHelper helperF = new FollowDatabaseHelper(getApplicationContext());
         UserDatabaseHelper helperU = new UserDatabaseHelper(getApplicationContext());
+        helperF.addFollow(1,2,"ami");
         for(int id:helperF.getFollows(userID)){
             followList.add(helperU.getUserFromID(id));
         }

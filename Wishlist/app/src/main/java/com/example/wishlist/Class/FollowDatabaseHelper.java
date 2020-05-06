@@ -5,10 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+
+import static android.content.ContentValues.TAG;
 
 public class FollowDatabaseHelper extends SQLiteOpenHelper {
 
@@ -24,12 +27,24 @@ public class FollowDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db){
+        Log.d(TAG, "onCreate: ");
         String sqlCommand = "CREATE TABLE "+
-                FOLLOW_TABLE_NAME + " ("+
-                FOLLOW_COL0 + "INTEGER REFERENCES user (userID) NOT NULL, "+
-                FOLLOW_COL1 + "INTEGER REFERENCES user (userID) NOT NULL, "+
-                FOLLOW_COL2 + "TEXT NOT NULL )";
+                FOLLOW_TABLE_NAME + " ( "+
+                FOLLOW_COL0 + " INTEGER NOT NULL, "+
+                FOLLOW_COL1 + " NTEGER NOT NULL, "+
+                FOLLOW_COL2 + " TEXT NOT NULL )";
         db.execSQL(sqlCommand);
+    }
+
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        String sqlCommand="CREATE TABLE IF NOT EXISTS "+
+                FOLLOW_TABLE_NAME + " ( "+
+                FOLLOW_COL0 + " INTEGER NOT NULL, "+
+                FOLLOW_COL1 + " INTEGER NOT NULL, "+
+                FOLLOW_COL2 + " TEXT NOT NULL )";
+        db.execSQL(sqlCommand);
+        super.onOpen(db);
     }
 
     @Override
