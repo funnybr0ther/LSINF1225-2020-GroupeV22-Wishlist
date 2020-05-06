@@ -64,10 +64,7 @@ public class FollowListActivity extends AppCompatActivity {
         searchEditText=findViewById(R.id.SearchEditText);
         initRecyclerView();
         //faireUsersOsef();
-        //fillFollowList();
-
-        FollowDatabaseHelper helperF = new FollowDatabaseHelper(getApplicationContext());
-        if(!helperF.addFollow(1,2,"ami")) Toast.makeText(this,"AAAAAAAAAAA",Toast.LENGTH_SHORT).show();
+        fillFollowList();
 
         followRecyclerAdapter.notifyDataSetChanged();
         searchEditText.addTextChangedListener(new TextWatcher() {
