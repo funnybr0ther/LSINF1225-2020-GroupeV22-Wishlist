@@ -18,6 +18,7 @@
 
             <include layout="@layout/other_profile_toolbar" />
         </androidx.appcompat.widget.Toolbar>
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView

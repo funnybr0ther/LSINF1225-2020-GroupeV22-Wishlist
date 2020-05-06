@@ -9,7 +9,6 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -22,10 +21,8 @@ import com.example.wishlist.Class.DateWish;
 import com.example.wishlist.Adapters.FollowRecyclerAdapter;
 import com.example.wishlist.Class.FollowDatabaseHelper;
 import com.example.wishlist.Class.FollowListItemDecorator;
-import com.example.wishlist.Adapters.FollowRecyclerAdapter;
 import com.example.wishlist.Class.User;
 import com.example.wishlist.Class.UserDatabaseHelper;
-import com.example.wishlist.Fragment.SearchUserDialog;
 import com.example.wishlist.R;
 
 import java.util.ArrayList;
@@ -41,7 +38,7 @@ public class FollowListActivity extends AppCompatActivity implements FollowRecyc
     private LinearLayout searchToolbar;
     private LinearLayout viewToolbar;
     private EditText searchEditText;
-    private ArrayList<User> allUser;
+    private ArrayList<User> filteredList = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,9 +62,8 @@ public class FollowListActivity extends AppCompatActivity implements FollowRecyc
         initRecyclerView();
 
         FollowDatabaseHelper helperF = new FollowDatabaseHelper(getApplicationContext());
-        if(!helperF.addFollow(userID,2,"ami")) Toast.makeText(this,"AAAAAAAAAAA",Toast.LENGTH_SHORT).show();
 
-        //faireUsersOsef();
+
         fillFollowList();
 
 
@@ -97,15 +93,15 @@ public class FollowListActivity extends AppCompatActivity implements FollowRecyc
         });
     }
     public void filter(String string){
-        followList.clear();
+        filteredList.clear();
         if( string.length()==0){
-            followList.addAll(allUser);
+            filteredList.addAll(followList);
         }
         else{
-            for (User user:allUser){
+            for (User user: followList){
                 String names=user.getFirstName()+user.getLastName();
                 if(names.toLowerCase().contains(string.toLowerCase())){
-                    followList.add(user);
+                    filteredList.add(user);
                 }
             }
         }
@@ -121,17 +117,6 @@ public class FollowListActivity extends AppCompatActivity implements FollowRecyc
         viewToolbar.setVisibility(View.VISIBLE);
     }
 
-    private void faireUsersOsef(){
-        User kim = new User(new Address("Ici","La","Nob",12),"Kim","Mens","kim.mens@hotmail.com",new DateWish(11,"Janvier",1903),"1234aA");
-        User sieg = new User(new Address("Ici","La","Nob",12),"Siegfried","Nijsen","kim.mens@hotmail.com",new DateWish(11,"Janvier",1903),"1234aA");
-        User jeandidou = new User(new Address("Ici","La","Nob",12),"Jean-Didou","Legat","kim.mens@hotmail.com",new DateWish(11,"Janvier",1903),"1234aA");
-        User vincent = new User(new Address("Ici","La","Nob",12),"Vincent","Legat","kim.mens@hotmail.com",new DateWish(11,"Janvier",1903),"1234aA");
-        followList.add(kim);
-        followList.add(sieg);
-        followList.add(jeandidou);
-        followList.add(vincent);
-        followRecyclerAdapter.notifyDataSetChanged();
-    }
 
     private void fillFollowList(){
         FollowDatabaseHelper helperF = new FollowDatabaseHelper(getApplicationContext());
@@ -139,6 +124,7 @@ public class FollowListActivity extends AppCompatActivity implements FollowRecyc
         for(int id:helperF.getFollows(userID)){
             followList.add(helperU.getUserFromID(id));
         }
+        filteredList.addAll(followList);
         followRecyclerAdapter.notifyDataSetChanged();
     }
 
@@ -147,7 +133,7 @@ public class FollowListActivity extends AppCompatActivity implements FollowRecyc
         recyclerView.setLayoutManager(linearLayoutManager);
         FollowListItemDecorator deco = new FollowListItemDecorator(10);
         recyclerView.addItemDecoration(deco);
-        followRecyclerAdapter = new FollowRecyclerAdapter(followList,this);
+        followRecyclerAdapter = new FollowRecyclerAdapter(filteredList,this);
         recyclerView.setAdapter(followRecyclerAdapter);
     }
 
@@ -158,7 +144,7 @@ public class FollowListActivity extends AppCompatActivity implements FollowRecyc
     @Override
     public void onFollowerClick(int position) {
         Intent otherProfileIntent=new Intent(this,OtherProfile.class);
-        otherProfileIntent.putExtra("otherUserID",followList.get(position).getUserID());
+        otherProfileIntent.putExtra("otherUserID",filteredList.get(position).getUserID());
         startActivity(otherProfileIntent);
     }
 }

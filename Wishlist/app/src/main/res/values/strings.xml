@@ -296,6 +296,7 @@
     <string name="followListToolbartext">Follow List</string>
     <string name="enterUserToSearch">Enter searched user\'s email adress </string>
     <string name="userSearchTitle">Search user </string>
+    <string name="searchUserTitle">All users</string>
 
     <string name="wishlistToolbarText">Whishlist</string>
     <string name="addWishlistDesc">add a Wishlist</string>
