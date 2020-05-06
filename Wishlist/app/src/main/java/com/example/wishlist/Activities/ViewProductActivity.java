@@ -8,9 +8,13 @@ import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -80,7 +84,7 @@ public class ViewProductActivity extends AppCompatActivity {
             });
         }
 
-        
+
         description = findViewById(R.id.description);
         category = findViewById(R.id.category);
         info = findViewById(R.id.info);
@@ -102,11 +106,16 @@ public class ViewProductActivity extends AppCompatActivity {
         String name = product.getName();
         String[] categoryStrings = product.getCategory();
         String[] dimensionsStringArray = ProductDatabaseHelper.convertStringToArray(product.getDimensions());
-        String dimensionsString = "";
-        if(dimensionsStringArray[0] != ""){
+        String dimensionsString = null;
+        Log.d(TAG, "displayProductInfo:"+dimensionsStringArray[0]);
+        if(!dimensionsStringArray[0].equals("null")){
             dimensionsString = dimensionsStringArray[0] + " by " + dimensionsStringArray[1] + " by " + dimensionsStringArray[2];
         }
-        String weightString = Integer.toString(product.getWeight());
+        String weightString=null;
+        if(product.getWeight()!=null){
+            Log.d(TAG, "displayProductInfo: MAIS BORDEL ");
+            weightString = Integer.toString(product.getWeight());
+        }
         Integer desire = product.getDesire();
         String pricePoint = Integer.toString(product.getPrice());
         String amount = Integer.toString(product.getTotal());
@@ -119,7 +128,7 @@ public class ViewProductActivity extends AppCompatActivity {
             productName.setText(name);
         }
         price.setText(pricePoint + "€");
-        if(descriptionString=="Undefined") {
+        if(descriptionString=="") {
             Log.d(TAG, "displayProductInfo: descriptionString was undefined");
             description.setVisibility(View.GONE);
         }
@@ -130,28 +139,28 @@ public class ViewProductActivity extends AppCompatActivity {
             category.setText("");
         }
         else{
-            String categoryString = "";
             chipGroup.removeAllViews();
             for (int i=0;i<categoryStrings.length;i++){
-                Chip chip = new Chip(this);
-                chip.setText(categoryStrings[i]);
-                chipGroup.addView(chip);
+                if(categoryStrings[i].length()!=0){
+                    Chip chip = new Chip(this);
+                    Log.d(TAG, "displayProductInfo: " + categoryStrings[i]);
+                    chip.setText(categoryStrings[i]);
+                    chipGroup.addView(chip);
+                }
+
             }
         }
         String infoString = "";
-        if(dimensionsString!="Undefined"){
+        if(dimensionsString!=null){
             infoString += "Dimensions:\n" + "\t" + dimensionsString + "\n";
         }
-        if(weightString != "0"){
+        if(weightString != null){
             infoString+= "Weight:\n" +"\t" + weightString + " grams\n";
         }
         if(photo!=null){
             productImage.setImageBitmap(photo);
         }
-        SpannableString spannableString = new SpannableString(infoString);
-        spannableString.setSpan(new UnderlineSpan(), 0, "Dimensions:".length(), 0);
-        spannableString.setSpan(new UnderlineSpan(), ("Dimensions:\n" + "\t" + dimensionsString + "\n").length(), ("Dimensions:\n" + "\t" + dimensionsString + "\n").length() + "Weight:".length(), 0);
-        info.setText(spannableString);
+        info.setText(infoString);
         desireBar.setRating((float)desire);
         amountBought.setText("Amount Bought : " + purchased + " / " + amount);
     }
@@ -173,6 +182,59 @@ public class ViewProductActivity extends AppCompatActivity {
         onBackPressed();
     }
 
+    public void onBuyPressed(View view){
+        final Product buyProduct = productDatabaseHelper.getProductFromID(productID);
+        RelativeLayout linearLayout = new RelativeLayout(this);
+        final NumberPicker aNumberPicker = new NumberPicker(this);
+        int max = buyProduct.getTotal()-buyProduct.getPurchased();
+        if(max<1){
+            Toast.makeText(this, "This product can't be offered anymore", Toast.LENGTH_LONG).show();
+            return;
+        }
+        aNumberPicker.setMaxValue(max);
+        aNumberPicker.setMinValue(1);
+
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(50, 50);
+        RelativeLayout.LayoutParams numPicerParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        numPicerParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+
+        linearLayout.setLayoutParams(params);
+        linearLayout.addView(aNumberPicker,numPicerParams);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("How many items?");
+        alertDialogBuilder.setView(linearLayout);
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int id) {
+                                buyAmount(aNumberPicker.getValue(),buyProduct);
+                            }
+                        })
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int id) {
+                                buyAmount(0,null);
+                                dialog.cancel();
+                            }
+                        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+    void buyAmount(int amount,Product buyProduct){
+        if(amount==0){
+            return;
+        }else{
+            buyProduct.setPurchased(buyProduct.getPurchased() + amount);
+            productDatabaseHelper.updateProduct(buyProduct,productID);
+            // Here, add in history
+            displayProductInfo(buyProduct);
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -189,6 +251,7 @@ public class ViewProductActivity extends AppCompatActivity {
         else if(requestCode==2){
             if(resultCode==RESULT_OK){
                 final Wishlist[] chosenWishlist = {null};
+                final Integer[] chosenWishlistID = {null};
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 int tempProductID = data.getIntExtra("newProduct",-1);
                 if(tempProductID==-1){
@@ -208,6 +271,7 @@ public class ViewProductActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         chosenWishlist[0] = wishlists.get(which);
+                        chosenWishlistID[0] = which;
                     }
                 });
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -226,7 +290,7 @@ public class ViewProductActivity extends AppCompatActivity {
                 if(chosenWishlist[0]==null){
                 }
                 else{
-                    //TODO : Add product to selected wishlist
+                    wishlistDatabaseHelper.addProduct(tempProductID,chosenWishlistID[0]);
                 }
                 displayProductInfo(productDatabaseHelper.getProductFromID(productID));
             }
