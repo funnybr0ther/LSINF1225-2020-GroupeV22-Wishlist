@@ -88,7 +88,7 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public long addProduct(Product product){
+    public int addProduct(Product product){
         /**
             Add Product product to the database
          */
@@ -104,7 +104,7 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(PRODUCT_COL8,product.getDesire());
         contentValues.put(PRODUCT_COL9,product.getTotal());
         contentValues.put(PRODUCT_COL10,product.getPurchased());
-        long err=db.insert(PRODUCT_TABLE_NAME,null,contentValues);
+        int err= (int) db.insert(PRODUCT_TABLE_NAME,null,contentValues);
         return err;
     }
 

@@ -91,7 +91,7 @@
         <item>May</item>
         <item>June</item>
         <item>July</item>
-        <item>Augustus</item>
+        <item>August</item>
         <item>September</item>
         <item>October</item>
         <item>November</item>
@@ -302,4 +302,6 @@
     <string name="NewWishlistFragment">Create a new wishlist :</string>
     <string name="createWishlistButton">Create</string>
     <string name="wishlistItem_defaultName">Wishlist</string>
+    <string name="productItem_defaultName">Product</string>
+    <string name="wishlistDetailToolbarText">Products</string>
 </resources>

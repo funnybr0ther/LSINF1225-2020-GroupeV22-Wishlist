@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class ListWishlistActivity extends AppCompatActivity {
 
     private int userID;
-    private LinearLayout myLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +35,7 @@ public class ListWishlistActivity extends AppCompatActivity {
             userID = intent.getIntExtra("userID",-1);
         } else{
             Intent backToLogin=new Intent(this,LoginActivity.class);
+            startActivity(backToLogin);
         }
 
         //Va chercher dans la BDD les wishlist d'un utilisateur grace a son userID
@@ -54,13 +55,13 @@ public class ListWishlistActivity extends AppCompatActivity {
 
     }
 
-    public void printWishlist(){
-        //Va chercher dans la BDD les wishlist d'un utilisateur grace a son userID
+    //methode appelé apres l'ajout d'une wishlist
+    public void fragmentReturn(){
         WishlistDatabaseHelper db = new WishlistDatabaseHelper(getApplicationContext());
         ArrayList<Wishlist> list = db.getUserWishlist(userID);
 
         ListView wishlistListView = findViewById(R.id.wishlist_listview);
-        wishlistListView.setAdapter(new WishlistAdapter(this, db.getUserWishlist(userID)));
+        wishlistListView.setAdapter(new WishlistAdapter(this, list));
     }
 
     public void onBackPressed(View view) {

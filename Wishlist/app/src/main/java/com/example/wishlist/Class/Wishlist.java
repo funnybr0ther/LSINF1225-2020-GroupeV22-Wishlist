@@ -6,15 +6,13 @@ public class Wishlist {
     private int userID;  //pas dans le diagramme UML
     private int[] productsReferences;
     private int wishlistID;
-    private int[] quantity;
 
 
-    public Wishlist(String name, int size, int userID, int[] products, int[] quantity, int wishlistID ){
+    public Wishlist(String name, int size, int userID, int[] products, int wishlistID ){
         this.name = name;
         this.size = size;
         this.userID = userID;
         this.productsReferences = products;
-        this.quantity = quantity;
         this.wishlistID = wishlistID;
     }
 
@@ -56,13 +54,5 @@ public class Wishlist {
 
     public void setProductsReferences(int[] productsReferences) {
         this.productsReferences = productsReferences;
-    }
-
-    public int[] getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int[] quantity) {
-        this.quantity = quantity;
     }
 }

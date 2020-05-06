@@ -1,4 +1,4 @@
-package com.example.wishlist.Class;
+package com.example.wishlist.Adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.wishlist.Class.User;
 import com.example.wishlist.R;
 
 import java.util.ArrayList;

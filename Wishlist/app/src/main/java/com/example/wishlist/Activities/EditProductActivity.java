@@ -2,9 +2,11 @@ package com.example.wishlist.Activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -36,9 +38,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EditProductActivity extends AppCompatActivity {
 //    CategoriesAdapter categoriesAdapter = new CategoriesAdapter(null,EditProductActivity.this);
-    long productId;
+    int productId;
     Product product;
     private boolean newProduct;
+    private boolean copyProduct;
+
+    Resources resources;
+
     private ProductDatabaseHelper productDatabaseHelper;
     private ImageButton saveProduct;
     private CircleImageView productImage;
@@ -84,7 +90,6 @@ public class EditProductActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
             Uri selectedImage = data.getData();
             String[] filePathColumn = { MediaStore.Images.Media.DATA };
@@ -105,6 +110,7 @@ public class EditProductActivity extends AppCompatActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        resources = getResources();
         setContentView(R.layout.edit_product);
         saveProduct = findViewById(R.id.validateEditProduct);
         productImage = findViewById(R.id.productEditPhoto);
@@ -120,7 +126,7 @@ public class EditProductActivity extends AppCompatActivity {
         desireField = findViewById(R.id.newDesire);
         amountPurchasedField = findViewById(R.id.newReceived);
         amountTotalField = findViewById(R.id.newTotal);
-        categoriesList = getResources().getStringArray(R.array.categories);
+        categoriesList = resources.getStringArray(R.array.categories);
         newImage.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -134,9 +140,11 @@ public class EditProductActivity extends AppCompatActivity {
             }
         });
         Intent intent = getIntent();
-        productId = intent.getLongExtra("productID",-1);
+        productId = intent.getIntExtra("productID",-1);
+        copyProduct = intent.getBooleanExtra("copyProduct",false);
         productDatabaseHelper = new ProductDatabaseHelper(getApplicationContext());
         if(productId==-1){
+            Log.d("BILIBU", "onCreate: NEW PRODUCT");
             newProduct=true;
             editCategories(new String[]{});
         }
@@ -149,34 +157,81 @@ public class EditProductActivity extends AppCompatActivity {
     }
 
     public void saveProduct(View view){
-        String newName = nameField.getText().toString();
+        boolean error = false;
+        String newName = null;
+        final int wrongColor = resources.getColor(R.color.wrongInformation);
+        final int trueColor = resources.getColor(R.color.white);
+        if(nameField.getText().length()<=0) {
+            error = true;
+            nameField.setBackgroundColor(wrongColor);
+        }else{
+            newName=nameField.getText().toString();
+            nameField.setBackgroundColor(trueColor);
+        }
         String newDescription = descriptionField.getText().toString();
         String[] newCategories = checkedCategories.toArray(new String[0]);
-        int newPrice = Integer.parseInt(priceField.getText().toString());
-        int newWeight = Integer.parseInt(weightField.getText().toString());
-        String[] dimensionsArray = new String[]{dimensionsXField.getText().toString(),dimensionsYField.getText().toString(),dimensionsZField.getText().toString()};
-        String newDimensions = ProductDatabaseHelper.convertArrayToString(dimensionsArray);
+        Integer newPrice = null;
+        if(priceField.getText().length()<=0){
+            error = true;
+            priceField.setBackgroundColor(wrongColor);
+        }else{
+            priceField.setBackgroundColor(trueColor);
+        newPrice = Integer.parseInt(priceField.getText().toString());
+        }
+        Integer newWeight = null;
+        if(weightField.getText().length()>0){
+            newWeight = Integer.parseInt(weightField.getText().toString());
+        }
+
+        String[] dimensionsArray = null;
+        boolean noDimenX = dimensionsXField.getText().length()==0;
+        boolean noDimenY = dimensionsYField.getText().length()==0;
+        boolean noDimenZ = dimensionsZField.getText().length()==0;
+        if(noDimenX&&noDimenY&&noDimenZ){
+            dimensionsArray = new String[]{null, null, null};
+        }
+        else if((!noDimenX)&&(!noDimenY)&&(!noDimenZ)){
+            dimensionsArray = new String[]{dimensionsXField.getText().toString(), dimensionsYField.getText().toString(), dimensionsZField.getText().toString()};
+        }else{
+            error = true;
+            dimensionsXField.setBackgroundColor(wrongColor);
+            dimensionsYField.setBackgroundColor(wrongColor);
+            dimensionsZField.setBackgroundColor(wrongColor);
+        }
+        String newDimensions = null;
+        if(!error){
+            newDimensions = ProductDatabaseHelper.convertArrayToString(dimensionsArray);
+        }
+
         int newDesire = (int) desireField.getRating();
-        int newPurchased = Integer.parseInt(amountPurchasedField.getText().toString());
-        int newTotal = Integer.parseInt(amountTotalField.getText().toString());
+        Integer newPurchased = null;
+        if(amountPurchasedField.getText().length()!=0){
+            newPurchased = Integer.parseInt(amountPurchasedField.getText().toString());
+        }
+        Integer newTotal = null;
+        if(amountTotalField.getText().length()!=0){
+            newTotal = Integer.parseInt(amountTotalField.getText().toString());
+        }
         BitmapDrawable imageBitmapDrawable = (BitmapDrawable) productImage.getDrawable();
         Bitmap newImage = null;
         if(imageBitmapDrawable != null){
             newImage = (imageBitmapDrawable).getBitmap();
         }
-        product = new Product(newName,newImage,newDescription,newCategories,newWeight,newPrice,newDesire,newDimensions,newTotal,newPurchased);
-        if(!newProduct){
-            productDatabaseHelper.updateProduct(product,productId);
-            Intent returnIntent = new Intent();
-            setResult(RESULT_OK,returnIntent);
-            finish();
-        }
-        else{
-            productId = productDatabaseHelper.addProduct(product);
-            Intent returnIntent = new Intent();
-            setResult(RESULT_OK,returnIntent);
-            returnIntent.putExtra("newProduct",productId);
-            finish();
+        if(!error) {
+
+            product = new Product(newName, newImage, newDescription, newCategories, newWeight, newPrice, newDesire, newDimensions, newTotal, newPurchased);
+            if (!newProduct && !copyProduct) {
+                productDatabaseHelper.updateProduct(product, productId);
+                Intent returnIntent = new Intent();
+                setResult(RESULT_OK, returnIntent);
+                finish();
+            } else {
+                productId = productDatabaseHelper.addProduct(product);
+                Intent returnIntent = new Intent();
+                setResult(RESULT_OK, returnIntent);
+                returnIntent.putExtra("newProduct", productId);
+                finish();
+            }
         }
     }
 
