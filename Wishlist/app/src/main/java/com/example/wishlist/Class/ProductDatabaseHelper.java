@@ -135,7 +135,7 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         return new Product(name,picture,description,categories,weight,price,desire,dimensions, amount,purchased);
     }
 
-    public boolean updateProduct(Product product, long productID){
+    public boolean updateProduct(Product product, int productID){
         /**
          * Updates the columns of the first line matching productID with the fields of
          * Product product. Return true if the operation succeeded, false otherwise.
