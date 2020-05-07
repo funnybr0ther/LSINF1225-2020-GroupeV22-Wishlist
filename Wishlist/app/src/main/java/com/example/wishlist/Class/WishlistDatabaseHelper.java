@@ -170,4 +170,27 @@ public class WishlistDatabaseHelper extends SQLiteOpenHelper {
         }
         return wishlists;
     }
+
+    //WISHLIST DETAIL
+    public int deleteAllWishlistProduct(int wishlistID){
+        SQLiteDatabase db = getWritableDatabase();
+        return db.delete(USER_TABLE_NAME_A, USER_COL0_A + " = " + wishlistID, null);
+    }
+
+    //WISHLIST DETAIL
+    public int deleteProductInAllWishlist(int productID){
+        SQLiteDatabase db = getWritableDatabase();
+        return db.delete(USER_TABLE_NAME_A, USER_COL1_A + " = " + productID, null);
+    }
+    //WISHLIST DETAIL
+    public int deleteProductInOneWishlist(int productID, int wishlistID){
+        SQLiteDatabase db = getWritableDatabase();
+        return db.delete(USER_TABLE_NAME_A, USER_COL1_A + " = " + productID + " AND " + USER_COL0_A + " = " + wishlistID, null);
+    }
+    //WISHLIST
+    public int deleteWishlistWithProduct(int wishlistID){
+        deleteAllWishlistProduct(wishlistID);
+        SQLiteDatabase db = getWritableDatabase();
+        return db.delete(USER_TABLE_NAME_B, USER_COL1_B + " = " + wishlistID, null);
+    }
 }

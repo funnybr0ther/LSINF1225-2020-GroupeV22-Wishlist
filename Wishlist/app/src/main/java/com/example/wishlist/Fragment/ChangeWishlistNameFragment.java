@@ -24,6 +24,7 @@ public class ChangeWishlistNameFragment extends DialogFragment {
 
     private EditText txtName;
     private Button btnChange;
+    private Button btnDelete;
     private int wishlistID;
     private int userID;
 
@@ -35,6 +36,7 @@ public class ChangeWishlistNameFragment extends DialogFragment {
         userID = getArguments().getInt("userID");
         txtName = (EditText) rootView.findViewById(R.id.nameChangeWishlist);
         btnChange = (Button) rootView.findViewById(R.id.buttonChangeWishlist);
+        btnDelete = (Button) rootView.findViewById(R.id.buttonDeleteWishlist);
 
         btnChange.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +57,14 @@ public class ChangeWishlistNameFragment extends DialogFragment {
                 dismiss();
             }
         });
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO
+            }
+        });
+
         return rootView;
     }
 }
