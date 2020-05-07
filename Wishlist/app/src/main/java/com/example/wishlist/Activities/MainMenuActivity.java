@@ -52,6 +52,7 @@ public class MainMenuActivity extends AppCompatActivity {
         intent1.putExtra("productID",1);
         intent1.putExtra("userID",userID);
         intent1.putExtra("isMyProduct",false);
+        intent1.putExtra("receiverID",1);
         startActivity(intent1);
     }
 
@@ -75,7 +76,7 @@ public class MainMenuActivity extends AppCompatActivity {
         dialog.setArguments(args);
         dialog.show(MainMenuActivity.this.getSupportFragmentManager(),"he");
     }
-      
+
     public void viewHistory(View view){
         Intent intent = new Intent(this, PurchaseViewActivity.class);
         startActivity(intent);
