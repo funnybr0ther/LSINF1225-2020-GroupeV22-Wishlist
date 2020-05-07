@@ -294,6 +294,13 @@
 
     <string name="followListPPdescr">Followed Account\'s Profile Picture</string>
     <string name="followListToolbartext">Follow List</string>
+    <string name="enterUserToSearch">Enter searched user\'s email address </string>
+    <string name="userSearchTitle">Search user </string>
+    <string name="searchUserTitle">All users</string>
+    <string name="seeFullProfileButton">See detailed profile</string>
+    <string name="seeOtherUsersWishlistsButton">See wishlists</string>
+    <string name="followButton">Follow</string>
+    <string name="unfollowButton">Unfollow</string>
 
     <string name="wishlistToolbarText">Whishlist</string>
     <string name="addWishlistDesc">add a Wishlist</string>
@@ -304,4 +311,8 @@
     <string name="wishlistItem_defaultName">Wishlist</string>
     <string name="productItem_defaultName">Product</string>
     <string name="wishlistDetailToolbarText">Products</string>
+    <string name="changeWishlistFragment">New wishlist name</string>
+    <string name="changeWishlistButton">Change</string>
+    <string name="strWishlistChange">New name of your wishlist :</string>
+    <string name="changeWishlistDesc">change the name of your wishlist</string>
 </resources>

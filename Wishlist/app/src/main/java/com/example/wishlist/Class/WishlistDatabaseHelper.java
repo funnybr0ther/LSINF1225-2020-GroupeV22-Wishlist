@@ -98,6 +98,17 @@ public class WishlistDatabaseHelper extends SQLiteOpenHelper {
         return productArray;
     }
 
+    //WISHLIST
+    public boolean changeWishlistName(int wishlistID, String newName, int userID){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(USER_COL0_B,userID);
+        contentValues.put(USER_COL1_B,wishlistID);
+        contentValues.put(USER_COL2_B,newName);
+        int err=db.update(USER_TABLE_NAME_B,contentValues,USER_COL1_B+" = ?",new String[]{String.valueOf(wishlistID)});
+        return err!=-1;
+    }
+
     //WISHLIST DETAIL
     /*public int[] getQuantity(int wishlistID){
         SQLiteDatabase db=getReadableDatabase();
@@ -139,6 +150,11 @@ public class WishlistDatabaseHelper extends SQLiteOpenHelper {
         return err!=-1;
     }
 
+    public void deleteProductFromWishlist(int productID){
+        SQLiteDatabase db = getWritableDatabase();
+        String sqlCommand = "DELETE FROM " + USER_TABLE_NAME_A + " WHERE " + USER_COL1_A + "= " + productID;
+        db.execSQL(sqlCommand);
+    }
     //WISHLIST
     public ArrayList<Wishlist> getUserWishlist(int userID){
         SQLiteDatabase db=getReadableDatabase();
@@ -158,5 +174,28 @@ public class WishlistDatabaseHelper extends SQLiteOpenHelper {
             cursor.moveToNext();
         }
         return wishlists;
+    }
+
+    //WISHLIST DETAIL
+    public int deleteAllWishlistProduct(int wishlistID){
+        SQLiteDatabase db = getWritableDatabase();
+        return db.delete(USER_TABLE_NAME_A, USER_COL0_A + " = " + wishlistID, null);
+    }
+
+    //WISHLIST DETAIL
+    public int deleteProductInAllWishlist(int productID){
+        SQLiteDatabase db = getWritableDatabase();
+        return db.delete(USER_TABLE_NAME_A, USER_COL1_A + " = " + productID, null);
+    }
+    //WISHLIST DETAIL
+    public int deleteProductInOneWishlist(int productID, int wishlistID){
+        SQLiteDatabase db = getWritableDatabase();
+        return db.delete(USER_TABLE_NAME_A, USER_COL1_A + " = " + productID + " AND " + USER_COL0_A + " = " + wishlistID, null);
+    }
+    //WISHLIST
+    public int deleteWishlistWithProduct(int wishlistID){
+        deleteAllWishlistProduct(wishlistID);
+        SQLiteDatabase db = getWritableDatabase();
+        return db.delete(USER_TABLE_NAME_B, USER_COL1_B + " = " + wishlistID, null);
     }
 }

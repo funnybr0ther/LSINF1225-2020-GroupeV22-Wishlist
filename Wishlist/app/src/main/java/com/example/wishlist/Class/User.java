@@ -1,11 +1,15 @@
 package com.example.wishlist.Class;
 
 import android.graphics.Bitmap;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 import com.example.wishlist.Class.Address;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 public class User {
     private Address address;  //commentraire
@@ -19,9 +23,18 @@ public class User {
     private String favoriteColor;
     private String size;
     private String shoeSize;
+    private int userID;
 
     public boolean isNotification() {
         return notification;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
+
+    public int getUserID() {
+        return userID;
     }
 
     public void setNotification(boolean notification) {
@@ -132,5 +145,20 @@ public class User {
 
     public void setSize(String size) {
         this.size = size;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return userID==user.getUserID();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public int hashCode() {
+        return Objects.hash(address, firstName, lastName, email, birthDate, password, profilePhoto, notification, favoriteColor, size, shoeSize, userID);
     }
 }
