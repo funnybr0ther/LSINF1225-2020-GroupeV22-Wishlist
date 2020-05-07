@@ -24,9 +24,11 @@ public class MainMenuActivity extends AppCompatActivity {
         SharedPreferences prefs = this.getSharedPreferences(
                 "com.example.app", Context.MODE_PRIVATE);
         int tmpUserID=prefs.getInt("userID",-1);
-        if (tmpUserID!=-1){
-            userID=tmpUserID;
+        if (tmpUserID!=-1) {
+            userID = tmpUserID;
             setContentView(R.layout.activity_main_menu);
+            //TextView textView=findViewById(R.id.textView);
+            //textView.setText(Integer.toString(userID));
         }
         /*if (intent.hasExtra("userID")){
             userID= intent.getIntExtra("userID",-1);
@@ -58,7 +60,7 @@ public class MainMenuActivity extends AppCompatActivity {
         SharedPreferences prefs = this.getSharedPreferences(
                 "com.example.app", Context.MODE_PRIVATE);
         prefs.edit().remove("userID").apply();
-        finish();
+        startActivity(intent2);
     }
     public void changePasswordOrEmail(View view){
         ChangePasswordOrEmailDialog dialog=new ChangePasswordOrEmailDialog();
@@ -78,12 +80,18 @@ public class MainMenuActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
     public void viewAllUsers(View view){
         Intent intent = new Intent(this, FindFollowActivity.class);
         startActivity(intent);
     }
 
+//    public void goToFriendWishlist(View view){
+//        Intent intent = new Intent(this,ListWishlistActivity.class);
+//        intent.putExtra("receiverID",1); //id de celui a qui appartient les wishlist
+//        intent.putExtra("userID",userID); //id de celui qui consulte les wishlist de ses amis
+//        intent.putExtra("isMyWishlist",false);
+//        startActivity(intent);
+//    }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
