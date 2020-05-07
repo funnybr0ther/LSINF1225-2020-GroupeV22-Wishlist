@@ -60,7 +60,7 @@ public class MainMenuActivity extends AppCompatActivity {
         SharedPreferences prefs = this.getSharedPreferences(
                 "com.example.app", Context.MODE_PRIVATE);
         prefs.edit().remove("userID").apply();
-        startActivity(intent2);
+        finish();
     }
     public void changePasswordOrEmail(View view){
         ChangePasswordOrEmailDialog dialog=new ChangePasswordOrEmailDialog();
