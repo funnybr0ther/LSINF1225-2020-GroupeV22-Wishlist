@@ -25,7 +25,7 @@
         android:layout_height="match_parent"
         android:id="@+id/TitleOtherProfileToolbar"
         android:layout_weight="70"
-        android:text="Profile"
+        android:text="METTRE NOM ICI"
         android:textColor="@color/white"
         android:textSize="25sp"
         android:gravity="center_vertical"
