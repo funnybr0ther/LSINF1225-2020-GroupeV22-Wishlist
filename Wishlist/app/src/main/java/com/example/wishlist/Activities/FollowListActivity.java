@@ -149,6 +149,14 @@ public class FollowListActivity extends AppCompatActivity implements FollowRecyc
         int userID = followList.get(position).getUserID();
         Log.d("TAG", "onFollowerClick: " + userID);
         otherProfileIntent.putExtra("receiverID",followList.get(position).getUserID());
-        startActivity(otherProfileIntent);
+        startActivityForResult(otherProfileIntent,1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==1 && resultCode==RESULT_OK){
+            fillFollowList();
+        }
     }
 }
