@@ -101,6 +101,8 @@ public class ViewProductActivity extends AppCompatActivity {
                     switchToAdd(ViewProductActivity.this.productID);
                 }
             });
+            
+
         }
 
 
