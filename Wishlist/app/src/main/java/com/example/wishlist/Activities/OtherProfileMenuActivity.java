@@ -81,4 +81,8 @@ public class OtherProfileMenuActivity extends AppCompatActivity {
         intent.putExtra("isMyWishlist",false);
         startActivity(intent);
     }
+
+    public void followCurrentUser(View view){
+
+    }
 }
