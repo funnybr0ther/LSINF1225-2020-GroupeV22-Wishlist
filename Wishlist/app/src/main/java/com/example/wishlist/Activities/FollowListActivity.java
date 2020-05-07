@@ -119,6 +119,8 @@ public class FollowListActivity extends AppCompatActivity implements FollowRecyc
 
 
     private void fillFollowList(){
+        followList.clear();
+        filteredList.clear();
         FollowDatabaseHelper helperF = new FollowDatabaseHelper(getApplicationContext());
         UserDatabaseHelper helperU = new UserDatabaseHelper(getApplicationContext());
         for(int id:helperF.getFollows(userID)){

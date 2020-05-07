@@ -7,12 +7,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.wishlist.Class.FollowDatabaseHelper;
 import com.example.wishlist.Class.User;
 import com.example.wishlist.Class.UserDatabaseHelper;
 import com.example.wishlist.R;
@@ -26,6 +28,8 @@ public class OtherProfileMenuActivity extends AppCompatActivity {
     private User otherUser;
     private CircleImageView profilePhoto;
     private TextView titleToolbar;
+    private Button followButton;
+    private Button unfollowButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,13 +48,28 @@ public class OtherProfileMenuActivity extends AppCompatActivity {
         Intent intent = getIntent();
         receiverID =intent.getIntExtra("receiverID",-1);
         setContentView(R.layout.other_profile_menu);
-        UserDatabaseHelper dbHelper = new UserDatabaseHelper(getApplicationContext());
-        otherUser = dbHelper.getUserFromID(receiverID);
 
+        UserDatabaseHelper dbHelperU = new UserDatabaseHelper(getApplicationContext());
         profilePhoto = findViewById(R.id.profilePhoto);
+        otherUser = dbHelperU.getUserFromID(receiverID);
+
+        actualiseButtons();
         visibleMode();
     }
 
+    public void actualiseButtons(){
+        FollowDatabaseHelper dbHelperF = new FollowDatabaseHelper(getApplicationContext());
+        followButton = findViewById(R.id.followButton);
+        unfollowButton = findViewById(R.id.unfollowButton);
+
+        if(dbHelperF.checkIfFollows(userID,receiverID)){
+            followButton.setVisibility(View.GONE);
+            unfollowButton.setVisibility(View.VISIBLE);
+        }else{
+            unfollowButton.setVisibility(View.GONE);
+            followButton.setVisibility(View.VISIBLE);
+        }
+    }
     @TargetApi(21)
     public void visibleMode() {
         if (otherUser.getProfilePhoto() != null) {
@@ -83,6 +102,14 @@ public class OtherProfileMenuActivity extends AppCompatActivity {
     }
 
     public void followCurrentUser(View view){
+        FollowDatabaseHelper helper = new FollowDatabaseHelper(getApplicationContext());
+        helper.addFollow(userID,receiverID,"Friend");
+        actualiseButtons();
+    }
 
+    public void unfollowCurrentUser(View view){
+        FollowDatabaseHelper helper = new FollowDatabaseHelper(getApplicationContext());
+        helper.unfollow(userID,receiverID);
+        actualiseButtons();
     }
 }
