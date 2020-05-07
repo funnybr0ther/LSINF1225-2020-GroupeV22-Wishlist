@@ -3,13 +3,10 @@ package com.example.wishlist.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
+import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.wishlist.Adapters.WishlistAdapter;
 import com.example.wishlist.Class.Wishlist;
@@ -19,10 +16,12 @@ import com.example.wishlist.R;
 
 import java.util.ArrayList;
 
-public class ListWishlistActivity extends AppCompatActivity {
+public class ListWishlistActivity extends AppCompatActivity  {
 
-    private int userID;
-
+    private int userID; //
+    private boolean isMyWishlist;
+    private int receiverID;
+    private int displayID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +36,27 @@ public class ListWishlistActivity extends AppCompatActivity {
             Intent backToLogin=new Intent(this,LoginActivity.class);
             startActivity(backToLogin);
         }
+        if (intent.hasExtra("receiverID")){
+            receiverID = intent.getIntExtra("receiverID",-1);
+            if(userID != receiverID){
+                isMyWishlist = false;
+            }
+        }
+        if (intent.hasExtra("isMyWishlist")){
+            isMyWishlist = intent.getBooleanExtra("isMyWishlist",false);
+        }
+
+        displayID = userID;
+
+        if(!isMyWishlist){
+            View addBtn = findViewById(R.id.contextMenuWishlist);
+            ((ViewGroup) addBtn.getParent()).removeView(addBtn);
+            displayID = receiverID;
+        }
 
         //Va chercher dans la BDD les wishlist d'un utilisateur grace a son userID
         WishlistDatabaseHelper db = new WishlistDatabaseHelper(getApplicationContext());
-        ArrayList<Wishlist> list = db.getUserWishlist(userID);
+        ArrayList<Wishlist> list = db.getUserWishlist(displayID);
 
         ListView wishlistListView = findViewById(R.id.wishlist_listview);
         wishlistListView.setAdapter(new WishlistAdapter(this, list));
@@ -64,8 +80,19 @@ public class ListWishlistActivity extends AppCompatActivity {
         wishlistListView.setAdapter(new WishlistAdapter(this, list));
     }
 
+    public void wishlistAdapterReturn(int wishlistID, int receiverID, String wishlistName){
+        Intent goToDetail = new Intent(this, DetailWishlistActivity.class);
+        goToDetail.putExtra("wishlistID",wishlistID);
+        goToDetail.putExtra("receiverID",receiverID);
+        goToDetail.putExtra("userID", userID);
+        goToDetail.putExtra("wishlistName",wishlistName);
+        goToDetail.putExtra("isMyWishlist",isMyWishlist);
+        this.startActivity(goToDetail);
+    }
+
     public void onBackPressed(View view) {
         onBackPressed();
     }
+
 
 }

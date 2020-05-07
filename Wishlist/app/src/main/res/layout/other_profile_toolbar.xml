@@ -23,8 +23,9 @@
     <TextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:id="@+id/TitleOtherProfileToolbar"
         android:layout_weight="70"
-        android:text="My Profile"
+        android:text="METTRE NOM ICI"
         android:textColor="@color/white"
         android:textSize="25sp"
         android:gravity="center_vertical"
@@ -39,15 +40,5 @@
         app:srcCompat="@drawable/ic_check_black_24dp"
         android:onClick="updateUser"
         android:background="?attr/selectableItemBackground"/>
-    <ImageButton
-        android:layout_width="0dp"
-        android:id="@+id/modifyMode"
-        android:layout_height="wrap_content"
-        android:onClick="editMode"
-        android:layout_weight="15"
-        android:visibility="visible"
-        app:srcCompat="@drawable/ic_mode_edit_white_30dp"
-        android:background="?attr/selectableItemBackground"/>
-
 
 </LinearLayout>

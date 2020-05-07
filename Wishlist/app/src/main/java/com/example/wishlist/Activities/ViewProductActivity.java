@@ -51,6 +51,7 @@ public class ViewProductActivity extends AppCompatActivity {
     private ChipGroup chipGroup;
     private ImageButton editButton;
     private ImageButton addButton;
+    private ImageButton delButton;
 
 
     int productID;
@@ -59,16 +60,14 @@ public class ViewProductActivity extends AppCompatActivity {
 
     ProductDatabaseHelper productDatabaseHelper;
     PurchaseDatabaseHelper purchaseDatabaseHelper;
-    private String[] testCategoryList = {"Garden","Children"};
-    private Product testProduct = new Product("BALANCOIRE",null,"Ceci est une balançoire",testCategoryList,2000,250,4,ProductDatabaseHelper.convertArrayToString(new String[]{"45","46","47"}),33,12);
+    WishlistDatabaseHelper wishlistDatabaseHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         productDatabaseHelper = new ProductDatabaseHelper(getApplicationContext());
         purchaseDatabaseHelper = new PurchaseDatabaseHelper(getApplicationContext());
-        productID = productDatabaseHelper.addProduct(testProduct);
         super.onCreate(savedInstanceState);
         Intent intent=getIntent();
-//        productID=intent.getIntExtra("productID",-1);
+        productID=intent.getIntExtra("productID",-1);
         boolean myProduct = intent.getBooleanExtra("isMyProduct",true);
         userID = intent.getIntExtra("userID",-1);
         if(myProduct){
@@ -78,6 +77,13 @@ public class ViewProductActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     switchToEdit(ViewProductActivity.this.productID);
+                }
+            });
+            delButton = findViewById(R.id.deleteProduct);
+            delButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    deleteProduct();
                 }
             });
         }
@@ -188,7 +194,9 @@ public class ViewProductActivity extends AppCompatActivity {
         startActivityForResult(intent,2);
     }
     public void onBackPressed(View view) {
-        onBackPressed();
+        final Intent returnIntent = new Intent();
+        setResult(RESULT_OK,returnIntent);
+        finish();
     }
 
     public void onBuyPressed(View view){
@@ -249,6 +257,14 @@ public class ViewProductActivity extends AppCompatActivity {
         }
     }
 
+    void deleteProduct(){
+        wishlistDatabaseHelper = new WishlistDatabaseHelper(this);
+        wishlistDatabaseHelper.deleteProductInAllWishlist(productID);
+        final Intent returnIntent = new Intent();
+        setResult(RESULT_OK,returnIntent);
+        finish();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -267,13 +283,13 @@ public class ViewProductActivity extends AppCompatActivity {
                 final Wishlist[] chosenWishlist = {null};
                 final Integer[] chosenWishlistID = {null};
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                int tempProductID = data.getIntExtra("newProduct",-1);
+                final int tempProductID = data.getIntExtra("newProduct",-1);
                 if(tempProductID==-1){
                     return;
                 }
                 displayProductInfo(productDatabaseHelper.getProductFromID(tempProductID));
                 builder.setTitle("Choose a wishlist");
-                WishlistDatabaseHelper wishlistDatabaseHelper = new WishlistDatabaseHelper(this);
+                wishlistDatabaseHelper = new WishlistDatabaseHelper(this);
                 final ArrayList<Wishlist> wishlists =  wishlistDatabaseHelper.getUserWishlist(userID);
                 String[] wishlistNames = new String[wishlists.size()];
                 for (int i = 0; i < wishlists.size(); i++) {
@@ -285,31 +301,35 @@ public class ViewProductActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         chosenWishlist[0] = wishlists.get(which);
-                        chosenWishlistID[0] = which;
+                        chosenWishlistID[0] = wishlists.get(which).getWishlistID();
                     }
                 });
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        confirmSelectList(chosenWishlistID[0],tempProductID);
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        chosenWishlist[0] = null;
                     }
                 });
                 AlertDialog dialog = builder.create();
                 dialog.show();
-                if(chosenWishlist[0]==null){
-                }
-                else{
-                    wishlistDatabaseHelper.addProduct(tempProductID,chosenWishlistID[0]);
-                }
-                displayProductInfo(productDatabaseHelper.getProductFromID(productID));
             }
         }
 
     }//onActivityResult
+    void confirmSelectList(int chosenWishlistID, int productID){
+        if(chosenWishlistID==-1){
+            Log.d(TAG, "onActivityResult: chosenWishlist null");
+        }
+        else{
+            Log.d(TAG, "onActivityResult: " + productID);
+            wishlistDatabaseHelper.addProduct(productID,chosenWishlistID);
+        }
+        displayProductInfo(productDatabaseHelper.getProductFromID(productID));
+    }
 
 }

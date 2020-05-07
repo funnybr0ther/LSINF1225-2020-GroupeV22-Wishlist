@@ -47,18 +47,11 @@ public class MainMenuActivity extends AppCompatActivity {
         intent.putExtra("userID",userID);
         startActivity(intent);
     }
-    public void exampleProduct(View view){
-        Intent intent1=new Intent(this, ViewProductActivity.class);
-        intent1.putExtra("productID",1);
-        intent1.putExtra("userID",userID);
-        intent1.putExtra("isMyProduct",false);
-        intent1.putExtra("receiverID",1);
-        startActivity(intent1);
-    }
 
     public void myWishlist(View view){
         Intent gotToWishlist=new Intent(this,ListWishlistActivity.class);
         gotToWishlist.putExtra("userID",userID);
+        gotToWishlist.putExtra("isMyWishlist",true);
         startActivity(gotToWishlist);
     }
 
@@ -81,17 +74,18 @@ public class MainMenuActivity extends AppCompatActivity {
         Intent intent = new Intent(this, PurchaseViewActivity.class);
         startActivity(intent);
     }
+
     public void viewFollowList(View view){
-        Intent intent = new Intent(this,ViewFollowsActivity.class);
+        Intent intent = new Intent(this, FollowListActivity.class);
         startActivity(intent);
     }
-    public void addProduct(View view){
-        Intent intent = new Intent(this,EditProductActivity.class);
-        intent.putExtra("productID",-1);
-        intent.putExtra("senderID",-1);
-        intent.putExtra("receiverID",-1);
-        startActivityForResult(intent,1);
+
+
+    public void viewAllUsers(View view){
+        Intent intent = new Intent(this, FindFollowActivity.class);
+        startActivity(intent);
     }
+
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 

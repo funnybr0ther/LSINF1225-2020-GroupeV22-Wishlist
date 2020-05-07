@@ -155,6 +155,12 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         int err=db.update(PRODUCT_TABLE_NAME,contentValues,PRODUCT_COL0+" = ?",new String[]{String.valueOf(productID)});
         return err!=-1;
     }
+
+    public void deleteProduct(int productID){
+        SQLiteDatabase db = getWritableDatabase();
+        String sqlCommand = "DELETE FROM " + PRODUCT_TABLE_NAME + " WHERE " + PRODUCT_COL0+ "=" + productID;
+        db.execSQL(sqlCommand);
+    }
     /*
         Conversion of String[] to String using a comma "," as a separator
      */
