@@ -150,6 +150,11 @@ public class WishlistDatabaseHelper extends SQLiteOpenHelper {
         return err!=-1;
     }
 
+    public void deleteProductFromWishlist(int productID){
+        SQLiteDatabase db = getWritableDatabase();
+        String sqlCommand = "DELETE FROM " + USER_TABLE_NAME_A + " WHERE " + USER_COL1_A + "= " + productID;
+        db.execSQL(sqlCommand);
+    }
     //WISHLIST
     public ArrayList<Wishlist> getUserWishlist(int userID){
         SQLiteDatabase db=getReadableDatabase();

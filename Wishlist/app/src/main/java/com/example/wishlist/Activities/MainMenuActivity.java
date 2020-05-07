@@ -52,6 +52,7 @@ public class MainMenuActivity extends AppCompatActivity {
         intent1.putExtra("productID",1);
         intent1.putExtra("userID",userID);
         intent1.putExtra("isMyProduct",false);
+        intent1.putExtra("receiverID",1);
         startActivity(intent1);
     }
 
@@ -81,10 +82,17 @@ public class MainMenuActivity extends AppCompatActivity {
         Intent intent = new Intent(this, PurchaseViewActivity.class);
         startActivity(intent);
     }
+
     public void viewFollowList(View view){
-        Intent intent = new Intent(this,ViewFollowsActivity.class);
+        Intent intent = new Intent(this, FollowListActivity.class);
         startActivity(intent);
     }
+
+    public void viewAllUsers(View view){
+        Intent intent = new Intent(this, FindFollowActivity.class);
+        startActivity(intent);
+    }
+
     public void addProduct(View view){
         Intent intent = new Intent(this,EditProductActivity.class);
         intent.putExtra("productID",-1);

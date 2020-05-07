@@ -114,11 +114,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Follow List"
-        android:layout_marginTop="5dp"
+        android:layout_below="@id/addProduct"
+        android:id="@+id/viewFollowList"
+        android:layout_marginTop="50dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:textSize="40sp"
         android:onClick="viewFollowList">
+    </Button>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Search User"
+        android:layout_below="@id/viewFollowList"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:textSize="40sp"
+        android:onClick="viewAllUsers">
     </Button>
     <Button
         android:layout_width="match_parent"

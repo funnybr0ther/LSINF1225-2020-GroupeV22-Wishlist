@@ -35,7 +35,7 @@
             android:layout_toRightOf="@id/backArrowFollowList"
             android:gravity="center_vertical"
             android:scaleType="fitCenter"
-            android:text="@string/followListToolbartext"
+            android:text="@string/searchUserTitle"
             android:textColor="@color/white"
             android:textSize="25sp"
             android:layout_marginStart="15dp"

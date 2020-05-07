@@ -6,8 +6,8 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize">
-        <include layout="@layout/follow_list_toolbar" />
-        <include layout="@layout/follow_list_search_toolbar"
+        <include layout="@layout/find_follow_toolbar" />
+        <include layout="@layout/find_follow_search_toolbar"
             android:visibility="gone"/>
     </com.google.android.material.appbar.AppBarLayout>
 

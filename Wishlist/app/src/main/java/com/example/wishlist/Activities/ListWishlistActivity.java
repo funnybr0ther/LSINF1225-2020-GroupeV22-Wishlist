@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.wishlist.Adapters.FollowRecyclerAdapter;
 import com.example.wishlist.Adapters.WishlistAdapter;
 import com.example.wishlist.Class.Wishlist;
 import com.example.wishlist.Class.WishlistDatabaseHelper;
@@ -20,7 +21,7 @@ import com.example.wishlist.R;
 
 import java.util.ArrayList;
 
-public class ListWishlistActivity extends AppCompatActivity {
+public class ListWishlistActivity extends AppCompatActivity  {
 
     private int userID; //
     private boolean isMyWishlist;
@@ -94,5 +95,6 @@ public class ListWishlistActivity extends AppCompatActivity {
     public void onBackPressed(View view) {
         onBackPressed();
     }
+
 
 }

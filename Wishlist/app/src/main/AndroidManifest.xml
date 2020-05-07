@@ -18,20 +18,26 @@
         android:roundIcon="@mipmap/ic_logo_wishlist_v2_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.CreateProfileActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
+        <activity android:name=".Activities.OtherProfile"></activity>
+        <activity
+            android:name=".Activities.CreateProfileActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity android:name=".Activities.CreateNewAccountActivity" />
+        <activity android:name=".Activities.MainMenuActivity" />
+        <activity
+            android:name=".Activities.MyProfileActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity
+            android:name=".Activities.ViewProductActivity"
+            android:configChanges="keyboard|orientation|screenSize" />
+        <activity android:name=".Activities.ListWishlistActivity" />
+        <activity android:name=".Activities.ChangePasswordOrEmailActivity" />
+        <activity android:name=".Activities.DetailWishlistActivity" />
+        <activity
+            android:name=".Activities.EditProductActivity"
+            android:configChanges="keyboard|orientation|screenSize" />
         <activity android:name=".Activities.CreateNewAccountActivity"></activity>
         <activity android:name=".Activities.PurchaseViewActivity"></activity>
-        <activity android:name=".Activities.MainMenuActivity"></activity>
-        <activity android:name=".Activities.MyProfileActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
-        <activity android:name=".Activities.ViewProductActivity"
-            android:configChanges="keyboard|orientation|screenSize"></activity>
-        <activity android:name=".Activities.ListWishlistActivity"></activity>
-        <activity android:name=".Activities.ChangePasswordOrEmailActivity"></activity>
-        <activity android:name=".Activities.DetailWishlistActivity"></activity>
-        <activity android:name=".Activities.EditProductActivity"
-            android:configChanges="keyboard|orientation|screenSize"></activity>
         <activity android:name=".Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -49,7 +55,9 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_path" />
         </provider>
-        <activity android:name=".Activities.ViewFollowsActivity"></activity>
+
+        <activity android:name=".Activities.FollowListActivity" />
+        <activity android:name=".Activities.FindFollowActivity" />
     </application>
 
 </manifest>
