@@ -19,45 +19,45 @@ import java.util.ArrayList;
 
 public class ProductAdapter extends BaseAdapter {
 
-    private Context context;
-    private ArrayList<Product> products;
-    private LayoutInflater inflater;
+    private final Context context;
+    private final ArrayList<Product> products;
+    private final LayoutInflater inflater;
 
-    public ProductAdapter(Context context, ArrayList<Product> products){
+    public ProductAdapter(final Context context, final ArrayList<Product> products){
         this.context = context;
         this.products = products;
-        this.inflater = LayoutInflater.from(context);
+        inflater = LayoutInflater.from(context);
     }
 
     @Override
     public int getCount() {
-        return products.size();
+        return this.products.size();
     }
 
     @Override
-    public Product getItem(int position) {
-        return products.get(position);
+    public Product getItem(final int position) {
+        return this.products.get(position);
     }
 
     @Override
-    public long getItemId(int position) {
+    public long getItemId(final int position) {
         return 0;
     }
 
     @Override
-    public View getView(final int position, View view, ViewGroup parent) {
-        view = inflater.inflate(R.layout.adapter_product, null);
-        final Product product = getItem(position);
-        String name = product.getName();
-        TextView itemNameView = view.findViewById(R.id.productItem_name);
+    public View getView(final int position, View view, final ViewGroup parent) {
+        view = this.inflater.inflate(R.layout.adapter_product, null);
+        Product product = this.getItem(position);
+        final String name = product.getName();
+        final TextView itemNameView = view.findViewById(R.id.productItem_name);
         itemNameView.setText(name);
-        TextView price = view.findViewById(R.id.productItem_price);
+        final TextView price = view.findViewById(R.id.productItem_price);
         price.setText(product.getPrice() + " € ");
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                DetailWishlistActivity detail = (DetailWishlistActivity) context;
+            public void onClick(final View v) {
+                final DetailWishlistActivity detail = (DetailWishlistActivity) ProductAdapter.this.context;
                 detail.productDetail(position);    //modifier pour wishlist externe
             }
         });

@@ -26,30 +26,30 @@ public class User {
     private int userID;
 
     public boolean isNotification() {
-        return notification;
+        return this.notification;
     }
 
-    public void setUserID(int userID) {
+    public void setUserID(final int userID) {
         this.userID = userID;
     }
 
     public int getUserID() {
-        return userID;
+        return this.userID;
     }
 
-    public void setNotification(boolean notification) {
+    public void setNotification(final boolean notification) {
         this.notification = notification;
     }
 
     public Bitmap getProfilePhoto() {
-        return profilePhoto;
+        return this.profilePhoto;
     }
 
-    public void setProfilePhoto(Bitmap profilePhoto) {
+    public void setProfilePhoto(final Bitmap profilePhoto) {
         this.profilePhoto = profilePhoto;
     }
 
-    public User(Address address, String firstName, String lastName, String email, DateWish birthDate, String password, Bitmap profilePhoto, String favoriteColor, String size, String shoeSize) {
+    public User(final Address address, final String firstName, final String lastName, final String email, final DateWish birthDate, final String password, final Bitmap profilePhoto, final String favoriteColor, final String size, final String shoeSize) {
         this.address = address;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -62,7 +62,7 @@ public class User {
         this.shoeSize = shoeSize;
     }
 
-    public User(Address address, String firstName, String lastName, String email, DateWish birthDate, String password) {
+    public User(final Address address, final String firstName, final String lastName, final String email, final DateWish birthDate, final String password) {
         this.address = address;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -72,18 +72,18 @@ public class User {
     }
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(final String password) {
         this.password = password;
     }
 
     public String getShoeSize() {
-        return shoeSize;
+        return this.shoeSize;
     }
 
-    public void setShoeSize(String shoeSize) {
+    public void setShoeSize(final String shoeSize) {
         this.shoeSize = shoeSize;
     }
 
@@ -92,73 +92,73 @@ public class User {
     }
 
     public Address getAddress() {
-        return address;
+        return this.address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(final Address address) {
         this.address = address;
     }
 
     public String getFirstName() {
-        return firstName;
+        return this.firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public void setFirstName(final String firstName) {
         this.firstName = firstName;
     }
 
     public String getLastName() {
-        return lastName;
+        return this.lastName;
     }
 
-    public void setLastName(String lastName) {
+    public void setLastName(final String lastName) {
         this.lastName = lastName;
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(final String email) {
         this.email = email;
     }
 
     public DateWish getBirthDate() {
-        return birthDate;
+        return this.birthDate;
     }
 
-    public void setBirthDate(DateWish birthDate) {
+    public void setBirthDate(final DateWish birthDate) {
         this.birthDate = birthDate;
     }
 
     public String getFavoriteColor() {
-        return favoriteColor;
+        return this.favoriteColor;
     }
 
-    public void setFavoriteColor(String favoriteColor) {
+    public void setFavoriteColor(final String favoriteColor) {
         this.favoriteColor = favoriteColor;
     }
 
     public String getSize() {
-        return size;
+        return this.size;
     }
 
-    public void setSize(String size) {
+    public void setSize(final String size) {
         this.size = size;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return userID==user.getUserID();
+        if (o == null || this.getClass() != o.getClass()) return false;
+        final User user = (User) o;
+        return this.userID ==user.getUserID();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public int hashCode() {
-        return Objects.hash(address, firstName, lastName, email, birthDate, password, profilePhoto, notification, favoriteColor, size, shoeSize, userID);
+        return Objects.hash(this.address, this.firstName, this.lastName, this.email, this.birthDate, this.password, this.profilePhoto, this.notification, this.favoriteColor, this.size, this.shoeSize, this.userID);
     }
 }

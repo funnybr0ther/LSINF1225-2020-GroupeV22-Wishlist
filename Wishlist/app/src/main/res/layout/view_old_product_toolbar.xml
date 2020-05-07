@@ -23,8 +23,7 @@
             android:layout_marginRight="20dp"
             android:background="@color/colorPrimary"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_add_button"
-            android:onClick="switchToAdd"/>
+            app:srcCompat="@drawable/ic_add_button" />
 
         <TextView
             android:id="@+id/productToolbarTitle"

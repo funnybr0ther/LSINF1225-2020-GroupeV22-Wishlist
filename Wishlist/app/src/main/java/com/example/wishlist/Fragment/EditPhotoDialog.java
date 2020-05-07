@@ -24,75 +24,75 @@ public class EditPhotoDialog extends DialogFragment {
     public final int MEMORY_REQUEST_CODE = 13;
 
     public interface OnPhotoReceivedListener {
-        public void getBitmapImage(Bitmap bitmap);
+        void getBitmapImage(Bitmap bitmap);
 
-        public void setUriImage(Uri uri);
+        void setUriImage(Uri uri);
     }
 
     OnPhotoReceivedListener onPhotoReceivedListener;
 
     @Override
-    public void onAttach(@NonNull Context context) {
+    public void onAttach(@NonNull final Context context) {
         super.onAttach(context);
         try {
-            onPhotoReceivedListener = (OnPhotoReceivedListener) getActivity();
+            this.onPhotoReceivedListener = (OnPhotoReceivedListener) this.getActivity();
 
-        } catch (ClassCastException e) {
+        } catch (final ClassCastException e) {
 
         }
     }
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_change_photo, container, false);
+    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.dialog_change_photo, container, false);
         //Cancel
-        TextView cancel = view.findViewById(R.id.changePhotoCancel);
+        final TextView cancel = view.findViewById(R.id.changePhotoCancel);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                EditPhotoDialog.this.getDialog().dismiss();
+            public void onClick(final View v) {
+                getDialog().dismiss();
             }
         });
         //Take Photo
-        TextView takePhoto = view.findViewById(R.id.changePhotoTakeNew);
+        final TextView takePhoto = view.findViewById(R.id.changePhotoTakeNew);
         takePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
+            public void onClick(final View v) {
+                final Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                EditPhotoDialog.this.startActivityForResult(cameraIntent, EditPhotoDialog.this.CAMERA_REQUEST_CODE);
             }
         });
 
         //Choose Photo From Memory
-        TextView selectPhoto = view.findViewById(R.id.photoFromMemory);
+        final TextView selectPhoto = view.findViewById(R.id.photoFromMemory);
         selectPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent memoryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+            public void onClick(final View v) {
+                final Intent memoryIntent = new Intent(Intent.ACTION_GET_CONTENT);
                 memoryIntent.setType("image/*");
-                startActivityForResult(memoryIntent, MEMORY_REQUEST_CODE);
+                EditPhotoDialog.this.startActivityForResult(memoryIntent, EditPhotoDialog.this.MEMORY_REQUEST_CODE);
             }
         });
         return view;
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //Result if take a new Photo
-        if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            MyProfileActivity activity = (MyProfileActivity) getActivity();
-            Bundle extras = data.getExtras();
-            Bitmap bitmap = (Bitmap) extras.get("data");
-            onPhotoReceivedListener.getBitmapImage(bitmap);
-            getDialog().dismiss();
+        if (requestCode == this.CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            final MyProfileActivity activity = (MyProfileActivity) this.getActivity();
+            final Bundle extras = data.getExtras();
+            final Bitmap bitmap = (Bitmap) extras.get("data");
+            this.onPhotoReceivedListener.getBitmapImage(bitmap);
+            this.getDialog().dismiss();
         }
         //Result if choose photo from Memory
-        if (requestCode == MEMORY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            Uri selectedImageUri = data.getData();
-            onPhotoReceivedListener.setUriImage(selectedImageUri);
-            getDialog().dismiss();
+        if (requestCode == this.MEMORY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            final Uri selectedImageUri = data.getData();
+            this.onPhotoReceivedListener.setUriImage(selectedImageUri);
+            this.getDialog().dismiss();
         }
     }
 }
