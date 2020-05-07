@@ -51,6 +51,7 @@ public class ViewProductActivity extends AppCompatActivity {
     private ChipGroup chipGroup;
     private ImageButton editButton;
     private ImageButton addButton;
+    private ImageButton delButton;
 
 
     int productID;
@@ -59,16 +60,14 @@ public class ViewProductActivity extends AppCompatActivity {
 
     ProductDatabaseHelper productDatabaseHelper;
     PurchaseDatabaseHelper purchaseDatabaseHelper;
-    private String[] testCategoryList = {"Garden","Children"};
-    private Product testProduct = new Product("BALANCOIRE",null,"Ceci est une balançoire",testCategoryList,2000,250,4,ProductDatabaseHelper.convertArrayToString(new String[]{"45","46","47"}),33,12);
+    WishlistDatabaseHelper wishlistDatabaseHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         productDatabaseHelper = new ProductDatabaseHelper(getApplicationContext());
         purchaseDatabaseHelper = new PurchaseDatabaseHelper(getApplicationContext());
-        productID = productDatabaseHelper.addProduct(testProduct);
         super.onCreate(savedInstanceState);
         Intent intent=getIntent();
-//        productID=intent.getIntExtra("productID",-1);
+        productID=intent.getIntExtra("productID",-1);
         boolean myProduct = intent.getBooleanExtra("isMyProduct",true);
         userID = intent.getIntExtra("userID",-1);
         if(myProduct){
@@ -78,6 +77,13 @@ public class ViewProductActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     switchToEdit(ViewProductActivity.this.productID);
+                }
+            });
+            delButton = findViewById(R.id.deleteProduct);
+            delButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    deleteProduct();
                 }
             });
         }
@@ -188,7 +194,9 @@ public class ViewProductActivity extends AppCompatActivity {
         startActivityForResult(intent,2);
     }
     public void onBackPressed(View view) {
-        onBackPressed();
+        final Intent returnIntent = new Intent();
+        setResult(RESULT_OK,returnIntent);
+        finish();
     }
 
     public void onBuyPressed(View view){
@@ -247,6 +255,15 @@ public class ViewProductActivity extends AppCompatActivity {
             purchaseDatabaseHelper.addPurchase(achat);
             displayProductInfo(buyProduct);
         }
+    }
+
+    void deleteProduct(){
+        wishlistDatabaseHelper = new WishlistDatabaseHelper(this);
+        productDatabaseHelper.deleteProduct(productID);
+        wishlistDatabaseHelper.deleteProductInAllWishlist(productID);
+        final Intent returnIntent = new Intent();
+        setResult(RESULT_OK,returnIntent);
+        finish();
     }
 
     @Override
