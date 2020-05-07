@@ -61,6 +61,7 @@
                     android:layout_marginRight="50dp"
                     android:textSize="30sp"
                     android:layout_below="@id/profileButton"
+                    android:onClick="goToFriendWishlist"
                     android:text="@string/seeOtherUsersWishlistsButton" />
 
                 <Button

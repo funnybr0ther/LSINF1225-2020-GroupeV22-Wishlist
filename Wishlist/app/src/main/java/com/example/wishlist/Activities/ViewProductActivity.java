@@ -259,7 +259,6 @@ public class ViewProductActivity extends AppCompatActivity {
 
     void deleteProduct(){
         wishlistDatabaseHelper = new WishlistDatabaseHelper(this);
-        productDatabaseHelper.deleteProduct(productID);
         wishlistDatabaseHelper.deleteProductInAllWishlist(productID);
         final Intent returnIntent = new Intent();
         setResult(RESULT_OK,returnIntent);
@@ -284,13 +283,13 @@ public class ViewProductActivity extends AppCompatActivity {
                 final Wishlist[] chosenWishlist = {null};
                 final Integer[] chosenWishlistID = {null};
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                int tempProductID = data.getIntExtra("newProduct",-1);
+                final int tempProductID = data.getIntExtra("newProduct",-1);
                 if(tempProductID==-1){
                     return;
                 }
                 displayProductInfo(productDatabaseHelper.getProductFromID(tempProductID));
                 builder.setTitle("Choose a wishlist");
-                WishlistDatabaseHelper wishlistDatabaseHelper = new WishlistDatabaseHelper(this);
+                wishlistDatabaseHelper = new WishlistDatabaseHelper(this);
                 final ArrayList<Wishlist> wishlists =  wishlistDatabaseHelper.getUserWishlist(userID);
                 String[] wishlistNames = new String[wishlists.size()];
                 for (int i = 0; i < wishlists.size(); i++) {
@@ -302,31 +301,35 @@ public class ViewProductActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         chosenWishlist[0] = wishlists.get(which);
-                        chosenWishlistID[0] = which;
+                        chosenWishlistID[0] = wishlists.get(which).getWishlistID();
                     }
                 });
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        confirmSelectList(chosenWishlistID[0],tempProductID);
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        chosenWishlist[0] = null;
                     }
                 });
                 AlertDialog dialog = builder.create();
                 dialog.show();
-                if(chosenWishlist[0]==null){
-                }
-                else{
-                    wishlistDatabaseHelper.addProduct(tempProductID,chosenWishlistID[0]);
-                }
-                displayProductInfo(productDatabaseHelper.getProductFromID(productID));
             }
         }
 
     }//onActivityResult
+    void confirmSelectList(int chosenWishlistID, int productID){
+        if(chosenWishlistID==-1){
+            Log.d(TAG, "onActivityResult: chosenWishlist null");
+        }
+        else{
+            Log.d(TAG, "onActivityResult: " + productID);
+            wishlistDatabaseHelper.addProduct(productID,chosenWishlistID);
+        }
+        displayProductInfo(productDatabaseHelper.getProductFromID(productID));
+    }
 
 }

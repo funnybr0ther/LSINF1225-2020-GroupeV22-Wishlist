@@ -1,11 +1,15 @@
 package com.example.wishlist.Class;
 
 import android.graphics.Bitmap;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 import com.example.wishlist.Class.Address;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 public class User {
     private Address address;  //commentraire
@@ -141,5 +145,20 @@ public class User {
 
     public void setSize(String size) {
         this.size = size;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return userID==user.getUserID();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public int hashCode() {
+        return Objects.hash(address, firstName, lastName, email, birthDate, password, profilePhoto, notification, favoriteColor, size, shoeSize, userID);
     }
 }

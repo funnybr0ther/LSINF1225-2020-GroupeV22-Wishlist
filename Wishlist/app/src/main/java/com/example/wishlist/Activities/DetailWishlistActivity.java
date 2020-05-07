@@ -22,12 +22,12 @@ import java.util.ArrayList;
 
 public class DetailWishlistActivity extends AppCompatActivity {
 
-    private int receiverID;
+    private int userID;
     private int wishlistID;
     WishlistDatabaseHelper dbWishlist;
     ArrayList<Product> products;
     private boolean isMyWishlist;
-    private int userID;
+    private int receiverID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class DetailWishlistActivity extends AppCompatActivity {
 
         //check que les elements necessaire à l'activite sont present
         if (intent.hasExtra("userID")){
-            receiverID = intent.getIntExtra("userID",-1);
+            userID = intent.getIntExtra("userID",-1);
         } else{
             Intent backToLogin=new Intent(this,LoginActivity.class);
             startActivity(backToLogin);
@@ -48,7 +48,7 @@ public class DetailWishlistActivity extends AppCompatActivity {
             wishlistID = intent.getIntExtra("wishlistID",-1);
         } else{
             Intent backToWishlist=new Intent(this,LoginActivity.class);
-            backToWishlist.putExtra("userID", receiverID);
+            backToWishlist.putExtra("userID", userID);
             startActivity(backToWishlist);
         }
         if (intent.hasExtra("wishlistName")){
@@ -56,9 +56,9 @@ public class DetailWishlistActivity extends AppCompatActivity {
            TextView title = findViewById(R.id.wishlistToolbarTitle);
            title.setText(wishlistName);
         }
-        if (intent.hasExtra("visiterID")){
-            userID = intent.getIntExtra("visiterID",-1);
-            if(receiverID != userID){
+        if (intent.hasExtra("receiverID")){
+            receiverID = intent.getIntExtra("receiverID",-1);
+            if(userID != receiverID){
                 isMyWishlist = false;
             }
         }
@@ -99,7 +99,7 @@ public class DetailWishlistActivity extends AppCompatActivity {
         ChangeWishlistNameFragment dialog=new ChangeWishlistNameFragment();
         Bundle args = new Bundle();
         args.putInt("wishlistID", wishlistID);
-        args.putInt("userID", receiverID);
+        args.putInt("userID", userID);
         dialog.setArguments(args);
         dialog.show(DetailWishlistActivity.this.getSupportFragmentManager(),"Change name");
     }
