@@ -21,47 +21,47 @@ public class LoginActivity extends AppCompatActivity {
 
     @TargetApi(21)
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences prefs = this.getSharedPreferences(
+    protected void onCreate(final Bundle savedInstanceState) {
+        final SharedPreferences prefs = getSharedPreferences(
                 "com.example.app", Context.MODE_PRIVATE);
-        int tmpUserID=prefs.getInt("userID",-1);
+        final int tmpUserID=prefs.getInt("userID",-1);
         if(tmpUserID!=-1){
-            Intent intent=new Intent(this,MainMenuActivity.class);
-            startActivity(intent);
+            final Intent intent=new Intent(this,MainMenuActivity.class);
+            this.startActivity(intent);
         }
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_v2);
-        editTextMail= (EditText)findViewById(R.id.username);
-        editTextPassword=(EditText)findViewById(R.id.password);
-        wrongLogin=(TextView) findViewById(R.id.wrongLogin);
+        this.setContentView(R.layout.login_v2);
+        this.editTextMail = this.findViewById(R.id.username);
+        this.editTextPassword = this.findViewById(R.id.password);
+        this.wrongLogin = this.findViewById(R.id.wrongLogin);
     }
 
 
     /*
     * Check if couple mail-password exist then go to main menu if true with userID in Extra
      */
-    public void checkUserAccess(View view){
+    public void checkUserAccess(final View view){
 
-        String mail= editTextMail.getText().toString();
-        String password=editTextPassword.getText().toString();
+        final String mail= this.editTextMail.getText().toString();
+        final String password= this.editTextPassword.getText().toString();
         //TextView textViewMessage=(TextView) findViewById(R.id.wrongLogin);
-        UserDatabaseHelper dbHelper=new UserDatabaseHelper(getApplicationContext());
-        int userID=dbHelper.checkUser(mail,password);
+        final UserDatabaseHelper dbHelper=new UserDatabaseHelper(this.getApplicationContext());
+        final int userID=dbHelper.checkUser(mail,password);
         if (userID!=-1){
-            SharedPreferences prefs = this.getSharedPreferences(
+            final SharedPreferences prefs = getSharedPreferences(
                     "com.example.app", Context.MODE_PRIVATE);
             prefs.edit().putInt("userID",userID).apply();
-            Intent intent=new Intent(this,MainMenuActivity.class);
-            startActivity(intent);
+            final Intent intent=new Intent(this,MainMenuActivity.class);
+            this.startActivity(intent);
         }
         else{
-            wrongLogin.setText("Wrong password or email");
+            this.wrongLogin.setText("Wrong password or email");
         }
     }
 
     //function called onclick of text "Still not Register"
-    public void newAccount(View view){
-        Intent intent=new Intent(this,CreateNewAccountActivity.class);
-        startActivity(intent);
+    public void newAccount(final View view){
+        final Intent intent=new Intent(this,CreateNewAccountActivity.class);
+        this.startActivity(intent);
     }
 }

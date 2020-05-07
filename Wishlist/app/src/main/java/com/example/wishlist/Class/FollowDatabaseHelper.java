@@ -21,75 +21,75 @@ public class FollowDatabaseHelper extends SQLiteOpenHelper {
     private static final String FOLLOW_COL1 = "followedID";
     private static final String FOLLOW_COL2 = "relation";
 
-    public FollowDatabaseHelper (@Nullable Context context){
-        super(context,DATABASE_NAME,null,1);
+    public FollowDatabaseHelper (@Nullable final Context context){
+        super(context, FollowDatabaseHelper.DATABASE_NAME,null,1);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db){
+    public void onCreate(final SQLiteDatabase db){
         Log.d(TAG, "onCreate: ");
-        String sqlCommand = "CREATE TABLE "+
-                FOLLOW_TABLE_NAME + " ( "+
-                FOLLOW_COL0 + " INTEGER REFERENCES user (userID) NOT NULL, "+
-                FOLLOW_COL1 + " NTEGER REFERENCES user (userID) NOT NULL, "+
-                FOLLOW_COL2 + " TEXT NOT NULL )";
+        final String sqlCommand = "CREATE TABLE "+
+                FollowDatabaseHelper.FOLLOW_TABLE_NAME + " ( "+
+                FollowDatabaseHelper.FOLLOW_COL0 + " INTEGER REFERENCES user (userID) NOT NULL, "+
+                FollowDatabaseHelper.FOLLOW_COL1 + " NTEGER REFERENCES user (userID) NOT NULL, "+
+                FollowDatabaseHelper.FOLLOW_COL2 + " TEXT NOT NULL )";
         db.execSQL(sqlCommand);
     }
 
     @Override
-    public void onOpen(SQLiteDatabase db) {
-        String sqlCommand="CREATE TABLE IF NOT EXISTS "+
-                FOLLOW_TABLE_NAME + " ( "+
-                FOLLOW_COL0 + " INTEGER REFERENCES user (userID) NOT NULL, "+
-                FOLLOW_COL1 + " INTEGER REFERENCES user (userID) NOT NULL, "+
-                FOLLOW_COL2 + " TEXT NOT NULL )";
+    public void onOpen(final SQLiteDatabase db) {
+        final String sqlCommand="CREATE TABLE IF NOT EXISTS "+
+                FollowDatabaseHelper.FOLLOW_TABLE_NAME + " ( "+
+                FollowDatabaseHelper.FOLLOW_COL0 + " INTEGER REFERENCES user (userID) NOT NULL, "+
+                FollowDatabaseHelper.FOLLOW_COL1 + " INTEGER REFERENCES user (userID) NOT NULL, "+
+                FollowDatabaseHelper.FOLLOW_COL2 + " TEXT NOT NULL )";
         db.execSQL(sqlCommand);
         super.onOpen(db);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        String sqlCommand="DROP IF TABLE EXISTS " +FOLLOW_TABLE_NAME;
-        onCreate(db);
+    public void onUpgrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
+        final String sqlCommand="DROP IF TABLE EXISTS " + FollowDatabaseHelper.FOLLOW_TABLE_NAME;
+        this.onCreate(db);
     }
 
-    public boolean addFollow(int followerID, int followedID, String relation){
-        SQLiteDatabase db=getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(FOLLOW_COL0,followerID);
-        contentValues.put(FOLLOW_COL1,followedID);
-        contentValues.put(FOLLOW_COL2,relation);
-        long err=db.insert(FOLLOW_TABLE_NAME,null,contentValues);
+    public boolean addFollow(final int followerID, final int followedID, final String relation){
+        final SQLiteDatabase db= this.getWritableDatabase();
+        final ContentValues contentValues = new ContentValues();
+        contentValues.put(FollowDatabaseHelper.FOLLOW_COL0,followerID);
+        contentValues.put(FollowDatabaseHelper.FOLLOW_COL1,followedID);
+        contentValues.put(FollowDatabaseHelper.FOLLOW_COL2,relation);
+        final long err=db.insert(FollowDatabaseHelper.FOLLOW_TABLE_NAME,null,contentValues);
         return err!=-1;
     }
 
-    public boolean checkIfFollows(int followerID,int followedID){
-        SQLiteDatabase db = getReadableDatabase();
-        String selection = FOLLOW_COL0+ " =? AND " + FOLLOW_COL1 + " =?";
-        String[] condition = {String.valueOf(followerID),String.valueOf(followedID)};
-        Cursor cursor = db.query(FOLLOW_TABLE_NAME,null,selection,condition,null,null,null);
-        boolean ret = cursor.getCount() != 0;
+    public boolean checkIfFollows(final int followerID, final int followedID){
+        final SQLiteDatabase db = this.getReadableDatabase();
+        final String selection = FollowDatabaseHelper.FOLLOW_COL0 + " =? AND " + FollowDatabaseHelper.FOLLOW_COL1 + " =?";
+        final String[] condition = {String.valueOf(followerID),String.valueOf(followedID)};
+        final Cursor cursor = db.query(FollowDatabaseHelper.FOLLOW_TABLE_NAME,null,selection,condition,null,null,null);
+        final boolean ret = cursor.getCount() != 0;
         cursor.close();
         return ret;
     }
 
-    public void unfollow(int followerID, int followedID){
-        SQLiteDatabase db = getWritableDatabase();
-        String sqlCommand = "DELETE FROM " + FOLLOW_TABLE_NAME + " WHERE " + FOLLOW_COL1 + "= " + followedID + " AND " + FOLLOW_COL0 + "= " + followerID;
+    public void unfollow(final int followerID, final int followedID){
+        final SQLiteDatabase db = this.getWritableDatabase();
+        final String sqlCommand = "DELETE FROM " + FollowDatabaseHelper.FOLLOW_TABLE_NAME + " WHERE " + FollowDatabaseHelper.FOLLOW_COL1 + "= " + followedID + " AND " + FollowDatabaseHelper.FOLLOW_COL0 + "= " + followerID;
         db.execSQL(sqlCommand);
     }
 
-    public ArrayList<Integer> getFollows(int id){
-        SQLiteDatabase db = getReadableDatabase();
-        String[] condition = {String.valueOf(id)};
-        String[] projection = {FOLLOW_COL1};
-        String selection = FOLLOW_COL0+" =?";
+    public ArrayList<Integer> getFollows(final int id){
+        final SQLiteDatabase db = this.getReadableDatabase();
+        final String[] condition = {String.valueOf(id)};
+        final String[] projection = {FollowDatabaseHelper.FOLLOW_COL1};
+        final String selection = FollowDatabaseHelper.FOLLOW_COL0 +" =?";
 
-        ArrayList<Integer> followList = new ArrayList<>();
-        Cursor cursor = db.query(FOLLOW_TABLE_NAME,null,selection,condition,null,null,null);
+        final ArrayList<Integer> followList = new ArrayList<>();
+        final Cursor cursor = db.query(FollowDatabaseHelper.FOLLOW_TABLE_NAME,null,selection,condition,null,null,null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            followList.add(cursor.getInt(cursor.getColumnIndex(FOLLOW_COL1)));
+            followList.add(cursor.getInt(cursor.getColumnIndex(FollowDatabaseHelper.FOLLOW_COL1)));
             cursor.moveToNext();
         }
         cursor.close();

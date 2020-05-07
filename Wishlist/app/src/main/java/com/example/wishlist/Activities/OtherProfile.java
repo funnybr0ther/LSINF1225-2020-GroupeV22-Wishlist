@@ -60,56 +60,56 @@ public class OtherProfile extends AppCompatActivity {
     private RelativeLayout relativeLayoutShoeSize;
     private RelativeLayout relativeLayoutFavoriteColor;
 
-    public void onBackPressed(View view) {
-        onBackPressed();
+    public void onBackPressed(final View view) {
+        this.onBackPressed();
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Get UserID and go back to login if there is no
-        SharedPreferences prefs = this.getSharedPreferences(
+        final SharedPreferences prefs = getSharedPreferences(
                 "com.example.app", Context.MODE_PRIVATE);
-        int tmpUserID = prefs.getInt("userID", -1);
+        final int tmpUserID = prefs.getInt("userID", -1);
         if (tmpUserID != -1) {
-            userID = tmpUserID;
+            this.userID = tmpUserID;
         } else {//If no userID go back to LoginActivity
-            Toast toast = Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT);
+            final Toast toast = Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT);
             toast.show();
-            Intent backToLogin = new Intent(this, LoginActivity.class);
+            final Intent backToLogin = new Intent(this, LoginActivity.class);
         }
         //Get the other userID then compare with the actual user ID (-> send user to MyProfile if it's the same)
-        Intent intent = getIntent();
-        otherUserID=intent.getIntExtra("otherUserID",-1);
-        if(otherUserID==userID){
-            Intent myProfileIntent=new Intent(this,MyProfileActivity.class);
-            startActivity(myProfileIntent);
+        final Intent intent = this.getIntent();
+        this.otherUserID =intent.getIntExtra("otherUserID",-1);
+        if(this.otherUserID == this.userID){
+            final Intent myProfileIntent=new Intent(this,MyProfileActivity.class);
+            this.startActivity(myProfileIntent);
         }
-        setContentView(R.layout.other_profile);
-        UserDatabaseHelper dbHelper = new UserDatabaseHelper(getApplicationContext());
+        this.setContentView(R.layout.other_profile);
+        final UserDatabaseHelper dbHelper = new UserDatabaseHelper(this.getApplicationContext());
 
-        otherUser = dbHelper.getUserFromID(otherUserID);
+        this.otherUser = dbHelper.getUserFromID(this.otherUserID);
 
         //Rely variable with layout
-        profilePhoto = findViewById(R.id.profilePhoto);
-        actualFirstName = findViewById(R.id.actualFirstName);
-        actualLastName = findViewById(R.id.actualLastName);
-        actualAddressLine1 = findViewById(R.id.actualAddressLine1);
-        actualAddressLine2 = findViewById(R.id.actualAddressLine2);
-        actualCity = findViewById(R.id.actualCity);
-        actualPostalCode = findViewById(R.id.actualPostalCode);
-        actualCountry = findViewById(R.id.actualCountry);
-        actualSize = findViewById(R.id.actualSize);
-        actualShoeSize = findViewById(R.id.actualShoeSize);
-        actualFavoriteColor = findViewById(R.id.actualFavoriteColor);
-        actualBirthDate = findViewById(R.id.actualBirthDate);
-        titleToolbar=findViewById(R.id.TitleOtherProfileToolbar);
+        this.profilePhoto = this.findViewById(R.id.profilePhoto);
+        this.actualFirstName = this.findViewById(R.id.actualFirstName);
+        this.actualLastName = this.findViewById(R.id.actualLastName);
+        this.actualAddressLine1 = this.findViewById(R.id.actualAddressLine1);
+        this.actualAddressLine2 = this.findViewById(R.id.actualAddressLine2);
+        this.actualCity = this.findViewById(R.id.actualCity);
+        this.actualPostalCode = this.findViewById(R.id.actualPostalCode);
+        this.actualCountry = this.findViewById(R.id.actualCountry);
+        this.actualSize = this.findViewById(R.id.actualSize);
+        this.actualShoeSize = this.findViewById(R.id.actualShoeSize);
+        this.actualFavoriteColor = this.findViewById(R.id.actualFavoriteColor);
+        this.actualBirthDate = this.findViewById(R.id.actualBirthDate);
+        this.titleToolbar = this.findViewById(R.id.TitleOtherProfileToolbar);
 
-        relativeLayoutAddressLine2 = findViewById(R.id.layoutAddressLine2);
-        relativeLayoutFavoriteColor = findViewById(R.id.layoutFavoriteColor);
-        relativeLayoutShoeSize = findViewById(R.id.layoutShoeSize);
-        relativeLayoutSize = findViewById(R.id.layoutSize);
-        visibleMode();
+        this.relativeLayoutAddressLine2 = this.findViewById(R.id.layoutAddressLine2);
+        this.relativeLayoutFavoriteColor = this.findViewById(R.id.layoutFavoriteColor);
+        this.relativeLayoutShoeSize = this.findViewById(R.id.layoutShoeSize);
+        this.relativeLayoutSize = this.findViewById(R.id.layoutSize);
+        this.visibleMode();
     }
 
     /*
@@ -120,54 +120,54 @@ public class OtherProfile extends AppCompatActivity {
      */
     @TargetApi(21)
     public void visibleMode(){
-        if(otherUser.getProfilePhoto()!=null) {
-            profilePhoto.setImageBitmap(otherUser.getProfilePhoto());
+        if(this.otherUser.getProfilePhoto()!=null) {
+            this.profilePhoto.setImageBitmap(this.otherUser.getProfilePhoto());
         }else{
-            profilePhoto.setImageDrawable(getDrawable(R.drawable.ic_default_photo));
+            this.profilePhoto.setImageDrawable(this.getDrawable(R.drawable.ic_default_photo));
         }
         //Fill in with actual information
-        actualPostalCode.setText(String.format("%d",otherUser.getAddress().getPostalCode()));
-        actualCity.setText(otherUser.getAddress().getCity());
-        actualCountry.setText(otherUser.getAddress().getCountry());
-        actualAddressLine1.setText(otherUser.getAddress().getAddressLine1());
-        actualFirstName.setText(otherUser.getFirstName());
-        actualLastName.setText(otherUser.getLastName());
-        actualBirthDate.setText(otherUser.getBirthDate().toString());
-        String title=otherUser.getFirstName()+"'s Details";
-        titleToolbar.setText(title);
-        String addressLine2=otherUser.getAddress().getAddressLine2();
+        this.actualPostalCode.setText(String.format("%d", this.otherUser.getAddress().getPostalCode()));
+        this.actualCity.setText(this.otherUser.getAddress().getCity());
+        this.actualCountry.setText(this.otherUser.getAddress().getCountry());
+        this.actualAddressLine1.setText(this.otherUser.getAddress().getAddressLine1());
+        this.actualFirstName.setText(this.otherUser.getFirstName());
+        this.actualLastName.setText(this.otherUser.getLastName());
+        this.actualBirthDate.setText(this.otherUser.getBirthDate().toString());
+        final String title= this.otherUser.getFirstName()+"'s Details";
+        this.titleToolbar.setText(title);
+        final String addressLine2= this.otherUser.getAddress().getAddressLine2();
         if(addressLine2==null||addressLine2.toLowerCase().equals("null")||addressLine2.equals("")){
-            relativeLayoutAddressLine2.setVisibility(View.GONE);
+            this.relativeLayoutAddressLine2.setVisibility(View.GONE);
         }
         else{
-            relativeLayoutAddressLine2.setVisibility(View.VISIBLE);
-            actualAddressLine2.setText(addressLine2);
+            this.relativeLayoutAddressLine2.setVisibility(View.VISIBLE);
+            this.actualAddressLine2.setText(addressLine2);
         }
-        String favoriteColor=otherUser.getFavoriteColor();
+        final String favoriteColor= this.otherUser.getFavoriteColor();
         if(favoriteColor==null||favoriteColor.toLowerCase().equals("null")||
                 favoriteColor.toLowerCase().equals("undefined")||favoriteColor.equals("")){
-            relativeLayoutFavoriteColor.setVisibility(View.GONE);
+            this.relativeLayoutFavoriteColor.setVisibility(View.GONE);
         }
         else{
-            relativeLayoutFavoriteColor.setVisibility(View.VISIBLE);
-            actualFavoriteColor.setText(favoriteColor);
+            this.relativeLayoutFavoriteColor.setVisibility(View.VISIBLE);
+            this.actualFavoriteColor.setText(favoriteColor);
         }
-        String size=otherUser.getSize();
+        final String size= this.otherUser.getSize();
         if(size==null||size.toLowerCase().equals("null")||size.toLowerCase().equals("undefined")){
-            relativeLayoutSize.setVisibility(View.GONE);
+            this.relativeLayoutSize.setVisibility(View.GONE);
         }
         else {
-            relativeLayoutSize.setVisibility(View.VISIBLE);
-            actualSize.setText(size);
+            this.relativeLayoutSize.setVisibility(View.VISIBLE);
+            this.actualSize.setText(size);
         }
-        String shoeSize=otherUser.getShoeSize();
+        final String shoeSize= this.otherUser.getShoeSize();
         if(shoeSize==null||shoeSize.toLowerCase().equals("null")||
                 shoeSize.toLowerCase().equals("undefined")||shoeSize.equals("")||shoeSize.equals("0")){
-            relativeLayoutShoeSize.setVisibility(View.GONE);
+            this.relativeLayoutShoeSize.setVisibility(View.GONE);
         }
         else{
-            relativeLayoutShoeSize.setVisibility(View.VISIBLE);
-            actualShoeSize.setText(shoeSize);
+            this.relativeLayoutShoeSize.setVisibility(View.VISIBLE);
+            this.actualShoeSize.setText(shoeSize);
         }
     }
 

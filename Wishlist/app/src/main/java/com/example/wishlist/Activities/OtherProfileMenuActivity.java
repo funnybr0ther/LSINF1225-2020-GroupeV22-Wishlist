@@ -1,6 +1,7 @@
 package com.example.wishlist.Activities;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,87 +33,87 @@ public class OtherProfileMenuActivity extends AppCompatActivity {
     private Button unfollowButton;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences prefs = this.getSharedPreferences(
+        final SharedPreferences prefs = getSharedPreferences(
                 "com.example.app", Context.MODE_PRIVATE);
-        int tmpUserID = prefs.getInt("userID", -1);
+        final int tmpUserID = prefs.getInt("userID", -1);
         if (tmpUserID != -1) {
-            userID = tmpUserID;
+            this.userID = tmpUserID;
         } else {//If no userID go back to LoginActivity
-            Toast toast = Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT);
+            final Toast toast = Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT);
             toast.show();
-            Intent backToLogin = new Intent(this, LoginActivity.class);
+            final Intent backToLogin = new Intent(this, LoginActivity.class);
         }
         //Get the other userID then compare with the actual user ID (-> send user to MyProfile if it's the same)
-        Intent intent = getIntent();
-        receiverID =intent.getIntExtra("receiverID",-1);
-        setContentView(R.layout.other_profile_menu);
+        final Intent intent = this.getIntent();
+        this.receiverID =intent.getIntExtra("receiverID",-1);
+        this.setContentView(R.layout.other_profile_menu);
 
-        UserDatabaseHelper dbHelperU = new UserDatabaseHelper(getApplicationContext());
-        profilePhoto = findViewById(R.id.profilePhoto);
-        otherUser = dbHelperU.getUserFromID(receiverID);
+        final UserDatabaseHelper dbHelperU = new UserDatabaseHelper(this.getApplicationContext());
+        this.profilePhoto = this.findViewById(R.id.profilePhoto);
+        this.otherUser = dbHelperU.getUserFromID(this.receiverID);
 
-        followButton = findViewById(R.id.followButton);
-        unfollowButton = findViewById(R.id.unfollowButton);
+        this.followButton = this.findViewById(R.id.followButton);
+        this.unfollowButton = this.findViewById(R.id.unfollowButton);
 
-        actualiseButtons();
-        visibleMode();
+        this.actualiseButtons();
+        this.visibleMode();
     }
 
     public void actualiseButtons(){
-        FollowDatabaseHelper dbHelperF = new FollowDatabaseHelper(getApplicationContext());
+        final FollowDatabaseHelper dbHelperF = new FollowDatabaseHelper(this.getApplicationContext());
 
-        if(dbHelperF.checkIfFollows(userID,receiverID)){
-            followButton.setVisibility(View.GONE);
-            unfollowButton.setVisibility(View.VISIBLE);
+        if(dbHelperF.checkIfFollows(this.userID, this.receiverID)){
+            this.followButton.setVisibility(View.GONE);
+            this.unfollowButton.setVisibility(View.VISIBLE);
         }else{
-            unfollowButton.setVisibility(View.GONE);
-            followButton.setVisibility(View.VISIBLE);
+            this.unfollowButton.setVisibility(View.GONE);
+            this.followButton.setVisibility(View.VISIBLE);
         }
     }
     @TargetApi(21)
     public void visibleMode() {
-        if (otherUser.getProfilePhoto() != null) {
-            profilePhoto.setImageBitmap(otherUser.getProfilePhoto());
+        if (this.otherUser.getProfilePhoto() != null) {
+            this.profilePhoto.setImageBitmap(this.otherUser.getProfilePhoto());
         } else {
-            profilePhoto.setImageDrawable(getDrawable(R.drawable.ic_default_photo));
+            this.profilePhoto.setImageDrawable(this.getDrawable(R.drawable.ic_default_photo));
         }
-        titleToolbar=findViewById(R.id.TitleOtherProfileToolbar);
-        String title=otherUser.getFirstName()+" " + otherUser.getLastName();
-        titleToolbar.setText(title);
+        this.titleToolbar = this.findViewById(R.id.TitleOtherProfileToolbar);
+        final String title= this.otherUser.getFirstName()+" " + this.otherUser.getLastName();
+        this.titleToolbar.setText(title);
     }
 
-    public void seeDetails(View view){
-        Intent seeProfileIntent = new Intent(this,OtherProfile.class);
-        seeProfileIntent.putExtra("otherUserID", receiverID);
-        startActivity(seeProfileIntent);
+    public void seeDetails(final View view){
+        final Intent seeProfileIntent = new Intent(this,OtherProfile.class);
+        seeProfileIntent.putExtra("otherUserID", this.receiverID);
+        this.startActivity(seeProfileIntent);
     }
 
-    public void onBackPressed(View view) {
-        Intent returnIntent = new Intent();
-        setResult(RESULT_OK, returnIntent);
-        finish();
+    public void onBackPressed(final View view) {
+        final Intent returnIntent = new Intent();
+        this.setResult(Activity.RESULT_OK, returnIntent);
+        this.finish();
     }
 
-    public void goToFriendWishlist(View view){
-        Log.d("SUPEER", "goToFriendWishlist: " + receiverID);
-        Intent intent = new Intent(this,ListWishlistActivity.class);
-        intent.putExtra("receiverID", receiverID); //id de celui a qui appartient les wishlist
-        intent.putExtra("userID",userID); //id de celui qui consulte les wishlist de ses amis
+    public void goToFriendWishlist(final View view){
+        Log.d("SUPEER", "goToFriendWishlist: " + this.receiverID);
+        final Intent intent = new Intent(this,ListWishlistActivity.class);
+        intent.putExtra("receiverID", this.receiverID); //id de celui a qui appartient les wishlist
+        intent.putExtra("userID", this.userID); //id de celui qui consulte les wishlist de ses amis
         intent.putExtra("isMyWishlist",false);
-        startActivity(intent);
+        this.startActivity(intent);
     }
 
-    public void followCurrentUser(View view){
-        FollowDatabaseHelper helper = new FollowDatabaseHelper(getApplicationContext());
-        helper.addFollow(userID,receiverID,"Friend");
-        actualiseButtons();
+    public void followCurrentUser(final View view){
+        final FollowDatabaseHelper helper = new FollowDatabaseHelper(this.getApplicationContext());
+        helper.addFollow(this.userID, this.receiverID,"Friend");
+        this.actualiseButtons();
     }
 
-    public void unfollowCurrentUser(View view){
-        FollowDatabaseHelper helper = new FollowDatabaseHelper(getApplicationContext());
-        helper.unfollow(userID,receiverID);
-        actualiseButtons();
+    public void unfollowCurrentUser(final View view){
+        final FollowDatabaseHelper helper = new FollowDatabaseHelper(this.getApplicationContext());
+        helper.unfollow(this.userID, this.receiverID);
+        this.actualiseButtons();
     }
 }

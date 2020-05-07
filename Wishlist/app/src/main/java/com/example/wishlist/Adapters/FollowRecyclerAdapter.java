@@ -18,31 +18,31 @@ import java.util.ArrayList;
 
 public class FollowRecyclerAdapter extends RecyclerView.Adapter<FollowRecyclerAdapter.Viewholder> {
 
-    private ArrayList<User> followList;
-    private FollowerOnClickListener onClickListener;
+    private final ArrayList<User> followList;
+    private final FollowerOnClickListener onClickListener;
 
-    public FollowRecyclerAdapter(ArrayList<User> follows ,FollowerOnClickListener followerOnClickListener) {
-        this.followList = follows;
-        this.onClickListener=followerOnClickListener;
+    public FollowRecyclerAdapter(final ArrayList<User> follows , final FollowerOnClickListener followerOnClickListener) {
+        followList = follows;
+        onClickListener =followerOnClickListener;
     }
 
     @NonNull
     @Override
-    public Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.follow_list_item,parent,false);
-        return new Viewholder(view,onClickListener);
+    public Viewholder onCreateViewHolder(@NonNull final ViewGroup parent, final int viewType) {
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.follow_list_item,parent,false);
+        return new Viewholder(view, this.onClickListener);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Viewholder holder, int position) {
+    public void onBindViewHolder(@NonNull final Viewholder holder, final int position) {
 
-        String full_name = followList.get(position).getFirstName()+" "+followList.get(position).getLastName();
+        final String full_name = this.followList.get(position).getFirstName()+" "+ this.followList.get(position).getLastName();
         holder.name.setText(full_name);
-        holder.picture.setImageBitmap(followList.get(position).getProfilePhoto());
+        holder.picture.setImageBitmap(this.followList.get(position).getProfilePhoto());
     }
 
     @Override
-    public int getItemCount() { return followList.size(); }
+    public int getItemCount() { return this.followList.size(); }
 
 
      class Viewholder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -51,17 +51,17 @@ public class FollowRecyclerAdapter extends RecyclerView.Adapter<FollowRecyclerAd
         ImageView picture;
         FollowerOnClickListener followerOnClickListener;
 
-         Viewholder(@NonNull View itemView, FollowerOnClickListener followerOnClickListener) {
+         Viewholder(@NonNull final View itemView, final FollowerOnClickListener followerOnClickListener) {
             super(itemView);
-            name = itemView.findViewById(R.id.followName);
-            picture = itemView.findViewById(R.id.followPicture);
+             this.name = itemView.findViewById(R.id.followName);
+             this.picture = itemView.findViewById(R.id.followPicture);
             this.followerOnClickListener=followerOnClickListener;
             itemView.setOnClickListener(this);
         }
 
          @Override
-         public void onClick(View v) {
-             followerOnClickListener.onFollowerClick(getAdapterPosition());
+         public void onClick(final View v) {
+             this.followerOnClickListener.onFollowerClick(this.getAdapterPosition());
          }
      }
     public interface FollowerOnClickListener{

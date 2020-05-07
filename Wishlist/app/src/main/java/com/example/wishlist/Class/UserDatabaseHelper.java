@@ -32,71 +32,71 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
     public static final String USER_COL10="profilePhoto";
     public static final String USER_COL11="notification";
 
-    public UserDatabaseHelper(@Nullable Context context) {
-        super(context, DATABASE_NAME, null, 1);
+    public UserDatabaseHelper(@Nullable final Context context) {
+        super(context, UserDatabaseHelper.DATABASE_NAME, null, 1);
     }
 
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
-        String sqlCommand="CREATE TABLE "+
-                USER_TABLE_NAME + " ("+
-                USER_COL0 + " INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT, "+
-                USER_COL1 + " TEXT NOT NULL UNIQUE, "+
-                USER_COL2 + " VARCHAR(255) NOT NULL, "+
-                USER_COL3 + " TEXT NOT NULL, "+
-                USER_COL4 + " TEXT NOT NULL, "+
-                USER_COL5 + " TEXT NOT NULL, "+
-                USER_COL6 + " DATE NOT NULL, "+
-                USER_COL7 + " TEXT,"+
-                USER_COL8 + " TEXT, "+
-                USER_COL9 + " TEXT, "+
-                USER_COL10 + " BLOB, "+
-                USER_COL11 + " TEXT)";
+    public void onCreate(final SQLiteDatabase db) {
+        final String sqlCommand="CREATE TABLE "+
+                UserDatabaseHelper.USER_TABLE_NAME + " ("+
+                UserDatabaseHelper.USER_COL0 + " INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT, "+
+                UserDatabaseHelper.USER_COL1 + " TEXT NOT NULL UNIQUE, "+
+                UserDatabaseHelper.USER_COL2 + " VARCHAR(255) NOT NULL, "+
+                UserDatabaseHelper.USER_COL3 + " TEXT NOT NULL, "+
+                UserDatabaseHelper.USER_COL4 + " TEXT NOT NULL, "+
+                UserDatabaseHelper.USER_COL5 + " TEXT NOT NULL, "+
+                UserDatabaseHelper.USER_COL6 + " DATE NOT NULL, "+
+                UserDatabaseHelper.USER_COL7 + " TEXT,"+
+                UserDatabaseHelper.USER_COL8 + " TEXT, "+
+                UserDatabaseHelper.USER_COL9 + " TEXT, "+
+                UserDatabaseHelper.USER_COL10 + " BLOB, "+
+                UserDatabaseHelper.USER_COL11 + " TEXT)";
         db.execSQL(sqlCommand);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        String sqlCommand="DROP IF TABLE EXISTS " +USER_TABLE_NAME;
-        onCreate(db);
+    public void onUpgrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
+        final String sqlCommand="DROP IF TABLE EXISTS " + UserDatabaseHelper.USER_TABLE_NAME;
+        this.onCreate(db);
     }
 
     //Add user in db return false if something went wrong
-    public boolean addUser(User user){
-        SQLiteDatabase db=getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(USER_COL1,user.getEmail());
-        contentValues.put(USER_COL2,user.getPassword());
-        contentValues.put(USER_COL3,user.getFirstName());
-        contentValues.put(USER_COL4,user.getLastName());
-        contentValues.put(USER_COL5,user.getAddress().toString());
-        contentValues.put(USER_COL6,user.getBirthDate().toString());
-        contentValues.put(USER_COL7,user.getSize());
-        contentValues.put(USER_COL8,user.getShoeSize());
-        contentValues.put(USER_COL9,user.getFavoriteColor());
+    public boolean addUser(final User user){
+        final SQLiteDatabase db= this.getWritableDatabase();
+        final ContentValues contentValues = new ContentValues();
+        contentValues.put(UserDatabaseHelper.USER_COL1,user.getEmail());
+        contentValues.put(UserDatabaseHelper.USER_COL2,user.getPassword());
+        contentValues.put(UserDatabaseHelper.USER_COL3,user.getFirstName());
+        contentValues.put(UserDatabaseHelper.USER_COL4,user.getLastName());
+        contentValues.put(UserDatabaseHelper.USER_COL5,user.getAddress().toString());
+        contentValues.put(UserDatabaseHelper.USER_COL6,user.getBirthDate().toString());
+        contentValues.put(UserDatabaseHelper.USER_COL7,user.getSize());
+        contentValues.put(UserDatabaseHelper.USER_COL8,user.getShoeSize());
+        contentValues.put(UserDatabaseHelper.USER_COL9,user.getFavoriteColor());
         if(user.getProfilePhoto()!=null){
-            contentValues.put(USER_COL10,ImageHelper.getBytes(user.getProfilePhoto()));
+            contentValues.put(UserDatabaseHelper.USER_COL10,ImageHelper.getBytes(user.getProfilePhoto()));
         }
-        contentValues.put(USER_COL11,user.isNotification());
-        long err=db.insert(USER_TABLE_NAME,null,contentValues);
+        contentValues.put(UserDatabaseHelper.USER_COL11,user.isNotification());
+        final long err=db.insert(UserDatabaseHelper.USER_TABLE_NAME,null,contentValues);
         return err!=-1;
     }
 
     //Check if any user is register with this mail and this password
-    public int checkUser(String mail, String password){
-        SQLiteDatabase db=getReadableDatabase();
-        String[] projection={USER_COL0,USER_COL1,USER_COL2};
-        String[] condition ={mail,password};
-        String selection=USER_COL1+"=? AND "+USER_COL2+" =?";
-        Cursor cursor=db.query(USER_TABLE_NAME,projection,selection,condition,null,null,null);
+    public int checkUser(final String mail, final String password){
+        final SQLiteDatabase db= this.getReadableDatabase();
+        final String[] projection={UserDatabaseHelper.USER_COL0, UserDatabaseHelper.USER_COL1, UserDatabaseHelper.USER_COL2};
+        final String[] condition ={mail,password};
+        final String selection= UserDatabaseHelper.USER_COL1 +"=? AND "+ UserDatabaseHelper.USER_COL2 +" =?";
+        final Cursor cursor=db.query(UserDatabaseHelper.USER_TABLE_NAME,projection,selection,condition,null,null,null);
 
         if (cursor.getCount()==0){
             cursor.close();
             return -1;
         }
         if(cursor.moveToFirst()) {
-            int userID=cursor.getInt(cursor.getColumnIndex(USER_COL0));
+            final int userID=cursor.getInt(cursor.getColumnIndex(UserDatabaseHelper.USER_COL0));
             cursor.close();
             return userID;
         }
@@ -107,66 +107,66 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
     }
 
     //Check if mail isn't used by another user
-    public boolean checkMail(String mail){
-        SQLiteDatabase db=getReadableDatabase();
-        String[] projection={USER_COL0,USER_COL1,USER_COL2};
-        String[] condition ={mail};
-        String selection=USER_COL1+" =?";
-        Cursor cursor=db.query(USER_TABLE_NAME,projection,selection,condition,null,null,null);
-        boolean sol=cursor.getCount()==0;
+    public boolean checkMail(final String mail){
+        final SQLiteDatabase db= this.getReadableDatabase();
+        final String[] projection={UserDatabaseHelper.USER_COL0, UserDatabaseHelper.USER_COL1, UserDatabaseHelper.USER_COL2};
+        final String[] condition ={mail};
+        final String selection= UserDatabaseHelper.USER_COL1 +" =?";
+        final Cursor cursor=db.query(UserDatabaseHelper.USER_TABLE_NAME,projection,selection,condition,null,null,null);
+        final boolean sol=cursor.getCount()==0;
         cursor.close();
         return sol;
     }
 
-    public User getUserFromID(int userID){
-        SQLiteDatabase db=getReadableDatabase();
-        String[] condition ={String.valueOf(userID)};
-        String selection=USER_COL0+" =?";
-        Cursor cursor=db.query(USER_TABLE_NAME,null,selection,condition,null,null,null);
+    public User getUserFromID(final int userID){
+        final SQLiteDatabase db= this.getReadableDatabase();
+        final String[] condition ={String.valueOf(userID)};
+        final String selection= UserDatabaseHelper.USER_COL0 +" =?";
+        final Cursor cursor=db.query(UserDatabaseHelper.USER_TABLE_NAME,null,selection,condition,null,null,null);
         if (cursor.getCount()==0){
             cursor.close();
             return null;
         }
         cursor.moveToFirst();
-        String addressString=cursor.getString(cursor.getColumnIndex(USER_COL5));
-        Address address=Address.fromString(addressString);
-        String firstName=cursor.getString(cursor.getColumnIndex(USER_COL3));
-        String lastName=cursor.getString(cursor.getColumnIndex(USER_COL4));
-        String email=cursor.getString(cursor.getColumnIndex(USER_COL1));
-        DateWish birthDate= new DateWish();
-        birthDate.setDate(cursor.getString(cursor.getColumnIndex(USER_COL6)));
-        String password=cursor.getString(cursor.getColumnIndex(USER_COL2));
-        byte[] profilePhoto=cursor.getBlob(cursor.getColumnIndex(USER_COL10));
-        boolean notification=true;
-        String favoriteColor=cursor.getString(cursor.getColumnIndex(USER_COL9));
-        String size=cursor.getString(cursor.getColumnIndex(USER_COL7));
-        String shoeSize=cursor.getString(cursor.getColumnIndex(USER_COL8));
-        User user=new User(address,firstName,lastName,email,birthDate,password,ImageHelper.getImage(profilePhoto),favoriteColor,size,shoeSize);
+        final String addressString=cursor.getString(cursor.getColumnIndex(UserDatabaseHelper.USER_COL5));
+        final Address address=Address.fromString(addressString);
+        final String firstName=cursor.getString(cursor.getColumnIndex(UserDatabaseHelper.USER_COL3));
+        final String lastName=cursor.getString(cursor.getColumnIndex(UserDatabaseHelper.USER_COL4));
+        final String email=cursor.getString(cursor.getColumnIndex(UserDatabaseHelper.USER_COL1));
+        final DateWish birthDate= new DateWish();
+        birthDate.setDate(cursor.getString(cursor.getColumnIndex(UserDatabaseHelper.USER_COL6)));
+        final String password=cursor.getString(cursor.getColumnIndex(UserDatabaseHelper.USER_COL2));
+        final byte[] profilePhoto=cursor.getBlob(cursor.getColumnIndex(UserDatabaseHelper.USER_COL10));
+        final boolean notification=true;
+        final String favoriteColor=cursor.getString(cursor.getColumnIndex(UserDatabaseHelper.USER_COL9));
+        final String size=cursor.getString(cursor.getColumnIndex(UserDatabaseHelper.USER_COL7));
+        final String shoeSize=cursor.getString(cursor.getColumnIndex(UserDatabaseHelper.USER_COL8));
+        final User user=new User(address,firstName,lastName,email,birthDate,password,ImageHelper.getImage(profilePhoto),favoriteColor,size,shoeSize);
         user.setUserID(cursor.getInt(0));
         cursor.close();
         return user;
     }
     public ArrayList<User> getAllUser(){
-        SQLiteDatabase db=getReadableDatabase();
-        Cursor cursor=db.rawQuery("SELECT * FROM "+USER_TABLE_NAME,null);
-        ArrayList<User> users=new ArrayList<User>();
+        final SQLiteDatabase db= this.getReadableDatabase();
+        final Cursor cursor=db.rawQuery("SELECT * FROM "+ UserDatabaseHelper.USER_TABLE_NAME,null);
+        final ArrayList<User> users=new ArrayList<User>();
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
-            String addressString=cursor.getString(cursor.getColumnIndex(USER_COL5));
-            Address address=Address.fromString(addressString);
-            String firstName=cursor.getString(cursor.getColumnIndex(USER_COL3));
-            String lastName=cursor.getString(cursor.getColumnIndex(USER_COL4));
-            String email=cursor.getString(cursor.getColumnIndex(USER_COL1));
-            DateWish birthDate= new DateWish();
-            birthDate.setDate(cursor.getString(cursor.getColumnIndex(USER_COL6)));
-            String password=cursor.getString(cursor.getColumnIndex(USER_COL2));
-            byte[] profilePhoto=cursor.getBlob(cursor.getColumnIndex(USER_COL10));
-            boolean notification=true;
-            String favoriteColor=cursor.getString(cursor.getColumnIndex(USER_COL9));
-            String size=cursor.getString(cursor.getColumnIndex(USER_COL7));
-            String shoeSize=cursor.getString(cursor.getColumnIndex(USER_COL8));
-            User user =new User(address,firstName,lastName,email,birthDate,password,ImageHelper.getImage(profilePhoto),favoriteColor,size,shoeSize);
-            user.setUserID(cursor.getInt(cursor.getColumnIndex(USER_COL0)));
+            final String addressString=cursor.getString(cursor.getColumnIndex(UserDatabaseHelper.USER_COL5));
+            final Address address=Address.fromString(addressString);
+            final String firstName=cursor.getString(cursor.getColumnIndex(UserDatabaseHelper.USER_COL3));
+            final String lastName=cursor.getString(cursor.getColumnIndex(UserDatabaseHelper.USER_COL4));
+            final String email=cursor.getString(cursor.getColumnIndex(UserDatabaseHelper.USER_COL1));
+            final DateWish birthDate= new DateWish();
+            birthDate.setDate(cursor.getString(cursor.getColumnIndex(UserDatabaseHelper.USER_COL6)));
+            final String password=cursor.getString(cursor.getColumnIndex(UserDatabaseHelper.USER_COL2));
+            final byte[] profilePhoto=cursor.getBlob(cursor.getColumnIndex(UserDatabaseHelper.USER_COL10));
+            final boolean notification=true;
+            final String favoriteColor=cursor.getString(cursor.getColumnIndex(UserDatabaseHelper.USER_COL9));
+            final String size=cursor.getString(cursor.getColumnIndex(UserDatabaseHelper.USER_COL7));
+            final String shoeSize=cursor.getString(cursor.getColumnIndex(UserDatabaseHelper.USER_COL8));
+            final User user =new User(address,firstName,lastName,email,birthDate,password,ImageHelper.getImage(profilePhoto),favoriteColor,size,shoeSize);
+            user.setUserID(cursor.getInt(cursor.getColumnIndex(UserDatabaseHelper.USER_COL0)));
             users.add(user);
             cursor.moveToNext();
         }
@@ -174,23 +174,23 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         return users;
     }
 
-    public boolean updateUser(User user, int userID){
-        SQLiteDatabase db=getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(USER_COL1,user.getEmail());
-        contentValues.put(USER_COL2,user.getPassword());
-        contentValues.put(USER_COL3,user.getFirstName());
-        contentValues.put(USER_COL4,user.getLastName());
-        contentValues.put(USER_COL5,user.getAddress().toString());
-        contentValues.put(USER_COL6,user.getBirthDate().toString());
-        contentValues.put(USER_COL7,user.getSize());
-        contentValues.put(USER_COL8,user.getShoeSize());
-        contentValues.put(USER_COL9,user.getFavoriteColor());
+    public boolean updateUser(final User user, final int userID){
+        final SQLiteDatabase db= this.getWritableDatabase();
+        final ContentValues contentValues = new ContentValues();
+        contentValues.put(UserDatabaseHelper.USER_COL1,user.getEmail());
+        contentValues.put(UserDatabaseHelper.USER_COL2,user.getPassword());
+        contentValues.put(UserDatabaseHelper.USER_COL3,user.getFirstName());
+        contentValues.put(UserDatabaseHelper.USER_COL4,user.getLastName());
+        contentValues.put(UserDatabaseHelper.USER_COL5,user.getAddress().toString());
+        contentValues.put(UserDatabaseHelper.USER_COL6,user.getBirthDate().toString());
+        contentValues.put(UserDatabaseHelper.USER_COL7,user.getSize());
+        contentValues.put(UserDatabaseHelper.USER_COL8,user.getShoeSize());
+        contentValues.put(UserDatabaseHelper.USER_COL9,user.getFavoriteColor());
         if(user.getProfilePhoto()!=null){
-            contentValues.put(USER_COL10,ImageHelper.getBytes(user.getProfilePhoto()));
+            contentValues.put(UserDatabaseHelper.USER_COL10,ImageHelper.getBytes(user.getProfilePhoto()));
         }
-        contentValues.put(USER_COL11,user.isNotification());
-        int err=db.update(USER_TABLE_NAME,contentValues,USER_COL0+" = ?",new String[]{String.valueOf(userID)});
+        contentValues.put(UserDatabaseHelper.USER_COL11,user.isNotification());
+        final int err=db.update(UserDatabaseHelper.USER_TABLE_NAME,contentValues, UserDatabaseHelper.USER_COL0 +" = ?",new String[]{String.valueOf(userID)});
         return err!=-1;
     }
     //Check if the couple password UserID is present in the db
@@ -201,18 +201,18 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
      * @param password
      * @return
      */
-    public boolean checkPassword(int userID, String password){
-        SQLiteDatabase db=getReadableDatabase();
-        String[] condition ={String.valueOf(userID),password};
-        String selection=USER_COL0+"=? AND "+USER_COL2+" =?";
-        Cursor cursor=db.query(USER_TABLE_NAME,null,selection,condition,null,null,null);
-        boolean sol=cursor.getCount()==1;
+    public boolean checkPassword(final int userID, final String password){
+        final SQLiteDatabase db= this.getReadableDatabase();
+        final String[] condition ={String.valueOf(userID),password};
+        final String selection= UserDatabaseHelper.USER_COL0 +"=? AND "+ UserDatabaseHelper.USER_COL2 +" =?";
+        final Cursor cursor=db.query(UserDatabaseHelper.USER_TABLE_NAME,null,selection,condition,null,null,null);
+        final boolean sol=cursor.getCount()==1;
         cursor.close();
         return sol;
     }
     //return number of row delete (here max 1 as userID is a primary key)
-    public int delete(int userID){
-        SQLiteDatabase db=getWritableDatabase();
-        return db.delete(USER_TABLE_NAME,USER_COL0+"=?",new String[]{String.valueOf(userID)});
+    public int delete(final int userID){
+        final SQLiteDatabase db= this.getWritableDatabase();
+        return db.delete(UserDatabaseHelper.USER_TABLE_NAME, UserDatabaseHelper.USER_COL0 +"=?",new String[]{String.valueOf(userID)});
     }
 }

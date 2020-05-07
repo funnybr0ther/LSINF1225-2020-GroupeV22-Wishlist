@@ -59,53 +59,53 @@ public class CreateProfileActivity extends AppCompatActivity implements AddPhoto
 
     @TargetApi(21)
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_profile);
+        this.setContentView(R.layout.create_profile);
 
         //Get information pass with Extra in intent
-        Intent intent=getIntent();
-        email=intent.getStringExtra("mail");
-        password=intent.getStringExtra("password");
+        final Intent intent= this.getIntent();
+        this.email =intent.getStringExtra("mail");
+        this.password =intent.getStringExtra("password");
 
         //Set the different View/Edit/Spinner variable
-        profilePhoto= findViewById(R.id.profilePhoto);
-        cameraLogo = findViewById(R.id.logoCamera);
-        editTextFirstName = (EditText) findViewById(R.id.newmail);
-        editTextLastName = (EditText) findViewById(R.id.getLastName);
-        editTextAddressLine1 = (EditText) findViewById(R.id.getAddressLine1);
-        editTextAddressLine2 = (EditText) findViewById(R.id.getAddressLine2);
-        editTextCity = (EditText) findViewById(R.id.getLocality);
-        editTextCountry = (EditText) findViewById(R.id.getCountry);
-        editTextPostalCode = (EditText) findViewById(R.id.getPostalCode);
-        spinnerSize = (Spinner) findViewById(R.id.spinnerSize);
-        spinnerShoeSize = (Spinner) findViewById(R.id.spinnerShoeSize);
-        spinnerFavoriteColor = (Spinner) findViewById(R.id.spinnerFavoriteColor);
-        spinnerDay = (Spinner) findViewById(R.id.spinnerDay);
-        spinnerMonth = (Spinner) findViewById(R.id.spinnerMonth);
-        spinnerYear = (Spinner) findViewById(R.id.spinnerYear);
+        this.profilePhoto = this.findViewById(R.id.profilePhoto);
+        this.cameraLogo = this.findViewById(R.id.logoCamera);
+        this.editTextFirstName = this.findViewById(R.id.newmail);
+        this.editTextLastName = this.findViewById(R.id.getLastName);
+        this.editTextAddressLine1 = this.findViewById(R.id.getAddressLine1);
+        this.editTextAddressLine2 = this.findViewById(R.id.getAddressLine2);
+        this.editTextCity = this.findViewById(R.id.getLocality);
+        this.editTextCountry = this.findViewById(R.id.getCountry);
+        this.editTextPostalCode = this.findViewById(R.id.getPostalCode);
+        this.spinnerSize = this.findViewById(R.id.spinnerSize);
+        this.spinnerShoeSize = this.findViewById(R.id.spinnerShoeSize);
+        this.spinnerFavoriteColor = this.findViewById(R.id.spinnerFavoriteColor);
+        this.spinnerDay = this.findViewById(R.id.spinnerDay);
+        this.spinnerMonth = this.findViewById(R.id.spinnerMonth);
+        this.spinnerYear = this.findViewById(R.id.spinnerYear);
 
         //Set the default photo
-        if(image==null){
-            profilePhoto.setImageDrawable(getDrawable(R.drawable.ic_default_photo));
+        if(this.image ==null){
+            this.profilePhoto.setImageDrawable(this.getDrawable(R.drawable.ic_default_photo));
         }
 
         //Set function onclick of camera logo
-        cameraLogo.setOnClickListener(new View.OnClickListener() {
+        this.cameraLogo.setOnClickListener(new View.OnClickListener() {
             //Check permission to take photo and access storage then create ChangePhotoDialog
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 //check permission
-                String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+                final String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
                 for (int i=0;i<2;i++) {
                     if (ContextCompat.checkSelfPermission(CreateProfileActivity.this, permissions[i])
                             != PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions(CreateProfileActivity.this, new String[]{permissions[i]},
-                                MY_PERMISSIONS_REQUEST);
+                                CreateProfileActivity.this.MY_PERMISSIONS_REQUEST);
                     } else {
                         if(i==1){
-                            AddPhotoDialog dialog = new AddPhotoDialog();
-                            dialog.show(CreateProfileActivity.this.getSupportFragmentManager(), "ha");
+                            final AddPhotoDialog dialog = new AddPhotoDialog();
+                            dialog.show(getSupportFragmentManager(), "ha");
                         }
                     }
                 }
@@ -114,11 +114,11 @@ public class CreateProfileActivity extends AppCompatActivity implements AddPhoto
         });
     }
 
-    public void onBackPressed(View view) {
-        onBackPressed();
+    public void onBackPressed(final View view) {
+        this.onBackPressed();
     }
 
-    public boolean checkDate(int day, String month, int year) {
+    public boolean checkDate(final int day, final String month, final int year) {
         if (day == 29 && month.equals( "February")) return year % 4 == 0;
         if (day > 29 && month.equals("February")) return false;
         if (day == 31) {
@@ -142,76 +142,76 @@ public class CreateProfileActivity extends AppCompatActivity implements AddPhoto
      * If something goes wrong we stay at this activity and put some information to help the user
      * If nothing goes wrong we go to the main menu
      */
-    public void createUser(View view) throws Exception{
+    public void createUser(final View view) throws Exception{
         int numberError = 0;
         //Get the information
-        String firstName = editTextFirstName.getText().toString();
-        String lastName = editTextLastName.getText().toString();
-        String addressLine1 = editTextAddressLine1.getText().toString();
-        String addressLine2 = editTextAddressLine2.getText().toString();
-        String city = editTextCity.getText().toString();
-        String country = editTextCountry.getText().toString();
+        final String firstName = this.editTextFirstName.getText().toString();
+        final String lastName = this.editTextLastName.getText().toString();
+        final String addressLine1 = this.editTextAddressLine1.getText().toString();
+        final String addressLine2 = this.editTextAddressLine2.getText().toString();
+        final String city = this.editTextCity.getText().toString();
+        final String country = this.editTextCountry.getText().toString();
         int postalCode=0;
         try {
-            postalCode = (int) Integer.parseInt(editTextPostalCode.getText().toString());
-            editTextPostalCode.setBackgroundColor(Color.rgb(255, 255, 255));
-        } catch (NumberFormatException e) {
-            editTextPostalCode.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
+            postalCode = Integer.parseInt(this.editTextPostalCode.getText().toString());
+            this.editTextPostalCode.setBackgroundColor(Color.rgb(255, 255, 255));
+        } catch (final NumberFormatException e) {
+            this.editTextPostalCode.setBackgroundColor(this.getResources().getColor(R.color.wrongInformation));
             numberError++;
         }
 
-        String size = spinnerSize.getSelectedItem().toString();
-        String shoeSize = spinnerShoeSize.getSelectedItem().toString();
-        String favoriteColor = spinnerFavoriteColor.getSelectedItem().toString();
-        String day = spinnerDay.getSelectedItem().toString();
-        String month = spinnerMonth.getSelectedItem().toString();
-        String year = spinnerYear.getSelectedItem().toString();
+        final String size = this.spinnerSize.getSelectedItem().toString();
+        final String shoeSize = this.spinnerShoeSize.getSelectedItem().toString();
+        final String favoriteColor = this.spinnerFavoriteColor.getSelectedItem().toString();
+        final String day = this.spinnerDay.getSelectedItem().toString();
+        final String month = this.spinnerMonth.getSelectedItem().toString();
+        final String year = this.spinnerYear.getSelectedItem().toString();
 
         //Check if any required is missing
-        if (!checkStringIsCorrect(firstName)) {
-            editTextFirstName.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
+        if (!this.checkStringIsCorrect(firstName)) {
+            this.editTextFirstName.setBackgroundColor(this.getResources().getColor(R.color.wrongInformation));
             numberError++;
         } else {
-            editTextFirstName.setBackgroundColor(getResources().getColor(R.color.design_default_color_background));
+            this.editTextFirstName.setBackgroundColor(this.getResources().getColor(R.color.design_default_color_background));
         }
-        if (!checkStringIsCorrect(lastName)) {
-            editTextLastName.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
+        if (!this.checkStringIsCorrect(lastName)) {
+            this.editTextLastName.setBackgroundColor(this.getResources().getColor(R.color.wrongInformation));
             numberError++;
         } else {
-            editTextLastName.setBackgroundColor(getResources().getColor(R.color.design_default_color_background));
+            this.editTextLastName.setBackgroundColor(this.getResources().getColor(R.color.design_default_color_background));
         }
-        if (!checkStringIsCorrect(addressLine1)) {
-            editTextAddressLine1.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
+        if (!this.checkStringIsCorrect(addressLine1)) {
+            this.editTextAddressLine1.setBackgroundColor(this.getResources().getColor(R.color.wrongInformation));
             numberError++;
         } else {
-            editTextAddressLine1.setBackgroundColor(getResources().getColor(R.color.design_default_color_background));
+            this.editTextAddressLine1.setBackgroundColor(this.getResources().getColor(R.color.design_default_color_background));
         }
-        if (!checkStringIsCorrect(city)) {
-            editTextCity.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
+        if (!this.checkStringIsCorrect(city)) {
+            this.editTextCity.setBackgroundColor(this.getResources().getColor(R.color.wrongInformation));
             numberError++;
         } else {
-            editTextCity.setBackgroundColor(getResources().getColor(R.color.design_default_color_background));
+            this.editTextCity.setBackgroundColor(this.getResources().getColor(R.color.design_default_color_background));
         }
-        if (!checkStringIsCorrect(country)) {
-            editTextCountry.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
+        if (!this.checkStringIsCorrect(country)) {
+            this.editTextCountry.setBackgroundColor(this.getResources().getColor(R.color.wrongInformation));
             numberError++;
         } else {
-            editTextCountry.setBackgroundColor(getResources().getColor(R.color.design_default_color_background));
+            this.editTextCountry.setBackgroundColor(this.getResources().getColor(R.color.design_default_color_background));
         }
 
         //Check the birthDate
-        TextView wrongDate = findViewById(R.id.wrongBirthdate);
+        final TextView wrongDate = this.findViewById(R.id.wrongBirthdate);
         int yearInt=-1;
         int dayInt=-1;
 
         if (year.equals("Year") || day.equals("Day") || month.equals("Month")) {
-            wrongDate.setText(getResources().getText(R.string.wrongDate));
+            wrongDate.setText(this.getResources().getText(R.string.wrongDate));
             numberError++;
         } else {
             yearInt = Integer.parseInt(year);
             dayInt = Integer.parseInt(day);
-            if (!checkDate(dayInt, month, yearInt)) {
-                wrongDate.setText(getResources().getText(R.string.wrongDate));
+            if (!this.checkDate(dayInt, month, yearInt)) {
+                wrongDate.setText(this.getResources().getText(R.string.wrongDate));
                 numberError++;
             } else {
                 wrongDate.setText("");
@@ -220,58 +220,58 @@ public class CreateProfileActivity extends AppCompatActivity implements AddPhoto
 
         if (numberError == 0) {
             //Create an Address
-            Address userAddress=new Address(addressLine1,city,country,postalCode);
-            if(checkStringIsCorrect(addressLine2)) userAddress.setAddressLine2(addressLine2);
+            final Address userAddress=new Address(addressLine1,city,country,postalCode);
+            if(this.checkStringIsCorrect(addressLine2)) userAddress.setAddressLine2(addressLine2);
             //Create a DateWish with representing birthdate
-            DateWish birthdate=new DateWish(dayInt,month,yearInt);
+            final DateWish birthdate=new DateWish(dayInt,month,yearInt);
             //create an User
-            User user=new User(userAddress,firstName,lastName,email,birthdate,password);
+            final User user=new User(userAddress,firstName,lastName, this.email,birthdate, this.password);
             if (!favoriteColor.equals("Undefined"))user.setFavoriteColor(favoriteColor);
             if (!size.equals("Undefined")) user.setSize(size);
-            if(image!=null) user.setProfilePhoto(image);
+            if(this.image !=null) user.setProfilePhoto(this.image);
             if (!shoeSize.equals("Undefined")) user.setShoeSize(shoeSize);
-            UserDatabaseHelper dbHelper= new UserDatabaseHelper(getApplicationContext());
+            final UserDatabaseHelper dbHelper= new UserDatabaseHelper(this.getApplicationContext());
             if(dbHelper.addUser(user)){
-                int userID=dbHelper.checkUser(email,password);
+                final int userID=dbHelper.checkUser(this.email, this.password);
                 if(userID==-1){
-                    Toast toast=Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT);
+                    final Toast toast=Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT);
                     toast.show();
                 }else{
-                    Toast toast=Toast.makeText(this,"Account Create",Toast.LENGTH_SHORT);
+                    final Toast toast=Toast.makeText(this,"Account Create",Toast.LENGTH_SHORT);
                     toast.show();
-                    SharedPreferences prefs = this.getSharedPreferences(
+                    final SharedPreferences prefs = getSharedPreferences(
                             "com.example.app", Context.MODE_PRIVATE);
                     prefs.edit().putInt("userID",userID).apply();
-                    Intent intent=new Intent(this,MainMenuActivity.class);
-                    startActivity(intent);
+                    final Intent intent=new Intent(this,MainMenuActivity.class);
+                    this.startActivity(intent);
                 }
             }else {
-                Toast toast=Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT);
+                final Toast toast=Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT);
                 toast.show();
             }
         } else {
-            Toast toast=Toast.makeText(this,"The information with a * are required",Toast.LENGTH_LONG);
+            final Toast toast=Toast.makeText(this,"The information with a * are required",Toast.LENGTH_LONG);
             toast.show();
         }
     }
 
     @Override
-    public void getBitmapImage(Bitmap bitmap) {
+    public void getBitmapImage(final Bitmap bitmap) {
         if(bitmap!=null){
-            profilePhoto.setImageBitmap(bitmap);
-            image=bitmap;
+            this.profilePhoto.setImageBitmap(bitmap);
+            this.image =bitmap;
         }
     }
 
     @Override
-    public void getUriImage(Uri uri) {
+    public void getUriImage(final Uri uri) {
         if(uri!=null){
             try{
-                image= ImageHelper.compress(MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri));
-                profilePhoto.setImageBitmap(image);
+                this.image = ImageHelper.compress(MediaStore.Images.Media.getBitmap(getContentResolver(), uri));
+                this.profilePhoto.setImageBitmap(this.image);
             }
-            catch (Exception e){
-                Toast toast=Toast.makeText(this,"something went wrong with the image",Toast.LENGTH_SHORT);
+            catch (final Exception e){
+                final Toast toast=Toast.makeText(this,"something went wrong with the image",Toast.LENGTH_SHORT);
                 toast.show();
             }
         }

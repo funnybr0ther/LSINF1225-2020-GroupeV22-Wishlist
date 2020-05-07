@@ -23,32 +23,32 @@ public class ChangePasswordOrEmailDialog extends DialogFragment {
     int userID;
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        userID=getArguments().getInt("userID");
-        final UserDatabaseHelper dbHelper=new UserDatabaseHelper(getActivity().getApplicationContext());
-        View view = inflater.inflate(R.layout.dialog_change_password_or_email, container, false);
+    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
+        this.userID = this.getArguments().getInt("userID");
+        final UserDatabaseHelper dbHelper=new UserDatabaseHelper(this.getActivity().getApplicationContext());
+        final View view = inflater.inflate(R.layout.dialog_change_password_or_email, container, false);
         //Cancel
-        TextView cancel = view.findViewById(R.id.changePasswordCancel);
+        final TextView cancel = view.findViewById(R.id.changePasswordCancel);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                ChangePasswordOrEmailDialog.this.getDialog().dismiss();
+            public void onClick(final View v) {
+                getDialog().dismiss();
             }
         });
         final EditText checkPassword=view.findViewById(R.id.password);
-        Button okButton=view.findViewById(R.id.okButton);
+        final Button okButton=view.findViewById(R.id.okButton);
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                String password = checkPassword.getText().toString();
-                if (dbHelper.checkPassword(userID, password)) {
-                    Intent intent = new Intent(getContext(), ChangePasswordOrEmailActivity.class);
-                    intent.putExtra("userID",userID);
-                    startActivity(intent);
-                    ChangePasswordOrEmailDialog.this.getDialog().dismiss();
+            public void onClick(final View v) {
+                final String password = checkPassword.getText().toString();
+                if (dbHelper.checkPassword(ChangePasswordOrEmailDialog.this.userID, password)) {
+                    final Intent intent = new Intent(ChangePasswordOrEmailDialog.this.getContext(), ChangePasswordOrEmailActivity.class);
+                    intent.putExtra("userID", ChangePasswordOrEmailDialog.this.userID);
+                    ChangePasswordOrEmailDialog.this.startActivity(intent);
+                    getDialog().dismiss();
                 }
                 else{
-                    Toast toast=Toast.makeText(getContext(),"Wrong Password",Toast.LENGTH_SHORT);
+                    final Toast toast=Toast.makeText(ChangePasswordOrEmailDialog.this.getContext(),"Wrong Password",Toast.LENGTH_SHORT);
                     toast.show();
                 }
             }

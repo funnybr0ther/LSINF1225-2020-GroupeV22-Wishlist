@@ -13,54 +13,54 @@ public class DateWish {
     SimpleDateFormat formatter = new SimpleDateFormat("d MMMM yyyy", Locale.ENGLISH);
     SimpleDateFormat formatterDateAndHour = new SimpleDateFormat("EEE MMM dd h:mm a yyyy", Locale.ENGLISH);
 
-    public DateWish(Date date) {
+    public DateWish(final Date date) {
         this.date = date;
     }
-    public DateWish(int day, String month, int year){
-        setDate( day,  month,  year);
+    public DateWish(final int day, final String month, final int year){
+        this.setDate( day,  month,  year);
     }
 
     public DateWish() {
     }
 
     public Date getDate() {
-        return date;
+        return this.date;
     }
 
-    public void setDate(int day, String month, int year ){
+    public void setDate(final int day, final String month, final int year ){
         try{
-            String dateStr=Integer.toString(day)+ " "+month+" "+Integer.toString(year);
-            date=formatter.parse(dateStr);
-        }catch (Exception e){
+            final String dateStr= day + " "+month+" "+ year;
+            this.date = this.formatter.parse(dateStr);
+        }catch (final Exception e){
 
         }
-        Log.d(TAG, "setDate: date set!");
+        Log.d(DateWish.TAG, "setDate: date set!");
     }
     public String toString(){
-        Log.d(TAG, "toString: ");
-        return formatter.format(date);
+        Log.d(DateWish.TAG, "toString: ");
+        return this.formatter.format(this.date);
     }
-    public void setDate(String dateString){
+    public void setDate(final String dateString){
         try{
-            date=formatter.parse(dateString);
-        }catch (Exception e){
+            this.date = this.formatter.parse(dateString);
+        }catch (final Exception e){
 
         }
     }
-    public void setDateAndHour(Date time){
-        date=time;
+    public void setDateAndHour(final Date time){
+        this.date =time;
     }
 
-    public void setDateAndHourFromString(String str){
+    public void setDateAndHourFromString(final String str){
         try{
-            date=formatterDateAndHour.parse(str);
-        }catch (Exception e){}
+            this.date = this.formatterDateAndHour.parse(str);
+        }catch (final Exception e){}
     }
 
-    public int compareTo(DateWish date2) {return date.compareTo(date2.getDate()); }
+    public int compareTo(final DateWish date2) {return this.date.compareTo(date2.getDate()); }
     public String dateAndHourToString(){
-        if(this.date==null) return "Error";
-        Log.d(TAG, "toD&HString: ");
-        return formatterDateAndHour.format(date);
+        if(date ==null) return "Error";
+        Log.d(DateWish.TAG, "toD&HString: ");
+        return this.formatterDateAndHour.format(this.date);
     }
 }

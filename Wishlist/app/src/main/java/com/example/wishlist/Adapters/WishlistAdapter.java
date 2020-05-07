@@ -17,49 +17,49 @@ import java.util.ArrayList;
 
 public class WishlistAdapter extends BaseAdapter {
 
-    private Context context;
-    private ArrayList<Wishlist> wishlists;
-    private LayoutInflater inflater;
+    private final Context context;
+    private final ArrayList<Wishlist> wishlists;
+    private final LayoutInflater inflater;
 
-    public WishlistAdapter(Context context, ArrayList<Wishlist> wishlists){
+    public WishlistAdapter(final Context context, final ArrayList<Wishlist> wishlists){
         this.context = context;
         this.wishlists = wishlists;
-        this.inflater = LayoutInflater.from(context);
+        inflater = LayoutInflater.from(context);
     }
 
     @Override
     public int getCount() {
-        return wishlists.size();
+        return this.wishlists.size();
     }
 
     @Override
-    public Wishlist getItem(int position) {
-        return wishlists.get(position);
+    public Wishlist getItem(final int position) {
+        return this.wishlists.get(position);
     }
 
     @Override
-    public long getItemId(int position) {
+    public long getItemId(final int position) {
         return 0;
     }
 
     @Override
-    public View getView(int position, View view, ViewGroup parent) {
-        view = inflater.inflate(R.layout.adapter_wishlist, null);
-        final Wishlist list = getItem(position);
+    public View getView(final int position, View view, final ViewGroup parent) {
+        view = this.inflater.inflate(R.layout.adapter_wishlist, null);
+        final Wishlist list = this.getItem(position);
         final String name = list.getName();
-        TextView itemNameView = view.findViewById(R.id.wishlistItem_name);
+        final TextView itemNameView = view.findViewById(R.id.wishlistItem_name);
         itemNameView.setText(name);
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 /*Intent goToDetail = new Intent(context, DetailWishlistActivity.class);
                 goToDetail.putExtra("wishlistID",list.getWishlistID());
                 goToDetail.putExtra("userID",list.getUserID());
                 goToDetail.putExtra("wishlistName",name);
                 goToDetail.putExtra("isMyWishlist",context.);
                 context.startActivity(goToDetail);*/
-                ListWishlistActivity call = (ListWishlistActivity) context;
+                final ListWishlistActivity call = (ListWishlistActivity) WishlistAdapter.this.context;
                 call.wishlistAdapterReturn(list.getWishlistID(), list.getUserID(), name);
             }
         });
