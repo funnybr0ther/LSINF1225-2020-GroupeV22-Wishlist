@@ -24,11 +24,11 @@ public class MainMenuActivity extends AppCompatActivity {
         SharedPreferences prefs = this.getSharedPreferences(
                 "com.example.app", Context.MODE_PRIVATE);
         int tmpUserID=prefs.getInt("userID",-1);
-        if (tmpUserID!=-1){
-            userID=tmpUserID;
+        if (tmpUserID!=-1) {
+            userID = tmpUserID;
             setContentView(R.layout.activity_main_menu);
-            TextView textView=findViewById(R.id.textView);
-            textView.setText(Integer.toString(userID));
+            //TextView textView=findViewById(R.id.textView);
+            //textView.setText(Integer.toString(userID));
         }
         /*if (intent.hasExtra("userID")){
             userID= intent.getIntExtra("userID",-1);
