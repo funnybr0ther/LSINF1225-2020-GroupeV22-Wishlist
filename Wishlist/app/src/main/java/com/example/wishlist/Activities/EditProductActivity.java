@@ -40,6 +40,9 @@ import java.util.Arrays;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+/**
+ * This is the activity that is executed whenever the user edits or creates a new product
+ */
 public class EditProductActivity extends AppCompatActivity {
 //    CategoriesAdapter categoriesAdapter = new CategoriesAdapter(null,EditProductActivity.this);
     int productId;
@@ -70,6 +73,9 @@ public class EditProductActivity extends AppCompatActivity {
     private ArrayList<String> checkedCategories;
 
     public void onBackPressed(View view) {
+        /**
+         * Asks the user if they want to save their changes/their product
+         */
         final Intent returnIntent = new Intent();
         final DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
@@ -93,6 +99,9 @@ public class EditProductActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        /**
+         * Result of
+         */
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
             Uri selectedImage = data.getData();
