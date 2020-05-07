@@ -8,21 +8,21 @@ public class Purchase {
     private final DateWish date;
     private final int productID;
 
-    public Purchase(final int acheteurID, final int beneficiaireID, final int productid, final int quantity, final DateWish date) {
-        buyer = acheteurID;
-        receiver = beneficiaireID;
+    public Purchase(int acheteurID, int beneficiaireID, int productid, int quantity, DateWish date) {
+        this.buyer = acheteurID;
+        this.receiver = beneficiaireID;
         this.quantity = quantity;
         this.date = date;
-        productID = productid;
+        this.productID = productid;
     }
 
-    public int getReceiver() {return receiver;}
+    public int getReceiver() {return this.receiver;}
 
-    public int getSender() {return buyer;}
+    public int getSender() {return this.buyer;}
 
-    public int getProductID() {return productID;}
+    public int getProductID() {return this.productID;}
 
-    public int getQuantity() {return quantity;}
+    public int getQuantity() {return this.quantity;}
 
-    public DateWish getDate() {return date;}
+    public DateWish getDate() {return this.date;}
 }

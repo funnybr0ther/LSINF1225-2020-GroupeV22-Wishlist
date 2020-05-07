@@ -29,35 +29,35 @@ public class ChangePasswordOrEmailActivity extends AppCompatActivity {
     private User user;
     UserDatabaseHelper dbHelper;
     @Override
-    protected void onCreate(final Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.change_password_or_email);
-        this.editTextPassword = this.findViewById(R.id.newPswrd);
-        this.editTextMail = this.findViewById(R.id.newmail);
-        this.editTextConfirmPassword = this.findViewById(R.id.confirmPswrd);
-        this.textViewEmail = this.findViewById(R.id.wrongEmail);
-        this.textViewPassword = this.findViewById(R.id.wrongPassword);
-        this.textViewConfPassword = this.findViewById(R.id.wrongConfirmPassword);
-        this.dbHelper = new UserDatabaseHelper(this.getApplicationContext());
-        final Intent intent= this.getIntent();
+        setContentView(R.layout.change_password_or_email);
+        editTextPassword = findViewById(R.id.newPswrd);
+        editTextMail = findViewById(R.id.newmail);
+        editTextConfirmPassword = findViewById(R.id.confirmPswrd);
+        textViewEmail = findViewById(R.id.wrongEmail);
+        textViewPassword = findViewById(R.id.wrongPassword);
+        textViewConfPassword = findViewById(R.id.wrongConfirmPassword);
+        dbHelper = new UserDatabaseHelper(getApplicationContext());
+        Intent intent= getIntent();
 
         //Get UserID and go back to login if there is no
-        final SharedPreferences prefs = getSharedPreferences(
+        SharedPreferences prefs = this.getSharedPreferences(
                 "com.example.app", Context.MODE_PRIVATE);
-        final int tmpUserID=prefs.getInt("userID",-1);
+        int tmpUserID=prefs.getInt("userID",-1);
         if (tmpUserID!=-1){
-            this.userID =tmpUserID;
+            userID =tmpUserID;
         }
         else{//If no userID go back to LoginActivity
-            final Toast toast=Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT);
+            Toast toast=Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT);
             toast.show();
-            final Intent backToLogin=new Intent(this,LoginActivity.class);
+            Intent backToLogin=new Intent(this,LoginActivity.class);
         }
 
-        this.user = this.dbHelper.getUserFromID(this.userID);
-        this.editTextMail.setText(this.user.getEmail());
-        this.editTextPassword.setText(this.user.getPassword());
-        this.editTextConfirmPassword.setText(this.user.getPassword());
+        user = dbHelper.getUserFromID(userID);
+        editTextMail.setText(user.getEmail());
+        editTextPassword.setText(user.getPassword());
+        editTextConfirmPassword.setText(user.getPassword());
     }
 
     /*
@@ -67,26 +67,26 @@ public class ChangePasswordOrEmailActivity extends AppCompatActivity {
      * contains at least a number (digit ???)
      * Show some text or not depending of that
      */
-    public boolean checkPassword(final String password){
+    public boolean checkPassword(String password){
         if (password.length()<5){
-            this.textViewPassword.setText("Your password must contain at least 5 characters");
+            textViewPassword.setText("Your password must contain at least 5 characters");
             return false;
         }
         if(password.equals(password.toLowerCase())){
-            this.textViewPassword.setText("Your password must contain at least 1 uppercase letter");
+            textViewPassword.setText("Your password must contain at least 1 uppercase letter");
             return false;
         }
-        final boolean containsNumber= this.containsNumber(password);
+        boolean containsNumber= containsNumber(password);
         if (!containsNumber){
-            this.textViewPassword.setText("Your password must contain at least 1 number");//comment on dit chiffre?
+            textViewPassword.setText("Your password must contain at least 1 number");//comment on dit chiffre?
             return false;
         }
-        this.textViewPassword.setText("");
+        textViewPassword.setText("");
         return true;
     }
 
-    public boolean containsNumber(final String string){
-        for (final char c:string.toCharArray()){
+    public boolean containsNumber(String string){
+        for (char c:string.toCharArray()){
             if(Character.isDigit(c))return true;
         }
         return false;
@@ -96,41 +96,41 @@ public class ChangePasswordOrEmailActivity extends AppCompatActivity {
      *Check if email is at least 5 char long and contains an @
      * Show some text or not depending of that
      */
-    public boolean checkEmail(final String email){
-        final UserDatabaseHelper dbHelper= new UserDatabaseHelper(this.getApplicationContext());
+    public boolean checkEmail(String email){
+        UserDatabaseHelper dbHelper= new UserDatabaseHelper(getApplicationContext());
         if(!email.contains("@")||email.length()<5){
-            this.textViewEmail.setText("Please insert a correct email");
+            textViewEmail.setText("Please insert a correct email");
             return false;
         }
-        else if(email.equals(this.user.getEmail())){
+        else if(email.equals(user.getEmail())){
             return true;
         }
         else if(!dbHelper.checkMail(email)){
-            this.textViewEmail.setText("This email is already used");
+            textViewEmail.setText("This email is already used");
             return false;
         }
         else {
-            this.textViewEmail.setText("");
+            textViewEmail.setText("");
             return true;
         }
     }
-    public void updatePassword(final View view){
-        final String password= this.editTextPassword.getText().toString();
-        final String confirmPassword= this.editTextConfirmPassword.getText().toString();
-        final String mail= this.editTextMail.getText().toString();
-        if (this.checkEmail(mail)& this.checkPassword(password)){
+    public void updatePassword(View view){
+        String password= editTextPassword.getText().toString();
+        String confirmPassword= editTextConfirmPassword.getText().toString();
+        String mail= editTextMail.getText().toString();
+        if (checkEmail(mail)& checkPassword(password)){
             if (password.equals(confirmPassword)){
-                this.user.setPassword(password);
-                this.user.setEmail(mail);
-                this.dbHelper.updateUser(this.user, this.userID);
-                final Toast toast=Toast.makeText(this,"Account updated",Toast.LENGTH_SHORT);
+                user.setPassword(password);
+                user.setEmail(mail);
+                dbHelper.updateUser(user, userID);
+                Toast toast=Toast.makeText(this,"Account updated",Toast.LENGTH_SHORT);
                 toast.show();
-                final Intent intent=new Intent(this,MainMenuActivity.class);
-                intent.putExtra("userID", this.userID);
-                this.startActivity(intent);
+                Intent intent=new Intent(this,MainMenuActivity.class);
+                intent.putExtra("userID", userID);
+                startActivity(intent);
             }
             else {
-                this.textViewConfPassword.setText("You don't write the same password");
+                textViewConfPassword.setText("You don't write the same password");
             }
         }
     }

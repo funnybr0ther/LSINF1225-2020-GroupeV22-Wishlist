@@ -10,26 +10,26 @@ import java.io.File;
 
 public class ImageHelper {
     // convert from bitmap to byte array
-    public static byte[] getBytes(final Bitmap bitmap) {
+    public static byte[] getBytes(Bitmap bitmap) {
         if(bitmap==null) return null;
-        final ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 30, stream);
         return stream.toByteArray();
     }
 
-    public static Bitmap compress(final Bitmap bitmap){
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    public static Bitmap compress(Bitmap bitmap){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 0, baos);
         return bitmap;
     }
 
     // convert from byte array to bitmap
-    public static Bitmap getImage(final byte[] image) {
+    public static Bitmap getImage(byte[] image) {
         if(image==null)return null;
         return BitmapFactory.decodeByteArray(image, 0, image.length);
     }
 
-    public static Bitmap getBitmapFromFile(final String filepath){
+    public static Bitmap getBitmapFromFile(String filepath){
         return BitmapFactory.decodeFile(filepath);
     }
 

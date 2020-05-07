@@ -24,78 +24,78 @@ public class ListWishlistActivity extends AppCompatActivity  {
     private int displayID;
 
     @Override
-    protected void onCreate(final Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.wishlist_list);
-        final Intent intent= this.getIntent();
+        setContentView(R.layout.wishlist_list);
+        Intent intent= getIntent();
 
         //check si l'activité recoit bien le userID
         if (intent.hasExtra("userID")){
-            this.userID = intent.getIntExtra("userID",-1);
+            userID = intent.getIntExtra("userID",-1);
         } else{
-            final Intent backToLogin=new Intent(this,LoginActivity.class);
-            this.startActivity(backToLogin);
+            Intent backToLogin=new Intent(this,LoginActivity.class);
+            startActivity(backToLogin);
         }
         if (intent.hasExtra("receiverID")){
-            this.receiverID = intent.getIntExtra("receiverID",-1);
-            if(this.userID != this.receiverID){
-                this.isMyWishlist = false;
+            receiverID = intent.getIntExtra("receiverID",-1);
+            if(userID != receiverID){
+                isMyWishlist = false;
             }
         }
         if (intent.hasExtra("isMyWishlist")){
-            this.isMyWishlist = intent.getBooleanExtra("isMyWishlist",false);
+            isMyWishlist = intent.getBooleanExtra("isMyWishlist",false);
         }
 
-        this.displayID = this.userID;
+        displayID = userID;
 
-        if(!this.isMyWishlist){
-            final View addBtn = this.findViewById(R.id.contextMenuWishlist);
+        if(!isMyWishlist){
+            View addBtn = findViewById(R.id.contextMenuWishlist);
             ((ViewGroup) addBtn.getParent()).removeView(addBtn);
-            this.displayID = this.receiverID;
+            displayID = receiverID;
         }
     }
 
     public void layoutUpdate(){
         //Va chercher dans la BDD les wishlist d'un utilisateur grace a son userID
-        final WishlistDatabaseHelper db = new WishlistDatabaseHelper(this.getApplicationContext());
-        final ArrayList<Wishlist> list = db.getUserWishlist(this.displayID);
+        WishlistDatabaseHelper db = new WishlistDatabaseHelper(getApplicationContext());
+        ArrayList<Wishlist> list = db.getUserWishlist(displayID);
 
-        final ListView wishlistListView = this.findViewById(R.id.wishlist_listview);
+        ListView wishlistListView = findViewById(R.id.wishlist_listview);
         wishlistListView.setAdapter(new WishlistAdapter(this, list));
     }
 
-    public void pressAddButton(final View view){
-        final AddWishlistFragment dialog=new AddWishlistFragment();
-        final Bundle args = new Bundle();
-        args.putInt("userID", this.userID);
+    public void pressAddButton(View view){
+        AddWishlistFragment dialog=new AddWishlistFragment();
+        Bundle args = new Bundle();
+        args.putInt("userID", userID);
         dialog.setArguments(args);
-        dialog.show(getSupportFragmentManager(),"Add list");
+        dialog.show(this.getSupportFragmentManager(),"Add list");
 
     }
 
     //methode appelé apres l'ajout d'une wishlist
     public void fragmentReturn(){
-        this.layoutUpdate();
+        layoutUpdate();
     }
 
-    public void wishlistAdapterReturn(final int wishlistID, final int receiverID, final String wishlistName){
-        final Intent goToDetail = new Intent(this, DetailWishlistActivity.class);
+    public void wishlistAdapterReturn(int wishlistID, int receiverID, String wishlistName){
+        Intent goToDetail = new Intent(this, DetailWishlistActivity.class);
         goToDetail.putExtra("wishlistID",wishlistID);
         goToDetail.putExtra("receiverID",receiverID);
-        goToDetail.putExtra("userID", this.userID);
+        goToDetail.putExtra("userID", userID);
         goToDetail.putExtra("wishlistName",wishlistName);
-        goToDetail.putExtra("isMyWishlist", this.isMyWishlist);
-        startActivity(goToDetail);
+        goToDetail.putExtra("isMyWishlist", isMyWishlist);
+        this.startActivity(goToDetail);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        this.layoutUpdate();
+        layoutUpdate();
     }
 
-    public void onBackPressed(final View view) {
-        this.onBackPressed();
+    public void onBackPressed(View view) {
+        onBackPressed();
     }
 
 

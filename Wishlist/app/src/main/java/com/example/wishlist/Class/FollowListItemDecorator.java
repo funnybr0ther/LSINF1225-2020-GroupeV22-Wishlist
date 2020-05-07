@@ -10,12 +10,12 @@ public class FollowListItemDecorator extends RecyclerView.ItemDecoration {
 
     private final int VerticalSpace;
 
-    public FollowListItemDecorator(final int verticalSpace) {
-        this.VerticalSpace = verticalSpace;
+    public FollowListItemDecorator(int verticalSpace) {
+        VerticalSpace = verticalSpace;
     }
 
     @Override
-    public void getItemOffsets(@NonNull final Rect outRect, @NonNull final View view, @NonNull final RecyclerView parent, @NonNull final RecyclerView.State state) {
-        outRect.bottom = this.VerticalSpace;
+    public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+        outRect.bottom = VerticalSpace;
     }
 }

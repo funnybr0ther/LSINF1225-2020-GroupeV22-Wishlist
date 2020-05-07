@@ -31,46 +31,46 @@ public class DetailWishlistActivity extends AppCompatActivity {
     private int receiverID;
 
     @Override
-    protected void onCreate(final Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.wishlist_detail);
-        this.dbWishlist = new WishlistDatabaseHelper(this.getApplicationContext());
-        final Intent intent= this.getIntent();
+        setContentView(R.layout.wishlist_detail);
+        dbWishlist = new WishlistDatabaseHelper(getApplicationContext());
+        Intent intent= getIntent();
 
         //check que les elements necessaire à l'activite sont present
         if (intent.hasExtra("userID")){
-            this.userID = intent.getIntExtra("userID",-1);
+            userID = intent.getIntExtra("userID",-1);
         } else{
-            final Intent backToLogin=new Intent(this,LoginActivity.class);
-            this.startActivity(backToLogin);
+            Intent backToLogin=new Intent(this,LoginActivity.class);
+            startActivity(backToLogin);
         }
 
         if (intent.hasExtra("wishlistID")){
-            this.wishlistID = intent.getIntExtra("wishlistID",-1);
+            wishlistID = intent.getIntExtra("wishlistID",-1);
         } else{
-            final Intent backToWishlist=new Intent(this,LoginActivity.class);
-            backToWishlist.putExtra("userID", this.userID);
-            this.startActivity(backToWishlist);
+            Intent backToWishlist=new Intent(this,LoginActivity.class);
+            backToWishlist.putExtra("userID", userID);
+            startActivity(backToWishlist);
         }
         if (intent.hasExtra("wishlistName")){
-           final String wishlistName = intent.getStringExtra("wishlistName");
-           final TextView title = this.findViewById(R.id.wishlistToolbarTitle);
+           String wishlistName = intent.getStringExtra("wishlistName");
+           TextView title = findViewById(R.id.wishlistToolbarTitle);
            title.setText(wishlistName);
         }
         if (intent.hasExtra("receiverID")){
-            this.receiverID = intent.getIntExtra("receiverID",-1);
-            if(this.userID != this.receiverID){
-                this.isMyWishlist = false;
+            receiverID = intent.getIntExtra("receiverID",-1);
+            if(userID != receiverID){
+                isMyWishlist = false;
             }
         }
         if (intent.hasExtra("isMyWishlist")){
-            this.isMyWishlist = intent.getBooleanExtra("isMyWishlist",false);
+            isMyWishlist = intent.getBooleanExtra("isMyWishlist",false);
         }
 
-        if(!this.isMyWishlist){
-            final View addProductBtn = this.findViewById(R.id.addProductBtn);
+        if(!isMyWishlist){
+            View addProductBtn = findViewById(R.id.addProductBtn);
             ((ViewGroup) addProductBtn.getParent()).removeView(addProductBtn);
-            final View changeName = this.findViewById(R.id.changeNameButton);
+            View changeName = findViewById(R.id.changeNameButton);
             ((ViewGroup) changeName.getParent()).removeView(changeName);
         }
 
@@ -78,84 +78,84 @@ public class DetailWishlistActivity extends AppCompatActivity {
 
     public void layoutUpdate(){
         //Va chercher dans la BDD les product d'une wishlist grace a sa wishlistID
-        final ListView wishlistListView = this.findViewById(R.id.wishlist_DetailView);
-        this.products = this.getProductArray();
-        wishlistListView.setAdapter(new ProductAdapter(this, this.products));
+        ListView wishlistListView = findViewById(R.id.wishlist_DetailView);
+        products = getProductArray();
+        wishlistListView.setAdapter(new ProductAdapter(this, products));
     }
 
     public ArrayList<Product> getProductArray(){
-        final ProductDatabaseHelper dbProduct = new ProductDatabaseHelper(this.getApplicationContext());
-        final ArrayList<Product> products = new ArrayList<Product>();
-        final int[] prod = this.dbWishlist.getProducts(this.wishlistID);
-        for(final int productID : prod){
+        ProductDatabaseHelper dbProduct = new ProductDatabaseHelper(getApplicationContext());
+        ArrayList<Product> products = new ArrayList<Product>();
+        int[] prod = dbWishlist.getProducts(wishlistID);
+        for(int productID : prod){
             products.add(dbProduct.getProductFromID(productID));
         }
         return products;
     }
 
-    public void pressAddButton(final View view){
-        final Intent intent = new Intent(this,EditProductActivity.class);
+    public void pressAddButton(View view){
+        Intent intent = new Intent(this,EditProductActivity.class);
         intent.putExtra("productID",-1);
-        this.startActivityForResult(intent,4);
+        startActivityForResult(intent,4);
     }
 
-    public void pressChangeButton(final View view){
-        final ChangeWishlistNameFragment dialog=new ChangeWishlistNameFragment();
-        final Bundle args = new Bundle();
-        args.putInt("wishlistID", this.wishlistID);
-        args.putInt("userID", this.userID);
+    public void pressChangeButton(View view){
+        ChangeWishlistNameFragment dialog=new ChangeWishlistNameFragment();
+        Bundle args = new Bundle();
+        args.putInt("wishlistID", wishlistID);
+        args.putInt("userID", userID);
         dialog.setArguments(args);
-        dialog.show(getSupportFragmentManager(),"Change name");
+        dialog.show(this.getSupportFragmentManager(),"Change name");
     }
 
-    public void fragmentReturn(final String newName){
-        final TextView title = this.findViewById(R.id.wishlistToolbarTitle);
+    public void fragmentReturn(String newName){
+        TextView title = findViewById(R.id.wishlistToolbarTitle);
         title.setText(newName);
     }
 
-    public void productDetail(final int productPosition){
-        final Intent intent1=new Intent(this, ViewProductActivity.class);
-        intent1.putExtra("productID", this.dbWishlist.getProducts(this.wishlistID)[productPosition]);
-        intent1.putExtra("receiverID", this.receiverID);
-        intent1.putExtra("userID", this.userID);
-        intent1.putExtra("isMyProduct", this.isMyWishlist);
-        this.startActivityForResult(intent1,1);
+    public void productDetail(int productPosition){
+        Intent intent1=new Intent(this, ViewProductActivity.class);
+        intent1.putExtra("productID", dbWishlist.getProducts(wishlistID)[productPosition]);
+        intent1.putExtra("receiverID", receiverID);
+        intent1.putExtra("userID", userID);
+        intent1.putExtra("isMyProduct", isMyWishlist);
+        startActivityForResult(intent1,1);
     }
 
     @Override
-    protected void onActivityResult(final int requestCode, final int resultCode, @Nullable final Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 4){
             if (resultCode == Activity.RESULT_OK) {
                 if(data.hasExtra("newProduct")) {
-                    final int productID = data.getIntExtra("newProduct", -1);
-                    this.dbWishlist.addProduct(productID, this.wishlistID);
-                    this.addProductReturn();
+                    int productID = data.getIntExtra("newProduct", -1);
+                    dbWishlist.addProduct(productID, wishlistID);
+                    addProductReturn();
                 }
             }
         }
         else if(requestCode == 1){
             if(resultCode == Activity.RESULT_OK){
                 Log.d("BILIBU", "onActivityResult: update to products view");
-                this.addProductReturn();
+                addProductReturn();
             }
         }
     }
 
     //methode appelé apres l'ajout d'un product
     public void addProductReturn(){
-        final ListView wishlistListView = this.findViewById(R.id.wishlist_DetailView);
-        this.products = this.getProductArray();
-        wishlistListView.setAdapter(new ProductAdapter(this, this.products));
+        ListView wishlistListView = findViewById(R.id.wishlist_DetailView);
+        products = getProductArray();
+        wishlistListView.setAdapter(new ProductAdapter(this, products));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        this.layoutUpdate();
+        layoutUpdate();
     }
 
-    public void onBackPressed(final View view) {
-        this.onBackPressed();
+    public void onBackPressed(View view) {
+        onBackPressed();
     }
 }
