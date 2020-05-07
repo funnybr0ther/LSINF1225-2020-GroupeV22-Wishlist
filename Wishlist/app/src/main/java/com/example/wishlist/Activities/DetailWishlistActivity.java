@@ -73,6 +73,9 @@ public class DetailWishlistActivity extends AppCompatActivity {
             ((ViewGroup) changeName.getParent()).removeView(changeName);
         }
 
+    }
+
+    public void layoutUpdate(){
         //Va chercher dans la BDD les product d'une wishlist grace a sa wishlistID
         ListView wishlistListView = findViewById(R.id.wishlist_DetailView);
         products = getProductArray();
@@ -145,6 +148,11 @@ public class DetailWishlistActivity extends AppCompatActivity {
         wishlistListView.setAdapter(new ProductAdapter(this, products));
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        layoutUpdate();
+    }
 
     public void onBackPressed(View view) {
         onBackPressed();

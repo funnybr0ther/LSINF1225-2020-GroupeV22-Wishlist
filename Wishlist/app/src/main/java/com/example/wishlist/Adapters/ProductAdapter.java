@@ -51,6 +51,8 @@ public class ProductAdapter extends BaseAdapter {
         String name = product.getName();
         TextView itemNameView = view.findViewById(R.id.productItem_name);
         itemNameView.setText(name);
+        TextView price = view.findViewById(R.id.productItem_price);
+        price.setText(product.getPrice() + " € ");
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override

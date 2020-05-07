@@ -53,7 +53,9 @@ public class ListWishlistActivity extends AppCompatActivity  {
             ((ViewGroup) addBtn.getParent()).removeView(addBtn);
             displayID = receiverID;
         }
+    }
 
+    public void layoutUpdate(){
         //Va chercher dans la BDD les wishlist d'un utilisateur grace a son userID
         WishlistDatabaseHelper db = new WishlistDatabaseHelper(getApplicationContext());
         ArrayList<Wishlist> list = db.getUserWishlist(displayID);
@@ -73,11 +75,7 @@ public class ListWishlistActivity extends AppCompatActivity  {
 
     //methode appelé apres l'ajout d'une wishlist
     public void fragmentReturn(){
-        WishlistDatabaseHelper db = new WishlistDatabaseHelper(getApplicationContext());
-        ArrayList<Wishlist> list = db.getUserWishlist(userID);
-
-        ListView wishlistListView = findViewById(R.id.wishlist_listview);
-        wishlistListView.setAdapter(new WishlistAdapter(this, list));
+        layoutUpdate();
     }
 
     public void wishlistAdapterReturn(int wishlistID, int receiverID, String wishlistName){
@@ -88,6 +86,12 @@ public class ListWishlistActivity extends AppCompatActivity  {
         goToDetail.putExtra("wishlistName",wishlistName);
         goToDetail.putExtra("isMyWishlist",isMyWishlist);
         this.startActivity(goToDetail);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        layoutUpdate();
     }
 
     public void onBackPressed(View view) {

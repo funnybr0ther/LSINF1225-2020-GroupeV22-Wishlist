@@ -133,7 +133,7 @@ public class OtherProfile extends AppCompatActivity {
         actualFirstName.setText(otherUser.getFirstName());
         actualLastName.setText(otherUser.getLastName());
         actualBirthDate.setText(otherUser.getBirthDate().toString());
-        String title=otherUser.getFirstName()+"'s Profile";
+        String title=otherUser.getFirstName()+"'s Details";
         titleToolbar.setText(title);
         String addressLine2=otherUser.getAddress().getAddressLine2();
         if(addressLine2==null||addressLine2.toLowerCase().equals("null")||addressLine2.equals("")){

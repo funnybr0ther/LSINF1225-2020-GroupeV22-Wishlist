@@ -64,11 +64,15 @@ public class ChangeWishlistNameFragment extends DialogFragment {
             public void onClick(View v) {
                 WishlistDatabaseHelper db = new WishlistDatabaseHelper(getActivity().getApplicationContext());
                 db.deleteWishlistWithProduct(wishlistID);
+                /*
                 Context ctx = getActivity().getApplicationContext();
                 Intent gotToWishlist=new Intent(ctx,ListWishlistActivity.class);
                 gotToWishlist.putExtra("userID",userID);
                 gotToWishlist.putExtra("isMyWishlist",true);
                 startActivity(gotToWishlist);
+*/
+                DetailWishlistActivity callingActivity = (DetailWishlistActivity) getActivity();
+                callingActivity.onBackPressed();
                 dismiss();
             }
         });

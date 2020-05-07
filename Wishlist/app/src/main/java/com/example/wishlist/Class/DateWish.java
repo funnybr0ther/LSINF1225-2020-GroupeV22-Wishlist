@@ -57,10 +57,7 @@ public class DateWish {
         }catch (Exception e){}
     }
 
-    public int compareTo(DateWish date2){
-        return date.compareTo(date2.getDate());
-    }
-
+    public int compareTo(DateWish date2) {return date.compareTo(date2.getDate()); }
     public String dateAndHourToString(){
         if(this.date==null) return "Error";
         Log.d(TAG, "toD&HString: ");
