@@ -63,17 +63,15 @@ public class PurchaseAdapter extends BaseAdapter {
         UserDatabaseHelper userDatabaseHelper=new UserDatabaseHelper(context.getApplicationContext());
         ProductDatabaseHelper productDatabaseHelper=new ProductDatabaseHelper(context.getApplicationContext());
         final Purchase purchase = getItem(position);
-        boolean isMyObject;//TODO TRUC A ENVOYER
-
         TextView textViewPurchaseSender = view.findViewById(R.id.PurchaseSender);
         TextView textViewPurchaseReceiver = view.findViewById(R.id.PurchaseReceiver);
+        TextView textViewPurchase = view.findViewById(R.id.PurchaseText);
         String sender=userDatabaseHelper.getUserFromID(purchase.getSender()).getFirstName();
         String receiver=userDatabaseHelper.getUserFromID(purchase.getReceiver()).getFirstName();
         String product=productDatabaseHelper.getProductFromID(purchase.getProductID()).getName();
         String purchaseText;
         if ( getUserID() == purchase.getSender()) {
             sender = "You ";
-            isMyObject=false;
             purchaseText = " bought " + product + " for ";
             textViewPurchaseSender.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -90,11 +88,20 @@ public class PurchaseAdapter extends BaseAdapter {
                     context.startActivity(otherProfileIntent);
                 }
             });
+            textViewPurchase.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent productIntent=new Intent(context, ViewProductActivity.class);
+                    productIntent.putExtra("receiverID",purchase.getReceiver());
+                    productIntent.putExtra("productID",purchase.getProductID());
+                    productIntent.putExtra("isMyProduct",false);
+                    context.startActivity(productIntent);
+                }
+            });
         }
         else{
             purchaseText = " bought " + product + " for ";
             receiver = "you.";
-            isMyObject=true;
             textViewPurchaseReceiver.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -110,20 +117,19 @@ public class PurchaseAdapter extends BaseAdapter {
                     context.startActivity(otherProfileIntent);
                 }
             });
+            textViewPurchase.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent productIntent=new Intent(context, ViewProductActivity.class);
+                    productIntent.putExtra("productID",purchase.getProductID());
+                    productIntent.putExtra("isMyProduct",true);
+                    context.startActivity(productIntent);
+                }
+            });
         }
 
         textViewPurchaseSender.setText(sender);
-
-        TextView textViewPurchase = view.findViewById(R.id.PurchaseText);
         textViewPurchase.setText(purchaseText);
-        textViewPurchase.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent productIntent=new Intent(context, ViewProductActivity.class);
-                productIntent.putExtra("productID",purchase.getProductID());
-                context.startActivity(productIntent);
-            }
-        });
 
         textViewPurchaseReceiver.setText(receiver);
 
