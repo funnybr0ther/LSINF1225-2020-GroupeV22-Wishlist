@@ -61,7 +61,6 @@ public class FollowListActivity extends AppCompatActivity implements FollowRecyc
         searchEditText=findViewById(R.id.SearchEditText);
         initRecyclerView();
 
-        FollowDatabaseHelper helperF = new FollowDatabaseHelper(getApplicationContext());
 
 
         fillFollowList();
@@ -143,7 +142,7 @@ public class FollowListActivity extends AppCompatActivity implements FollowRecyc
 
     @Override
     public void onFollowerClick(int position) {
-        Intent otherProfileIntent=new Intent(this,OtherProfile.class);
+        Intent otherProfileIntent=new Intent(this,OtherProfileMenuActivity.class);
         otherProfileIntent.putExtra("otherUserID",filteredList.get(position).getUserID());
         startActivity(otherProfileIntent);
     }
