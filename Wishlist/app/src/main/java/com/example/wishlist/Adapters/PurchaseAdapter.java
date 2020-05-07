@@ -12,6 +12,9 @@ import android.widget.Toast;
 
 
 import com.example.wishlist.Activities.DetailWishlistActivity;
+import com.example.wishlist.Activities.MyProfileActivity;
+import com.example.wishlist.Activities.OtherProfile;
+import com.example.wishlist.Activities.ViewProductActivity;
 import com.example.wishlist.Class.DateWish;
 import com.example.wishlist.Class.ProductDatabaseHelper;
 import com.example.wishlist.Class.Purchase;
@@ -60,25 +63,68 @@ public class PurchaseAdapter extends BaseAdapter {
         UserDatabaseHelper userDatabaseHelper=new UserDatabaseHelper(context.getApplicationContext());
         ProductDatabaseHelper productDatabaseHelper=new ProductDatabaseHelper(context.getApplicationContext());
         final Purchase purchase = getItem(position);
+        boolean isMyObject;//TODO TRUC A ENVOYER
 
+        TextView textViewPurchaseSender = view.findViewById(R.id.PurchaseSender);
+        TextView textViewPurchaseReceiver = view.findViewById(R.id.PurchaseReceiver);
         String sender=userDatabaseHelper.getUserFromID(purchase.getSender()).getFirstName();
         String receiver=userDatabaseHelper.getUserFromID(purchase.getReceiver()).getFirstName();
         String product=productDatabaseHelper.getProductFromID(purchase.getProductID()).getName();
         String purchaseText;
         if ( getUserID() == purchase.getSender()) {
             sender = "You ";
-            purchaseText = " bought " + product + " for ";}
+            isMyObject=false;
+            purchaseText = " bought " + product + " for ";
+            textViewPurchaseSender.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent myProfileIntent= new Intent(context, MyProfileActivity.class);
+                    context.startActivity(myProfileIntent);
+                }
+            });
+            textViewPurchaseReceiver.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent otherProfileIntent= new Intent(context, OtherProfile.class);
+                    otherProfileIntent.putExtra("otherUserID",purchase.getReceiver());
+                    context.startActivity(otherProfileIntent);
+                }
+            });
+        }
         else{
             purchaseText = " bought " + product + " for ";
-            receiver = "you.";}
+            receiver = "you.";
+            isMyObject=true;
+            textViewPurchaseReceiver.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent myProfileIntent= new Intent(context, MyProfileActivity.class);
+                    context.startActivity(myProfileIntent);
+                }
+            });
+            textViewPurchaseSender.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent otherProfileIntent= new Intent(context, OtherProfile.class);
+                    otherProfileIntent.putExtra("otherUserID",purchase.getSender());
+                    context.startActivity(otherProfileIntent);
+                }
+            });
+        }
 
-        TextView textViewPurchaseSender = view.findViewById(R.id.PurchaseSender);
         textViewPurchaseSender.setText(sender);
 
         TextView textViewPurchase = view.findViewById(R.id.PurchaseText);
         textViewPurchase.setText(purchaseText);
+        textViewPurchase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent productIntent=new Intent(context, ViewProductActivity.class);
+                productIntent.putExtra("productID",purchase.getProductID());
+                context.startActivity(productIntent);
+            }
+        });
 
-        TextView textViewPurchaseReceiver = view.findViewById(R.id.PurchaseReceiver);
         textViewPurchaseReceiver.setText(receiver);
 
         TextView datePurchase=view.findViewById(R.id.DatePurchase);

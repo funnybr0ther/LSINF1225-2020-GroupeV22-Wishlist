@@ -3,6 +3,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,5 +45,9 @@ public class PurchaseViewActivity extends AppCompatActivity {
         };
         Collections.sort(list,byDateNewestFirst);
         listViewPurchases.setAdapter(new PurchaseAdapter(this,list));
+    }
+
+    public void onBackPressed(View view) {
+        onBackPressed();
     }
 }
