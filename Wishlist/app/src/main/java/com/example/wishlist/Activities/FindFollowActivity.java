@@ -130,7 +130,7 @@ public class FindFollowActivity extends AppCompatActivity implements FollowRecyc
 
     @Override
     public void onFollowerClick(int position) {
-        Intent otherProfileIntent=new Intent(this,OtherProfile.class);
+        Intent otherProfileIntent=new Intent(this,OtherProfileMenuActivity.class);
         otherProfileIntent.putExtra("otherUserID",followList.get(position).getUserID());
         startActivity(otherProfileIntent);
     }
