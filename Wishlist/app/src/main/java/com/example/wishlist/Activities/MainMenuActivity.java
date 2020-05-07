@@ -27,8 +27,6 @@ public class MainMenuActivity extends AppCompatActivity {
         if (tmpUserID!=-1){
             userID=tmpUserID;
             setContentView(R.layout.activity_main_menu);
-            TextView textView=findViewById(R.id.textView);
-            textView.setText(Integer.toString(userID));
         }
         /*if (intent.hasExtra("userID")){
             userID= intent.getIntExtra("userID",-1);
@@ -60,7 +58,7 @@ public class MainMenuActivity extends AppCompatActivity {
         SharedPreferences prefs = this.getSharedPreferences(
                 "com.example.app", Context.MODE_PRIVATE);
         prefs.edit().remove("userID").apply();
-        startActivity(intent2);
+        finish();
     }
     public void changePasswordOrEmail(View view){
         ChangePasswordOrEmailDialog dialog=new ChangePasswordOrEmailDialog();

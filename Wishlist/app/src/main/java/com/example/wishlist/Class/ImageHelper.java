@@ -13,7 +13,7 @@ public class ImageHelper {
     public static byte[] getBytes(Bitmap bitmap) {
         if(bitmap==null) return null;
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 10, stream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 30, stream);
         return stream.toByteArray();
     }
 

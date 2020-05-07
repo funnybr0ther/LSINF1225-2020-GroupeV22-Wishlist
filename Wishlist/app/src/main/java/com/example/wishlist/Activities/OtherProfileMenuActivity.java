@@ -53,14 +53,15 @@ public class OtherProfileMenuActivity extends AppCompatActivity {
         profilePhoto = findViewById(R.id.profilePhoto);
         otherUser = dbHelperU.getUserFromID(receiverID);
 
+        followButton = findViewById(R.id.followButton);
+        unfollowButton = findViewById(R.id.unfollowButton);
+
         actualiseButtons();
         visibleMode();
     }
 
     public void actualiseButtons(){
         FollowDatabaseHelper dbHelperF = new FollowDatabaseHelper(getApplicationContext());
-        followButton = findViewById(R.id.followButton);
-        unfollowButton = findViewById(R.id.unfollowButton);
 
         if(dbHelperF.checkIfFollows(userID,receiverID)){
             followButton.setVisibility(View.GONE);
@@ -89,7 +90,9 @@ public class OtherProfileMenuActivity extends AppCompatActivity {
     }
 
     public void onBackPressed(View view) {
-        super.onBackPressed();
+        Intent returnIntent = new Intent();
+        setResult(RESULT_OK, returnIntent);
+        finish();
     }
 
     public void goToFriendWishlist(View view){
