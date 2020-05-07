@@ -11,6 +11,7 @@ import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -72,41 +73,41 @@ public class ViewProductActivity extends AppCompatActivity {
      * @param savedInstanceState
      */
     @Override
-    protected void onCreate(final Bundle savedInstanceState) {
-        this.productDatabaseHelper = new ProductDatabaseHelper(this.getApplicationContext());
-        this.purchaseDatabaseHelper = new PurchaseDatabaseHelper(this.getApplicationContext());
+    protected void onCreate(Bundle savedInstanceState) {
+        productDatabaseHelper = new ProductDatabaseHelper(getApplicationContext());
+        purchaseDatabaseHelper = new PurchaseDatabaseHelper(getApplicationContext());
         super.onCreate(savedInstanceState);
-        final Intent intent= this.getIntent();
-        this.productID =intent.getIntExtra("productID",-1);
-        final boolean myProduct = intent.getBooleanExtra("isMyProduct",true);
-        final SharedPreferences prefs = getSharedPreferences(
+        Intent intent= getIntent();
+        productID =intent.getIntExtra("productID",-1);
+        boolean myProduct = intent.getBooleanExtra("isMyProduct",true);
+        SharedPreferences prefs = this.getSharedPreferences(
                 "com.example.app", Context.MODE_PRIVATE);
-        this.userID =prefs.getInt("userID",-1);
+        userID =prefs.getInt("userID",-1);
         if(myProduct){
-            this.setContentView(R.layout.view_my_product);
-            this.editButton = this.findViewById(R.id.editProduct);
-            this.editButton.setOnClickListener(new View.OnClickListener() {
+            setContentView(R.layout.view_my_product);
+            editButton = findViewById(R.id.editProduct);
+            editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(final View v) {
-                    ViewProductActivity.this.switchToEdit(productID);
+                public void onClick(View v) {
+                    switchToEdit(ViewProductActivity.this.productID);
                 }
             });
-            this.delButton = this.findViewById(R.id.deleteProduct);
-            this.delButton.setOnClickListener(new View.OnClickListener() {
+            delButton = findViewById(R.id.deleteProduct);
+            delButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(final View v) {
-                    ViewProductActivity.this.deleteProduct();
+                public void onClick(View v) {
+                    deleteProduct();
                 }
             });
         }
         else{
-            this.receiverID = intent.getIntExtra("receiverID",-1);
-            this.setContentView(R.layout.view_one_product);
-            this.addButton = this.findViewById(R.id.copyProduct);
-            this.addButton.setOnClickListener(new View.OnClickListener() {
+            receiverID = intent.getIntExtra("receiverID",-1);
+            setContentView(R.layout.view_one_product);
+            addButton = findViewById(R.id.copyProduct);
+            addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(final View v) {
-                    ViewProductActivity.this.switchToAdd(productID);
+                public void onClick(View v) {
+                    switchToAdd(ViewProductActivity.this.productID);
                 }
             });
 
@@ -114,19 +115,19 @@ public class ViewProductActivity extends AppCompatActivity {
         }
 
 
-        this.description = this.findViewById(R.id.description);
-        this.category = this.findViewById(R.id.category);
-        this.info = this.findViewById(R.id.info);
-        this.productName = this.findViewById(R.id.productName);
-        this.desireBar = this.findViewById(R.id.rating);
-        this.price = this.findViewById(R.id.priceTag);
-        this.amountBought = this.findViewById(R.id.boughtAmount);
-        this.productImage = this.findViewById(R.id.productPhoto);
-        this.chipGroup = this.findViewById(R.id.categoriesGroup);
+        description = findViewById(R.id.description);
+        category = findViewById(R.id.category);
+        info = findViewById(R.id.info);
+        productName = findViewById(R.id.productName);
+        desireBar = findViewById(R.id.rating);
+        price = findViewById(R.id.priceTag);
+        amountBought = findViewById(R.id.boughtAmount);
+        productImage = findViewById(R.id.productPhoto);
+        chipGroup = findViewById(R.id.categoriesGroup);
 
 
-        Log.d(this.TAG, "onCreate: tempProductID = " + productID);
-        this.displayProductInfo(this.productDatabaseHelper.getProductFromID(productID));
+        Log.d(TAG, "onCreate: tempProductID = " + this.productID);
+        displayProductInfo(productDatabaseHelper.getProductFromID(this.productID));
     }
 
     /**
@@ -134,52 +135,52 @@ public class ViewProductActivity extends AppCompatActivity {
      * of set fields if their contents are null.
      * @param product
      */
-    public void displayProductInfo(final Product product){
-        Log.d(this.TAG, "displayProductInfo: bilibu updated");
-        final String descriptionString = product.getDescription();
-        final String name = product.getName();
-        final String[] categoryStrings = product.getCategory();
-        final String[] dimensionsStringArray = ProductDatabaseHelper.convertStringToArray(product.getDimensions());
+    public void displayProductInfo(Product product){
+        Log.d(TAG, "displayProductInfo: bilibu updated");
+        String descriptionString = product.getDescription();
+        String name = product.getName();
+        String[] categoryStrings = product.getCategory();
+        String[] dimensionsStringArray = ProductDatabaseHelper.convertStringToArray(product.getDimensions());
         String dimensionsString = null;
-        Log.d(this.TAG, "displayProductInfo:"+dimensionsStringArray[0]);
+        Log.d(TAG, "displayProductInfo:"+dimensionsStringArray[0]);
         if(!dimensionsStringArray[0].equals("null")){
             dimensionsString = dimensionsStringArray[0] + " by " + dimensionsStringArray[1] + " by " + dimensionsStringArray[2];
         }
         String weightString=null;
         if(product.getWeight()!=null){
-            Log.d(this.TAG, "displayProductInfo: MAIS BORDEL ");
+            Log.d(TAG, "displayProductInfo: MAIS BORDEL ");
             weightString = Integer.toString(product.getWeight());
         }
-        final Integer desire = product.getDesire();
-        final String pricePoint = Integer.toString(product.getPrice());
-        final String amount = Integer.toString(product.getTotal());
-        final String purchased = Integer.toString(product.getPurchased());
-        final Bitmap photo = product.getPhoto();
+        Integer desire = product.getDesire();
+        String pricePoint = Integer.toString(product.getPrice());
+        String amount = Integer.toString(product.getTotal());
+        String purchased = Integer.toString(product.getPurchased());
+        Bitmap photo = product.getPhoto();
         if(name=="Undefined"){
             Toast.makeText(this, "Something went wrong:\n Missing name", Toast  .LENGTH_SHORT).show();
         }
         else{
-            this.productName.setText(name);
+            productName.setText(name);
         }
-        this.price.setText(pricePoint + "€");
+        price.setText(pricePoint + "€");
         if(descriptionString=="") {
-            Log.d(this.TAG, "displayProductInfo: descriptionString was undefined");
-            this.description.setVisibility(View.GONE);
+            Log.d(TAG, "displayProductInfo: descriptionString was undefined");
+            description.setVisibility(View.GONE);
         }
         else{
-            this.description.setText(descriptionString);
+            description.setText(descriptionString);
         }
         if(categoryStrings.length==0) {
-            this.category.setText("");
+            category.setText("");
         }
         else{
-            this.chipGroup.removeAllViews();
+            chipGroup.removeAllViews();
             for (int i=0;i<categoryStrings.length;i++){
                 if(categoryStrings[i].length()!=0){
-                    final Chip chip = new Chip(this);
-                    Log.d(this.TAG, "displayProductInfo: " + categoryStrings[i]);
+                    Chip chip = new Chip(this);
+                    Log.d(TAG, "displayProductInfo: " + categoryStrings[i]);
                     chip.setText(categoryStrings[i]);
-                    this.chipGroup.addView(chip);
+                    chipGroup.addView(chip);
                 }
 
             }
@@ -192,25 +193,25 @@ public class ViewProductActivity extends AppCompatActivity {
             infoString+= "Weight:\n" +"\t" + weightString + " grams\n";
         }
         if(photo!=null){
-            this.productImage.setVisibility(View.VISIBLE);
-            this.productImage.setImageBitmap(photo);
+            productImage.setVisibility(View.VISIBLE);
+            productImage.setImageBitmap(photo);
         }
         else{
-            this.productImage.setVisibility(View.GONE);
+            productImage.setVisibility(View.GONE);
         }
-        this.info.setText(infoString);
-        this.desireBar.setRating((float)desire);
-        this.amountBought.setText("Amount Bought : " + purchased + " / " + amount);
+        info.setText(infoString);
+        desireBar.setRating((float)desire);
+        amountBought.setText("Amount Bought : " + purchased + " / " + amount);
     }
 
     /**
      * Starts the EditProductActivity to allow edition of the currently viewed product
      * @param pID the product to be edited
      */
-    void switchToEdit(final int pID){
-        final Intent intent=new Intent(this, EditProductActivity.class);
+    void switchToEdit(int pID){
+        Intent intent=new Intent(this, EditProductActivity.class);
         intent.putExtra("productID",pID);
-        this.startActivityForResult(intent,1);
+        startActivityForResult(intent,1);
     }
 
     /**
@@ -218,22 +219,22 @@ public class ViewProductActivity extends AppCompatActivity {
      * allows addition of that newly edited product to one of the user's wishlists.
      * @param pID
      */
-    void switchToAdd(final int pID){
-        Log.d(this.TAG, "switchToAdd: pID is" + pID);
-        final Intent intent = new Intent(this,EditProductActivity.class);
+    void switchToAdd(int pID){
+        Log.d(TAG, "switchToAdd: pID is" + pID);
+        Intent intent = new Intent(this,EditProductActivity.class);
         intent.putExtra("productID",pID);
         intent.putExtra("copyProduct",true);
-        this.startActivityForResult(intent,2);
+        startActivityForResult(intent,2);
     }
 
     /**
      * Ends the activity if the back button is pressed.
      * @param view
      */
-    public void onBackPressed(final View view) {
-        Intent returnIntent = new Intent();
-        this.setResult(Activity.RESULT_OK,returnIntent);
-        this.finish();
+    public void onBackPressed(View view) {
+        final Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_OK,returnIntent);
+        finish();
     }
 
     /**
@@ -242,11 +243,11 @@ public class ViewProductActivity extends AppCompatActivity {
      * owner of the product asked for.
      * @param view
      */
-    public void onBuyPressed(final View view){
-        final Product buyProduct = this.productDatabaseHelper.getProductFromID(this.productID);
-        final RelativeLayout linearLayout = new RelativeLayout(this);
+    public void onBuyPressed(View view){
+        final Product buyProduct = productDatabaseHelper.getProductFromID(productID);
+        RelativeLayout linearLayout = new RelativeLayout(this);
         final NumberPicker aNumberPicker = new NumberPicker(this);
-        final int max = buyProduct.getTotal()-buyProduct.getPurchased();
+        int max = buyProduct.getTotal()-buyProduct.getPurchased();
         if(max<1){
             Toast.makeText(this, "This product can't be offered anymore", Toast.LENGTH_LONG).show();
             return;
@@ -254,35 +255,35 @@ public class ViewProductActivity extends AppCompatActivity {
         aNumberPicker.setMaxValue(max);
         aNumberPicker.setMinValue(1);
 
-        final RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(50, 50);
-        final RelativeLayout.LayoutParams numPicerParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(50, 50);
+        RelativeLayout.LayoutParams numPicerParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         numPicerParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
 
         linearLayout.setLayoutParams(params);
         linearLayout.addView(aNumberPicker,numPicerParams);
 
-        final UserDatabaseHelper userDatabaseHelper = new UserDatabaseHelper(this);
-        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setTitle("How many items do you want to gift " + userDatabaseHelper.getUserFromID(this.receiverID).getFirstName() + "?");
+        UserDatabaseHelper userDatabaseHelper = new UserDatabaseHelper(this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("How many items do you want to gift " + userDatabaseHelper.getUserFromID(receiverID).getFirstName() + "?");
         alertDialogBuilder.setView(linearLayout);
         alertDialogBuilder
                 .setCancelable(false)
                 .setPositiveButton("OK",
                         new DialogInterface.OnClickListener() {
-                            public void onClick(final DialogInterface dialog,
-                                                final int id) {
-                                ViewProductActivity.this.buyAmount(aNumberPicker.getValue(),buyProduct);
+                            public void onClick(DialogInterface dialog,
+                                                int id) {
+                                buyAmount(aNumberPicker.getValue(),buyProduct);
                             }
                         })
                 .setNegativeButton("Cancel",
                         new DialogInterface.OnClickListener() {
-                            public void onClick(final DialogInterface dialog,
-                                                final int id) {
-                                ViewProductActivity.this.buyAmount(0,null);
+                            public void onClick(DialogInterface dialog,
+                                                int id) {
+                                buyAmount(0,null);
                                 dialog.cancel();
                             }
                         });
-        final AlertDialog alertDialog = alertDialogBuilder.create();
+        AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
 
@@ -292,18 +293,18 @@ public class ViewProductActivity extends AppCompatActivity {
      * @param amount the amount of products that were purchased
      * @param buyProduct the currently edited product, used to modify the item in the database
      */
-    void buyAmount(final int amount, final Product buyProduct){
+    void buyAmount(int amount, Product buyProduct){
         if(amount==0){
             return;
         }else{
             buyProduct.setPurchased(buyProduct.getPurchased() + amount);
-            this.productDatabaseHelper.updateProduct(buyProduct, this.productID);
-            final DateWish date = new DateWish();
-            final Date currentTime = Calendar.getInstance().getTime();
+            productDatabaseHelper.updateProduct(buyProduct, productID);
+            DateWish date = new DateWish();
+            Date currentTime = Calendar.getInstance().getTime();
             date.setDateAndHour(currentTime);
-            final Purchase achat = new Purchase(this.userID, this.receiverID, this.productID,amount,date);
-            this.purchaseDatabaseHelper.addPurchase(achat);
-            this.displayProductInfo(buyProduct);
+            Purchase achat = new Purchase(userID, receiverID, productID,amount,date);
+            purchaseDatabaseHelper.addPurchase(achat);
+            displayProductInfo(buyProduct);
         }
     }
 
@@ -312,11 +313,11 @@ public class ViewProductActivity extends AppCompatActivity {
      * the product from its wishlist but not from the product database (kept for purchase history)
      */
     void deleteProduct(){
-        this.wishlistDatabaseHelper = new WishlistDatabaseHelper(this);
-        this.wishlistDatabaseHelper.deleteProductInAllWishlist(this.productID);
-        Intent returnIntent = new Intent();
-        this.setResult(Activity.RESULT_OK,returnIntent);
-        this.finish();
+        wishlistDatabaseHelper = new WishlistDatabaseHelper(this);
+        wishlistDatabaseHelper.deleteProductInAllWishlist(productID);
+        final Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_OK,returnIntent);
+        finish();
     }
 
     /**
@@ -326,13 +327,13 @@ public class ViewProductActivity extends AppCompatActivity {
      * @param data intent for transferring data from activity to activity
      */
     @Override
-    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
 
             if (resultCode == Activity.RESULT_OK) {
-                this.displayProductInfo(this.productDatabaseHelper.getProductFromID(this.productID));
+                displayProductInfo(productDatabaseHelper.getProductFromID(productID));
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 //Do nothing?
@@ -342,40 +343,40 @@ public class ViewProductActivity extends AppCompatActivity {
             if(resultCode== Activity.RESULT_OK){
                 final Wishlist[] chosenWishlist = {null};
                 final Integer[] chosenWishlistID = {null};
-                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 final int tempProductID = data.getIntExtra("newProduct",-1);
                 if(tempProductID==-1){
                     return;
                 }
-                this.displayProductInfo(this.productDatabaseHelper.getProductFromID(tempProductID));
+                displayProductInfo(productDatabaseHelper.getProductFromID(tempProductID));
                 builder.setTitle("Choose a wishlist");
-                this.wishlistDatabaseHelper = new WishlistDatabaseHelper(this);
-                final ArrayList<Wishlist> wishlists = this.wishlistDatabaseHelper.getUserWishlist(this.userID);
-                final String[] wishlistNames = new String[wishlists.size()];
+                wishlistDatabaseHelper = new WishlistDatabaseHelper(this);
+                final ArrayList<Wishlist> wishlists = wishlistDatabaseHelper.getUserWishlist(userID);
+                String[] wishlistNames = new String[wishlists.size()];
                 for (int i = 0; i < wishlists.size(); i++) {
                     wishlistNames[i] = wishlists.get(i).getName();
-                    Log.d(this.TAG, "onActivityResult: wishlistNames" + wishlistNames[i]);
+                    Log.d(TAG, "onActivityResult: wishlistNames" + wishlistNames[i]);
                 }
 
                 builder.setSingleChoiceItems(wishlistNames,-1, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(final DialogInterface dialog, final int which) {
+                    public void onClick(DialogInterface dialog, int which) {
                         chosenWishlist[0] = wishlists.get(which);
                         chosenWishlistID[0] = wishlists.get(which).getWishlistID();
                     }
                 });
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(final DialogInterface dialog, final int which) {
-                        ViewProductActivity.this.confirmSelectList(chosenWishlistID[0],tempProductID);
+                    public void onClick(DialogInterface dialog, int which) {
+                        confirmSelectList(chosenWishlistID[0],tempProductID);
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(final DialogInterface dialog, final int which) {
+                    public void onClick(DialogInterface dialog, int which) {
                     }
                 });
-                final AlertDialog dialog = builder.create();
+                AlertDialog dialog = builder.create();
                 dialog.show();
             }
         }
@@ -387,15 +388,15 @@ public class ViewProductActivity extends AppCompatActivity {
      * @param chosenWishlistID the ID of the selected wishlist.
      * @param productID the ID of the current product that shall be copied to the wishlist.
      */
-    void confirmSelectList(final int chosenWishlistID, final int productID){
+    void confirmSelectList(int chosenWishlistID, int productID){
         if(chosenWishlistID==-1){
-            Log.d(this.TAG, "onActivityResult: chosenWishlist null");
+            Log.d(TAG, "onActivityResult: chosenWishlist null");
         }
         else{
-            Log.d(this.TAG, "onActivityResult: " + productID);
-            this.wishlistDatabaseHelper.addProduct(productID,chosenWishlistID);
+            Log.d(TAG, "onActivityResult: " + productID);
+            wishlistDatabaseHelper.addProduct(productID,chosenWishlistID);
         }
-        this.displayProductInfo(this.productDatabaseHelper.getProductFromID(productID));
+        displayProductInfo(productDatabaseHelper.getProductFromID(productID));
     }
 
 }

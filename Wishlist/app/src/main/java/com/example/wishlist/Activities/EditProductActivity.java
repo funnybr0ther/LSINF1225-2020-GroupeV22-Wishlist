@@ -77,25 +77,25 @@ public class EditProductActivity extends AppCompatActivity {
      * Asks the user if they want to save their changes/their product
      * @param view
      */
-    public void onBackPressed(final View view) {
+    public void onBackPressed(View view) {
 
         final Intent returnIntent = new Intent();
-        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+        final DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(final DialogInterface dialog, final int which) {
+            public void onClick(DialogInterface dialog, int which) {
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
                         returnIntent.putExtra("newProduct", -1);
-                        EditProductActivity.this.finish();
+                        finish();
                         break;
                     case DialogInterface.BUTTON_NEGATIVE:
                         break;
                     case DialogInterface.BUTTON_NEUTRAL:
-                        EditProductActivity.this.saveProduct(null);
+                        saveProduct(null);
                 }
             }
         };
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Quit without saving?").setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).setNeutralButton("Save",dialogClickListener).show();
     }
@@ -107,21 +107,21 @@ public class EditProductActivity extends AppCompatActivity {
      * @param data image URI container
      */
     @Override
-    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == EditProductActivity.RESULT_LOAD_IMAGE && resultCode == Activity.RESULT_OK && null != data) {
-            final Uri selectedImage = data.getData();
-            final String[] filePathColumn = { MediaStore.Images.Media.DATA };
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == Activity.RESULT_OK && null != data) {
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = {MediaStore.MediaColumns.DATA};
 
-            final Cursor cursor = this.getContentResolver().query(selectedImage,
+            Cursor cursor = getContentResolver().query(selectedImage,
                     filePathColumn, null, null, null);
             cursor.moveToFirst();
 
-            final int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            final String picturePath = cursor.getString(columnIndex);
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
             cursor.close();
-            this.productImage.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            productImage.setImageBitmap(BitmapFactory.decodeFile(picturePath));
         }
 
 
@@ -132,53 +132,53 @@ public class EditProductActivity extends AppCompatActivity {
      * @param savedInstanceState
      */
     @Override
-    public void onCreate(@Nullable final Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.resources = this.getResources();
-        this.setContentView(R.layout.edit_product);
-        this.productImage = this.findViewById(R.id.productEditPhoto);
-        this.newImage = this.findViewById(R.id.logoCamera);
-        this.nameField = this.findViewById(R.id.newNameEdit);
-        this.descriptionField = this.findViewById(R.id.newDescriptionEdit);
-        this.categoriesField = this.findViewById(R.id.newCategoriesGroup);
-        this.priceField = this.findViewById(R.id.newPrice);
-        this.weightField = this.findViewById(R.id.newWeight);
-        this.dimensionsXField = this.findViewById(R.id.dimensionsX);
-        this.dimensionsYField = this.findViewById(R.id.dimensionsY);
-        this.dimensionsZField = this.findViewById(R.id.dimensionsZ);
-        this.desireField = this.findViewById(R.id.newDesire);
-        this.amountPurchasedField = this.findViewById(R.id.newReceived);
-        this.amountTotalField = this.findViewById(R.id.newTotal);
-        this.categoriesList = this.resources.getStringArray(R.array.categories);
-        this.deleteImage = this.findViewById(R.id.deleteImage);
-        this.newImage.setOnClickListener(new View.OnClickListener() {
+        resources = getResources();
+        setContentView(R.layout.edit_product);
+        productImage = findViewById(R.id.productEditPhoto);
+        newImage = findViewById(R.id.logoCamera);
+        nameField = findViewById(R.id.newNameEdit);
+        descriptionField = findViewById(R.id.newDescriptionEdit);
+        categoriesField = findViewById(R.id.newCategoriesGroup);
+        priceField = findViewById(R.id.newPrice);
+        weightField = findViewById(R.id.newWeight);
+        dimensionsXField = findViewById(R.id.dimensionsX);
+        dimensionsYField = findViewById(R.id.dimensionsY);
+        dimensionsZField = findViewById(R.id.dimensionsZ);
+        desireField = findViewById(R.id.newDesire);
+        amountPurchasedField = findViewById(R.id.newReceived);
+        amountTotalField = findViewById(R.id.newTotal);
+        categoriesList = resources.getStringArray(R.array.categories);
+        deleteImage = findViewById(R.id.deleteImage);
+        newImage.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(final View arg0) {
-                EditProductActivity.this.askPicture();
+            public void onClick(View arg0) {
+                askPicture();
             }
         });
-        this.deleteImage.setOnClickListener(new View.OnClickListener() {
+        deleteImage.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(final View v) {
-                if (EditProductActivity.this.productImage.getDrawable() != null){
-                    EditProductActivity.this.productImage.setImageBitmap(null);
+            public void onClick(View v) {
+                if (productImage.getDrawable() != null){
+                    productImage.setImageBitmap(null);
                 }
             }
         });
-        final Intent intent = this.getIntent();
-        this.productId = intent.getIntExtra("productID",-1);
-        this.copyProduct = intent.getBooleanExtra("copyProduct",false);
-        this.productDatabaseHelper = new ProductDatabaseHelper(this.getApplicationContext());
-        if(this.productId ==-1){
+        Intent intent = getIntent();
+        productId = intent.getIntExtra("productID",-1);
+        copyProduct = intent.getBooleanExtra("copyProduct",false);
+        productDatabaseHelper = new ProductDatabaseHelper(getApplicationContext());
+        if(productId ==-1){
             Log.d("BILIBU", "onCreate: NEW PRODUCT");
-            this.newProduct =true;
-            this.editCategories(new String[]{});
+            newProduct =true;
+            editCategories(new String[]{});
         }
         else{
-            this.newProduct =false;
-            this.product = this.productDatabaseHelper.getProductFromID(this.productId);
-            this.editProduct(this.product);
+            newProduct =false;
+            product = productDatabaseHelper.getProductFromID(productId);
+            editProduct(product);
         }
 
     }
@@ -187,11 +187,11 @@ public class EditProductActivity extends AppCompatActivity {
      * Launches file explorer to choose a fitting image for the product
      */
     public void askPicture(){
-        final Intent i = new Intent(
+        Intent i = new Intent(
                 Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
-        this.startActivityForResult(i, EditProductActivity.RESULT_LOAD_IMAGE);
+        startActivityForResult(i, RESULT_LOAD_IMAGE);
     }
 
     /**
@@ -199,63 +199,63 @@ public class EditProductActivity extends AppCompatActivity {
      * in the database
      * @param view
      */
-    public void saveProduct(final View view){
+    public void saveProduct(View view){
         boolean error = false;
         String newName = null;
-        int wrongColor = this.resources.getColor(R.color.wrongInformation);
-        int trueColor = this.resources.getColor(R.color.white);
-        if(this.nameField.getText().length()<=0) {
+        final int wrongColor = resources.getColor(R.color.wrongInformation);
+        final int trueColor = resources.getColor(R.color.white);
+        if(nameField.getText().length()<=0) {
             error = true;
-            this.nameField.setBackgroundColor(wrongColor);
+            nameField.setBackgroundColor(wrongColor);
         }else{
-            newName= this.nameField.getText().toString();
-            this.nameField.setBackgroundColor(trueColor);
+            newName= nameField.getText().toString();
+            nameField.setBackgroundColor(trueColor);
         }
-        final String newDescription = this.descriptionField.getText().toString();
-        final String[] newCategories = this.checkedCategories.toArray(new String[0]);
+        String newDescription = descriptionField.getText().toString();
+        String[] newCategories = checkedCategories.toArray(new String[0]);
         Integer newPrice = null;
-        if(this.priceField.getText().length()<=0){
+        if(priceField.getText().length()<=0){
             error = true;
-            this.priceField.setBackgroundColor(wrongColor);
+            priceField.setBackgroundColor(wrongColor);
         }else{
-            this.priceField.setBackgroundColor(trueColor);
-        newPrice = Integer.parseInt(this.priceField.getText().toString());
+            priceField.setBackgroundColor(trueColor);
+        newPrice = Integer.parseInt(priceField.getText().toString());
         }
         Integer newWeight = null;
-        if(this.weightField.getText().length()>0){
-            newWeight = Integer.parseInt(this.weightField.getText().toString());
+        if(weightField.getText().length()>0){
+            newWeight = Integer.parseInt(weightField.getText().toString());
         }
 
         String[] dimensionsArray = null;
-        final boolean noDimenX = this.dimensionsXField.getText().length()==0;
-        final boolean noDimenY = this.dimensionsYField.getText().length()==0;
-        final boolean noDimenZ = this.dimensionsZField.getText().length()==0;
+        boolean noDimenX = dimensionsXField.getText().length()==0;
+        boolean noDimenY = dimensionsYField.getText().length()==0;
+        boolean noDimenZ = dimensionsZField.getText().length()==0;
         if(noDimenX&&noDimenY&&noDimenZ){
             dimensionsArray = new String[]{null, null, null};
         }
         else if((!noDimenX)&&(!noDimenY)&&(!noDimenZ)){
-            dimensionsArray = new String[]{this.dimensionsXField.getText().toString(), this.dimensionsYField.getText().toString(), this.dimensionsZField.getText().toString()};
+            dimensionsArray = new String[]{dimensionsXField.getText().toString(), dimensionsYField.getText().toString(), dimensionsZField.getText().toString()};
         }else{
             error = true;
-            this.dimensionsXField.setBackgroundColor(wrongColor);
-            this.dimensionsYField.setBackgroundColor(wrongColor);
-            this.dimensionsZField.setBackgroundColor(wrongColor);
+            dimensionsXField.setBackgroundColor(wrongColor);
+            dimensionsYField.setBackgroundColor(wrongColor);
+            dimensionsZField.setBackgroundColor(wrongColor);
         }
         String newDimensions = null;
         if(!error){
             newDimensions = ProductDatabaseHelper.convertArrayToString(dimensionsArray);
         }
 
-        final int newDesire = (int) this.desireField.getRating();
+        int newDesire = (int) desireField.getRating();
         Integer newPurchased = null;
-        if(this.amountPurchasedField.getText().length()!=0){
-            newPurchased = Integer.parseInt(this.amountPurchasedField.getText().toString());
+        if(amountPurchasedField.getText().length()!=0){
+            newPurchased = Integer.parseInt(amountPurchasedField.getText().toString());
         }
         Integer newTotal = null;
-        if(this.amountTotalField.getText().length()!=0){
-            newTotal = Integer.parseInt(this.amountTotalField.getText().toString());
+        if(amountTotalField.getText().length()!=0){
+            newTotal = Integer.parseInt(amountTotalField.getText().toString());
         }
-        final BitmapDrawable imageBitmapDrawable = (BitmapDrawable) this.productImage.getDrawable();
+        BitmapDrawable imageBitmapDrawable = (BitmapDrawable) productImage.getDrawable();
         Bitmap newImage = null;
         if(imageBitmapDrawable != null){
             newImage = (imageBitmapDrawable).getBitmap();
@@ -263,18 +263,18 @@ public class EditProductActivity extends AppCompatActivity {
 
         if(!error) {
 
-            this.product = new Product(newName, newImage, newDescription, newCategories, newWeight, newPrice, newDesire, newDimensions, newTotal, newPurchased);
-            if (!this.newProduct && !this.copyProduct) {
-                this.productDatabaseHelper.updateProduct(this.product, this.productId);
-                final Intent returnIntent = new Intent();
-                this.setResult(Activity.RESULT_OK, returnIntent);
-                this.finish();
+            product = new Product(newName, newImage, newDescription, newCategories, newWeight, newPrice, newDesire, newDimensions, newTotal, newPurchased);
+            if (!newProduct && !copyProduct) {
+                productDatabaseHelper.updateProduct(product, productId);
+                Intent returnIntent = new Intent();
+                setResult(Activity.RESULT_OK, returnIntent);
+                finish();
             } else {
-                this.productId = this.productDatabaseHelper.addProduct(this.product);
-                final Intent returnIntent = new Intent();
-                this.setResult(Activity.RESULT_OK, returnIntent);
-                returnIntent.putExtra("newProduct", this.productId);
-                this.finish();
+                productId = productDatabaseHelper.addProduct(product);
+                Intent returnIntent = new Intent();
+                setResult(Activity.RESULT_OK, returnIntent);
+                returnIntent.putExtra("newProduct", productId);
+                finish();
             }
         }
     }
@@ -283,36 +283,36 @@ public class EditProductActivity extends AppCompatActivity {
      * Reads the informations product and displays them in the corresponding fields
      * @param product non-null: the product whose information should be displayed
      */
-    public void editProduct(final Product product) {
-        final String productName = product.getName();
-        final Bitmap image = product.getPhoto();
-        final String description = product.getDescription();
-        final String[] categories = product.getCategory();
-        final int weight = product.getWeight();
-        final int price = product.getPrice();
-        final int desire = product.getDesire();
-        final String dimensions = product.getDimensions();
-        final int total = product.getTotal();
-        final int purchased = product.getPurchased();
-        this.editCategories(categories);
+    public void editProduct(Product product) {
+        String productName = product.getName();
+        Bitmap image = product.getPhoto();
+        String description = product.getDescription();
+        String[] categories = product.getCategory();
+        int weight = product.getWeight();
+        int price = product.getPrice();
+        int desire = product.getDesire();
+        String dimensions = product.getDimensions();
+        int total = product.getTotal();
+        int purchased = product.getPurchased();
+        editCategories(categories);
         if(image!=null){
-            this.productImage.setImageBitmap(image);
+            productImage.setImageBitmap(image);
         }
-        this.nameField.setText(productName);
-        this.descriptionField.setText(description);
-        this.priceField.setText(String.valueOf(price));
-        this.desireField.setRating(desire);
-        this.amountPurchasedField.setText(String.valueOf(purchased));
-        this.amountTotalField.setText(String.valueOf(total));
+        nameField.setText(productName);
+        descriptionField.setText(description);
+        priceField.setText(String.valueOf(price));
+        desireField.setRating(desire);
+        amountPurchasedField.setText(String.valueOf(purchased));
+        amountTotalField.setText(String.valueOf(total));
 
-        final String[] dimensionsArray = ProductDatabaseHelper.convertStringToArray(dimensions);
+        String[] dimensionsArray = ProductDatabaseHelper.convertStringToArray(dimensions);
         if(!dimensionsArray[0].equals("null")){
-            this.dimensionsXField.setText(dimensionsArray[0]);
-            this.dimensionsYField.setText(dimensionsArray[1]);
-            this.dimensionsZField.setText(dimensionsArray[2]);
+            dimensionsXField.setText(dimensionsArray[0]);
+            dimensionsYField.setText(dimensionsArray[1]);
+            dimensionsZField.setText(dimensionsArray[2]);
         }
         if(weight!=0){
-            this.weightField.setText(String.valueOf(weight));
+            weightField.setText(String.valueOf(weight));
         }
     }
 
@@ -323,29 +323,29 @@ public class EditProductActivity extends AppCompatActivity {
      * database.
      * @param categories
      */
-    public void editCategories(final String[] categories){
-        this.checkedCategories = new ArrayList<String>(Arrays.asList(categories));
-        for (final String s : this.categoriesList) {
-            final Chip chip = new Chip(this);
+    public void editCategories(String[] categories){
+        checkedCategories = new ArrayList<String>(Arrays.asList(categories));
+        for (String s : categoriesList) {
+            Chip chip = new Chip(this);
             chip.setCheckable(true);
             chip.setText(s);
-            if (this.checkedCategories.contains(s)) {
+            if (checkedCategories.contains(s)) {
                 chip.setChecked(true);
             }
-            this.categoriesField.addView(chip);
+            categoriesField.addView(chip);
             chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
-                public void onCheckedChanged(final CompoundButton view, final boolean isChecked) {
+                public void onCheckedChanged(CompoundButton view, boolean isChecked) {
                     if (isChecked) {
-                        if (EditProductActivity.this.checkedCategories.contains(view.getText())) {
+                        if (checkedCategories.contains(view.getText())) {
 
                         } else {
-                            EditProductActivity.this.checkedCategories.add((String) view.getText());
+                            checkedCategories.add((String) view.getText());
                         }
 
                     } else {
-                        if (EditProductActivity.this.checkedCategories.contains(view.getText())) {
-                            EditProductActivity.this.checkedCategories.remove(view.getText());
+                        if (checkedCategories.contains(view.getText())) {
+                            checkedCategories.remove(view.getText());
                         } else {
 
                         }

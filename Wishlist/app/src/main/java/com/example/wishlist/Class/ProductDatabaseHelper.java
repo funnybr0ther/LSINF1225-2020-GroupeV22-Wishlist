@@ -19,23 +19,23 @@ import static android.content.ContentValues.TAG;
 public class ProductDatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME="wishlist.db";
     private static final String PRODUCT_TABLE_NAME ="product";
-    public static final String PRODUCT_COL0 ="productReference";
-    public static final String PRODUCT_COL1 ="name";
-    public static final String PRODUCT_COL2 ="price";
-    public static final String PRODUCT_COL3 ="category";
-    public static final String PRODUCT_COL4 ="image";
-    public static final String PRODUCT_COL5 ="weight";
-    public static final String PRODUCT_COL6 ="dimensions";
-    public static final String PRODUCT_COL7 ="description";
-    public static final String PRODUCT_COL8 ="desire";
-    public static final String PRODUCT_COL9 ="amount";
-    public static final String PRODUCT_COL10 ="purchased";
+    private static final String PRODUCT_COL0 ="productReference";
+    private static final String PRODUCT_COL1 ="name";
+    private static final String PRODUCT_COL2 ="price";
+    private static final String PRODUCT_COL3 ="category";
+    private static final String PRODUCT_COL4 ="image";
+    private static final String PRODUCT_COL5 ="weight";
+    private static final String PRODUCT_COL6 ="dimensions";
+    private static final String PRODUCT_COL7 ="description";
+    private static final String PRODUCT_COL8 ="desire";
+    private static final String PRODUCT_COL9 ="amount";
+    private static final String PRODUCT_COL10 ="purchased";
 
-    public ProductDatabaseHelper(@Nullable final Context context) {
+    public ProductDatabaseHelper(@Nullable Context context) {
         /**
          * Constructor for product database helper
          */
-        super(context, ProductDatabaseHelper.DATABASE_NAME, null, 1);
+        super(context, DATABASE_NAME, null, 1);
     }
 
     /**
@@ -43,22 +43,22 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
      * @param db the database to be written to
      */
     @Override
-    public void onCreate(final SQLiteDatabase db) {
+    public void onCreate(SQLiteDatabase db) {
 
         Log.d(TAG, "onCreate: ");
-        final String sqlCommand="CREATE TABLE "+
-                ProductDatabaseHelper.PRODUCT_TABLE_NAME + " ("+
-                ProductDatabaseHelper.PRODUCT_COL0 + " INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT, "+
-                ProductDatabaseHelper.PRODUCT_COL1 + " TEXT NOT NULL, "+
-                ProductDatabaseHelper.PRODUCT_COL2 + " INTEGER NOT NULL, "+
-                ProductDatabaseHelper.PRODUCT_COL3 + " TEXT, "+
-                ProductDatabaseHelper.PRODUCT_COL4 + " BLOB, "+
-                ProductDatabaseHelper.PRODUCT_COL5 + " INTEGER, "+
-                ProductDatabaseHelper.PRODUCT_COL6 + " STRING, "+
-                ProductDatabaseHelper.PRODUCT_COL7 + " TEXT," +
-                ProductDatabaseHelper.PRODUCT_COL8 + " INTEGER, "+
-                ProductDatabaseHelper.PRODUCT_COL9 + " INTEGER, "+
-                ProductDatabaseHelper.PRODUCT_COL10 + " INTEGER)";
+        String sqlCommand="CREATE TABLE "+
+                PRODUCT_TABLE_NAME + " ("+
+                PRODUCT_COL0 + " INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT, "+
+                PRODUCT_COL1 + " TEXT NOT NULL, "+
+                PRODUCT_COL2 + " INTEGER NOT NULL, "+
+                PRODUCT_COL3 + " TEXT, "+
+                PRODUCT_COL4 + " BLOB, "+
+                PRODUCT_COL5 + " INTEGER, "+
+                PRODUCT_COL6 + " STRING, "+
+                PRODUCT_COL7 + " TEXT," +
+                PRODUCT_COL8 + " INTEGER, "+
+                PRODUCT_COL9 + " INTEGER, "+
+                PRODUCT_COL10 + " INTEGER)";
         db.execSQL(sqlCommand);
     }
 
@@ -67,20 +67,20 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
      * @param db the database to add the table to
      */
     @Override
-    public void onOpen(final SQLiteDatabase db) {
-        final String sqlCommand="CREATE TABLE IF NOT EXISTS "+
-                ProductDatabaseHelper.PRODUCT_TABLE_NAME + " ("+
-                ProductDatabaseHelper.PRODUCT_COL0 + " INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT, "+
-                ProductDatabaseHelper.PRODUCT_COL1 + " TEXT NOT NULL, "+
-                ProductDatabaseHelper.PRODUCT_COL2 + " INTEGER NOT NULL, "+
-                ProductDatabaseHelper.PRODUCT_COL3 + " TEXT, "+
-                ProductDatabaseHelper.PRODUCT_COL4 + " BLOB, "+
-                ProductDatabaseHelper.PRODUCT_COL5 + " INTEGER, "+
-                ProductDatabaseHelper.PRODUCT_COL6 + " STRING, "+
-                ProductDatabaseHelper.PRODUCT_COL7 + " TEXT," +
-                ProductDatabaseHelper.PRODUCT_COL8 + " INTEGER, "+
-                ProductDatabaseHelper.PRODUCT_COL9 + " INTEGER, "+
-                ProductDatabaseHelper.PRODUCT_COL10 + " INTEGER)";
+    public void onOpen(SQLiteDatabase db) {
+        String sqlCommand="CREATE TABLE IF NOT EXISTS "+
+                PRODUCT_TABLE_NAME + " ("+
+                PRODUCT_COL0 + " INTEGER NOT NULL UNIQUE PRIMARY KEY AUTOINCREMENT, "+
+                PRODUCT_COL1 + " TEXT NOT NULL, "+
+                PRODUCT_COL2 + " INTEGER NOT NULL, "+
+                PRODUCT_COL3 + " TEXT, "+
+                PRODUCT_COL4 + " BLOB, "+
+                PRODUCT_COL5 + " INTEGER, "+
+                PRODUCT_COL6 + " STRING, "+
+                PRODUCT_COL7 + " TEXT," +
+                PRODUCT_COL8 + " INTEGER, "+
+                PRODUCT_COL9 + " INTEGER, "+
+                PRODUCT_COL10 + " INTEGER)";
         db.execSQL(sqlCommand);
         super.onOpen(db);
     }
@@ -89,31 +89,31 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
      Drop table to create new "upgraded" table format, not rly used
      */
     @Override
-    public void onUpgrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        final String sqlCommand="DROP IF TABLE EXISTS " + ProductDatabaseHelper.PRODUCT_TABLE_NAME;
-        this.onCreate(db);
+        String sqlCommand="DROP IF TABLE EXISTS " + PRODUCT_TABLE_NAME;
+        onCreate(db);
     }
     /**
      Add Product product to the database
      @param product the product to be added to the database
      @return the productID of the newly added line
      */
-    public int addProduct(final Product product){
+    public int addProduct(Product product){
 
-        final SQLiteDatabase db= this.getWritableDatabase();
-        final ContentValues contentValues = new ContentValues();
-        contentValues.put(ProductDatabaseHelper.PRODUCT_COL1,product.getName());
-        contentValues.put(ProductDatabaseHelper.PRODUCT_COL2,product.getPrice());
-        contentValues.put(ProductDatabaseHelper.PRODUCT_COL3, ProductDatabaseHelper.convertArrayToString(product.getCategory()));
-        contentValues.put(ProductDatabaseHelper.PRODUCT_COL4,ImageHelper.getBytes(product.getPhoto()));
-        contentValues.put(ProductDatabaseHelper.PRODUCT_COL5,product.getWeight());
-        contentValues.put(ProductDatabaseHelper.PRODUCT_COL6,product.getDimensions());
-        contentValues.put(ProductDatabaseHelper.PRODUCT_COL7,product.getDescription());
-        contentValues.put(ProductDatabaseHelper.PRODUCT_COL8,product.getDesire());
-        contentValues.put(ProductDatabaseHelper.PRODUCT_COL9,product.getTotal());
-        contentValues.put(ProductDatabaseHelper.PRODUCT_COL10,product.getPurchased());
-        final int err= (int) db.insert(ProductDatabaseHelper.PRODUCT_TABLE_NAME,null,contentValues);
+        SQLiteDatabase db= getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(PRODUCT_COL1,product.getName());
+        contentValues.put(PRODUCT_COL2,product.getPrice());
+        contentValues.put(PRODUCT_COL3, convertArrayToString(product.getCategory()));
+        contentValues.put(PRODUCT_COL4,ImageHelper.getBytes(product.getPhoto()));
+        contentValues.put(PRODUCT_COL5,product.getWeight());
+        contentValues.put(PRODUCT_COL6,product.getDimensions());
+        contentValues.put(PRODUCT_COL7,product.getDescription());
+        contentValues.put(PRODUCT_COL8,product.getDesire());
+        contentValues.put(PRODUCT_COL9,product.getTotal());
+        contentValues.put(PRODUCT_COL10,product.getPurchased());
+        int err= (int) db.insert(PRODUCT_TABLE_NAME,null,contentValues);
         return err;
     }
 
@@ -123,27 +123,27 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
      * @param productID the productID of the producted that must be returned
      * @return The Product object that matches productID, null if productID isn't valid
      */
-    public Product getProductFromID(final long productID){
+    public Product getProductFromID(long productID){
 
-        final SQLiteDatabase db= this.getReadableDatabase();
-        final String[] condition = {String.valueOf(productID)};
-        final String selection = ProductDatabaseHelper.PRODUCT_COL0 +" =?";
-        final Cursor cursor=db.query(ProductDatabaseHelper.PRODUCT_TABLE_NAME,null,selection,condition,null,null,null);
+        SQLiteDatabase db= getReadableDatabase();
+        String[] condition = {String.valueOf(productID)};
+        String selection = PRODUCT_COL0 +" =?";
+        Cursor cursor=db.query(PRODUCT_TABLE_NAME,null,selection,condition,null,null,null);
         if(cursor.getCount() == -1){
             cursor.close();
             return null;
         }
         cursor.moveToFirst();
-        final String name = cursor.getString(cursor.getColumnIndex(ProductDatabaseHelper.PRODUCT_COL1));
-        final Integer price = cursor.getInt(cursor.getColumnIndex(ProductDatabaseHelper.PRODUCT_COL2));
-        final String[] categories = ProductDatabaseHelper.convertStringToArray(cursor.getString(cursor.getColumnIndex(ProductDatabaseHelper.PRODUCT_COL3)));
-        final Bitmap picture = ImageHelper.getImage(cursor.getBlob(cursor.getColumnIndex(ProductDatabaseHelper.PRODUCT_COL4)));
-        final Integer weight = cursor.getInt(cursor.getColumnIndex(ProductDatabaseHelper.PRODUCT_COL5));
-        final String dimensions = cursor.getString(cursor.getColumnIndex(ProductDatabaseHelper.PRODUCT_COL6));
-        final String description = cursor.getString(cursor.getColumnIndex(ProductDatabaseHelper.PRODUCT_COL7));
-        final Integer desire = cursor.getInt(cursor.getColumnIndex(ProductDatabaseHelper.PRODUCT_COL8));
-        final Integer amount = cursor.getInt(cursor.getColumnIndex(ProductDatabaseHelper.PRODUCT_COL9));
-        final Integer purchased = cursor.getInt(cursor.getColumnIndex(ProductDatabaseHelper.PRODUCT_COL10));
+        String name = cursor.getString(cursor.getColumnIndex(PRODUCT_COL1));
+        Integer price = cursor.getInt(cursor.getColumnIndex(PRODUCT_COL2));
+        String[] categories = convertStringToArray(cursor.getString(cursor.getColumnIndex(PRODUCT_COL3)));
+        Bitmap picture = ImageHelper.getImage(cursor.getBlob(cursor.getColumnIndex(PRODUCT_COL4)));
+        Integer weight = cursor.getInt(cursor.getColumnIndex(PRODUCT_COL5));
+        String dimensions = cursor.getString(cursor.getColumnIndex(PRODUCT_COL6));
+        String description = cursor.getString(cursor.getColumnIndex(PRODUCT_COL7));
+        Integer desire = cursor.getInt(cursor.getColumnIndex(PRODUCT_COL8));
+        Integer amount = cursor.getInt(cursor.getColumnIndex(PRODUCT_COL9));
+        Integer purchased = cursor.getInt(cursor.getColumnIndex(PRODUCT_COL10));
         return new Product(name,picture,description,categories,weight,price,desire,dimensions, amount,purchased);
     }
 
@@ -153,21 +153,21 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
      * @param product the Product object that contains the fields to be overwritten in the database
      * @param productID the productID of the line that must be overwritten
      */
-    public boolean updateProduct(final Product product, final int productID){
+    public boolean updateProduct(Product product, int productID){
 
-        final SQLiteDatabase db= this.getWritableDatabase();
-        final ContentValues contentValues = new ContentValues();
-        contentValues.put(ProductDatabaseHelper.PRODUCT_COL1,product.getName());
-        contentValues.put(ProductDatabaseHelper.PRODUCT_COL2,product.getPrice());
-        contentValues.put(ProductDatabaseHelper.PRODUCT_COL3, ProductDatabaseHelper.convertArrayToString(product.getCategory()));
-        contentValues.put(ProductDatabaseHelper.PRODUCT_COL4,ImageHelper.getBytes(product.getPhoto()));
-        contentValues.put(ProductDatabaseHelper.PRODUCT_COL5,product.getWeight());
-        contentValues.put(ProductDatabaseHelper.PRODUCT_COL6,product.getDimensions());
-        contentValues.put(ProductDatabaseHelper.PRODUCT_COL7,product.getDescription());
-        contentValues.put(ProductDatabaseHelper.PRODUCT_COL8,product.getDesire());
-        contentValues.put(ProductDatabaseHelper.PRODUCT_COL9,product.getTotal());
-        contentValues.put(ProductDatabaseHelper.PRODUCT_COL10,product.getPurchased());
-        final int err=db.update(ProductDatabaseHelper.PRODUCT_TABLE_NAME,contentValues, ProductDatabaseHelper.PRODUCT_COL0 +" = ?",new String[]{String.valueOf(productID)});
+        SQLiteDatabase db= getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(PRODUCT_COL1,product.getName());
+        contentValues.put(PRODUCT_COL2,product.getPrice());
+        contentValues.put(PRODUCT_COL3, convertArrayToString(product.getCategory()));
+        contentValues.put(PRODUCT_COL4,ImageHelper.getBytes(product.getPhoto()));
+        contentValues.put(PRODUCT_COL5,product.getWeight());
+        contentValues.put(PRODUCT_COL6,product.getDimensions());
+        contentValues.put(PRODUCT_COL7,product.getDescription());
+        contentValues.put(PRODUCT_COL8,product.getDesire());
+        contentValues.put(PRODUCT_COL9,product.getTotal());
+        contentValues.put(PRODUCT_COL10,product.getPurchased());
+        int err=db.update(PRODUCT_TABLE_NAME,contentValues, PRODUCT_COL0 +" = ?",new String[]{String.valueOf(productID)});
         return err!=-1;
     }
 
@@ -175,9 +175,9 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
      * Not used bc history keeping
      * @param productID the productID of the line that must be deleted
      */
-    public void deleteProduct(final int productID){
-        final SQLiteDatabase db = this.getWritableDatabase();
-        final String sqlCommand = "DELETE FROM " + ProductDatabaseHelper.PRODUCT_TABLE_NAME + " WHERE " + ProductDatabaseHelper.PRODUCT_COL0 + "=" + productID;
+    public void deleteProduct(int productID){
+        SQLiteDatabase db = getWritableDatabase();
+        String sqlCommand = "DELETE FROM " + PRODUCT_TABLE_NAME + " WHERE " + PRODUCT_COL0 + "=" + productID;
         db.execSQL(sqlCommand);
     }
     /*
@@ -190,7 +190,7 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
      * @param array the String array to be converted
      * @return the String object that corresponds to array
      */
-    public static String convertArrayToString(final String[] array){
+    public static String convertArrayToString(String[] array){
         /**
          * String[] -> String
          */
@@ -199,7 +199,7 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
             str = str+array[i];
             // Do not append comma at the end of last element
             if(i<array.length-1){
-                str = str+ ProductDatabaseHelper.strSeparator;
+                str = str+ strSeparator;
             }
         }
         return str;
@@ -210,11 +210,11 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
      * @param str a valid String, to be separated in a String array
      * @return the String array corresponding to str
      */
-    public static String[] convertStringToArray(final String str){
+    public static String[] convertStringToArray(String str){
         /**
          * String -> String[]
          */
-        final String[] arr = str.split(ProductDatabaseHelper.strSeparator);
+        String[] arr = str.split(strSeparator);
         return arr;
     }
 }

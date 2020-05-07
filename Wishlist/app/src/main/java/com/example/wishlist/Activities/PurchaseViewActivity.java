@@ -24,22 +24,22 @@ public class PurchaseViewActivity extends AppCompatActivity {
     private static final String TAG = "MainHistoriqueActivity";
 
     @Override
-    protected void onCreate(final Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.fragment_viewhistorique);
-        Log.d(PurchaseViewActivity.TAG, "onCreate: started.");
-        final ListView listViewPurchases= this.findViewById(R.id.HistoriqueItems);
-        final SharedPreferences prefs = getSharedPreferences(
+        setContentView(R.layout.fragment_viewhistorique);
+        Log.d(TAG, "onCreate: started.");
+        ListView listViewPurchases= findViewById(R.id.HistoriqueItems);
+        SharedPreferences prefs = this.getSharedPreferences(
                 "com.example.app", Context.MODE_PRIVATE);
-        final int userID=prefs.getInt("userID",-1);
+        int userID=prefs.getInt("userID",-1);
 
-        final PurchaseDatabaseHelper dbHelper=new PurchaseDatabaseHelper(this.getApplicationContext());
-        final ArrayList<Purchase> list=dbHelper.getUserHistory(userID);   // Historique quand user = bénéficiaire
-        final ArrayList<Purchase> list2 = dbHelper.getAllPurchases(userID);   // Historique quand user = acheteur
+        PurchaseDatabaseHelper dbHelper=new PurchaseDatabaseHelper(getApplicationContext());
+        ArrayList<Purchase> list=dbHelper.getUserHistory(userID);   // Historique quand user = bénéficiaire
+        ArrayList<Purchase> list2 = dbHelper.getAllPurchases(userID);   // Historique quand user = acheteur
         list.addAll(list2);
-        final Comparator<Purchase> byDateNewestFirst=new Comparator<Purchase>() {
+        Comparator<Purchase> byDateNewestFirst=new Comparator<Purchase>() {
             @Override
-            public int compare(final Purchase o1, final Purchase o2) {
+            public int compare(Purchase o1, Purchase o2) {
                 return o2.getDate().compareTo(o1.getDate());
             }
         };
@@ -47,7 +47,7 @@ public class PurchaseViewActivity extends AppCompatActivity {
         listViewPurchases.setAdapter(new PurchaseAdapter(this,list));
     }
 
-    public void onBackPressed(final View view) {
-        this.onBackPressed();
+    public void onBackPressed(View view) {
+        onBackPressed();
     }
 }

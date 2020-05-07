@@ -19,15 +19,15 @@ public class MainMenuActivity extends AppCompatActivity {
     private int userID;
 
     @Override
-    protected void onCreate(final Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final Intent intent= this.getIntent();
-        final SharedPreferences prefs = getSharedPreferences(
+        Intent intent= getIntent();
+        SharedPreferences prefs = this.getSharedPreferences(
                 "com.example.app", Context.MODE_PRIVATE);
-        final int tmpUserID=prefs.getInt("userID",-1);
+        int tmpUserID=prefs.getInt("userID",-1);
         if (tmpUserID!=-1) {
-            this.userID = tmpUserID;
-            this.setContentView(R.layout.activity_main_menu);
+            userID = tmpUserID;
+            setContentView(R.layout.activity_main_menu);
             //TextView textView=findViewById(R.id.textView);
             //textView.setText(Integer.toString(userID));
         }
@@ -38,52 +38,52 @@ public class MainMenuActivity extends AppCompatActivity {
             textView.setText(Integer.toString(userID));
         }*/
         else{//If no userID go back to LoginActivity
-            final Toast toast=Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT);
+            Toast toast=Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT);
             toast.show();
-            final Intent backToLogin=new Intent(this,LoginActivity.class);
+            Intent backToLogin=new Intent(this,LoginActivity.class);
         }
     }
-    public void MyProfile(final View view){
-        final Intent intent=new Intent(this,MyProfileActivity.class);
-        intent.putExtra("userID", this.userID);
-        this.startActivity(intent);
+    public void MyProfile(View view){
+        Intent intent=new Intent(this,MyProfileActivity.class);
+        intent.putExtra("userID", userID);
+        startActivity(intent);
     }
 
-    public void myWishlist(final View view){
-        final Intent gotToWishlist=new Intent(this,ListWishlistActivity.class);
-        gotToWishlist.putExtra("userID", this.userID);
+    public void myWishlist(View view){
+        Intent gotToWishlist=new Intent(this,ListWishlistActivity.class);
+        gotToWishlist.putExtra("userID", userID);
         gotToWishlist.putExtra("isMyWishlist",true);
-        this.startActivity(gotToWishlist);
+        startActivity(gotToWishlist);
     }
 
-    public void disconnect(final View view) {
-        final Intent intent2 = new Intent(this, LoginActivity.class);
-        final SharedPreferences prefs = getSharedPreferences(
+    public void disconnect(View view) {
+        Intent intent2 = new Intent(this, LoginActivity.class);
+        SharedPreferences prefs = this.getSharedPreferences(
                 "com.example.app", Context.MODE_PRIVATE);
         prefs.edit().remove("userID").apply();
-        this.startActivity(intent2);
+        startActivity(intent2);
     }
-    public void changePasswordOrEmail(final View view){
-        final ChangePasswordOrEmailDialog dialog=new ChangePasswordOrEmailDialog();
-        final Bundle args = new Bundle();
-        args.putInt("userID", this.userID);
+    public void changePasswordOrEmail(View view){
+        ChangePasswordOrEmailDialog dialog=new ChangePasswordOrEmailDialog();
+        Bundle args = new Bundle();
+        args.putInt("userID", userID);
         dialog.setArguments(args);
-        dialog.show(getSupportFragmentManager(),"he");
+        dialog.show(this.getSupportFragmentManager(),"he");
     }
 
-    public void viewHistory(final View view){
-        final Intent intent = new Intent(this, PurchaseViewActivity.class);
-        this.startActivity(intent);
+    public void viewHistory(View view){
+        Intent intent = new Intent(this, PurchaseViewActivity.class);
+        startActivity(intent);
     }
 
-    public void viewFollowList(final View view){
-        final Intent intent = new Intent(this, FollowListActivity.class);
-        this.startActivity(intent);
+    public void viewFollowList(View view){
+        Intent intent = new Intent(this, FollowListActivity.class);
+        startActivity(intent);
     }
 
-    public void viewAllUsers(final View view){
-        final Intent intent = new Intent(this, FindFollowActivity.class);
-        this.startActivity(intent);
+    public void viewAllUsers(View view){
+        Intent intent = new Intent(this, FindFollowActivity.class);
+        startActivity(intent);
     }
 
 //    public void goToFriendWishlist(View view){
@@ -94,13 +94,13 @@ public class MainMenuActivity extends AppCompatActivity {
 //        startActivity(intent);
 //    }
 
-    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
 
             if (resultCode == Activity.RESULT_OK) {
-                final int pID = data.getIntExtra("newProduct",-1);
+                int pID = data.getIntExtra("newProduct",-1);
                 Toast.makeText(this, "Product ID= "+pID, Toast.LENGTH_SHORT).show();
             }
         }

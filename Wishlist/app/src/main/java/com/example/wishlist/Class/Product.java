@@ -34,7 +34,7 @@ public class Product {
      * @param amount the total amount of 'products' the user wants
      * @param purchased the amount of products already received (auto-incremented when offered)
      */
-    public Product(final String name, final Bitmap photo, final String description, final String[] category, final Integer weight, final Integer price, final Integer desire, final String dimensions, final Integer amount, final Integer purchased) {
+    public Product(String name, Bitmap photo, String description, String[] category, Integer weight, Integer price, Integer desire, String dimensions, Integer amount, Integer purchased) {
         this.name = name;
         this.photo = photo;
         this.description = description;
@@ -43,7 +43,7 @@ public class Product {
         this.price = price;
         this.desire = desire;
         this.dimensions = dimensions;
-        total = amount;
+        this.total = amount;
         this.purchased = purchased;
     }
 
@@ -52,82 +52,82 @@ public class Product {
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
-    public void setName(final String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
     public Bitmap getPhoto() {
-        return this.photo;
+        return photo;
     }
 
-    public void setPhoto(final Bitmap photo) {
+    public void setPhoto(Bitmap photo) {
         this.photo = photo;
     }
 
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
-    public void setDescription(final String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
     public String[] getCategory() {
-        return this.category;
+        return category;
     }
 
-    public void setCategory(final String[] category) {
+    public void setCategory(String[] category) {
         this.category = category;
     }
 
     public Integer getWeight() {
-        return this.weight;
+        return weight;
     }
 
-    public void setWeight(final int weight) {
+    public void setWeight(int weight) {
         this.weight = weight;
     }
 
     public Integer getPrice() {
-        return this.price;
+        return price;
     }
 
-    public void setPrice(final int price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
     public Integer getDesire() {
-        return this.desire;
+        return desire;
     }
 
-    public void setDesire(final int desire) {
+    public void setDesire(int desire) {
         this.desire = desire;
     }
 
     public String getDimensions() {
-        return this.dimensions;
+        return dimensions;
     }
 
-    public void setDimensions(final String dimensions) {
+    public void setDimensions(String dimensions) {
         this.dimensions = dimensions;
     }
 
     public Integer getTotal() {
-        return this.total;
+        return total;
     }
 
-    public void setTotal(final int amount) {
-        total = amount;
+    public void setTotal(int amount) {
+        this.total = amount;
     }
 
     public Integer getPurchased() {
-        return this.purchased;
+        return purchased;
     }
 
-    public void setPurchased(final int purchased) {
+    public void setPurchased(int purchased) {
         this.purchased = purchased;
     }
 }

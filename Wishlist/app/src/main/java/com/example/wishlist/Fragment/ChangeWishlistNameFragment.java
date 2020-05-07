@@ -31,39 +31,39 @@ public class ChangeWishlistNameFragment extends DialogFragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
-        final View rootView = inflater.inflate( R.layout.frangment_change_wishlist_name, container, false);
-        this.wishlistID = this.getArguments().getInt("wishlistID");
-        this.userID = this.getArguments().getInt("userID");
-        this.txtName = rootView.findViewById(R.id.nameChangeWishlist);
-        this.btnChange = rootView.findViewById(R.id.buttonChangeWishlist);
-        this.btnDelete = rootView.findViewById(R.id.buttonDeleteWishlist);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View rootView = inflater.inflate( R.layout.frangment_change_wishlist_name, container, false);
+        wishlistID = getArguments().getInt("wishlistID");
+        userID = getArguments().getInt("userID");
+        txtName = rootView.findViewById(R.id.nameChangeWishlist);
+        btnChange = rootView.findViewById(R.id.buttonChangeWishlist);
+        btnDelete = rootView.findViewById(R.id.buttonDeleteWishlist);
 
-        this.btnChange.setOnClickListener(new View.OnClickListener() {
+        btnChange.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(final View v) {
-                final String newName = ChangeWishlistNameFragment.this.txtName.getText().toString();
+            public void onClick(View v) {
+                String newName = txtName.getText().toString();
                 if(newName.matches("")) {
-                    final Toast toast = Toast.makeText(ChangeWishlistNameFragment.this.getContext(), "Wrong name", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getContext(), "Wrong name", Toast.LENGTH_SHORT);
                     toast.show();
                 }else if(!newName.matches("")) {
-                    final WishlistDatabaseHelper db = new WishlistDatabaseHelper(ChangeWishlistNameFragment.this.getActivity().getApplicationContext());
+                    WishlistDatabaseHelper db = new WishlistDatabaseHelper(getActivity().getApplicationContext());
                     //int userID = getArguments().getInt("userID");
-                    db.changeWishlistName(ChangeWishlistNameFragment.this.wishlistID, newName, ChangeWishlistNameFragment.this.userID);
-                    final Toast toast=Toast.makeText(ChangeWishlistNameFragment.this.getContext(),"Name changed !",Toast.LENGTH_SHORT);
+                    db.changeWishlistName(wishlistID, newName, userID);
+                    Toast toast=Toast.makeText(getContext(),"Name changed !",Toast.LENGTH_SHORT);
                     toast.show();
                 }
-                final DetailWishlistActivity callingActivity = (DetailWishlistActivity) ChangeWishlistNameFragment.this.getActivity();
+                DetailWishlistActivity callingActivity = (DetailWishlistActivity) getActivity();
                 callingActivity.fragmentReturn(newName);
-                ChangeWishlistNameFragment.this.dismiss();
+                dismiss();
             }
         });
 
-        this.btnDelete.setOnClickListener(new View.OnClickListener() {
+        btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(final View v) {
-                final WishlistDatabaseHelper db = new WishlistDatabaseHelper(ChangeWishlistNameFragment.this.getActivity().getApplicationContext());
-                db.deleteWishlistWithProduct(ChangeWishlistNameFragment.this.wishlistID);
+            public void onClick(View v) {
+                WishlistDatabaseHelper db = new WishlistDatabaseHelper(getActivity().getApplicationContext());
+                db.deleteWishlistWithProduct(wishlistID);
                 /*
                 Context ctx = getActivity().getApplicationContext();
                 Intent gotToWishlist=new Intent(ctx,ListWishlistActivity.class);
@@ -71,9 +71,9 @@ public class ChangeWishlistNameFragment extends DialogFragment {
                 gotToWishlist.putExtra("isMyWishlist",true);
                 startActivity(gotToWishlist);
 */
-                final DetailWishlistActivity callingActivity = (DetailWishlistActivity) ChangeWishlistNameFragment.this.getActivity();
+                DetailWishlistActivity callingActivity = (DetailWishlistActivity) getActivity();
                 callingActivity.onBackPressed();
-                ChangeWishlistNameFragment.this.dismiss();
+                dismiss();
             }
         });
 

@@ -96,7 +96,7 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
      * get the index of a string in a specified spinner
      * Set 0 (->default item of the spinner) if string isn't in the spinner
      */
-    private int getIndex(final Spinner spinner, final String myString){
+    private int getIndex(Spinner spinner, String myString){
         for (int i=0;i<spinner.getCount();i++){
             if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){
                 return i;
@@ -106,98 +106,98 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
     }
 
 
-    public void onBackPressed(final View view) {
-        this.onBackPressed();
+    public void onBackPressed(View view) {
+        onBackPressed();
     }
 
     @Override
-    protected void onCreate(final Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.my_profile);
+        setContentView(R.layout.my_profile);
         //Get the userID then create user with information in db relative to that ID
-        final Intent intent= this.getIntent();
+        Intent intent= getIntent();
 
         //Get UserID and go back to login if there is no
-        final SharedPreferences prefs = getSharedPreferences(
+        SharedPreferences prefs = this.getSharedPreferences(
                 "com.example.app", Context.MODE_PRIVATE);
-        final int tmpUserID=prefs.getInt("userID",-1);
+        int tmpUserID=prefs.getInt("userID",-1);
         if (tmpUserID!=-1){
-            this.userID =tmpUserID;
+            userID =tmpUserID;
         }
         else{//If no userID go back to LoginActivity
-            final Toast toast=Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT);
+            Toast toast=Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT);
             toast.show();
-            final Intent backToLogin=new Intent(this,LoginActivity.class);
+            Intent backToLogin=new Intent(this,LoginActivity.class);
         }
 
-        final UserDatabaseHelper dbHelper= new UserDatabaseHelper(this.getApplicationContext());
+        UserDatabaseHelper dbHelper= new UserDatabaseHelper(getApplicationContext());
 
-        this.user =dbHelper.getUserFromID(this.userID);
+        user =dbHelper.getUserFromID(userID);
 
         //Rely variable with layout
-        this.profilePhoto = this.findViewById(R.id.profilePhoto);
-        this.modifyButton = this.findViewById(R.id.modifyProfile);
-        this.activeEditModeButton = this.findViewById(R.id.modifyMode);
-        this.backArrow = this.findViewById(R.id.backArrowEditProfile);
-        this.cameraLogo = this.findViewById(R.id.logoCamera);
+        profilePhoto = findViewById(R.id.profilePhoto);
+        modifyButton = findViewById(R.id.modifyProfile);
+        activeEditModeButton = findViewById(R.id.modifyMode);
+        backArrow = findViewById(R.id.backArrowEditProfile);
+        cameraLogo = findViewById(R.id.logoCamera);
 
-        this.textViewFirstName = this.findViewById(R.id.FirstName);
-        this.textViewLastName = this.findViewById(R.id.LastName);
-        this.textViewAddressLine1 = this.findViewById(R.id.AddressLine1);
-        this.textViewCity = this.findViewById(R.id.City);
-        this.textViewPostalCode = this.findViewById(R.id.PostalCode);
-        this.textViewCountry = this.findViewById(R.id.Country);
-        this.textViewBirthDate = this.findViewById(R.id.BirthDate);
+        textViewFirstName = findViewById(R.id.FirstName);
+        textViewLastName = findViewById(R.id.LastName);
+        textViewAddressLine1 = findViewById(R.id.AddressLine1);
+        textViewCity = findViewById(R.id.City);
+        textViewPostalCode = findViewById(R.id.PostalCode);
+        textViewCountry = findViewById(R.id.Country);
+        textViewBirthDate = findViewById(R.id.BirthDate);
 
-        this.actualFirstName = this.findViewById(R.id.actualFirstName);
-        this.actualLastName = this.findViewById(R.id.actualLastName);
-        this.actualAddressLine1 = this.findViewById(R.id.actualAddressLine1);
-        this.actualAddressLine2 = this.findViewById(R.id.actualAddressLine2);
-        this.actualCity = this.findViewById(R.id.actualCity);
-        this.actualPostalCode = this.findViewById(R.id.actualPostalCode);
-        this.actualCountry = this.findViewById(R.id.actualCountry);
-        this.actualSize = this.findViewById(R.id.actualSize);
-        this.actualShoeSize = this.findViewById(R.id.actualShoeSize);
-        this.actualFavoriteColor = this.findViewById(R.id.actualFavoriteColor);
-        this.actualBirthDate = this.findViewById(R.id.wrongBirthdate);
+        actualFirstName = findViewById(R.id.actualFirstName);
+        actualLastName = findViewById(R.id.actualLastName);
+        actualAddressLine1 = findViewById(R.id.actualAddressLine1);
+        actualAddressLine2 = findViewById(R.id.actualAddressLine2);
+        actualCity = findViewById(R.id.actualCity);
+        actualPostalCode = findViewById(R.id.actualPostalCode);
+        actualCountry = findViewById(R.id.actualCountry);
+        actualSize = findViewById(R.id.actualSize);
+        actualShoeSize = findViewById(R.id.actualShoeSize);
+        actualFavoriteColor = findViewById(R.id.actualFavoriteColor);
+        actualBirthDate = findViewById(R.id.wrongBirthdate);
 
-        this.editTextFirstName = this.findViewById(R.id.editFirstName);
-        this.editTextLastName = this.findViewById(R.id.editLastName);
-        this.editTextAddressLine1 = this.findViewById(R.id.editAddressLine1);
-        this.editTextAddressLine2 = this.findViewById(R.id.editAddressLine2);
-        this.editTextCity = this.findViewById(R.id.editCity);
-        this.editTextPostalCode = this.findViewById(R.id.editPostalCode);
-        this.editTextCountry = this.findViewById(R.id.editCountry);
-        this.spinnerSize = this.findViewById(R.id.spinnerSize);
-        this.spinnerShoeSize = this.findViewById(R.id.spinnerShoeSize);
-        this.spinnerFavoriteColor = this.findViewById(R.id.spinnerFavoriteColor);
-        this.spinnerDay = this.findViewById(R.id.spinnerDay);
-        this.spinnerMonth = this.findViewById(R.id.spinnerMonth);
-        this.spinnerYear = this.findViewById(R.id.spinnerYear);
+        editTextFirstName = findViewById(R.id.editFirstName);
+        editTextLastName = findViewById(R.id.editLastName);
+        editTextAddressLine1 = findViewById(R.id.editAddressLine1);
+        editTextAddressLine2 = findViewById(R.id.editAddressLine2);
+        editTextCity = findViewById(R.id.editCity);
+        editTextPostalCode = findViewById(R.id.editPostalCode);
+        editTextCountry = findViewById(R.id.editCountry);
+        spinnerSize = findViewById(R.id.spinnerSize);
+        spinnerShoeSize = findViewById(R.id.spinnerShoeSize);
+        spinnerFavoriteColor = findViewById(R.id.spinnerFavoriteColor);
+        spinnerDay = findViewById(R.id.spinnerDay);
+        spinnerMonth = findViewById(R.id.spinnerMonth);
+        spinnerYear = findViewById(R.id.spinnerYear);
 
-        this.relativeLayoutAddressLine2 = this.findViewById(R.id.layoutAddressLine2);
-        this.relativeLayoutFavoriteColor = this.findViewById(R.id.layoutFavoriteColor);
-        this.relativeLayoutShoeSize = this.findViewById(R.id.layoutShoeSize);
-        this.relativeLayoutSize = this.findViewById(R.id.layoutSize);
-        this.relativeLayoutSpinnersDate = this.findViewById(R.id.layoutSpinnersDate);
+        relativeLayoutAddressLine2 = findViewById(R.id.layoutAddressLine2);
+        relativeLayoutFavoriteColor = findViewById(R.id.layoutFavoriteColor);
+        relativeLayoutShoeSize = findViewById(R.id.layoutShoeSize);
+        relativeLayoutSize = findViewById(R.id.layoutSize);
+        relativeLayoutSpinnersDate = findViewById(R.id.layoutSpinnersDate);
         //Set the mode to view
-        if(!this.editMode) this.visibleMode();
+        if(!editMode) visibleMode();
         //Set function onclick of camera logo
-        this.cameraLogo.setOnClickListener(new View.OnClickListener() {
+        cameraLogo.setOnClickListener(new View.OnClickListener() {
             //Check permission to take photo and access storage then create ChangePhotoDialogEdit
             @Override
-            public void onClick(final View v) {
+            public void onClick(View v) {
                 //check permission
-                final String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+                String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
                 for (int i=0;i<2;i++) {
                     if (ContextCompat.checkSelfPermission(MyProfileActivity.this, permissions[i])
                             != PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions(MyProfileActivity.this, new String[]{permissions[i]},
-                                MyProfileActivity.this.MY_PERMISSIONS_REQUEST);
+                                MY_PERMISSIONS_REQUEST);
                     } else {
                         if(i==1){
-                            final EditPhotoDialog dialog = new EditPhotoDialog();
-                            dialog.show(getSupportFragmentManager(), "ha");
+                            EditPhotoDialog dialog = new EditPhotoDialog();
+                            dialog.show(MyProfileActivity.this.getSupportFragmentManager(), "ha");
                         }
                     }
                 }
@@ -213,73 +213,73 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
      * -eventually set some layout visible if there where not in view mode
      */
     public void editMode(){
-        this.editMode =true;
-        this.activeEditModeButton.setVisibility(View.GONE);
-        this.modifyButton.setVisibility(View.VISIBLE);
+        editMode =true;
+        activeEditModeButton.setVisibility(View.GONE);
+        modifyButton.setVisibility(View.VISIBLE);
         //set visibleMode when click on backArrow (-> no change in profile)
-        this.backArrow.setOnClickListener(new View.OnClickListener() {
+        backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(final View v) {
-                MyProfileActivity.this.visibleMode();
+            public void onClick(View v) {
+                visibleMode();
             }
         });
-        this.cameraLogo.setVisibility(View.VISIBLE);
-        this.relativeLayoutShoeSize.setVisibility(View.VISIBLE);
-        this.relativeLayoutSize.setVisibility(View.VISIBLE);
-        this.relativeLayoutFavoriteColor.setVisibility(View.VISIBLE);
-        this.relativeLayoutAddressLine2.setVisibility(View.VISIBLE);
-        this.relativeLayoutSpinnersDate.setVisibility(View.VISIBLE);
-        this.textViewFirstName.setText(R.string.firstName);
-        this.textViewLastName.setText(R.string.lastName);
-        this.textViewAddressLine1.setText(R.string.addressLine1);
-        this.textViewCity.setText(R.string.city);
-        this.textViewCountry.setText(R.string.country);
-        this.textViewPostalCode.setText(R.string.postalCode);
-        this.textViewBirthDate.setText(R.string.birthdate);
+        cameraLogo.setVisibility(View.VISIBLE);
+        relativeLayoutShoeSize.setVisibility(View.VISIBLE);
+        relativeLayoutSize.setVisibility(View.VISIBLE);
+        relativeLayoutFavoriteColor.setVisibility(View.VISIBLE);
+        relativeLayoutAddressLine2.setVisibility(View.VISIBLE);
+        relativeLayoutSpinnersDate.setVisibility(View.VISIBLE);
+        textViewFirstName.setText(R.string.firstName);
+        textViewLastName.setText(R.string.lastName);
+        textViewAddressLine1.setText(R.string.addressLine1);
+        textViewCity.setText(R.string.city);
+        textViewCountry.setText(R.string.country);
+        textViewPostalCode.setText(R.string.postalCode);
+        textViewBirthDate.setText(R.string.birthdate);
         //Set Visibility
-        this.editTextFirstName.setVisibility(View.VISIBLE);
-        this.editTextLastName.setVisibility(View.VISIBLE);
-        this.editTextAddressLine1.setVisibility(View.VISIBLE);
-        this.editTextAddressLine2.setVisibility(View.VISIBLE);
-        this.editTextCity.setVisibility(View.VISIBLE);
-        this.editTextPostalCode.setVisibility(View.VISIBLE);
-        this.editTextCountry.setVisibility(View.VISIBLE);
-        this.spinnerSize.setVisibility(View.VISIBLE);
-        this.spinnerShoeSize.setVisibility(View.VISIBLE);
-        this.spinnerFavoriteColor.setVisibility(View.VISIBLE);
-        this.spinnerDay.setVisibility(View.VISIBLE);
-        this.spinnerMonth.setVisibility(View.VISIBLE);
-        this.spinnerYear.setVisibility(View.VISIBLE);
-        this.actualFirstName.setVisibility(View.GONE);
-        this.actualLastName.setVisibility(View.GONE);
-        this.actualAddressLine1.setVisibility(View.GONE);
-        this.actualAddressLine2.setVisibility(View.GONE);
-        this.actualCity.setVisibility(View.GONE);
-        this.actualPostalCode.setVisibility(View.GONE);
-        this.actualCountry.setVisibility(View.GONE);
-        this.actualSize.setVisibility(View.GONE);
-        this.actualShoeSize.setVisibility(View.GONE);
-        this.actualFavoriteColor.setVisibility(View.GONE);
-        this.actualBirthDate.setVisibility(View.GONE);
+        editTextFirstName.setVisibility(View.VISIBLE);
+        editTextLastName.setVisibility(View.VISIBLE);
+        editTextAddressLine1.setVisibility(View.VISIBLE);
+        editTextAddressLine2.setVisibility(View.VISIBLE);
+        editTextCity.setVisibility(View.VISIBLE);
+        editTextPostalCode.setVisibility(View.VISIBLE);
+        editTextCountry.setVisibility(View.VISIBLE);
+        spinnerSize.setVisibility(View.VISIBLE);
+        spinnerShoeSize.setVisibility(View.VISIBLE);
+        spinnerFavoriteColor.setVisibility(View.VISIBLE);
+        spinnerDay.setVisibility(View.VISIBLE);
+        spinnerMonth.setVisibility(View.VISIBLE);
+        spinnerYear.setVisibility(View.VISIBLE);
+        actualFirstName.setVisibility(View.GONE);
+        actualLastName.setVisibility(View.GONE);
+        actualAddressLine1.setVisibility(View.GONE);
+        actualAddressLine2.setVisibility(View.GONE);
+        actualCity.setVisibility(View.GONE);
+        actualPostalCode.setVisibility(View.GONE);
+        actualCountry.setVisibility(View.GONE);
+        actualSize.setVisibility(View.GONE);
+        actualShoeSize.setVisibility(View.GONE);
+        actualFavoriteColor.setVisibility(View.GONE);
+        actualBirthDate.setVisibility(View.GONE);
 
         //Fill in with actual information
-        this.editTextPostalCode.setText(String.format("%d", this.user.getAddress().getPostalCode()));
-        this.editTextCity.setText(this.user.getAddress().getCity());
-        this.editTextCountry.setText(this.user.getAddress().getCountry());
-        this.editTextAddressLine1.setText(this.user.getAddress().getAddressLine1());
-        this.editTextFirstName.setText(this.user.getFirstName());
-        this.editTextLastName.setText(this.user.getLastName());
-        final String[] date= this.user.getBirthDate().toString().split(" ");
-        this.spinnerDay.setSelection(this.getIndex(this.spinnerDay,date[0]));
-        this.spinnerMonth.setSelection(this.getIndex(this.spinnerMonth,date[1]));
-        this.spinnerYear.setSelection(this.getIndex(this.spinnerYear,date[2]));
-        this.spinnerFavoriteColor.setSelection(this.getIndex(this.spinnerFavoriteColor, this.user.getFavoriteColor()));
-        this.spinnerSize.setSelection(this.getIndex(this.spinnerSize, this.user.getSize()));
-        this.spinnerShoeSize.setSelection(this.getIndex(this.spinnerShoeSize, this.user.getShoeSize()));
+        editTextPostalCode.setText(String.format("%d", user.getAddress().getPostalCode()));
+        editTextCity.setText(user.getAddress().getCity());
+        editTextCountry.setText(user.getAddress().getCountry());
+        editTextAddressLine1.setText(user.getAddress().getAddressLine1());
+        editTextFirstName.setText(user.getFirstName());
+        editTextLastName.setText(user.getLastName());
+        String[] date= user.getBirthDate().toString().split(" ");
+        spinnerDay.setSelection(getIndex(spinnerDay,date[0]));
+        spinnerMonth.setSelection(getIndex(spinnerMonth,date[1]));
+        spinnerYear.setSelection(getIndex(spinnerYear,date[2]));
+        spinnerFavoriteColor.setSelection(getIndex(spinnerFavoriteColor, user.getFavoriteColor()));
+        spinnerSize.setSelection(getIndex(spinnerSize, user.getSize()));
+        spinnerShoeSize.setSelection(getIndex(spinnerShoeSize, user.getShoeSize()));
     }
 
-    public void visibleMode(final View view){
-        this.visibleMode();
+    public void visibleMode(View view){
+        visibleMode();
     }
 
     /*
@@ -292,102 +292,102 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
      */
     @TargetApi(21)
     public void visibleMode(){
-        this.editMode =false;
-        this.textViewFirstName.setText(R.string.firstNameWithout);
-        this.textViewLastName.setText(R.string.lastNameWithout);
-        this.textViewAddressLine1.setText(R.string.addressLine1Without);
-        this.textViewCity.setText(R.string.cityWithout);
-        this.textViewCountry.setText(R.string.countryWithout);
-        this.textViewPostalCode.setText(R.string.postalCodeWithout);
-        this.textViewBirthDate.setText(R.string.birthdateWithout);
-        if(this.user.getProfilePhoto()!=null) {
-            this.profilePhoto.setImageBitmap(this.user.getProfilePhoto());
+        editMode =false;
+        textViewFirstName.setText(R.string.firstNameWithout);
+        textViewLastName.setText(R.string.lastNameWithout);
+        textViewAddressLine1.setText(R.string.addressLine1Without);
+        textViewCity.setText(R.string.cityWithout);
+        textViewCountry.setText(R.string.countryWithout);
+        textViewPostalCode.setText(R.string.postalCodeWithout);
+        textViewBirthDate.setText(R.string.birthdateWithout);
+        if(user.getProfilePhoto()!=null) {
+            profilePhoto.setImageBitmap(user.getProfilePhoto());
         }else{
-            this.profilePhoto.setImageDrawable(this.getDrawable(R.drawable.ic_default_photo));
+            profilePhoto.setImageDrawable(getDrawable(R.drawable.ic_default_photo));
         }
         //Set normal onBackPressed function when we click on back arrow
-        this.backArrow.setOnClickListener(new View.OnClickListener() {
+        backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(final View v) {
-                MyProfileActivity.this.onBackPressed();
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
         //Set Visibility
-        this.activeEditModeButton.setVisibility(View.VISIBLE);
-        this.modifyButton.setVisibility(View.GONE);
-        this.cameraLogo.setVisibility(View.GONE);
-        this.editTextFirstName.setVisibility(View.GONE);
-        this.editTextLastName.setVisibility(View.GONE);
-        this.editTextAddressLine1.setVisibility(View.GONE);
-        this.editTextAddressLine2.setVisibility(View.GONE);
-        this.editTextCity.setVisibility(View.GONE);
-        this.editTextPostalCode.setVisibility(View.GONE);
-        this.editTextCountry.setVisibility(View.GONE);
-        this.spinnerSize.setVisibility(View.GONE);
-        this.spinnerShoeSize.setVisibility(View.GONE);
-        this.spinnerFavoriteColor.setVisibility(View.GONE);
-        this.spinnerDay.setVisibility(View.GONE);
-        this.spinnerMonth.setVisibility(View.GONE);
-        this.spinnerYear.setVisibility(View.GONE);
-        this.actualFirstName.setVisibility(View.VISIBLE);
-        this.actualLastName.setVisibility(View.VISIBLE);
-        this.actualAddressLine1.setVisibility(View.VISIBLE);
-        this.actualAddressLine2.setVisibility(View.VISIBLE);
-        this.actualCity.setVisibility(View.VISIBLE);
-        this.actualPostalCode.setVisibility(View.VISIBLE);
-        this.actualCountry.setVisibility(View.VISIBLE);
-        this.actualSize.setVisibility(View.VISIBLE);
-        this.actualShoeSize.setVisibility(View.VISIBLE);
-        this.actualFavoriteColor.setVisibility(View.VISIBLE);
-        this.actualBirthDate.setVisibility(View.VISIBLE);
+        activeEditModeButton.setVisibility(View.VISIBLE);
+        modifyButton.setVisibility(View.GONE);
+        cameraLogo.setVisibility(View.GONE);
+        editTextFirstName.setVisibility(View.GONE);
+        editTextLastName.setVisibility(View.GONE);
+        editTextAddressLine1.setVisibility(View.GONE);
+        editTextAddressLine2.setVisibility(View.GONE);
+        editTextCity.setVisibility(View.GONE);
+        editTextPostalCode.setVisibility(View.GONE);
+        editTextCountry.setVisibility(View.GONE);
+        spinnerSize.setVisibility(View.GONE);
+        spinnerShoeSize.setVisibility(View.GONE);
+        spinnerFavoriteColor.setVisibility(View.GONE);
+        spinnerDay.setVisibility(View.GONE);
+        spinnerMonth.setVisibility(View.GONE);
+        spinnerYear.setVisibility(View.GONE);
+        actualFirstName.setVisibility(View.VISIBLE);
+        actualLastName.setVisibility(View.VISIBLE);
+        actualAddressLine1.setVisibility(View.VISIBLE);
+        actualAddressLine2.setVisibility(View.VISIBLE);
+        actualCity.setVisibility(View.VISIBLE);
+        actualPostalCode.setVisibility(View.VISIBLE);
+        actualCountry.setVisibility(View.VISIBLE);
+        actualSize.setVisibility(View.VISIBLE);
+        actualShoeSize.setVisibility(View.VISIBLE);
+        actualFavoriteColor.setVisibility(View.VISIBLE);
+        actualBirthDate.setVisibility(View.VISIBLE);
 
         //Fill in with actual information
-        this.actualPostalCode.setText(String.format("%d", this.user.getAddress().getPostalCode()));
-        this.actualCity.setText(this.user.getAddress().getCity());
-        this.actualCountry.setText(this.user.getAddress().getCountry());
-        this.actualAddressLine1.setText(this.user.getAddress().getAddressLine1());
-        this.actualFirstName.setText(this.user.getFirstName());
-        this.actualLastName.setText(this.user.getLastName());
-        this.actualBirthDate.setTextColor(this.getResources().getColor(R.color.black));
-        this.actualBirthDate.setText(this.user.getBirthDate().toString());
-        this.relativeLayoutSpinnersDate.setVisibility(View.GONE);
-        final String addressLine2= this.user.getAddress().getAddressLine2();
+        actualPostalCode.setText(String.format("%d", user.getAddress().getPostalCode()));
+        actualCity.setText(user.getAddress().getCity());
+        actualCountry.setText(user.getAddress().getCountry());
+        actualAddressLine1.setText(user.getAddress().getAddressLine1());
+        actualFirstName.setText(user.getFirstName());
+        actualLastName.setText(user.getLastName());
+        actualBirthDate.setTextColor(getResources().getColor(R.color.black));
+        actualBirthDate.setText(user.getBirthDate().toString());
+        relativeLayoutSpinnersDate.setVisibility(View.GONE);
+        String addressLine2= user.getAddress().getAddressLine2();
         if(addressLine2==null||addressLine2.toLowerCase().equals("null")||addressLine2.equals("")){
-            this.relativeLayoutAddressLine2.setVisibility(View.GONE);
+            relativeLayoutAddressLine2.setVisibility(View.GONE);
         }
         else{
-            this.relativeLayoutAddressLine2.setVisibility(View.VISIBLE);
-            this.actualAddressLine2.setText(addressLine2);
+            relativeLayoutAddressLine2.setVisibility(View.VISIBLE);
+            actualAddressLine2.setText(addressLine2);
         }
-        final String favoriteColor= this.user.getFavoriteColor();
+        String favoriteColor= user.getFavoriteColor();
         if(favoriteColor==null||favoriteColor.toLowerCase().equals("null")||
                 favoriteColor.toLowerCase().equals("undefined")||favoriteColor.equals("")){
-            this.relativeLayoutFavoriteColor.setVisibility(View.GONE);
+            relativeLayoutFavoriteColor.setVisibility(View.GONE);
         }
         else{
-            this.relativeLayoutFavoriteColor.setVisibility(View.VISIBLE);
-            this.actualFavoriteColor.setText(favoriteColor);
+            relativeLayoutFavoriteColor.setVisibility(View.VISIBLE);
+            actualFavoriteColor.setText(favoriteColor);
         }
-        final String size= this.user.getSize();
+        String size= user.getSize();
         if(size==null||size.toLowerCase().equals("null")||size.toLowerCase().equals("undefined")){
-            this.relativeLayoutSize.setVisibility(View.GONE);
+            relativeLayoutSize.setVisibility(View.GONE);
         }
         else {
-            this.relativeLayoutSize.setVisibility(View.VISIBLE);
-            this.actualSize.setText(size);
+            relativeLayoutSize.setVisibility(View.VISIBLE);
+            actualSize.setText(size);
         }
-        final String shoeSize= this.user.getShoeSize();
+        String shoeSize= user.getShoeSize();
         if(shoeSize==null||shoeSize.toLowerCase().equals("null")||
                 shoeSize.toLowerCase().equals("undefined")||shoeSize.equals("")||shoeSize.equals("0")){
-            this.relativeLayoutShoeSize.setVisibility(View.GONE);
+            relativeLayoutShoeSize.setVisibility(View.GONE);
         }
         else{
-            this.relativeLayoutShoeSize.setVisibility(View.VISIBLE);
-            this.actualShoeSize.setText(shoeSize);
+            relativeLayoutShoeSize.setVisibility(View.VISIBLE);
+            actualShoeSize.setText(shoeSize);
         }
     }
 
-    public boolean checkDate(final int day, final String month, final int year) {
+    public boolean checkDate(int day, String month, int year) {
         if (day == 29 && month.equals( "February")) return year % 4 == 0;
         if (day > 29 && month.equals("February")) return false;
         if (day == 31) {
@@ -401,121 +401,121 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
         return str.length() > 0;
     }
 
-    public void editMode(final View view){
-        this.editMode();}
+    public void editMode(View view){
+        editMode();}
     /*
      * Update User in the database with the new information collected
      * Give some information to the user if he doesn't fill anything well
      * Almost same function than createUser in CreateProfileActivity
      */
-    public void updateUser(final View view){
+    public void updateUser(View view){
         int numberError = 0;
         //Get the information
-        final String firstName = this.editTextFirstName.getText().toString();
-        final String lastName = this.editTextLastName.getText().toString();
-        final String addressLine1 = this.editTextAddressLine1.getText().toString();
-        final String addressLine2 = this.editTextAddressLine2.getText().toString();
-        final String city = this.editTextCity.getText().toString();
-        final String country = this.editTextCountry.getText().toString();
+        String firstName = editTextFirstName.getText().toString();
+        String lastName = editTextLastName.getText().toString();
+        String addressLine1 = editTextAddressLine1.getText().toString();
+        String addressLine2 = editTextAddressLine2.getText().toString();
+        String city = editTextCity.getText().toString();
+        String country = editTextCountry.getText().toString();
         int postalCode=0;
         try {
-            postalCode = Integer.parseInt(this.editTextPostalCode.getText().toString());
-            this.editTextPostalCode.setBackgroundColor(Color.rgb(255, 255, 255));
-        } catch (final NumberFormatException e) {
-            this.editTextPostalCode.setBackgroundColor(this.getResources().getColor(R.color.wrongInformation));
+            postalCode = Integer.parseInt(editTextPostalCode.getText().toString());
+            editTextPostalCode.setBackgroundColor(Color.rgb(255, 255, 255));
+        } catch (NumberFormatException e) {
+            editTextPostalCode.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
             numberError++;
         }
 
 
-        final String size = this.spinnerSize.getSelectedItem().toString();
-        final String shoeSize = this.spinnerShoeSize.getSelectedItem().toString();
-        final String favoriteColor = this.spinnerFavoriteColor.getSelectedItem().toString();
-        final String day = this.spinnerDay.getSelectedItem().toString();
-        final String month = this.spinnerMonth.getSelectedItem().toString();
-        final String year = this.spinnerYear.getSelectedItem().toString();
+        String size = spinnerSize.getSelectedItem().toString();
+        String shoeSize = spinnerShoeSize.getSelectedItem().toString();
+        String favoriteColor = spinnerFavoriteColor.getSelectedItem().toString();
+        String day = spinnerDay.getSelectedItem().toString();
+        String month = spinnerMonth.getSelectedItem().toString();
+        String year = spinnerYear.getSelectedItem().toString();
 
         //Check if any required missing
-        if (!this.checkStringIsCorrect(firstName)) {
-            this.editTextFirstName.setBackgroundColor(this.getResources().getColor(R.color.wrongInformation));
+        if (!checkStringIsCorrect(firstName)) {
+            editTextFirstName.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
             numberError++;
         } else {
-            this.editTextFirstName.setBackgroundColor(this.getResources().getColor(R.color.design_default_color_background));
+            editTextFirstName.setBackgroundColor(getResources().getColor(R.color.design_default_color_background));
         }
-        if (!this.checkStringIsCorrect(lastName)) {
-            this.editTextLastName.setBackgroundColor(this.getResources().getColor(R.color.wrongInformation));
+        if (!checkStringIsCorrect(lastName)) {
+            editTextLastName.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
             numberError++;
         } else {
-            this.editTextLastName.setBackgroundColor(this.getResources().getColor(R.color.design_default_color_background));
+            editTextLastName.setBackgroundColor(getResources().getColor(R.color.design_default_color_background));
         }
-        if (!this.checkStringIsCorrect(addressLine1)) {
-            this.editTextAddressLine1.setBackgroundColor(this.getResources().getColor(R.color.wrongInformation));
+        if (!checkStringIsCorrect(addressLine1)) {
+            editTextAddressLine1.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
             numberError++;
         } else {
-            this.editTextAddressLine1.setBackgroundColor(this.getResources().getColor(R.color.design_default_color_background));
+            editTextAddressLine1.setBackgroundColor(getResources().getColor(R.color.design_default_color_background));
         }
-        if (!this.checkStringIsCorrect(city)) {
-            this.editTextCity.setBackgroundColor(this.getResources().getColor(R.color.wrongInformation));
+        if (!checkStringIsCorrect(city)) {
+            editTextCity.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
             numberError++;
         } else {
-            this.editTextCity.setBackgroundColor(this.getResources().getColor(R.color.design_default_color_background));
+            editTextCity.setBackgroundColor(getResources().getColor(R.color.design_default_color_background));
         }
-        if (!this.checkStringIsCorrect(country)) {
-            this.editTextCountry.setBackgroundColor(this.getResources().getColor(R.color.wrongInformation));
+        if (!checkStringIsCorrect(country)) {
+            editTextCountry.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
             numberError++;
         } else {
-            this.editTextCountry.setBackgroundColor(this.getResources().getColor(R.color.design_default_color_background));
+            editTextCountry.setBackgroundColor(getResources().getColor(R.color.design_default_color_background));
         }
 
         //Check the birthDate
         int yearInt=-1;
         int dayInt=-1;
-        this.actualBirthDate.setTextColor(this.getResources().getColor(R.color.wrongInformation));
+        actualBirthDate.setTextColor(getResources().getColor(R.color.wrongInformation));
 
         if (year.equals("Year") || day.equals("Day") || month.equals("Month")) {
-            this.actualBirthDate.setText(this.getResources().getText(R.string.wrongDate));
+            actualBirthDate.setText(getResources().getText(R.string.wrongDate));
             numberError++;
         } else {
             yearInt = Integer.parseInt(year);
             dayInt = Integer.parseInt(day);
-            if (!this.checkDate(dayInt, month, yearInt)) {
-                this.actualBirthDate.setText(this.getResources().getText(R.string.wrongDate));
+            if (!checkDate(dayInt, month, yearInt)) {
+                actualBirthDate.setText(getResources().getText(R.string.wrongDate));
                 numberError++;
             } else {
-                this.actualBirthDate.setText("");
+                actualBirthDate.setText("");
             }
         }
 
         if (numberError == 0) {
             //Create an Address
-            final Address userAddress=new Address(addressLine1,city,country,postalCode);
-            if(this.checkStringIsCorrect(addressLine2)) userAddress.setAddressLine2(addressLine2);
+            Address userAddress=new Address(addressLine1,city,country,postalCode);
+            if(checkStringIsCorrect(addressLine2)) userAddress.setAddressLine2(addressLine2);
             //create an User
-            final DateWish birthdate=new DateWish();
+            DateWish birthdate=new DateWish();
             birthdate.setDate(dayInt,month,yearInt);
-            this.user.setAddress(userAddress);
-            this.user.setFirstName(firstName);
-            this.user.setLastName(lastName);
-            this.user.setBirthDate(birthdate);
-            this.user.setFavoriteColor(favoriteColor);
-            this.user.setSize(size);
-            this.user.setShoeSize(shoeSize);
+            user.setAddress(userAddress);
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setBirthDate(birthdate);
+            user.setFavoriteColor(favoriteColor);
+            user.setSize(size);
+            user.setShoeSize(shoeSize);
 
-            final UserDatabaseHelper dbHelper= new UserDatabaseHelper(this.getApplicationContext());
-            if(dbHelper.updateUser(this.user, this.userID)){
-                if(this.userID ==-1){
-                    final Toast toast=Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT);
+            UserDatabaseHelper dbHelper= new UserDatabaseHelper(getApplicationContext());
+            if(dbHelper.updateUser(user, userID)){
+                if(userID ==-1){
+                    Toast toast=Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT);
                     toast.show();
                 }else{
-                    final Toast toast=Toast.makeText(this,"Account updated",Toast.LENGTH_SHORT);
+                    Toast toast=Toast.makeText(this,"Account updated",Toast.LENGTH_SHORT);
                     toast.show();
-                    this.visibleMode();
+                    visibleMode();
                 }
             }else {
-                final Toast toast=Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT);
+                Toast toast=Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT);
                 toast.show();
             }
         } else {
-            final Toast toast=Toast.makeText(this,"The information with a * are required",Toast.LENGTH_LONG);
+            Toast toast=Toast.makeText(this,"The information with a * are required",Toast.LENGTH_LONG);
             toast.show();
         }
     }
@@ -526,32 +526,32 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
      */
     @TargetApi(21)
     @Override
-    public void getBitmapImage(final Bitmap bitmap) {
+    public void getBitmapImage(Bitmap bitmap) {
         if(bitmap==null){
-            this.profilePhoto.setImageDrawable(this.getDrawable(R.drawable.ic_default_photo));
+            profilePhoto.setImageDrawable(getDrawable(R.drawable.ic_default_photo));
         }
         else {
-            this.profilePhoto.setImageBitmap(bitmap);
-            this.image =bitmap;
-            this.user.setProfilePhoto(this.image);
+            profilePhoto.setImageBitmap(bitmap);
+            image =bitmap;
+            user.setProfilePhoto(image);
         }
     }
     @TargetApi(21)
     @Override
-    public void setUriImage(final Uri uri) {
+    public void setUriImage(Uri uri) {
         if(uri!=null){
-            this.profilePhoto.setImageURI(uri);
+            profilePhoto.setImageURI(uri);
             try{
-                this.image = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                this.user.setProfilePhoto(this.image);
+                image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                user.setProfilePhoto(image);
             }
-            catch (final Exception e){
-                final Toast toast=Toast.makeText(this,"something went wrong with the image",Toast.LENGTH_SHORT);
+            catch (Exception e){
+                Toast toast=Toast.makeText(this,"something went wrong with the image",Toast.LENGTH_SHORT);
                 toast.show();
             }
         }
         else{
-            this.profilePhoto.setImageDrawable(this.getDrawable(R.drawable.ic_default_photo));
+            profilePhoto.setImageDrawable(getDrawable(R.drawable.ic_default_photo));
         }
     }
     

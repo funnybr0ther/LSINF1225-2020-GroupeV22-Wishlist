@@ -8,51 +8,51 @@ public class Wishlist {
     private int wishlistID;
 
 
-    public Wishlist(final String name, final int size, final int userID, final int[] products, final int wishlistID ){
+    public Wishlist(String name, int size, int userID, int[] products, int wishlistID ){
         this.name = name;
         this.size = size;
         this.userID = userID;
-        productsReferences = products;
+        this.productsReferences = products;
         this.wishlistID = wishlistID;
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
-    public void setName(final String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
     public int getWishlistID() {
-        return this.wishlistID;
+        return wishlistID;
     }
 
-    public void setWishlistID(final int wishlistID) {
+    public void setWishlistID(int wishlistID) {
         this.wishlistID = wishlistID;
     }
 
     public int getSize() {
-        return this.size;
+        return size;
     }
 
-    public void setSize(final int size) {
+    public void setSize(int size) {
         this.size = size;
     }
 
     public int getUserID() {
-        return this.userID;
+        return userID;
     }
 
-    public void setUserID(final int userID) {
+    public void setUserID(int userID) {
         this.userID = userID;
     }
 
     public int[] getProductsReferences() {
-        return this.productsReferences;
+        return productsReferences;
     }
 
-    public void setProductsReferences(final int[] productsReferences) {
+    public void setProductsReferences(int[] productsReferences) {
         this.productsReferences = productsReferences;
     }
 }

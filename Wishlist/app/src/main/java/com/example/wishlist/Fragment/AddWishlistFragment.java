@@ -27,24 +27,24 @@ public class AddWishlistFragment extends DialogFragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
-        final View rootView = inflater.inflate( R.layout.fragment_add_wishlist, container, false);
-        this.userID = this.getArguments().getInt("userID");
-        this.txtName = rootView.findViewById(R.id.nameCreateWishlist);
-        this.btnCreate = rootView.findViewById(R.id.buttonCreateWishlist);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View rootView = inflater.inflate( R.layout.fragment_add_wishlist, container, false);
+        userID = getArguments().getInt("userID");
+        txtName = rootView.findViewById(R.id.nameCreateWishlist);
+        btnCreate = rootView.findViewById(R.id.buttonCreateWishlist);
 
-        this.btnCreate.setOnClickListener(new View.OnClickListener() {
+        btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(final View v) {
-                final String listName = AddWishlistFragment.this.txtName.getText().toString();
+            public void onClick(View v) {
+                String listName = txtName.getText().toString();
                 if(listName.matches("")) {
-                    final Toast toast = Toast.makeText(AddWishlistFragment.this.getContext(), "Wrong name", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getContext(), "Wrong name", Toast.LENGTH_SHORT);
                     toast.show();
                 }else if(!listName.matches("")) {
-                    final WishlistDatabaseHelper db = new WishlistDatabaseHelper(AddWishlistFragment.this.getActivity().getApplicationContext());
-                    final int userID = AddWishlistFragment.this.getArguments().getInt("userID");
+                    WishlistDatabaseHelper db = new WishlistDatabaseHelper(getActivity().getApplicationContext());
+                    int userID = getArguments().getInt("userID");
                     db.addWishlist(listName, userID);
-                    final Toast toast=Toast.makeText(AddWishlistFragment.this.getContext(),"Wishlist " + listName + " created !",Toast.LENGTH_SHORT);
+                    Toast toast=Toast.makeText(getContext(),"Wishlist " + listName + " created !",Toast.LENGTH_SHORT);
                     toast.show();
                 }
                 /*
@@ -54,9 +54,9 @@ public class AddWishlistFragment extends DialogFragment {
                 startActivity(intent);
             */
                 // A suprimer si le code en dessous fonctionne
-                final ListWishlistActivity callingActivity = (ListWishlistActivity) AddWishlistFragment.this.getActivity();
+                ListWishlistActivity callingActivity = (ListWishlistActivity) getActivity();
                 callingActivity.fragmentReturn();
-                AddWishlistFragment.this.dismiss();
+                dismiss();
             }
         });
         return rootView;

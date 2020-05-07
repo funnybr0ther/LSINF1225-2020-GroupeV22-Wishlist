@@ -5,8 +5,6 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import com.example.wishlist.Class.Address;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
@@ -26,30 +24,30 @@ public class User {
     private int userID;
 
     public boolean isNotification() {
-        return this.notification;
+        return notification;
     }
 
-    public void setUserID(final int userID) {
+    public void setUserID(int userID) {
         this.userID = userID;
     }
 
     public int getUserID() {
-        return this.userID;
+        return userID;
     }
 
-    public void setNotification(final boolean notification) {
+    public void setNotification(boolean notification) {
         this.notification = notification;
     }
 
     public Bitmap getProfilePhoto() {
-        return this.profilePhoto;
+        return profilePhoto;
     }
 
-    public void setProfilePhoto(final Bitmap profilePhoto) {
+    public void setProfilePhoto(Bitmap profilePhoto) {
         this.profilePhoto = profilePhoto;
     }
 
-    public User(final Address address, final String firstName, final String lastName, final String email, final DateWish birthDate, final String password, final Bitmap profilePhoto, final String favoriteColor, final String size, final String shoeSize) {
+    public User(Address address, String firstName, String lastName, String email, DateWish birthDate, String password, Bitmap profilePhoto, String favoriteColor, String size, String shoeSize) {
         this.address = address;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -62,7 +60,7 @@ public class User {
         this.shoeSize = shoeSize;
     }
 
-    public User(final Address address, final String firstName, final String lastName, final String email, final DateWish birthDate, final String password) {
+    public User(Address address, String firstName, String lastName, String email, DateWish birthDate, String password) {
         this.address = address;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -72,18 +70,18 @@ public class User {
     }
 
     public String getPassword() {
-        return this.password;
+        return password;
     }
 
-    public void setPassword(final String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
     public String getShoeSize() {
-        return this.shoeSize;
+        return shoeSize;
     }
 
-    public void setShoeSize(final String shoeSize) {
+    public void setShoeSize(String shoeSize) {
         this.shoeSize = shoeSize;
     }
 
@@ -92,73 +90,73 @@ public class User {
     }
 
     public Address getAddress() {
-        return this.address;
+        return address;
     }
 
-    public void setAddress(final Address address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 
     public String getFirstName() {
-        return this.firstName;
+        return firstName;
     }
 
-    public void setFirstName(final String firstName) {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
     public String getLastName() {
-        return this.lastName;
+        return lastName;
     }
 
-    public void setLastName(final String lastName) {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
     public String getEmail() {
-        return this.email;
+        return email;
     }
 
-    public void setEmail(final String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
     public DateWish getBirthDate() {
-        return this.birthDate;
+        return birthDate;
     }
 
-    public void setBirthDate(final DateWish birthDate) {
+    public void setBirthDate(DateWish birthDate) {
         this.birthDate = birthDate;
     }
 
     public String getFavoriteColor() {
-        return this.favoriteColor;
+        return favoriteColor;
     }
 
-    public void setFavoriteColor(final String favoriteColor) {
+    public void setFavoriteColor(String favoriteColor) {
         this.favoriteColor = favoriteColor;
     }
 
     public String getSize() {
-        return this.size;
+        return size;
     }
 
-    public void setSize(final String size) {
+    public void setSize(String size) {
         this.size = size;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
-    public boolean equals(final Object o) {
+    public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || this.getClass() != o.getClass()) return false;
-        final User user = (User) o;
-        return this.userID ==user.getUserID();
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return userID ==user.getUserID();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public int hashCode() {
-        return Objects.hash(this.address, this.firstName, this.lastName, this.email, this.birthDate, this.password, this.profilePhoto, this.notification, this.favoriteColor, this.size, this.shoeSize, this.userID);
+        return Objects.hash(address, firstName, lastName, email, birthDate, password, profilePhoto, notification, favoriteColor, size, shoeSize, userID);
     }
 }

@@ -23,27 +23,27 @@ public class CreateNewAccountActivity extends AppCompatActivity {
 
     @Override
     @TargetApi(26)
-    protected void onCreate(final Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.create_new_account_v2);
+        setContentView(R.layout.create_new_account_v2);
         //Set different view/Edit
-        this.editTextMail = this.findViewById(R.id.newmail);
-        this.editTextPassword = this.findViewById(R.id.newPswrd);
-        this.editTextConfPswrd = this.findViewById(R.id.confirmPswrd);
-        this.textViewPassword = this.findViewById(R.id.wrongPassword);
-        this.textViewEmail = this.findViewById(R.id.wrongEmail);
-        this.textViewConfPassword = this.findViewById(R.id.wrongConfirmPassword);
+        editTextMail = findViewById(R.id.newmail);
+        editTextPassword = findViewById(R.id.newPswrd);
+        editTextConfPswrd = findViewById(R.id.confirmPswrd);
+        textViewPassword = findViewById(R.id.wrongPassword);
+        textViewEmail = findViewById(R.id.wrongEmail);
+        textViewConfPassword = findViewById(R.id.wrongConfirmPassword);
 
         //Je sais pas ce que c'est autofill mais ça à l'air stylé -> à voir plus tard
-        this.editTextMail.setAutofillHints(View.AUTOFILL_HINT_EMAIL_ADDRESS);
+        editTextMail.setAutofillHints(View.AUTOFILL_HINT_EMAIL_ADDRESS);
     }
 
-    public void onBackPressed(final View view) {
-        this.onBackPressed();
+    public void onBackPressed(View view) {
+        onBackPressed();
     }
 
-    public boolean containsNumber(final String string){
-        for (final char c:string.toCharArray()){
+    public boolean containsNumber(String string){
+        for (char c:string.toCharArray()){
             if(Character.isDigit(c))return true;
         }
         return false;
@@ -56,21 +56,21 @@ public class CreateNewAccountActivity extends AppCompatActivity {
     * contains at least a number (digit ???)
     * Show some text or not depending of that
      */
-    public boolean checkPassword(final String password){
+    public boolean checkPassword(String password){
         if (password.length()<5){
-            this.textViewPassword.setText("Your password must contain at least 5 characters");
+            textViewPassword.setText("Your password must contain at least 5 characters");
             return false;
         }
         if(password.equals(password.toLowerCase())){
-            this.textViewPassword.setText("Your password must contain at least 1 uppercase letter");
+            textViewPassword.setText("Your password must contain at least 1 uppercase letter");
             return false;
         }
-        final boolean containsNumber= this.containsNumber(password);
+        boolean containsNumber= containsNumber(password);
         if (!containsNumber){
-            this.textViewPassword.setText("Your password must contain at least 1 number");//comment on dit chiffre?
+            textViewPassword.setText("Your password must contain at least 1 number");//comment on dit chiffre?
             return false;
         }
-        this.textViewPassword.setText("");
+        textViewPassword.setText("");
         return true;
     }
 
@@ -78,18 +78,18 @@ public class CreateNewAccountActivity extends AppCompatActivity {
     *Check if email is at least 5 char long and contains an @
     * Show some text or not depending of that
     */
-    public boolean checkEmail(final String email){
-        final UserDatabaseHelper dbHelper= new UserDatabaseHelper(this.getApplicationContext());
+    public boolean checkEmail(String email){
+        UserDatabaseHelper dbHelper= new UserDatabaseHelper(getApplicationContext());
         if(!email.contains("@")||email.length()<5){
-            this.textViewEmail.setText("Please insert a correct email");
+            textViewEmail.setText("Please insert a correct email");
             return false;
         }
         else if(!dbHelper.checkMail(email)){
-            this.textViewEmail.setText("This email is already used");
+            textViewEmail.setText("This email is already used");
             return false;
         }
         else {
-            this.textViewEmail.setText("");
+            textViewEmail.setText("");
             return true;
         }
     }
@@ -99,19 +99,19 @@ public class CreateNewAccountActivity extends AppCompatActivity {
     * Access to CreateProfile to finish registration if nothing goes wrong
     * Do nothing in the other case (just show some text to help the user)
      */
-    public void checkSignInInfo(final View view){
-        final String mail= this.editTextMail.getText().toString();
-        final String password= this.editTextPassword.getText().toString();
-        final String confirmPassword= this.editTextConfPswrd.getText().toString();
-        if(this.checkEmail(mail)& this.checkPassword(password)){
+    public void checkSignInInfo(View view){
+        String mail= editTextMail.getText().toString();
+        String password= editTextPassword.getText().toString();
+        String confirmPassword= editTextConfPswrd.getText().toString();
+        if(checkEmail(mail)& checkPassword(password)){
             if(password.equals(confirmPassword)){
-                final Intent intent =new Intent(this,CreateProfileActivity.class);
+                Intent intent =new Intent(this,CreateProfileActivity.class);
                 intent.putExtra("mail",mail);
                 intent.putExtra("password",password);
-                this.startActivity(intent);
+                startActivity(intent);
             }
             else{
-                this.textViewConfPassword.setText("You don't write the same password");
+                textViewConfPassword.setText("You don't write the same password");
             }
         }
     }
