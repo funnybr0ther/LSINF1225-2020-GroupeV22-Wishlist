@@ -135,7 +135,7 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         return new Product(name,picture,description,categories,weight,price,desire,dimensions, amount,purchased);
     }
 
-    public boolean updateProduct(Product product, long productID){
+    public boolean updateProduct(Product product, int productID){
         /**
          * Updates the columns of the first line matching productID with the fields of
          * Product product. Return true if the operation succeeded, false otherwise.
@@ -154,6 +154,13 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(PRODUCT_COL10,product.getPurchased());
         int err=db.update(PRODUCT_TABLE_NAME,contentValues,PRODUCT_COL0+" = ?",new String[]{String.valueOf(productID)});
         return err!=-1;
+    }
+
+    public void deleteProduct(int productID, Context context){
+        SQLiteDatabase db = getWritableDatabase();
+        WishlistDatabaseHelper wdb = new WishlistDatabaseHelper(context);
+        String sqlCommand = "DELETE FROM " + PRODUCT_TABLE_NAME + " WHERE " + PRODUCT_COL0+ "=" + productID;
+        db.execSQL(sqlCommand);
     }
     /*
         Conversion of String[] to String using a comma "," as a separator

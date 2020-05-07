@@ -1,44 +1,48 @@
 package com.example.wishlist.Activities;
-
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
-import com.example.wishlist.Class.DateWish;
-import com.example.wishlist.Class.Product;
+import com.example.wishlist.Adapters.PurchaseAdapter;
 import com.example.wishlist.Class.Purchase;
-import com.example.wishlist.Class.PurchaseList;
+import com.example.wishlist.Class.PurchaseDatabaseHelper;
 import com.example.wishlist.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
-public class PurchaseViewActivity extends Fragment {
-    private static final String TAG = "PurchaseViewActivity";
-    private PurchaseList adapter;
-    private ListView purchaselistt;
+public class PurchaseViewActivity extends AppCompatActivity {
+    private static final String TAG = "MainHistoriqueActivity";
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_viewhistorique,container,false);
-        return view;
-    }
+    protected void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_viewhistorique);
+        Log.d(TAG, "onCreate: started.");
+        ListView listViewPurchases=findViewById(R.id.HistoriqueItems);
+        SharedPreferences prefs = this.getSharedPreferences(
+                "com.example.app", Context.MODE_PRIVATE);
+        int userID=prefs.getInt("userID",-1);
 
-    private void SetUpPurchaselist(){
-        final ArrayList<Purchase> purhcases = new ArrayList<>();
-        purhcases.add(new Purchase(7,9,new DateWish(27,"april",2020),5,new Product()));
-        purhcases.add(new Purchase(7,9,new DateWish(27,"april",2020),5,new Product()));
-        purhcases.add(new Purchase(7,9,new DateWish(27,"april",2020),5,new Product()));
-        purhcases.add(new Purchase(7,9,new DateWish(27,"april",2020),5,new Product()));
-        adapter = new PurchaseList(getActivity(),R.layout.historique_liste,purhcases,"");
-        purchaselistt.setAdapter(adapter);
-
+        PurchaseDatabaseHelper dbHelper=new PurchaseDatabaseHelper(getApplicationContext());
+        ArrayList<Purchase> list=dbHelper.getUserHistory(userID);   // Historique quand user = bénéficiaire
+        ArrayList<Purchase> list2 = dbHelper.getAllPurchases(userID);   // Historique quand user = acheteur
+        list.addAll(list2);
+        Comparator<Purchase> byDateNewestFirst=new Comparator<Purchase>() {
+            @Override
+            public int compare(Purchase o1, Purchase o2) {
+                return o2.getDate().compareTo(o1.getDate());
+            }
+        };
+        Collections.sort(list,byDateNewestFirst);
+        listViewPurchases.setAdapter(new PurchaseAdapter(this,list));
     }
 }
