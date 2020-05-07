@@ -93,7 +93,8 @@ public class MainMenuActivity extends AppCompatActivity {
 
     public void goToFriendWishlist(View view){
         Intent intent = new Intent(this,ListWishlistActivity.class);
-        intent.putExtra("userID",userID);
+        intent.putExtra("userID",userID); //id de celui a qui appartient les wishlist
+        intent.putExtra("visiterID",422); //id de celui qui consulte les wishlist de ses amis
         intent.putExtra("isMyWishlist",false);
         startActivity(intent);
     }

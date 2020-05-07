@@ -32,6 +32,7 @@ public class DetailWishlistActivity extends AppCompatActivity {
     WishlistDatabaseHelper dbWishlist;
     ArrayList<Product> products;
     private boolean isMyWishlist;
+    private int visiterID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,17 +61,22 @@ public class DetailWishlistActivity extends AppCompatActivity {
            TextView title = findViewById(R.id.wishlistToolbarTitle);
            title.setText(wishlistName);
         }
-        if (intent.hasExtra("isMyWishlist")){
-            isMyWishlist = intent.getBooleanExtra("isMyWishlist",false);
-            if(!isMyWishlist){
-                View addProductBtn = findViewById(R.id.addProductBtn);
-                ((ViewGroup) addProductBtn.getParent()).removeView(addProductBtn);
-                View changeName = findViewById(R.id.changeNameButton);
-                ((ViewGroup) changeName.getParent()).removeView(changeName);
+        if (intent.hasExtra("visiterID")){
+            visiterID = intent.getIntExtra("visiterID",-1);
+            if(userID != visiterID){
+                isMyWishlist = false;
             }
         }
+        if (intent.hasExtra("isMyWishlist")){
+            isMyWishlist = intent.getBooleanExtra("isMyWishlist",false);
+        }
 
-
+        if(!isMyWishlist){
+            View addProductBtn = findViewById(R.id.addProductBtn);
+            ((ViewGroup) addProductBtn.getParent()).removeView(addProductBtn);
+            View changeName = findViewById(R.id.changeNameButton);
+            ((ViewGroup) changeName.getParent()).removeView(changeName);
+        }
 
         //Va chercher dans la BDD les product d'une wishlist grace a sa wishlistID
         ListView wishlistListView = findViewById(R.id.wishlist_DetailView);
