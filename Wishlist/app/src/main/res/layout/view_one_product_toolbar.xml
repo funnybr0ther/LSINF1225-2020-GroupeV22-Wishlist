@@ -26,6 +26,21 @@
             app:srcCompat="@drawable/ic_add_button"
             android:onClick="switchToAdd"/>
 
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buyProduct"
+            android:layout_toLeftOf="@id/copyProduct"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="20dp"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            android:background="@color/colorPrimary"
+            app:srcCompat="@drawable/ic_buyproduct"
+            android:onClick="onBuyPressed">
+        </ImageButton>
+
         <TextView
             android:id="@+id/productToolbarTitle"
             android:layout_width="wrap_content"

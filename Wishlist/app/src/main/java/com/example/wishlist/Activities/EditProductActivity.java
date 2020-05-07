@@ -46,9 +46,9 @@ public class EditProductActivity extends AppCompatActivity {
     Resources resources;
 
     private ProductDatabaseHelper productDatabaseHelper;
-    private ImageButton saveProduct;
     private CircleImageView productImage;
     private ImageView newImage;
+    private ImageView deleteImage;
     private EditText nameField;
     private EditText descriptionField;
     private ChipGroup categoriesField;
@@ -112,7 +112,6 @@ public class EditProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         resources = getResources();
         setContentView(R.layout.edit_product);
-        saveProduct = findViewById(R.id.validateEditProduct);
         productImage = findViewById(R.id.productEditPhoto);
         newImage = findViewById(R.id.logoCamera);
         nameField = findViewById(R.id.newNameEdit);
@@ -127,6 +126,7 @@ public class EditProductActivity extends AppCompatActivity {
         amountPurchasedField = findViewById(R.id.newReceived);
         amountTotalField = findViewById(R.id.newTotal);
         categoriesList = resources.getStringArray(R.array.categories);
+        deleteImage = findViewById(R.id.deleteImage);
         newImage.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -137,6 +137,14 @@ public class EditProductActivity extends AppCompatActivity {
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
                 startActivityForResult(i, RESULT_LOAD_IMAGE);
+            }
+        });
+        deleteImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if ((BitmapDrawable) productImage.getDrawable() != null){
+                    productImage.setImageBitmap(null);
+                }
             }
         });
         Intent intent = getIntent();
@@ -217,6 +225,7 @@ public class EditProductActivity extends AppCompatActivity {
         if(imageBitmapDrawable != null){
             newImage = (imageBitmapDrawable).getBitmap();
         }
+
         if(!error) {
 
             product = new Product(newName, newImage, newDescription, newCategories, newWeight, newPrice, newDesire, newDimensions, newTotal, newPurchased);
@@ -258,9 +267,11 @@ public class EditProductActivity extends AppCompatActivity {
         amountTotalField.setText(String.valueOf(total));
 
         String[] dimensionsArray = ProductDatabaseHelper.convertStringToArray(dimensions);
-        dimensionsXField.setText(dimensionsArray[0]);
-        dimensionsYField.setText(dimensionsArray[1]);
-        dimensionsZField.setText(dimensionsArray[2]);
+        if(!dimensionsArray[0].equals("null")){
+            dimensionsXField.setText(dimensionsArray[0]);
+            dimensionsYField.setText(dimensionsArray[1]);
+            dimensionsZField.setText(dimensionsArray[2]);
+        }
         if(weight!=0){
             weightField.setText(String.valueOf(weight));
         }
