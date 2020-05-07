@@ -63,6 +63,13 @@ public class ViewProductActivity extends AppCompatActivity {
     ProductDatabaseHelper productDatabaseHelper;
     PurchaseDatabaseHelper purchaseDatabaseHelper;
     WishlistDatabaseHelper wishlistDatabaseHelper;
+
+    /**
+     * Reads given intents to determine the product to be displayed, its owner and the current user
+     * of the app. The toolbar is adapted so that the current user can either copy and offer
+     * someone else's product, or edit and delete their own product.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         productDatabaseHelper = new ProductDatabaseHelper(getApplicationContext());
@@ -121,6 +128,11 @@ public class ViewProductActivity extends AppCompatActivity {
         displayProductInfo(productDatabaseHelper.getProductFromID(this.productID));
     }
 
+    /**
+     * Displays the given product's informations in the right fields, dynamically adjusts visibility
+     * of set fields if their contents are null.
+     * @param product
+     */
     public void displayProductInfo(Product product){
         Log.d(TAG, "displayProductInfo: bilibu updated");
         String descriptionString = product.getDescription();
@@ -190,12 +202,21 @@ public class ViewProductActivity extends AppCompatActivity {
         amountBought.setText("Amount Bought : " + purchased + " / " + amount);
     }
 
+    /**
+     * Starts the EditProductActivity to allow edition of the currently viewed product
+     * @param pID the product to be edited
+     */
     void switchToEdit(int pID){
         Intent intent=new Intent(this, EditProductActivity.class);
         intent.putExtra("productID",pID);
         startActivityForResult(intent,1);
     }
 
+    /**
+     * Starts the EditProductActivity to allow edition of currently viewed product, and then
+     * allows addition of that newly edited product to one of the user's wishlists.
+     * @param pID
+     */
     void switchToAdd(int pID){
         Log.d(TAG, "switchToAdd: pID is" + pID);
         Intent intent = new Intent(this,EditProductActivity.class);
@@ -203,12 +224,23 @@ public class ViewProductActivity extends AppCompatActivity {
         intent.putExtra("copyProduct",true);
         startActivityForResult(intent,2);
     }
+
+    /**
+     * Ends the activity if the back button is pressed.
+     * @param view
+     */
     public void onBackPressed(View view) {
         final Intent returnIntent = new Intent();
         setResult(RESULT_OK,returnIntent);
         finish();
     }
 
+    /**
+     * Launches when the buy button is pressed in the toolbar. Asks the user how many products they
+     * want to buy, based on how many were already offered by other users and the total amount the
+     * owner of the product asked for.
+     * @param view
+     */
     public void onBuyPressed(View view){
         final Product buyProduct = productDatabaseHelper.getProductFromID(productID);
         RelativeLayout linearLayout = new RelativeLayout(this);
@@ -234,7 +266,7 @@ public class ViewProductActivity extends AppCompatActivity {
         alertDialogBuilder.setView(linearLayout);
         alertDialogBuilder
                 .setCancelable(false)
-                .setPositiveButton("Ok",
+                .setPositiveButton("OK",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,
                                                 int id) {
@@ -252,6 +284,13 @@ public class ViewProductActivity extends AppCompatActivity {
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
+
+    /**
+     * Is called when the user presses "OK" on the dialog box when offering a product.
+     * Accesses the database and updates the product view
+     * @param amount the amount of products that were purchased
+     * @param buyProduct the currently edited product, used to modify the item in the database
+     */
     void buyAmount(int amount,Product buyProduct){
         if(amount==0){
             return;
@@ -267,6 +306,10 @@ public class ViewProductActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Is called when the user presses the "delete" button in the toolbar. Removes the instances of
+     * the product from its wishlist but not from the product database (kept for purchase history)
+     */
     void deleteProduct(){
         wishlistDatabaseHelper = new WishlistDatabaseHelper(this);
         wishlistDatabaseHelper.deleteProductInAllWishlist(productID);
@@ -275,6 +318,12 @@ public class ViewProductActivity extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * Used when returning from EditProductActivity after editing a product
+     * @param requestCode = 1 or 2, depending on the reason the activity was called
+     * @param resultCode = RESULT_OK if the product was indeed edited (and not canceled)
+     * @param data intent for transferring data from activity to activity
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -330,7 +379,13 @@ public class ViewProductActivity extends AppCompatActivity {
             }
         }
 
-    }//onActivityResult
+    }
+
+    /**
+     * Called from the dialog box that asks to choose a wishlist to copy the product to.
+     * @param chosenWishlistID the ID of the selected wishlist.
+     * @param productID the ID of the current product that shall be copied to the wishlist.
+     */
     void confirmSelectList(int chosenWishlistID, int productID){
         if(chosenWishlistID==-1){
             Log.d(TAG, "onActivityResult: chosenWishlist null");

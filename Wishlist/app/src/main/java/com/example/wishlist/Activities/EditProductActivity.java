@@ -72,10 +72,12 @@ public class EditProductActivity extends AppCompatActivity {
     private static int RESULT_LOAD_IMAGE = 1;
     private ArrayList<String> checkedCategories;
 
+    /**
+     * Asks the user if they want to save their changes/their product
+     * @param view
+     */
     public void onBackPressed(View view) {
-        /**
-         * Asks the user if they want to save their changes/their product
-         */
+
         final Intent returnIntent = new Intent();
         final DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
@@ -97,11 +99,15 @@ public class EditProductActivity extends AppCompatActivity {
                 .setNegativeButton("No", dialogClickListener).setNeutralButton("Save",dialogClickListener).show();
     }
 
+    /**
+     * Sets the image chosen by the user in their own files in the productImage viewer
+     * @param requestCode, identifies the request type that the activity result comes from
+     * @param resultCode should be RESULT_OK if the image was successfully chosen
+     * @param data image URI container
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        /**
-         * Result of
-         */
+
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
             Uri selectedImage = data.getData();
@@ -120,6 +126,10 @@ public class EditProductActivity extends AppCompatActivity {
 
     }
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -172,34 +182,10 @@ public class EditProductActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Launches file explorer to choose a fitting image for the product
+     */
     public void askPicture(){
-
-        // Here, thisActivity is the current activity
-        if (ContextCompat.checkSelfPermission(getApplicationContext(),
-                Manifest.permission.READ_CONTACTS)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            // Permission is not granted
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.READ_CONTACTS)) {
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-            } else {
-                // No explanation needed; request the permission
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.READ_CONTACTS},
-                        1);
-
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
-            }
-        } else {
-            // Permission has already been granted
-        }
-
         Intent i = new Intent(
                 Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -207,6 +193,11 @@ public class EditProductActivity extends AppCompatActivity {
         startActivityForResult(i, RESULT_LOAD_IMAGE);
     }
 
+    /**
+     * Reads the different fields, checks whether they are valid, and writes/updates the product
+     * in the database
+     * @param view
+     */
     public void saveProduct(View view){
         boolean error = false;
         String newName = null;
@@ -287,6 +278,10 @@ public class EditProductActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Reads the informations product and displays them in the corresponding fields
+     * @param product non-null: the product whose information should be displayed
+     */
     public void editProduct(Product product) {
         String productName = product.getName();
         Bitmap image = product.getPhoto();
@@ -320,6 +315,13 @@ public class EditProductActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Adds the Strings in categories to the categoriesField chip group for categories,
+     * checks the ones of the currently displayed product. When a chip is checked, it automatically
+     * adds its string to the checkedCategories ArrayList, which is then read when writing to the
+     * database.
+     * @param categories
+     */
     public void editCategories(String[] categories){
         checkedCategories = new ArrayList<String>(Arrays.asList(categories));
         for (String s : categoriesList) {
