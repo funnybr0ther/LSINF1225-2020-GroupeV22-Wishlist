@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.wishlist.Activities.DetailWishlistActivity;
 import com.example.wishlist.Activities.EditProductActivity;
+import com.example.wishlist.Activities.ViewProductActivity;
 import com.example.wishlist.Class.Product;
 import com.example.wishlist.Class.Wishlist;
 import com.example.wishlist.R;
@@ -44,8 +45,8 @@ public class ProductAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View view, ViewGroup parent) {
-        view = inflater.inflate(R.layout.adapter_wishlist, null);
+    public View getView(final int position, View view, ViewGroup parent) {
+        view = inflater.inflate(R.layout.adapter_product, null);
         final Product product = getItem(position);
         String name = product.getName();
         TextView itemNameView = view.findViewById(R.id.productItem_name);
@@ -54,8 +55,8 @@ public class ProductAdapter extends BaseAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent goTCreateProductl = new Intent(context, EditProductActivity.class);
-                context.startActivity(goTCreateProductl);
+                DetailWishlistActivity detail = (DetailWishlistActivity) context;
+                detail.productDetail(position);    //modifier pour wishlist externe
             }
         });
 

@@ -51,23 +51,11 @@
         android:textSize="40sp"
         android:onClick="MyProfile"/>
     <Button
-        android:id="@+id/ExampleProduct"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Ex. Product"
-        android:layout_below="@id/MyProfile"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:textSize="40sp"
-        android:onClick="exampleProduct">
-    </Button>
-    <Button
         android:id="@+id/viewWishlist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Wishlist"
-        android:layout_below="@id/ExampleProduct"
+        android:layout_below="@id/MyProfile"
         android:layout_marginTop="50dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
@@ -99,22 +87,10 @@
         android:onClick="viewHistory">
     </Button>
     <Button
-        android:id="@+id/addProduct"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Create Product"
-        android:layout_below="@id/viewHistory"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:textSize="40sp"
-        android:onClick="addProduct">
-    </Button>
-    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Follow List"
-        android:layout_below="@id/addProduct"
+        android:layout_below="@id/viewHistory"
         android:id="@+id/viewFollowList"
         android:layout_marginTop="50dp"
         android:layout_marginLeft="50dp"
@@ -132,6 +108,16 @@
         android:layout_marginRight="50dp"
         android:textSize="40sp"
         android:onClick="viewAllUsers">
+    </Button>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Friend wishlist"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:textSize="40sp"
+        android:onClick="goToFriendWishlist">
     </Button>
         </LinearLayout>
     </ScrollView>

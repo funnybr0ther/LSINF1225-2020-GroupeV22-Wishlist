@@ -156,9 +156,8 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         return err!=-1;
     }
 
-    public void deleteProduct(int productID, Context context){
+    public void deleteProduct(int productID){
         SQLiteDatabase db = getWritableDatabase();
-        WishlistDatabaseHelper wdb = new WishlistDatabaseHelper(context);
         String sqlCommand = "DELETE FROM " + PRODUCT_TABLE_NAME + " WHERE " + PRODUCT_COL0+ "=" + productID;
         db.execSQL(sqlCommand);
     }

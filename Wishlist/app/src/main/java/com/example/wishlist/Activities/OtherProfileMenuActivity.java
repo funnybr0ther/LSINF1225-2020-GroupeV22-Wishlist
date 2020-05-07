@@ -1,11 +1,11 @@
 package com.example.wishlist.Activities;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,12 +22,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class OtherProfileMenuActivity extends AppCompatActivity {
 
     private int userID;
-    private int otherUserID;
+    private int receiverID;
     private User otherUser;
     private CircleImageView profilePhoto;
     private TextView titleToolbar;
-
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,15 +42,10 @@ public class OtherProfileMenuActivity extends AppCompatActivity {
         }
         //Get the other userID then compare with the actual user ID (-> send user to MyProfile if it's the same)
         Intent intent = getIntent();
-        otherUserID=intent.getIntExtra("otherUserID",-1);
-        if(otherUserID==userID){
-            Intent myProfileIntent=new Intent(this,MyProfileActivity.class);
-            startActivity(myProfileIntent);
-        }
-
+        receiverID =intent.getIntExtra("receiverID",-1);
         setContentView(R.layout.other_profile_menu);
         UserDatabaseHelper dbHelper = new UserDatabaseHelper(getApplicationContext());
-        otherUser = dbHelper.getUserFromID(otherUserID);
+        otherUser = dbHelper.getUserFromID(receiverID);
 
         profilePhoto = findViewById(R.id.profilePhoto);
         visibleMode();
@@ -72,11 +65,20 @@ public class OtherProfileMenuActivity extends AppCompatActivity {
 
     public void seeDetails(View view){
         Intent seeProfileIntent = new Intent(this,OtherProfile.class);
-        seeProfileIntent.putExtra("otherUserID",otherUserID);
+        seeProfileIntent.putExtra("otherUserID", receiverID);
         startActivity(seeProfileIntent);
     }
 
     public void onBackPressed(View view) {
         super.onBackPressed();
+    }
+
+    public void goToFriendWishlist(View view){
+        Log.d("SUPEER", "goToFriendWishlist: " + receiverID);
+        Intent intent = new Intent(this,ListWishlistActivity.class);
+        intent.putExtra("receiverID", receiverID); //id de celui a qui appartient les wishlist
+        intent.putExtra("userID",userID); //id de celui qui consulte les wishlist de ses amis
+        intent.putExtra("isMyWishlist",false);
+        startActivity(intent);
     }
 }
