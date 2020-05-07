@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -64,6 +65,7 @@ public class FindFollowActivity extends AppCompatActivity implements FollowRecyc
         searchEditText=findViewById(R.id.SearchEditText);
         UserDatabaseHelper userDatabaseHelper= new UserDatabaseHelper(getApplicationContext());
         allUser=userDatabaseHelper.getAllUser();
+        allUser.remove(userDatabaseHelper.getUserFromID(userID));
         followList.addAll(allUser);
         initRecyclerView();
         followRecyclerAdapter.notifyDataSetChanged();
@@ -130,8 +132,10 @@ public class FindFollowActivity extends AppCompatActivity implements FollowRecyc
 
     @Override
     public void onFollowerClick(int position) {
-        Intent otherProfileIntent=new Intent(this,OtherProfile.class);
-        otherProfileIntent.putExtra("otherUserID",followList.get(position).getUserID());
+        Intent otherProfileIntent=new Intent(this,OtherProfileMenuActivity.class);
+        int userID = followList.get(position).getUserID();
+        Log.d("TAG", "onFollowerClick: " + userID);
+        otherProfileIntent.putExtra("receiverID",followList.get(position).getUserID());
         startActivity(otherProfileIntent);
     }
 
