@@ -23,8 +23,8 @@
             android:layout_weight="1"
             android:background="@color/colorPrimary"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_product_edit_mode"
-            android:onClick="switchToEdit"/>
+            app:srcCompat="@drawable/ic_product_edit_mode">
+        </ImageButton>
 
         <ImageButton
             android:id="@+id/deleteProduct"
@@ -39,7 +39,6 @@
             android:background="@color/colorPrimary"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/ic_del">
-
         </ImageButton>
 
         <TextView
@@ -53,7 +52,8 @@
             android:scaleType="fitCenter"
             android:text="@string/viewProductToolbarText"
             android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:textSize="20sp">
+        </TextView>
 
         <ImageButton
             android:id="@+id/backArrowViewproduct"
@@ -63,7 +63,8 @@
             android:background="?attr/selectableItemBackground"
             android:contentDescription="TODO"
             android:onClick="onBackPressed"
-            app:srcCompat="@drawable/ic_arrow_back_white_30dp" />
+            app:srcCompat="@drawable/ic_arrow_back_white_30dp">
+        </ImageButton>
     </RelativeLayout>
 
 

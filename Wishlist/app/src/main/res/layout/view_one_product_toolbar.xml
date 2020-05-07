@@ -23,8 +23,8 @@
             android:layout_marginRight="20dp"
             android:background="@color/colorPrimary"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_add_button"
-            android:onClick="switchToAdd"/>
+            app:srcCompat="@drawable/ic_add_button">
+        </ImageButton>
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -52,7 +52,8 @@
             android:scaleType="fitCenter"
             android:text="@string/viewProductToolbarText"
             android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:textSize="20sp">
+        </TextView>
 
         <ImageButton
             android:id="@+id/backArrowViewproduct"
@@ -62,7 +63,8 @@
             android:background="?attr/selectableItemBackground"
             android:contentDescription="TODO"
             android:onClick="onBackPressed"
-            app:srcCompat="@drawable/ic_arrow_back_white_30dp" />
+            app:srcCompat="@drawable/ic_arrow_back_white_30dp">
+        </ImageButton>
     </RelativeLayout>
 
 

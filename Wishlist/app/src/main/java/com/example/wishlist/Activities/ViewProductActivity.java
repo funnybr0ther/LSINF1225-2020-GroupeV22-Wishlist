@@ -101,7 +101,7 @@ public class ViewProductActivity extends AppCompatActivity {
                     switchToAdd(ViewProductActivity.this.productID);
                 }
             });
-            
+
 
         }
 
@@ -179,7 +179,11 @@ public class ViewProductActivity extends AppCompatActivity {
             infoString+= "Weight:\n" +"\t" + weightString + " grams\n";
         }
         if(photo!=null){
+            productImage.setVisibility(View.VISIBLE);
             productImage.setImageBitmap(photo);
+        }
+        else{
+            productImage.setVisibility(View.GONE);
         }
         info.setText(infoString);
         desireBar.setRating((float)desire);
