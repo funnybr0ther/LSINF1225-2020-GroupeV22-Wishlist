@@ -307,4 +307,8 @@
     <string name="wishlistItem_defaultName">Wishlist</string>
     <string name="productItem_defaultName">Product</string>
     <string name="wishlistDetailToolbarText">Products</string>
+    <string name="changeWishlistFragment">New wishlist name</string>
+    <string name="changeWishlistButton">Change</string>
+    <string name="strWishlistChange">New name of your wishlist :</string>
+    <string name="changeWishlistDesc">change the name of your wishlist</string>
 </resources>
