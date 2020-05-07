@@ -6,9 +6,8 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize">
-        <include layout="@layout/find_follow_toolbar" />
-        <include layout="@layout/find_follow_search_toolbar"
-            android:visibility="gone"/>
+        <include layout="@layout/find_follow_toolbar">
+        </include>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -17,7 +16,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="5dp">
-
     </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>

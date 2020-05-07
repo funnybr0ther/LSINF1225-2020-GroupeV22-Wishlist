@@ -88,7 +88,7 @@
             android:focusable="true"
             android:onClick="newAccount"
             android:text="@string/createAccount"
-            android:textColor="#3F51B5"
+            android:textColor="#2aa198 "
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/loginButton" />

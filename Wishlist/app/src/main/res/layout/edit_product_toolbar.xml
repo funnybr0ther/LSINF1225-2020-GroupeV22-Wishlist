@@ -25,7 +25,8 @@
             android:onClick="saveProduct"
             android:background="@color/colorPrimary"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_check_black_24dp" />
+            app:srcCompat="@drawable/ic_check_black_24dp"
+            android:contentDescription="TODO" />
 
         <TextView
             android:id="@+id/productToolbarTitle"

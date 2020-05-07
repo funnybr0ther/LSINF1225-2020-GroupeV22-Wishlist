@@ -194,6 +194,13 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         return err!=-1;
     }
     //Check if the couple password UserID is present in the db
+
+    /**
+     *
+     * @param userID
+     * @param password
+     * @return
+     */
     public boolean checkPassword(int userID, String password){
         SQLiteDatabase db=getReadableDatabase();
         String[] condition ={String.valueOf(userID),password};
