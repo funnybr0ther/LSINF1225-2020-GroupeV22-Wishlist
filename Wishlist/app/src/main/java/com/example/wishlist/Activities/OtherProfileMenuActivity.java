@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -23,7 +24,8 @@ public class OtherProfileMenuActivity extends AppCompatActivity {
     private int userID;
     private int otherUserID;
     private User otherUser;
-    CircleImageView profilePhoto;
+    private CircleImageView profilePhoto;
+    private TextView titleToolbar;
 
 
 
@@ -63,6 +65,9 @@ public class OtherProfileMenuActivity extends AppCompatActivity {
         } else {
             profilePhoto.setImageDrawable(getDrawable(R.drawable.ic_default_photo));
         }
+        titleToolbar=findViewById(R.id.TitleOtherProfileToolbar);
+        String title=otherUser.getFirstName()+" " + otherUser.getLastName();
+        titleToolbar.setText(title);
     }
 
     public void seeDetails(View view){
