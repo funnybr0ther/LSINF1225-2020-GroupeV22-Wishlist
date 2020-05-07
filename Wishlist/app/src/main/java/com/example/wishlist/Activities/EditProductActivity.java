@@ -130,7 +130,7 @@ public class EditProductActivity extends AppCompatActivity {
         amountPurchasedField = findViewById(R.id.newReceived);
         amountTotalField = findViewById(R.id.newTotal);
         categoriesList = resources.getStringArray(R.array.categories);
-        deleteImage = findViewById(R.id.deleteImage);
+        deleteImage = findViewById(R.id.deleteProduct);
         newImage.setOnClickListener(new View.OnClickListener() {
 
             @Override

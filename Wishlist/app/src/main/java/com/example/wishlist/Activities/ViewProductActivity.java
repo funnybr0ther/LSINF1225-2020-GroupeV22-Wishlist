@@ -1,7 +1,9 @@
 package com.example.wishlist.Activities;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -69,7 +71,9 @@ public class ViewProductActivity extends AppCompatActivity {
         Intent intent=getIntent();
         productID=intent.getIntExtra("productID",-1);
         boolean myProduct = intent.getBooleanExtra("isMyProduct",true);
-        userID = intent.getIntExtra("userID",-1);
+        SharedPreferences prefs = this.getSharedPreferences(
+                "com.example.app", Context.MODE_PRIVATE);
+        userID=prefs.getInt("userID",-1);
         if(myProduct){
             setContentView(R.layout.view_my_product);
             editButton = findViewById(R.id.editProduct);
