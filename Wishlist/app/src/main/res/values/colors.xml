@@ -5,5 +5,6 @@
     <color name="colorAccent">#D81B60</color>
     <color name="wrongInformation">#F44336</color>
     <color name="black">#000000</color>
+    <color name="grey">#b3b3b3</color>
     <color name="white">#FFF</color>
 </resources>

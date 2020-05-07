@@ -19,9 +19,18 @@ public class User {
     private String favoriteColor;
     private String size;
     private String shoeSize;
+    private int userID;
 
     public boolean isNotification() {
         return notification;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
+
+    public int getUserID() {
+        return userID;
     }
 
     public void setNotification(boolean notification) {
