@@ -248,7 +248,7 @@ public class ViewProductActivity extends AppCompatActivity {
         }else{
             buyProduct.setPurchased(buyProduct.getPurchased() + amount);
             productDatabaseHelper.updateProduct(buyProduct,productID);
-            DateWish date = new DateWish(); // + Comment on récupère la date via l'appli ? psk ca me semble bizzare ..
+            DateWish date = new DateWish();
             Date currentTime = Calendar.getInstance().getTime();
             date.setDateAndHour(currentTime);
             Purchase achat = new Purchase(userID,receiverID,productID,amount,date);

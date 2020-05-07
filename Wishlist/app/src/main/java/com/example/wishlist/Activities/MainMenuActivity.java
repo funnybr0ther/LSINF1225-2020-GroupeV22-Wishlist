@@ -80,18 +80,12 @@ public class MainMenuActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
     public void viewAllUsers(View view){
         Intent intent = new Intent(this, FindFollowActivity.class);
         startActivity(intent);
     }
 
-//    public void goToFriendWishlist(View view){
-//        Intent intent = new Intent(this,ListWishlistActivity.class);
-//        intent.putExtra("receiverID",1); //id de celui a qui appartient les wishlist
-//        intent.putExtra("userID",userID); //id de celui qui consulte les wishlist de ses amis
-//        intent.putExtra("isMyWishlist",false);
-//        startActivity(intent);
-//    }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 

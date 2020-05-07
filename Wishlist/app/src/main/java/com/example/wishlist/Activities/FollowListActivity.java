@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -118,6 +119,8 @@ public class FollowListActivity extends AppCompatActivity implements FollowRecyc
 
 
     private void fillFollowList(){
+        followList.clear();
+        filteredList.clear();
         FollowDatabaseHelper helperF = new FollowDatabaseHelper(getApplicationContext());
         UserDatabaseHelper helperU = new UserDatabaseHelper(getApplicationContext());
         for(int id:helperF.getFollows(userID)){
@@ -143,7 +146,9 @@ public class FollowListActivity extends AppCompatActivity implements FollowRecyc
     @Override
     public void onFollowerClick(int position) {
         Intent otherProfileIntent=new Intent(this,OtherProfileMenuActivity.class);
-        otherProfileIntent.putExtra("otherUserID",filteredList.get(position).getUserID());
+        int userID = followList.get(position).getUserID();
+        Log.d("TAG", "onFollowerClick: " + userID);
+        otherProfileIntent.putExtra("receiverID",followList.get(position).getUserID());
         startActivity(otherProfileIntent);
     }
 }
