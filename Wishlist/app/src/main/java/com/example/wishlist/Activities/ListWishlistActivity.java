@@ -23,6 +23,10 @@ public class ListWishlistActivity extends AppCompatActivity  {
     private int receiverID;
     private int displayID;
 
+    /**
+     *Display a custom layout for the user
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +59,9 @@ public class ListWishlistActivity extends AppCompatActivity  {
         }
     }
 
+    /**
+     * Uptade the layout
+     */
     public void layoutUpdate(){
         //Va chercher dans la BDD les wishlist d'un utilisateur grace a son userID
         WishlistDatabaseHelper db = new WishlistDatabaseHelper(getApplicationContext());
@@ -64,6 +71,9 @@ public class ListWishlistActivity extends AppCompatActivity  {
         wishlistListView.setAdapter(new WishlistAdapter(this, list));
     }
 
+    /**
+     * Open addWishlistFragment when pressing add Button
+     */
     public void pressAddButton(View view){
         AddWishlistFragment dialog=new AddWishlistFragment();
         Bundle args = new Bundle();
@@ -73,11 +83,19 @@ public class ListWishlistActivity extends AppCompatActivity  {
 
     }
 
-    //methode appelé apres l'ajout d'une wishlist
+    /**
+     * Uptade the layout when the addWishlistFragment is dismiss
+     */
     public void fragmentReturn(){
         layoutUpdate();
     }
 
+    /**
+     * Go to DetailWishlistActivity.
+     * @param wishlistID id of the wishlist
+     * @param receiverID id of the wishlist owner
+     * @param wishlistName name of the wishlist
+     */
     public void wishlistAdapterReturn(int wishlistID, int receiverID, String wishlistName){
         Intent goToDetail = new Intent(this, DetailWishlistActivity.class);
         goToDetail.putExtra("wishlistID",wishlistID);
@@ -88,12 +106,19 @@ public class ListWishlistActivity extends AppCompatActivity  {
         this.startActivity(goToDetail);
     }
 
+    /**
+     * Update the layout when we are back on the activity
+     */
     @Override
     protected void onResume() {
         super.onResume();
         layoutUpdate();
     }
 
+    /**
+     * Back to the last activity
+     * @param view
+     */
     public void onBackPressed(View view) {
         onBackPressed();
     }

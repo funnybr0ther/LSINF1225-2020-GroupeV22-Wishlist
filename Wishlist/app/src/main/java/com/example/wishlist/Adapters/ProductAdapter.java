@@ -29,21 +29,42 @@ public class ProductAdapter extends BaseAdapter {
         this.inflater = LayoutInflater.from(context);
     }
 
+    /**
+     * get the size of the wishlists
+     * @return size of the wishlists
+     */
     @Override
     public int getCount() {
         return products.size();
     }
 
+    /**
+     * get product with an index in the ArrayList
+     * @param position index of the product
+     * @return Product at this index
+     */
     @Override
     public Product getItem(int position) {
         return products.get(position);
     }
 
+    /**
+     * always return 0
+     * @param position Integer
+     * @return always 0
+     */
     @Override
     public long getItemId(int position) {
         return 0;
     }
 
+    /**
+     * Create a layout personalized for each product
+     * @param position Integer
+     * @param view View
+     * @param parent ViewGrouo
+     * @return a View personalized for each wishlist
+     */
     @Override
     public View getView(final int position, View view, ViewGroup parent) {
         view = inflater.inflate(R.layout.adapter_product, null);
@@ -57,6 +78,10 @@ public class ProductAdapter extends BaseAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /**
+                 * Display the product content
+                 * @param v View
+                 */
                 DetailWishlistActivity detail = (DetailWishlistActivity) context;
                 detail.productDetail(position);    //modifier pour wishlist externe
             }
