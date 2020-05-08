@@ -122,6 +122,7 @@ public class OtherProfileMenuActivity extends AppCompatActivity {
         final Spinner sp = new Spinner(OtherProfileMenuActivity.this);
         sp.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         sp.setAdapter(adp);
+        sp.setPadding(100,0,110,0);
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(OtherProfileMenuActivity.this);
