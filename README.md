@@ -7,7 +7,7 @@ Ce répertoire contient les fichiers suivants :
 
 * README.md : ce document.
 
-Notre application est destiné à des appareils android.
+Notre application est destiné à des appareils android, installez-la à l'aide du fichier app-release.apk
 En vous souhaitant une bonne utilisation,
 le groupe 2.2
 # Membres:
