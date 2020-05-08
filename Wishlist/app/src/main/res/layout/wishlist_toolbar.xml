@@ -26,7 +26,8 @@
             android:scaleType="fitCenter"
             android:contentDescription="@string/addWishlistDesc"
             app:srcCompat="@drawable/ic_add_button"
-            android:onClick="pressAddButton"/>
+            android:onClick="pressAddButton">
+        </ImageButton>
 
         <TextView
             android:id="@+id/wishlistToolbarTitle"
@@ -39,7 +40,8 @@
             android:scaleType="fitCenter"
             android:text="@string/wishlistToolbarText"
             android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:textSize="20sp">
+        </TextView>
 
         <ImageButton
             android:id="@+id/backArrowWishlist"
@@ -49,7 +51,8 @@
             android:background="?attr/selectableItemBackground"
             android:contentDescription="@string/backWishlistMenu"
             android:onClick="onBackPressed"
-            app:srcCompat="@drawable/ic_arrow_back_white_30dp" />
+            app:srcCompat="@drawable/ic_arrow_back_white_30dp">
+        </ImageButton>
     </RelativeLayout>
 
 
