@@ -1,0 +1,14 @@
+Sur le premier écran, vous pouvez vous connecter ou vous créer un compte.
+Si vous créez un compte, vousdevez remplir vos informations (mail, adresse, ...).
+Sur le menu principal, vous pouvez vous déconnecter grâce au bouton de sortie en haut à gauche et modifier votre profil grâce au bouton en haut à droite.
+Le bouton "My Wishlists" vous emmène vers votre liste dewishlists.
+Vous pouvez consulter une wishlist existante en cliquant dessus ou en créer une nouvelle grâce aubouton "+" en haut à droite.
+Une fois sur votre wishlist, vous pouvez changer son nom ou la supprimer grâca au bouton "crayon", ou y ajouter des produits grâce au bouton "+".
+Lors de l’ajout d’un produit, vous devezfournir les informations le concernant (description, envie,...).
+De retour au menue principal, le bouton "View History" vous permet de consulter l’historique de vos achats.Le bouton "Follow List" vous permet de voir la liste des gens que vous suivez.
+Le bouton "Search User" vouspermet de trouvez des utilisateurs en recherchant leur nom.
+Lorsque vous cliquez sur le nom d’un utilisateur, vous pouvez consulter son profil, voir ses wishlists et le suivre(ou arrêter de le suivre).
+Lorsque vous vous mettez à suivre un utilisateur, vous devez précisez votre relation(amicale, familiale,...).
+Lorsque vous cliquez sur le produit dans la wishlist d’un ami, vous voyez les informationsconcernant ce produit.
+Vous pouvez acheter ce produit grâce au bouton "caddie" en haut en précisant la quantitévoulue.
+Vous pouvez également copier ce produit dans une de vos wishlist avec le bouton "+", tout en vousdonnant la liberté de pouvoir le modifier.
