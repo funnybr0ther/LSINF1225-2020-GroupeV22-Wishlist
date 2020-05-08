@@ -27,14 +27,12 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
             android:layout_weight="70"
             android:layout_gravity="center_vertical"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:text="Menu"
-            android:textColor="@color/goldMarzia"
-            android:textSize="25sp" >
+            android:textColor="@color/white"
+            android:textSize="30sp" >
 
         </TextView>
 
