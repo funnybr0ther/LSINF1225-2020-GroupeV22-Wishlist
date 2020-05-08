@@ -21,11 +21,19 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
+    <Spinner
+        android:id="@+id/spinnerProduct"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="140dp"
+        android:layout_marginTop="70dp"
+        />
+
     <ListView
         android:id="@+id/wishlist_DetailView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="60dp">
+        android:layout_marginTop="130dp">
     </ListView>
 
 </RelativeLayout>

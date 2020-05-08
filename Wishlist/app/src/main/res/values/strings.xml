@@ -316,4 +316,9 @@
     <string name="strWishlistChange">New name of your wishlist :</string>
     <string name="changeWishlistDesc">Change the name of your wishlist</string>
     <string name="productItem_defaultPrice">0 €</string>
+    <string-array name="sortProduct">
+        <item>More recent</item>
+        <item>Price low->high</item>
+        <item>Price high->low</item>
+    </string-array>
 </resources>
