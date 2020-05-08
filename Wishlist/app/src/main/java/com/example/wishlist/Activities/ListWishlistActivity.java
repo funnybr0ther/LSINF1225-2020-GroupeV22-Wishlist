@@ -63,7 +63,6 @@ public class ListWishlistActivity extends AppCompatActivity  {
      * Uptade the layout
      */
     public void layoutUpdate(){
-        //Va chercher dans la BDD les wishlist d'un utilisateur grace a son userID
         WishlistDatabaseHelper db = new WishlistDatabaseHelper(getApplicationContext());
         ArrayList<Wishlist> list = db.getUserWishlist(displayID);
 

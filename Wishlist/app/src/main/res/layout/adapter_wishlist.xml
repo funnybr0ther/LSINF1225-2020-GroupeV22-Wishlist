@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/wishlistItem_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:src="@mipmap/ic_wishlist"
         android:contentDescription="TODO" />
 
@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="10dp"
         android:text="@string/wishlistItem_defaultName"
         android:textSize="30dp"
         android:textColor="@color/colorPrimary"/>

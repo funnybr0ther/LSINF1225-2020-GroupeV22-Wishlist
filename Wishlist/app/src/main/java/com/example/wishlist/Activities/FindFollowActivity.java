@@ -122,7 +122,7 @@ public class FindFollowActivity extends AppCompatActivity implements FollowRecyc
         recyclerView.setLayoutManager(linearLayoutManager);
         FollowListItemDecorator deco = new FollowListItemDecorator(10);
         recyclerView.addItemDecoration(deco);
-        followRecyclerAdapter = new FollowRecyclerAdapter(followList,this);
+        followRecyclerAdapter = new FollowRecyclerAdapter(followList,this,getApplicationContext(),userID);
         recyclerView.setAdapter(followRecyclerAdapter);
     }
 

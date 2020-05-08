@@ -73,6 +73,22 @@ public class FollowDatabaseHelper extends SQLiteOpenHelper {
         return ret;
     }
 
+    public String getRelationship(int followerID, int followedID){
+        SQLiteDatabase db = getReadableDatabase();
+        String selection = FOLLOW_COL0 + " =? AND " + FOLLOW_COL1 + " =?";
+        String[] condition = {String.valueOf(followerID),String.valueOf(followedID)};
+        Cursor cursor = db.query(FOLLOW_TABLE_NAME,null,selection,condition,null,null,null);
+        cursor.moveToFirst();
+        if(cursor.getCount() == 0){
+            cursor.close();
+            return "";
+        }
+        String res = cursor.getString(cursor.getColumnIndex(FOLLOW_COL2));
+        cursor.close();
+        return res;
+
+    }
+
     public void unfollow(int followerID, int followedID){
         SQLiteDatabase db = getWritableDatabase();
         String sqlCommand = "DELETE FROM " + FOLLOW_TABLE_NAME + " WHERE " + FOLLOW_COL1 + "= " + followedID + " AND " + FOLLOW_COL0 + "= " + followerID;
