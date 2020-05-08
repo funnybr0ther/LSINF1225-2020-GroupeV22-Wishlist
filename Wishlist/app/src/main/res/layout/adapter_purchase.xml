@@ -1,42 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="100"
     android:padding="10dp">
 
     <TextView
         android:id="@+id/PurchaseSender"
+        android:clickable="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sender "
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/green"
         android:textSize="20sp" />
 
+
+    <TextView
+        android:id="@+id/bought"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" bougth "
+        android:layout_toRightOf="@+id/PurchaseSender"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        />
     <TextView
         android:id="@+id/PurchaseText"
         android:layout_width="wrap_content"
-        android:text="bought product to "
+        android:layout_height="wrap_content"
+        android:text="product"
+        android:layout_toRightOf="@+id/bought"
         android:textSize="20sp"
-        android:textColor="@color/black"
-        android:layout_height="wrap_content" />
-
+        android:textColor="@color/orange"
+        />
     <TextView
         android:id="@+id/PurchaseReceiver"
         android:clickable="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text = " receiver."
+        android:layout_toRightOf="@id/fo"
+        android:text=" receiver."
         android:textSize="20sp"
-        android:textColor="@color/colorPrimary"/>
+        android:textColor="@color/green"/>
+    <TextView
+        android:id="@+id/fo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" for "
+        android:layout_toRightOf="@id/PurchaseText"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        />
 
     <TextView
         android:id="@+id/DatePurchase"
-        android:layout_width="0dp"
-        android:layout_weight="30"
-        android:layout_height="wrap_content"
+        android:layout_below="@+id/PurchaseSender"
         android:text="Wen Jun 24 22h30 2020"
-        android:textSize="20sp"
-        />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/goldMarzia"
+        android:textSize="20sp">
+    </TextView>
 
-</LinearLayout>
+</RelativeLayout>

@@ -25,6 +25,13 @@ public class AddWishlistFragment extends DialogFragment {
     private Button btnCreate;
     private int userID;
 
+    /**
+     * Display the fragment for create a wishlist when pressing add button.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return View
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -34,6 +41,10 @@ public class AddWishlistFragment extends DialogFragment {
         btnCreate = rootView.findViewById(R.id.buttonCreateWishlist);
 
         btnCreate.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Create a new wishlist
+             * @param v View Button
+             */
             @Override
             public void onClick(View v) {
                 String listName = txtName.getText().toString();
@@ -47,13 +58,6 @@ public class AddWishlistFragment extends DialogFragment {
                     Toast toast=Toast.makeText(getContext(),"Wishlist " + listName + " created !",Toast.LENGTH_SHORT);
                     toast.show();
                 }
-                /*
-                AddWishlistFragment.this.getDialog().dismiss();
-                Intent intent = new Intent(getContext(), ListWishlistActivity.class);
-                intent.putExtra("userID",userID);
-                startActivity(intent);
-            */
-                // A suprimer si le code en dessous fonctionne
                 ListWishlistActivity callingActivity = (ListWishlistActivity) getActivity();
                 callingActivity.fragmentReturn();
                 dismiss();
@@ -61,19 +65,4 @@ public class AddWishlistFragment extends DialogFragment {
         });
         return rootView;
     }
-
-
-
-    /*public void PressBtnCreate(View view){
-        String listName = txtName.getText().toString();
-        if(listName != "") {
-            WishlistDatabaseHelper db = new WishlistDatabaseHelper(getActivity().getApplicationContext());
-
-            Toast toast=Toast.makeText(getContext(),"Wishlist " + listName + " created !",Toast.LENGTH_SHORT);
-            toast.show();
-        }
-        Toast toast=Toast.makeText(getContext(),"Wrong name",Toast.LENGTH_SHORT);
-        toast.show();
-    }*/
-
 }

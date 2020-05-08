@@ -36,7 +36,7 @@
             android:scaleType="fitCenter"
             android:text="@string/viewProductToolbarText"
             android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:textSize="25sp" />
 
         <ImageButton
             android:id="@+id/backArrowViewproduct"

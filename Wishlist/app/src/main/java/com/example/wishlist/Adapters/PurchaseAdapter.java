@@ -72,7 +72,7 @@ public class PurchaseAdapter extends BaseAdapter {
         String purchaseText;
         if (getUserID() == purchase.getSender()) {
             sender = "You ";
-            purchaseText = " bought " + product + " for ";
+            purchaseText =  product;
             textViewPurchaseSender.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -100,8 +100,8 @@ public class PurchaseAdapter extends BaseAdapter {
             });
         }
         else{
-            purchaseText = " bought " + product + " for ";
-            receiver = "you.";
+            purchaseText =product;
+            receiver = "you";
             textViewPurchaseReceiver.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -134,11 +134,6 @@ public class PurchaseAdapter extends BaseAdapter {
         textViewPurchaseReceiver.setText(receiver);
 
         TextView datePurchase=view.findViewById(R.id.DatePurchase);
-        /*if (.equals("5 May 2020")){
-            Toast.makeText(context,"Bad",Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(context,"Good",Toast.LENGTH_SHORT).show();
-        }*/
         datePurchase.setText(purchase.getDate().dateAndHourToString());
         return view;
     }
