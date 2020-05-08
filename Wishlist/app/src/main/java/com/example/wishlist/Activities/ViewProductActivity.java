@@ -99,7 +99,6 @@ public class ViewProductActivity extends AppCompatActivity {
             });
         }
 
-
         description = findViewById(R.id.description);
         category = findViewById(R.id.category);
         info = findViewById(R.id.info);

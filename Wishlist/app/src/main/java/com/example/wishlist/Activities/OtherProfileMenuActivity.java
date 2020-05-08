@@ -8,10 +8,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.wishlist.Class.FollowDatabaseHelper;
@@ -70,6 +72,7 @@ public class OtherProfileMenuActivity extends AppCompatActivity {
             followButton.setVisibility(View.VISIBLE);
         }
     }
+
     @TargetApi(21)
     public void visibleMode() {
         if (otherUser.getProfilePhoto() != null) {
@@ -103,7 +106,12 @@ public class OtherProfileMenuActivity extends AppCompatActivity {
 
     public void followCurrentUser(View view){
         FollowDatabaseHelper helper = new FollowDatabaseHelper(getApplicationContext());
-        helper.addFollow(userID,receiverID,"Friend");
+        String relationship;
+
+        final Spinner sp = new Spinner(OtherProfileMenuActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(OtherProfileMenuActivity.this);
+
+        //helper.addFollow(userID,receiverID,"Friend");
         actualiseButtons();
     }
 
