@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.Objects;
 
 public class User {
-    private Address address;  //commentaire
+    private Address address; 
     private String firstName;
     private String lastName;
     private String email;
