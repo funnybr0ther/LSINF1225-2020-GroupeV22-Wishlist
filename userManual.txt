@@ -6,7 +6,7 @@ Vous pouvez consulter une wishlist existante en cliquant dessus ou en créer une
 Une fois sur votre wishlist, vous pouvez changer son nom ou la supprimer grâca au bouton "crayon", ou y ajouter des produits grâce au bouton "+".
 Lors de l’ajout d’un produit, vous devez fournir les informations le concernant (description, envie,...).
 De retour au menue principal, le bouton "View History" vous permet de consulter l’historique de vos cadeaux offerts et reçus. Le bouton "Follow List" vous permet de voir la liste des gens que vous suivez.
-Le bouton "Search User" vous permet de trouvez des utilisateurs en recherchant leur nom.
+Le bouton "Search User" vous permet de trouver des utilisateurs en recherchant leur nom.
 Lorsque vous cliquez sur le nom d’un utilisateur, vous pouvez consulter son profil, voir ses wishlists et le suivre (ou arrêter de le suivre).
 Lorsque vous vous mettez à suivre un utilisateur, vous devez précisez votre relation (amicale, familiale,...).
 Lorsque vous cliquez sur le produit dans la wishlist d’un ami, vous voyez les informations concernant ce produit.
