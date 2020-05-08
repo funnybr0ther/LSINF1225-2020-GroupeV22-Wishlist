@@ -64,29 +64,29 @@ public class CreateProfileActivity extends AppCompatActivity implements AddPhoto
         setContentView(R.layout.create_profile);
 
         //Get information pass with Extra in intent
-        Intent intent=getIntent();
-        email=intent.getStringExtra("mail");
-        password=intent.getStringExtra("password");
+        Intent intent= getIntent();
+        email =intent.getStringExtra("mail");
+        password =intent.getStringExtra("password");
 
         //Set the different View/Edit/Spinner variable
-        profilePhoto= findViewById(R.id.profilePhoto);
+        profilePhoto = findViewById(R.id.profilePhoto);
         cameraLogo = findViewById(R.id.logoCamera);
-        editTextFirstName = (EditText) findViewById(R.id.newmail);
-        editTextLastName = (EditText) findViewById(R.id.getLastName);
-        editTextAddressLine1 = (EditText) findViewById(R.id.getAddressLine1);
-        editTextAddressLine2 = (EditText) findViewById(R.id.getAddressLine2);
-        editTextCity = (EditText) findViewById(R.id.getLocality);
-        editTextCountry = (EditText) findViewById(R.id.getCountry);
-        editTextPostalCode = (EditText) findViewById(R.id.getPostalCode);
-        spinnerSize = (Spinner) findViewById(R.id.spinnerSize);
-        spinnerShoeSize = (Spinner) findViewById(R.id.spinnerShoeSize);
-        spinnerFavoriteColor = (Spinner) findViewById(R.id.spinnerFavoriteColor);
-        spinnerDay = (Spinner) findViewById(R.id.spinnerDay);
-        spinnerMonth = (Spinner) findViewById(R.id.spinnerMonth);
-        spinnerYear = (Spinner) findViewById(R.id.spinnerYear);
+        editTextFirstName = findViewById(R.id.newmail);
+        editTextLastName = findViewById(R.id.getLastName);
+        editTextAddressLine1 = findViewById(R.id.getAddressLine1);
+        editTextAddressLine2 = findViewById(R.id.getAddressLine2);
+        editTextCity = findViewById(R.id.getLocality);
+        editTextCountry = findViewById(R.id.getCountry);
+        editTextPostalCode = findViewById(R.id.getPostalCode);
+        spinnerSize = findViewById(R.id.spinnerSize);
+        spinnerShoeSize = findViewById(R.id.spinnerShoeSize);
+        spinnerFavoriteColor = findViewById(R.id.spinnerFavoriteColor);
+        spinnerDay = findViewById(R.id.spinnerDay);
+        spinnerMonth = findViewById(R.id.spinnerMonth);
+        spinnerYear = findViewById(R.id.spinnerYear);
 
         //Set the default photo
-        if(image==null){
+        if(image ==null){
             profilePhoto.setImageDrawable(getDrawable(R.drawable.ic_default_photo));
         }
 
@@ -153,7 +153,7 @@ public class CreateProfileActivity extends AppCompatActivity implements AddPhoto
         String country = editTextCountry.getText().toString();
         int postalCode=0;
         try {
-            postalCode = (int) Integer.parseInt(editTextPostalCode.getText().toString());
+            postalCode = Integer.parseInt(editTextPostalCode.getText().toString());
             editTextPostalCode.setBackgroundColor(Color.rgb(255, 255, 255));
         } catch (NumberFormatException e) {
             editTextPostalCode.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
@@ -225,14 +225,14 @@ public class CreateProfileActivity extends AppCompatActivity implements AddPhoto
             //Create a DateWish with representing birthdate
             DateWish birthdate=new DateWish(dayInt,month,yearInt);
             //create an User
-            User user=new User(userAddress,firstName,lastName,email,birthdate,password);
+            User user=new User(userAddress,firstName,lastName, email,birthdate, password);
             if (!favoriteColor.equals("Undefined"))user.setFavoriteColor(favoriteColor);
             if (!size.equals("Undefined")) user.setSize(size);
-            if(image!=null) user.setProfilePhoto(image);
+            if(image !=null) user.setProfilePhoto(image);
             if (!shoeSize.equals("Undefined")) user.setShoeSize(shoeSize);
             UserDatabaseHelper dbHelper= new UserDatabaseHelper(getApplicationContext());
             if(dbHelper.addUser(user)){
-                int userID=dbHelper.checkUser(email,password);
+                int userID=dbHelper.checkUser(email, password);
                 if(userID==-1){
                     Toast toast=Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT);
                     toast.show();
@@ -259,7 +259,7 @@ public class CreateProfileActivity extends AppCompatActivity implements AddPhoto
     public void getBitmapImage(Bitmap bitmap) {
         if(bitmap!=null){
             profilePhoto.setImageBitmap(bitmap);
-            image=bitmap;
+            image =bitmap;
         }
     }
 
@@ -267,7 +267,7 @@ public class CreateProfileActivity extends AppCompatActivity implements AddPhoto
     public void getUriImage(Uri uri) {
         if(uri!=null){
             try{
-                image= ImageHelper.compress(MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri));
+                image = ImageHelper.compress(MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri));
                 profilePhoto.setImageBitmap(image);
             }
             catch (Exception e){

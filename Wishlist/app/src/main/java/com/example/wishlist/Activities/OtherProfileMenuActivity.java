@@ -1,6 +1,7 @@
 package com.example.wishlist.Activities;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -55,16 +56,17 @@ public class OtherProfileMenuActivity extends AppCompatActivity {
         profilePhoto = findViewById(R.id.profilePhoto);
         otherUser = dbHelperU.getUserFromID(receiverID);
 
+        followButton = findViewById(R.id.followButton);
+        unfollowButton = findViewById(R.id.unfollowButton);
+
         actualiseButtons();
         visibleMode();
     }
 
     public void actualiseButtons(){
         FollowDatabaseHelper dbHelperF = new FollowDatabaseHelper(getApplicationContext());
-        followButton = findViewById(R.id.followButton);
-        unfollowButton = findViewById(R.id.unfollowButton);
 
-        if(dbHelperF.checkIfFollows(userID,receiverID)){
+        if(dbHelperF.checkIfFollows(userID, receiverID)){
             followButton.setVisibility(View.GONE);
             unfollowButton.setVisibility(View.VISIBLE);
         }else{
@@ -80,8 +82,8 @@ public class OtherProfileMenuActivity extends AppCompatActivity {
         } else {
             profilePhoto.setImageDrawable(getDrawable(R.drawable.ic_default_photo));
         }
-        titleToolbar=findViewById(R.id.TitleOtherProfileToolbar);
-        String title=otherUser.getFirstName()+" " + otherUser.getLastName();
+        titleToolbar = findViewById(R.id.TitleOtherProfileToolbar);
+        String title= otherUser.getFirstName()+" " + otherUser.getLastName();
         titleToolbar.setText(title);
     }
 
@@ -92,14 +94,16 @@ public class OtherProfileMenuActivity extends AppCompatActivity {
     }
 
     public void onBackPressed(View view) {
-        super.onBackPressed();
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
     }
 
     public void goToFriendWishlist(View view){
         Log.d("SUPEER", "goToFriendWishlist: " + receiverID);
         Intent intent = new Intent(this,ListWishlistActivity.class);
         intent.putExtra("receiverID", receiverID); //id de celui a qui appartient les wishlist
-        intent.putExtra("userID",userID); //id de celui qui consulte les wishlist de ses amis
+        intent.putExtra("userID", userID); //id de celui qui consulte les wishlist de ses amis
         intent.putExtra("isMyWishlist",false);
         startActivity(intent);
     }
@@ -117,7 +121,7 @@ public class OtherProfileMenuActivity extends AppCompatActivity {
 
     public void unfollowCurrentUser(View view){
         FollowDatabaseHelper helper = new FollowDatabaseHelper(getApplicationContext());
-        helper.unfollow(userID,receiverID);
+        helper.unfollow(userID, receiverID);
         actualiseButtons();
     }
 }

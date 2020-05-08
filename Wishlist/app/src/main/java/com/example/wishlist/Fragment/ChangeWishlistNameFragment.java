@@ -35,9 +35,9 @@ public class ChangeWishlistNameFragment extends DialogFragment {
         View rootView = inflater.inflate( R.layout.frangment_change_wishlist_name, container, false);
         wishlistID = getArguments().getInt("wishlistID");
         userID = getArguments().getInt("userID");
-        txtName = (EditText) rootView.findViewById(R.id.nameChangeWishlist);
-        btnChange = (Button) rootView.findViewById(R.id.buttonChangeWishlist);
-        btnDelete = (Button) rootView.findViewById(R.id.buttonDeleteWishlist);
+        txtName = rootView.findViewById(R.id.nameChangeWishlist);
+        btnChange = rootView.findViewById(R.id.buttonChangeWishlist);
+        btnDelete = rootView.findViewById(R.id.buttonDeleteWishlist);
 
         btnChange.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,11 +64,15 @@ public class ChangeWishlistNameFragment extends DialogFragment {
             public void onClick(View v) {
                 WishlistDatabaseHelper db = new WishlistDatabaseHelper(getActivity().getApplicationContext());
                 db.deleteWishlistWithProduct(wishlistID);
+                /*
                 Context ctx = getActivity().getApplicationContext();
                 Intent gotToWishlist=new Intent(ctx,ListWishlistActivity.class);
                 gotToWishlist.putExtra("userID",userID);
                 gotToWishlist.putExtra("isMyWishlist",true);
                 startActivity(gotToWishlist);
+*/
+                DetailWishlistActivity callingActivity = (DetailWishlistActivity) getActivity();
+                callingActivity.onBackPressed();
                 dismiss();
             }
         });

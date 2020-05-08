@@ -18,25 +18,25 @@ import java.util.ArrayList;
 
 public class FollowRecyclerAdapter extends RecyclerView.Adapter<FollowRecyclerAdapter.Viewholder> {
 
-    private ArrayList<User> followList;
-    private FollowerOnClickListener onClickListener;
+    private final ArrayList<User> followList;
+    private final FollowerOnClickListener onClickListener;
 
-    public FollowRecyclerAdapter(ArrayList<User> follows ,FollowerOnClickListener followerOnClickListener) {
+    public FollowRecyclerAdapter(ArrayList<User> follows , FollowerOnClickListener followerOnClickListener) {
         this.followList = follows;
-        this.onClickListener=followerOnClickListener;
+        this.onClickListener =followerOnClickListener;
     }
 
     @NonNull
     @Override
     public Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.follow_list_item,parent,false);
-        return new Viewholder(view,onClickListener);
+        return new Viewholder(view, onClickListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull Viewholder holder, int position) {
 
-        String full_name = followList.get(position).getFirstName()+" "+followList.get(position).getLastName();
+        String full_name = followList.get(position).getFirstName()+" "+ followList.get(position).getLastName();
         holder.name.setText(full_name);
         holder.picture.setImageBitmap(followList.get(position).getProfilePhoto());
     }
@@ -53,8 +53,8 @@ public class FollowRecyclerAdapter extends RecyclerView.Adapter<FollowRecyclerAd
 
          Viewholder(@NonNull View itemView, FollowerOnClickListener followerOnClickListener) {
             super(itemView);
-            name = itemView.findViewById(R.id.followName);
-            picture = itemView.findViewById(R.id.followPicture);
+             name = itemView.findViewById(R.id.followName);
+             picture = itemView.findViewById(R.id.followPicture);
             this.followerOnClickListener=followerOnClickListener;
             itemView.setOnClickListener(this);
         }

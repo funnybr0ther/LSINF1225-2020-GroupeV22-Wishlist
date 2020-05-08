@@ -14,7 +14,7 @@ public class Address {
      */
     @NonNull
     public String toString(){
-        return addressLine1+"_/"+addressLine2+"_/"+city+"_/"+country+"_/"+postalCode;
+        return addressLine1 +"_/"+ addressLine2 +"_/"+ city +"_/"+ country +"_/"+ postalCode;
     }
 
     public static Address fromString(String str){

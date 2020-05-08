@@ -24,9 +24,9 @@ public class AddPhotoDialog extends DialogFragment {
     public final int MEMORY_REQUEST_CODE = 456;
 
     public interface OnPhotoReceivedListener {
-        public void getBitmapImage(Bitmap bitmap);
+        void getBitmapImage(Bitmap bitmap);
 
-        public void getUriImage(Uri uri);
+        void getUriImage(Uri uri);
     }
 
     OnPhotoReceivedListener onPhotoReceivedListener;

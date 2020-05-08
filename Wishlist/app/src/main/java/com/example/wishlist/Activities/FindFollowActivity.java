@@ -37,7 +37,7 @@ public class FindFollowActivity extends AppCompatActivity implements FollowRecyc
 
     int userID;
 
-    private ArrayList<User> followList = new ArrayList<>();
+    private final ArrayList<User> followList = new ArrayList<>();
     private FollowRecyclerAdapter followRecyclerAdapter;
     private LinearLayout searchToolbar;
     private LinearLayout viewToolbar;
@@ -51,7 +51,7 @@ public class FindFollowActivity extends AppCompatActivity implements FollowRecyc
                 "com.example.app", Context.MODE_PRIVATE);
         int tmpUserID=prefs.getInt("userID",-1);
         if (tmpUserID!=-1){
-            userID=tmpUserID;
+            userID =tmpUserID;
         }
         else{//If no userID go back to LoginActivity
             Toast toast=Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT);
@@ -60,11 +60,11 @@ public class FindFollowActivity extends AppCompatActivity implements FollowRecyc
         }
         setContentView(R.layout.activity_follow_list);
         recyclerView = findViewById(R.id.recyclerViewFollows);
-        searchToolbar=findViewById(R.id.SearchToolbar);
-        viewToolbar=findViewById(R.id.FollowListToolbar);
-        searchEditText=findViewById(R.id.SearchEditText);
+        searchToolbar = findViewById(R.id.SearchToolbar);
+        viewToolbar = findViewById(R.id.FollowListToolbar);
+        searchEditText = findViewById(R.id.SearchEditText);
         UserDatabaseHelper userDatabaseHelper= new UserDatabaseHelper(getApplicationContext());
-        allUser=userDatabaseHelper.getAllUser();
+        allUser =userDatabaseHelper.getAllUser();
         allUser.remove(userDatabaseHelper.getUserFromID(userID));
         followList.addAll(allUser);
         initRecyclerView();
@@ -72,21 +72,21 @@ public class FindFollowActivity extends AppCompatActivity implements FollowRecyc
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                String str=searchEditText.getText().toString().toLowerCase();
+                String str= searchEditText.getText().toString().toLowerCase();
                 filter(str);
                 followRecyclerAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String str=searchEditText.getText().toString().toLowerCase();
+                String str= searchEditText.getText().toString().toLowerCase();
                 filter(str);
                 followRecyclerAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                String str=searchEditText.getText().toString().toLowerCase();
+                String str= searchEditText.getText().toString().toLowerCase();
                 filter(str);
                 followRecyclerAdapter.notifyDataSetChanged();
             }
@@ -98,7 +98,7 @@ public class FindFollowActivity extends AppCompatActivity implements FollowRecyc
             followList.addAll(allUser);
         }
         else{
-            for (User user:allUser){
+            for (User user: allUser){
                 String names=user.getFirstName()+user.getLastName();
                 if(names.toLowerCase().contains(string.toLowerCase())){
                     followList.add(user);
@@ -135,7 +135,7 @@ public class FindFollowActivity extends AppCompatActivity implements FollowRecyc
         Intent otherProfileIntent=new Intent(this,OtherProfileMenuActivity.class);
         int userID = followList.get(position).getUserID();
         Log.d("TAG", "onFollowerClick: " + userID);
-        otherProfileIntent.putExtra("receiverID",followList.get(position).getUserID());
+        otherProfileIntent.putExtra("receiverID", followList.get(position).getUserID());
         startActivity(otherProfileIntent);
     }
 

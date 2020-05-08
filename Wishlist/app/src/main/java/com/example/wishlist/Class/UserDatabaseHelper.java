@@ -58,13 +58,13 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        String sqlCommand="DROP IF TABLE EXISTS " +USER_TABLE_NAME;
+        String sqlCommand="DROP IF TABLE EXISTS " + USER_TABLE_NAME;
         onCreate(db);
     }
 
     //Add user in db return false if something went wrong
     public boolean addUser(User user){
-        SQLiteDatabase db=getWritableDatabase();
+        SQLiteDatabase db= getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(USER_COL1,user.getEmail());
         contentValues.put(USER_COL2,user.getPassword());
@@ -85,10 +85,10 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
 
     //Check if any user is register with this mail and this password
     public int checkUser(String mail, String password){
-        SQLiteDatabase db=getReadableDatabase();
-        String[] projection={USER_COL0,USER_COL1,USER_COL2};
+        SQLiteDatabase db= getReadableDatabase();
+        String[] projection={USER_COL0, USER_COL1, USER_COL2};
         String[] condition ={mail,password};
-        String selection=USER_COL1+"=? AND "+USER_COL2+" =?";
+        String selection= USER_COL1 +"=? AND "+ USER_COL2 +" =?";
         Cursor cursor=db.query(USER_TABLE_NAME,projection,selection,condition,null,null,null);
 
         if (cursor.getCount()==0){
@@ -108,10 +108,10 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
 
     //Check if mail isn't used by another user
     public boolean checkMail(String mail){
-        SQLiteDatabase db=getReadableDatabase();
-        String[] projection={USER_COL0,USER_COL1,USER_COL2};
+        SQLiteDatabase db= getReadableDatabase();
+        String[] projection={USER_COL0, USER_COL1, USER_COL2};
         String[] condition ={mail};
-        String selection=USER_COL1+" =?";
+        String selection= USER_COL1 +" =?";
         Cursor cursor=db.query(USER_TABLE_NAME,projection,selection,condition,null,null,null);
         boolean sol=cursor.getCount()==0;
         cursor.close();
@@ -119,9 +119,9 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public User getUserFromID(int userID){
-        SQLiteDatabase db=getReadableDatabase();
+        SQLiteDatabase db= getReadableDatabase();
         String[] condition ={String.valueOf(userID)};
-        String selection=USER_COL0+" =?";
+        String selection= USER_COL0 +" =?";
         Cursor cursor=db.query(USER_TABLE_NAME,null,selection,condition,null,null,null);
         if (cursor.getCount()==0){
             cursor.close();
@@ -147,8 +147,8 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         return user;
     }
     public ArrayList<User> getAllUser(){
-        SQLiteDatabase db=getReadableDatabase();
-        Cursor cursor=db.rawQuery("SELECT * FROM "+USER_TABLE_NAME,null);
+        SQLiteDatabase db= getReadableDatabase();
+        Cursor cursor=db.rawQuery("SELECT * FROM "+ USER_TABLE_NAME,null);
         ArrayList<User> users=new ArrayList<User>();
         cursor.moveToFirst();
         while (!cursor.isAfterLast()){
@@ -175,7 +175,7 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public boolean updateUser(User user, int userID){
-        SQLiteDatabase db=getWritableDatabase();
+        SQLiteDatabase db= getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(USER_COL1,user.getEmail());
         contentValues.put(USER_COL2,user.getPassword());
@@ -190,14 +190,21 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
             contentValues.put(USER_COL10,ImageHelper.getBytes(user.getProfilePhoto()));
         }
         contentValues.put(USER_COL11,user.isNotification());
-        int err=db.update(USER_TABLE_NAME,contentValues,USER_COL0+" = ?",new String[]{String.valueOf(userID)});
+        int err=db.update(USER_TABLE_NAME,contentValues, USER_COL0 +" = ?",new String[]{String.valueOf(userID)});
         return err!=-1;
     }
     //Check if the couple password UserID is present in the db
+
+    /**
+     *
+     * @param userID
+     * @param password
+     * @return
+     */
     public boolean checkPassword(int userID, String password){
-        SQLiteDatabase db=getReadableDatabase();
+        SQLiteDatabase db= getReadableDatabase();
         String[] condition ={String.valueOf(userID),password};
-        String selection=USER_COL0+"=? AND "+USER_COL2+" =?";
+        String selection= USER_COL0 +"=? AND "+ USER_COL2 +" =?";
         Cursor cursor=db.query(USER_TABLE_NAME,null,selection,condition,null,null,null);
         boolean sol=cursor.getCount()==1;
         cursor.close();
@@ -205,7 +212,7 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
     }
     //return number of row delete (here max 1 as userID is a primary key)
     public int delete(int userID){
-        SQLiteDatabase db=getWritableDatabase();
-        return db.delete(USER_TABLE_NAME,USER_COL0+"=?",new String[]{String.valueOf(userID)});
+        SQLiteDatabase db= getWritableDatabase();
+        return db.delete(USER_TABLE_NAME, USER_COL0 +"=?",new String[]{String.valueOf(userID)});
     }
 }

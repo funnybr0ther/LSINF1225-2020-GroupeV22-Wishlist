@@ -1,5 +1,6 @@
 package com.example.wishlist.Activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,12 +35,12 @@ public class FollowListActivity extends AppCompatActivity implements FollowRecyc
 
     int userID;
 
-    private ArrayList<User> followList = new ArrayList<>();
+    private final ArrayList<User> followList = new ArrayList<>();
     private FollowRecyclerAdapter followRecyclerAdapter;
     private LinearLayout searchToolbar;
     private LinearLayout viewToolbar;
     private EditText searchEditText;
-    private ArrayList<User> filteredList = new ArrayList<>();
+    private final ArrayList<User> filteredList = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,7 +49,7 @@ public class FollowListActivity extends AppCompatActivity implements FollowRecyc
                 "com.example.app", Context.MODE_PRIVATE);
         int tmpUserID=prefs.getInt("userID",-1);
         if (tmpUserID!=-1){
-            userID=tmpUserID;
+            userID =tmpUserID;
         }
         else{//If no userID go back to LoginActivity
             Toast toast=Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT);
@@ -57,36 +58,34 @@ public class FollowListActivity extends AppCompatActivity implements FollowRecyc
         }
         setContentView(R.layout.activity_follow_list);
         recyclerView = findViewById(R.id.recyclerViewFollows);
-        searchToolbar=findViewById(R.id.SearchToolbar);
-        viewToolbar=findViewById(R.id.FollowListToolbar);
-        searchEditText=findViewById(R.id.SearchEditText);
+        searchToolbar = findViewById(R.id.SearchToolbar);
+        viewToolbar = findViewById(R.id.FollowListToolbar);
+        searchEditText = findViewById(R.id.SearchEditText);
         initRecyclerView();
 
 
-
         fillFollowList();
-
 
 
         followRecyclerAdapter.notifyDataSetChanged();
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                String str=searchEditText.getText().toString().toLowerCase();
+                String str= searchEditText.getText().toString().toLowerCase();
                 filter(str);
                 followRecyclerAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String str=searchEditText.getText().toString().toLowerCase();
+                String str= searchEditText.getText().toString().toLowerCase();
                 filter(str);
                 followRecyclerAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                String str=searchEditText.getText().toString().toLowerCase();
+                String str= searchEditText.getText().toString().toLowerCase();
                 filter(str);
                 followRecyclerAdapter.notifyDataSetChanged();
             }
@@ -148,7 +147,15 @@ public class FollowListActivity extends AppCompatActivity implements FollowRecyc
         Intent otherProfileIntent=new Intent(this,OtherProfileMenuActivity.class);
         int userID = followList.get(position).getUserID();
         Log.d("TAG", "onFollowerClick: " + userID);
-        otherProfileIntent.putExtra("receiverID",followList.get(position).getUserID());
-        startActivity(otherProfileIntent);
+        otherProfileIntent.putExtra("receiverID", followList.get(position).getUserID());
+        startActivityForResult(otherProfileIntent,1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==1 && resultCode== Activity.RESULT_OK){
+            fillFollowList();
+        }
     }
 }

@@ -29,8 +29,8 @@ public class DateWish {
 
     public void setDate(int day, String month, int year ){
         try{
-            String dateStr=Integer.toString(day)+ " "+month+" "+Integer.toString(year);
-            date=formatter.parse(dateStr);
+            String dateStr= day + " "+month+" "+ year;
+            date = formatter.parse(dateStr);
         }catch (Exception e){
 
         }
@@ -42,27 +42,24 @@ public class DateWish {
     }
     public void setDate(String dateString){
         try{
-            date=formatter.parse(dateString);
+            date = formatter.parse(dateString);
         }catch (Exception e){
 
         }
     }
     public void setDateAndHour(Date time){
-        date=time;
+        date =time;
     }
 
     public void setDateAndHourFromString(String str){
         try{
-            date=formatterDateAndHour.parse(str);
+            date = formatterDateAndHour.parse(str);
         }catch (Exception e){}
     }
 
-    public int compareTo(DateWish date2){
-        return date.compareTo(date2.getDate());
-    }
-
+    public int compareTo(DateWish date2) {return date.compareTo(date2.getDate()); }
     public String dateAndHourToString(){
-        if(this.date==null) return "Error";
+        if(this.date ==null) return "Error";
         Log.d(TAG, "toD&HString: ");
         return formatterDateAndHour.format(date);
     }

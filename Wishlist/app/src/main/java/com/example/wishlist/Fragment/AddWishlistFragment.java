@@ -30,8 +30,8 @@ public class AddWishlistFragment extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate( R.layout.fragment_add_wishlist, container, false);
         userID = getArguments().getInt("userID");
-        txtName = (EditText) rootView.findViewById(R.id.nameCreateWishlist);
-        btnCreate = (Button) rootView.findViewById(R.id.buttonCreateWishlist);
+        txtName = rootView.findViewById(R.id.nameCreateWishlist);
+        btnCreate = rootView.findViewById(R.id.buttonCreateWishlist);
 
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override

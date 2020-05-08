@@ -1,13 +1,17 @@
 package com.example.wishlist.Activities;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -61,15 +65,24 @@ public class ViewProductActivity extends AppCompatActivity {
     ProductDatabaseHelper productDatabaseHelper;
     PurchaseDatabaseHelper purchaseDatabaseHelper;
     WishlistDatabaseHelper wishlistDatabaseHelper;
+
+    /**
+     * Reads given intents to determine the product to be displayed, its owner and the current user
+     * of the app. The toolbar is adapted so that the current user can either copy and offer
+     * someone else's product, or edit and delete their own product.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         productDatabaseHelper = new ProductDatabaseHelper(getApplicationContext());
         purchaseDatabaseHelper = new PurchaseDatabaseHelper(getApplicationContext());
         super.onCreate(savedInstanceState);
-        Intent intent=getIntent();
-        productID=intent.getIntExtra("productID",-1);
+        Intent intent= getIntent();
+        productID =intent.getIntExtra("productID",-1);
         boolean myProduct = intent.getBooleanExtra("isMyProduct",true);
-        userID = intent.getIntExtra("userID",-1);
+        SharedPreferences prefs = this.getSharedPreferences(
+                "com.example.app", Context.MODE_PRIVATE);
+        userID =prefs.getInt("userID",-1);
         if(myProduct){
             setContentView(R.layout.view_my_product);
             editButton = findViewById(R.id.editProduct);
@@ -97,6 +110,8 @@ public class ViewProductActivity extends AppCompatActivity {
                     switchToAdd(ViewProductActivity.this.productID);
                 }
             });
+
+
         }
 
         description = findViewById(R.id.description);
@@ -114,6 +129,11 @@ public class ViewProductActivity extends AppCompatActivity {
         displayProductInfo(productDatabaseHelper.getProductFromID(this.productID));
     }
 
+    /**
+     * Displays the given product's informations in the right fields, dynamically adjusts visibility
+     * of set fields if their contents are null.
+     * @param product
+     */
     public void displayProductInfo(Product product){
         Log.d(TAG, "displayProductInfo: bilibu updated");
         String descriptionString = product.getDescription();
@@ -172,19 +192,32 @@ public class ViewProductActivity extends AppCompatActivity {
             infoString+= "Weight:\n" +"\t" + weightString + " grams\n";
         }
         if(photo!=null){
+            productImage.setVisibility(View.VISIBLE);
             productImage.setImageBitmap(photo);
+        }
+        else{
+            productImage.setVisibility(View.GONE);
         }
         info.setText(infoString);
         desireBar.setRating((float)desire);
         amountBought.setText("Amount Bought : " + purchased + " / " + amount);
     }
 
+    /**
+     * Starts the EditProductActivity to allow edition of the currently viewed product
+     * @param pID the product to be edited
+     */
     void switchToEdit(int pID){
         Intent intent=new Intent(this, EditProductActivity.class);
         intent.putExtra("productID",pID);
         startActivityForResult(intent,1);
     }
 
+    /**
+     * Starts the EditProductActivity to allow edition of currently viewed product, and then
+     * allows addition of that newly edited product to one of the user's wishlists.
+     * @param pID
+     */
     void switchToAdd(int pID){
         Log.d(TAG, "switchToAdd: pID is" + pID);
         Intent intent = new Intent(this,EditProductActivity.class);
@@ -192,12 +225,23 @@ public class ViewProductActivity extends AppCompatActivity {
         intent.putExtra("copyProduct",true);
         startActivityForResult(intent,2);
     }
+
+    /**
+     * Ends the activity if the back button is pressed.
+     * @param view
+     */
     public void onBackPressed(View view) {
         final Intent returnIntent = new Intent();
-        setResult(RESULT_OK,returnIntent);
+        setResult(Activity.RESULT_OK,returnIntent);
         finish();
     }
 
+    /**
+     * Launches when the buy button is pressed in the toolbar. Asks the user how many products they
+     * want to buy, based on how many were already offered by other users and the total amount the
+     * owner of the product asked for.
+     * @param view
+     */
     public void onBuyPressed(View view){
         final Product buyProduct = productDatabaseHelper.getProductFromID(productID);
         RelativeLayout linearLayout = new RelativeLayout(this);
@@ -211,7 +255,7 @@ public class ViewProductActivity extends AppCompatActivity {
         aNumberPicker.setMinValue(1);
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(50, 50);
-        RelativeLayout.LayoutParams numPicerParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams numPicerParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         numPicerParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
 
         linearLayout.setLayoutParams(params);
@@ -223,7 +267,7 @@ public class ViewProductActivity extends AppCompatActivity {
         alertDialogBuilder.setView(linearLayout);
         alertDialogBuilder
                 .setCancelable(false)
-                .setPositiveButton("Ok",
+                .setPositiveButton("OK",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,
                                                 int id) {
@@ -241,44 +285,61 @@ public class ViewProductActivity extends AppCompatActivity {
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
-    void buyAmount(int amount,Product buyProduct){
+
+    /**
+     * Is called when the user presses "OK" on the dialog box when offering a product.
+     * Accesses the database and updates the product view
+     * @param amount the amount of products that were purchased
+     * @param buyProduct the currently edited product, used to modify the item in the database
+     */
+    void buyAmount(int amount, Product buyProduct){
         if(amount==0){
             return;
         }else{
             buyProduct.setPurchased(buyProduct.getPurchased() + amount);
-            productDatabaseHelper.updateProduct(buyProduct,productID);
-            DateWish date = new DateWish(); // + Comment on récupère la date via l'appli ? psk ca me semble bizzare ..
+            productDatabaseHelper.updateProduct(buyProduct, productID);
+            DateWish date = new DateWish();
             Date currentTime = Calendar.getInstance().getTime();
             date.setDateAndHour(currentTime);
-            Purchase achat = new Purchase(userID,receiverID,productID,amount,date);
+            Purchase achat = new Purchase(userID, receiverID, productID,amount,date);
             purchaseDatabaseHelper.addPurchase(achat);
             displayProductInfo(buyProduct);
         }
     }
 
+    /**
+     * Is called when the user presses the "delete" button in the toolbar. Removes the instances of
+     * the product from its wishlist but not from the product database (kept for purchase history)
+     */
     void deleteProduct(){
         wishlistDatabaseHelper = new WishlistDatabaseHelper(this);
         wishlistDatabaseHelper.deleteProductInAllWishlist(productID);
         final Intent returnIntent = new Intent();
-        setResult(RESULT_OK,returnIntent);
+        setResult(Activity.RESULT_OK,returnIntent);
         finish();
     }
 
+    /**
+     * Used when returning from EditProductActivity after editing a product
+     * @param requestCode = 1 or 2, depending on the reason the activity was called
+     * @param resultCode = RESULT_OK if the product was indeed edited (and not canceled)
+     * @param data intent for transferring data from activity to activity
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
 
-            if (resultCode == RESULT_OK) {
+            if (resultCode == Activity.RESULT_OK) {
                 displayProductInfo(productDatabaseHelper.getProductFromID(productID));
             }
-            if (resultCode == RESULT_CANCELED) {
+            if (resultCode == Activity.RESULT_CANCELED) {
                 //Do nothing?
             }
         }
         else if(requestCode==2){
-            if(resultCode==RESULT_OK){
+            if(resultCode== Activity.RESULT_OK){
                 final Wishlist[] chosenWishlist = {null};
                 final Integer[] chosenWishlistID = {null};
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -289,7 +350,7 @@ public class ViewProductActivity extends AppCompatActivity {
                 displayProductInfo(productDatabaseHelper.getProductFromID(tempProductID));
                 builder.setTitle("Choose a wishlist");
                 wishlistDatabaseHelper = new WishlistDatabaseHelper(this);
-                final ArrayList<Wishlist> wishlists =  wishlistDatabaseHelper.getUserWishlist(userID);
+                final ArrayList<Wishlist> wishlists = wishlistDatabaseHelper.getUserWishlist(userID);
                 String[] wishlistNames = new String[wishlists.size()];
                 for (int i = 0; i < wishlists.size(); i++) {
                     wishlistNames[i] = wishlists.get(i).getName();
@@ -319,7 +380,13 @@ public class ViewProductActivity extends AppCompatActivity {
             }
         }
 
-    }//onActivityResult
+    }
+
+    /**
+     * Called from the dialog box that asks to choose a wishlist to copy the product to.
+     * @param chosenWishlistID the ID of the selected wishlist.
+     * @param productID the ID of the current product that shall be copied to the wishlist.
+     */
     void confirmSelectList(int chosenWishlistID, int productID){
         if(chosenWishlistID==-1){
             Log.d(TAG, "onActivityResult: chosenWishlist null");

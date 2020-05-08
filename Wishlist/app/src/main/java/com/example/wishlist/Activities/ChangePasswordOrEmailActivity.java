@@ -32,21 +32,21 @@ public class ChangePasswordOrEmailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.change_password_or_email);
-        editTextPassword=findViewById(R.id.newPswrd);
-        editTextMail=findViewById(R.id.newmail);
-        editTextConfirmPassword=findViewById(R.id.confirmPswrd);
-        textViewEmail=findViewById(R.id.wrongEmail);
-        textViewPassword=findViewById(R.id.wrongPassword);
-        textViewConfPassword=findViewById(R.id.wrongConfirmPassword);
-        dbHelper= new UserDatabaseHelper(getApplicationContext());
-        Intent intent=getIntent();
+        editTextPassword = findViewById(R.id.newPswrd);
+        editTextMail = findViewById(R.id.newmail);
+        editTextConfirmPassword = findViewById(R.id.confirmPswrd);
+        textViewEmail = findViewById(R.id.wrongEmail);
+        textViewPassword = findViewById(R.id.wrongPassword);
+        textViewConfPassword = findViewById(R.id.wrongConfirmPassword);
+        dbHelper = new UserDatabaseHelper(getApplicationContext());
+        Intent intent= getIntent();
 
         //Get UserID and go back to login if there is no
         SharedPreferences prefs = this.getSharedPreferences(
                 "com.example.app", Context.MODE_PRIVATE);
         int tmpUserID=prefs.getInt("userID",-1);
         if (tmpUserID!=-1){
-            userID=tmpUserID;
+            userID =tmpUserID;
         }
         else{//If no userID go back to LoginActivity
             Toast toast=Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT);
@@ -54,7 +54,7 @@ public class ChangePasswordOrEmailActivity extends AppCompatActivity {
             Intent backToLogin=new Intent(this,LoginActivity.class);
         }
 
-        user=dbHelper.getUserFromID(userID);
+        user = dbHelper.getUserFromID(userID);
         editTextMail.setText(user.getEmail());
         editTextPassword.setText(user.getPassword());
         editTextConfirmPassword.setText(user.getPassword());
@@ -76,7 +76,7 @@ public class ChangePasswordOrEmailActivity extends AppCompatActivity {
             textViewPassword.setText("Your password must contain at least 1 uppercase letter");
             return false;
         }
-        boolean containsNumber=containsNumber(password);
+        boolean containsNumber= containsNumber(password);
         if (!containsNumber){
             textViewPassword.setText("Your password must contain at least 1 number");//comment on dit chiffre?
             return false;
@@ -115,18 +115,18 @@ public class ChangePasswordOrEmailActivity extends AppCompatActivity {
         }
     }
     public void updatePassword(View view){
-        String password=editTextPassword.getText().toString();
-        String confirmPassword=editTextConfirmPassword.getText().toString();
-        String mail=editTextMail.getText().toString();
-        if (checkEmail(mail)&checkPassword(password)){
+        String password= editTextPassword.getText().toString();
+        String confirmPassword= editTextConfirmPassword.getText().toString();
+        String mail= editTextMail.getText().toString();
+        if (checkEmail(mail)& checkPassword(password)){
             if (password.equals(confirmPassword)){
                 user.setPassword(password);
                 user.setEmail(mail);
-                dbHelper.updateUser(user,userID);
+                dbHelper.updateUser(user, userID);
                 Toast toast=Toast.makeText(this,"Account updated",Toast.LENGTH_SHORT);
                 toast.show();
                 Intent intent=new Intent(this,MainMenuActivity.class);
-                intent.putExtra("userID",userID);
+                intent.putExtra("userID", userID);
                 startActivity(intent);
             }
             else {

@@ -27,12 +27,12 @@ public class CreateNewAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_new_account_v2);
         //Set different view/Edit
-        editTextMail= (EditText)findViewById(R.id.newmail);
-        editTextPassword= (EditText)findViewById(R.id.newPswrd);
-        editTextConfPswrd= (EditText) findViewById(R.id.confirmPswrd);
-        textViewPassword=(TextView) findViewById(R.id.wrongPassword);
-        textViewEmail=(TextView) findViewById(R.id.wrongEmail);
-        textViewConfPassword=(TextView) findViewById(R.id.wrongConfirmPassword);
+        editTextMail = findViewById(R.id.newmail);
+        editTextPassword = findViewById(R.id.newPswrd);
+        editTextConfPswrd = findViewById(R.id.confirmPswrd);
+        textViewPassword = findViewById(R.id.wrongPassword);
+        textViewEmail = findViewById(R.id.wrongEmail);
+        textViewConfPassword = findViewById(R.id.wrongConfirmPassword);
 
         //Je sais pas ce que c'est autofill mais ça à l'air stylé -> à voir plus tard
         editTextMail.setAutofillHints(View.AUTOFILL_HINT_EMAIL_ADDRESS);
@@ -65,7 +65,7 @@ public class CreateNewAccountActivity extends AppCompatActivity {
             textViewPassword.setText("Your password must contain at least 1 uppercase letter");
             return false;
         }
-        boolean containsNumber=containsNumber(password);
+        boolean containsNumber= containsNumber(password);
         if (!containsNumber){
             textViewPassword.setText("Your password must contain at least 1 number");//comment on dit chiffre?
             return false;
@@ -102,8 +102,8 @@ public class CreateNewAccountActivity extends AppCompatActivity {
     public void checkSignInInfo(View view){
         String mail= editTextMail.getText().toString();
         String password= editTextPassword.getText().toString();
-        String confirmPassword=editTextConfPswrd.getText().toString();
-        if(checkEmail(mail)&checkPassword(password)){
+        String confirmPassword= editTextConfPswrd.getText().toString();
+        if(checkEmail(mail)& checkPassword(password)){
             if(password.equals(confirmPassword)){
                 Intent intent =new Intent(this,CreateProfileActivity.class);
                 intent.putExtra("mail",mail);

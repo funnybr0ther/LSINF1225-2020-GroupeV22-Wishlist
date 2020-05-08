@@ -11,8 +11,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
-import com.example.wishlist.Class.Purchase;
-
 import java.util.ArrayList;
 
 public class PurchaseDatabaseHelper extends SQLiteOpenHelper {
@@ -66,7 +64,7 @@ public class PurchaseDatabaseHelper extends SQLiteOpenHelper {
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             int purchaseID = cursor.getInt(cursor.getColumnIndex(PURCHASE_COL0));
-            Purchase purchase=getPurchaseFromID(purchaseID);
+            Purchase purchase= getPurchaseFromID(purchaseID);
             purchases.add(purchase);
             cursor.moveToNext();
         }
@@ -86,10 +84,10 @@ public class PurchaseDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Purchase> getUserHistory(int userID){  // Quand bénéficiaire = user
-        SQLiteDatabase db=getReadableDatabase();
+        SQLiteDatabase db= getReadableDatabase();
         ArrayList<Purchase> purchases = new ArrayList<Purchase>();
         String[] condition ={String.valueOf(userID)};
-        String selection=PURCHASE_COL2+" =?";
+        String selection= PURCHASE_COL2 +" =?";
         Cursor cursor=db.query(PURCHASE_TABLE_NAME,null,selection,condition,null,null,null);
         /*if(cursor.getCount() == -1){
             cursor.close();
@@ -98,7 +96,7 @@ public class PurchaseDatabaseHelper extends SQLiteOpenHelper {
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             int purchaseID = cursor.getInt(cursor.getColumnIndex(PURCHASE_COL0));
-            Purchase purchase=getPurchaseFromID(purchaseID);
+            Purchase purchase= getPurchaseFromID(purchaseID);
             purchases.add(purchase);
             cursor.moveToNext();
         }
@@ -107,9 +105,9 @@ public class PurchaseDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public Purchase getPurchaseFromID(int purchaseID){  // Pour accéder à un Purchase spécifique
-        SQLiteDatabase db=getReadableDatabase();
+        SQLiteDatabase db= getReadableDatabase();
         String[] condition ={String.valueOf(purchaseID)};
-        String selection=PURCHASE_COL0+" =?";
+        String selection= PURCHASE_COL0 +" =?";
         Cursor cursor=db.query(PURCHASE_TABLE_NAME,null,selection,condition,null,null,null);
         if (cursor.getCount()==0){
             cursor.close();
@@ -123,7 +121,7 @@ public class PurchaseDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public int deletePurchase(int purchaseID){
-        SQLiteDatabase db=this.getWritableDatabase();
-        return db.delete(PURCHASE_TABLE_NAME,PURCHASE_COL0+"=?",new String[] {String.valueOf(purchaseID)});
+        SQLiteDatabase db= this.getWritableDatabase();
+        return db.delete(PURCHASE_TABLE_NAME, PURCHASE_COL0 +"=?",new String[] {String.valueOf(purchaseID)});
     }
 }

@@ -80,7 +80,7 @@ public class WishlistDatabaseHelper extends SQLiteOpenHelper {
 
     //WISHLIST DETAIL
     public int[] getProducts(int wishlistID){
-        SQLiteDatabase db=getReadableDatabase();
+        SQLiteDatabase db= getReadableDatabase();
         String strSql = "SELECT " + USER_COL1_A + " FROM " + USER_TABLE_NAME_A + " WHERE " + USER_COL0_A + " = '" + wishlistID + "'";
         Cursor cursor = db.rawQuery(strSql, null);
 
@@ -105,7 +105,7 @@ public class WishlistDatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(USER_COL0_B,userID);
         contentValues.put(USER_COL1_B,wishlistID);
         contentValues.put(USER_COL2_B,newName);
-        int err=db.update(USER_TABLE_NAME_B,contentValues,USER_COL1_B+" = ?",new String[]{String.valueOf(wishlistID)});
+        int err=db.update(USER_TABLE_NAME_B,contentValues, USER_COL1_B +" = ?",new String[]{String.valueOf(wishlistID)});
         return err!=-1;
     }
 
@@ -131,7 +131,7 @@ public class WishlistDatabaseHelper extends SQLiteOpenHelper {
 
     //WISHLIST DETAIL
     public boolean addProduct(int productID, int wishlistID){
-        SQLiteDatabase db=getWritableDatabase();
+        SQLiteDatabase db= getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(USER_COL0_A,wishlistID);
         contentValues.put(USER_COL1_A,productID);
@@ -142,7 +142,7 @@ public class WishlistDatabaseHelper extends SQLiteOpenHelper {
     //WISHLIST
     public boolean addWishlist(String name, int userID){
 
-        SQLiteDatabase db=getWritableDatabase();
+        SQLiteDatabase db= getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(USER_COL0_B,userID);
         contentValues.put(USER_COL2_B,name);
@@ -157,7 +157,7 @@ public class WishlistDatabaseHelper extends SQLiteOpenHelper {
     }
     //WISHLIST
     public ArrayList<Wishlist> getUserWishlist(int userID){
-        SQLiteDatabase db=getReadableDatabase();
+        SQLiteDatabase db= getReadableDatabase();
         ArrayList<Wishlist> wishlists = new ArrayList<Wishlist>();
 
         String strSql = "SELECT " + USER_COL1_B +", " + USER_COL2_B + " FROM " + USER_TABLE_NAME_B + " WHERE " + USER_COL0_B + " = '" + userID + '\'' ;
