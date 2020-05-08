@@ -5,7 +5,7 @@ Ce répertoire contient les fichiers suivants :
 				            - des différents layout Wishlist/app/src/main/res/layout
 				            - des différentes valeurs utilisées (couleurs, logo, etc..) : Wishlist/app/src/main/res/values
 
--userManual.txt : le document qui vous assure une prise en main rapide de notre application.
+- userManual.txt : le document qui vous assure une prise en main rapide de notre application.
 
 - README.md : ce document
 
