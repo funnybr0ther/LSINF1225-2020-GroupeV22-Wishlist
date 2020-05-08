@@ -6,26 +6,37 @@
     android:orientation="horizontal"
     android:weightSum="100">
 
-    <TextView
-        android:id="@+id/followName"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="100"
-        android:lines="1"
-        android:padding="15dp"
-        android:textColor="@color/design_default_color_on_primary"
-        android:textSize="30sp" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/followName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:padding="10dp"
+            android:textColor="@color/design_default_color_on_primary"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/followRelation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:layout_gravity="top"
+            android:textSize="25sp"
+            android:layout_marginLeft="50dp" />
+    </LinearLayout>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/followPicture"
-        android:contentDescription="@string/followListPPdescr"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_margin="5dp"/>
+        android:layout_margin="5dp"
+        android:contentDescription="@string/followListPPdescr" />
 
 
 </LinearLayout>

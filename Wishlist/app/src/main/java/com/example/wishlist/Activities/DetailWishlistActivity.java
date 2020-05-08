@@ -6,11 +6,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wishlist.Adapters.ProductAdapter;
 import com.example.wishlist.Class.Product;
@@ -21,7 +25,7 @@ import com.example.wishlist.R;
 
 import java.util.ArrayList;
 
-public class DetailWishlistActivity extends AppCompatActivity {
+public class DetailWishlistActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private int userID;
     private int wishlistID;
@@ -29,6 +33,7 @@ public class DetailWishlistActivity extends AppCompatActivity {
     ArrayList<Product> products;
     private boolean isMyWishlist;
     private int receiverID;
+
 
     /**
      *Display a custom layout for the user
@@ -78,6 +83,12 @@ public class DetailWishlistActivity extends AppCompatActivity {
             ((ViewGroup) changeName.getParent()).removeView(changeName);
         }
 
+        //spinner
+        Spinner spinnerProduct = findViewById(R.id.spinnerProduct);
+        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this,R.array. sortProduct, android.R.layout.simple_spinner_item);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerProduct.setAdapter(spinnerAdapter);
+        spinnerProduct.setOnItemSelectedListener(this);
     }
 
     /**
@@ -199,5 +210,79 @@ public class DetailWishlistActivity extends AppCompatActivity {
      */
     public void onBackPressed(View view) {
         onBackPressed();
+    }
+
+    /**
+     * Sort the product from the cheapest to the more expensive
+     * @param p ArrayList of Product
+     * @return ArrayList of Product sort
+     */
+    public ArrayList<Product> sortProductByPriceUp(ArrayList<Product> p){
+        int size = p.size();
+        for(int i = 0; i < size; i++){
+            int minI = i;
+            for (int j = i+1; j < size; j++){
+                if(p.get(j).getPrice() < p.get(minI).getPrice()){
+                    minI = j;
+                }
+            }
+            Product temp = p.get(minI);
+            p.set(minI,p.get(i));
+            p.set(i,temp);
+        }
+        return p;
+    }
+
+    /**
+     * Sort the product from the more expensive to the cheapest
+     * @param p ArrayList of Product
+     * @return ArrayList of Product sort
+     */
+    public ArrayList<Product> sortProductByPriceDown(ArrayList<Product> p){
+        int size = p.size();
+        for(int i = 0; i < size; i++){
+            int maxI = i;
+            for (int j = i+1; j < size; j++){
+                if(p.get(j).getPrice() > p.get(maxI).getPrice()){
+                    maxI = j;
+                }
+            }
+            Product temp = p.get(maxI);
+            p.set(maxI,p.get(i));
+            p.set(i,temp);
+        }
+        return p;
+    }
+
+    /**
+     * Spinner
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String text = parent.getItemAtPosition(position).toString();
+        if(position == 0){
+            layoutUpdate();
+        }else if(position == 1){
+            ListView wishlistListView = findViewById(R.id.wishlist_DetailView);
+            ArrayList<Product> p = sortProductByPriceUp(products);
+            wishlistListView.setAdapter(new ProductAdapter(this, p));
+        }else if(position == 2) {
+            ListView wishlistListView = findViewById(R.id.wishlist_DetailView);
+            ArrayList<Product> p = sortProductByPriceDown(products);
+            wishlistListView.setAdapter(new ProductAdapter(this, p));
+        }
+    }
+
+    /**
+     * spinner do nothing
+     * @param parent
+     */
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
