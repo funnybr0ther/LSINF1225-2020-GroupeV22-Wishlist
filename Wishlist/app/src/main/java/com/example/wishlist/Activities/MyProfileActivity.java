@@ -43,7 +43,6 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
     private int userID;
     private final int MY_PERMISSIONS_REQUEST=45;
     private Bitmap image;
-    private boolean editMode;
     //Button
     private ImageButton modifyButton;
     private ImageButton activeEditModeButton;
@@ -92,9 +91,11 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
     private RelativeLayout relativeLayoutFavoriteColor;
     private RelativeLayout relativeLayoutSpinnersDate;
 
-    /*
-     * get the index of a string in a specified spinner
-     * Set 0 (->default item of the spinner) if string isn't in the spinner
+    /**
+     * Function to get the index of a string in a spinner
+     * @param spinner
+     * @param myString
+     * @return the index if the string is in the spinner 0 (basic position of spinner) otherwise
      */
     private int getIndex(Spinner spinner, String myString){
         for (int i=0;i<spinner.getCount();i++){
@@ -110,13 +111,19 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
         onBackPressed();
     }
 
+    /**
+     * Look if any User is declared connected by shared preference
+     * -> If one user is connected :
+     *      - assign the views to their global variables and set the onClickListener of camera logo
+     *      - get user from his id and assign it to the global variable user
+     *      - fill the information about user
+     * -> Go to login activity otherwise
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_profile);
-        //Get the userID then create user with information in db relative to that ID
-        Intent intent= getIntent();
-
         //Get UserID and go back to login if there is no
         SharedPreferences prefs = this.getSharedPreferences(
                 "com.example.app", Context.MODE_PRIVATE);
@@ -129,9 +136,7 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
             toast.show();
             Intent backToLogin=new Intent(this,LoginActivity.class);
         }
-
         UserDatabaseHelper dbHelper= new UserDatabaseHelper(getApplicationContext());
-
         user =dbHelper.getUserFromID(userID);
 
         //Rely variable with layout
@@ -181,7 +186,7 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
         relativeLayoutSize = findViewById(R.id.layoutSize);
         relativeLayoutSpinnersDate = findViewById(R.id.layoutSpinnersDate);
         //Set the mode to view
-        if(!editMode) visibleMode();
+        visibleMode();
         //Set function onclick of camera logo
         cameraLogo.setOnClickListener(new View.OnClickListener() {
             //Check permission to take photo and access storage then create ChangePhotoDialogEdit
@@ -205,15 +210,14 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
         });
     }
 
-    /*
-     *Make some change in the layout to able edit profile :
-     * -change visibility of layout
-     * -change some text (add * for required information)
-     * -fill editTexts and spinners with actual information
-     * -eventually set some layout visible if there where not in view mode
+    /**
+     * Make some change in the layout to able edit profile :
+     *      - change visibility of layout
+     *      - change some text (add * for required information)
+     *      - fill editTexts and spinners with actual information
+     *      - eventually set some layout visible if there where not in view mode
      */
     public void editMode(){
-        editMode =true;
         activeEditModeButton.setVisibility(View.GONE);
         modifyButton.setVisibility(View.VISIBLE);
         //set visibleMode when click on backArrow (-> no change in profile)
@@ -282,17 +286,16 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
         visibleMode();
     }
 
-    /*
-     *Make some change in the layout for the view profile :
-     * -change visibility of layout
-     * -change some text (take off * of required information)
-     * -fill textViews with actual information
-     * -eventually set visibility of some layout to gone if we have no information about that
-     * (ex : shoesize is undefined -> we don't see "Shoe size :")
+    /**
+     * Make some change in the layout for the view profile :
+     *      - change visibility of layout
+     *      - change some text (take off * of required information)
+     *      - fill textViews with actual information
+     *      - eventually set visibility of some layout to gone if we have no information about that
+     *                                   (ex : shoesize is undefined -> we don't see "Shoe size :")
      */
     @TargetApi(21)
     public void visibleMode(){
-        editMode =false;
         textViewFirstName.setText(R.string.firstNameWithout);
         textViewLastName.setText(R.string.lastNameWithout);
         textViewAddressLine1.setText(R.string.addressLine1Without);
@@ -387,6 +390,13 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
         }
     }
 
+    /**
+     * Check if the date is correct
+     * @param day
+     * @param month
+     * @param year
+     * @return boolean
+     */
     public boolean checkDate(int day, String month, int year) {
         if (day == 29 && month.equals( "February")) return year % 4 == 0;
         if (day > 29 && month.equals("February")) return false;
@@ -396,17 +406,26 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
         return true;
     }
 
+    /**
+     * Check if the string without strange character as #/? is not empty
+     * @param str
+     * @return boolean
+     */
     public boolean checkStringIsCorrect(String str) {
         str = str.replaceAll("[^\\w]", "");
         return str.length() > 0;
     }
 
     public void editMode(View view){
-        editMode();}
-    /*
+        editMode();
+    }
+
+
+    /**
      * Update User in the database with the new information collected
      * Give some information to the user if he doesn't fill anything well
      * Almost same function than createUser in CreateProfileActivity
+     * @param view
      */
     public void updateUser(View view){
         int numberError = 0;
@@ -425,7 +444,6 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
             editTextPostalCode.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
             numberError++;
         }
-
 
         String size = spinnerSize.getSelectedItem().toString();
         String shoeSize = spinnerShoeSize.getSelectedItem().toString();
@@ -520,9 +538,10 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
         }
     }
 
-    /*
-     * 2 functions to modify the profile photo of the user
-     * Called by ChangeDialogEdit (override public interface of this class)
+
+    /**
+     * Set bitmap if it's not null in profile photo view, in global variable image and in user
+     * @param bitmap image to set in profile photo
      */
     @TargetApi(21)
     @Override
@@ -536,6 +555,12 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
             user.setProfilePhoto(image);
         }
     }
+
+    /**
+     * Transform the uri image to bitmap
+     * Set  this bitmap if it's not null in profile photo view, in global variable image and in user
+     * @param uri image to set in profile photo
+     */
     @TargetApi(21)
     @Override
     public void setUriImage(Uri uri) {

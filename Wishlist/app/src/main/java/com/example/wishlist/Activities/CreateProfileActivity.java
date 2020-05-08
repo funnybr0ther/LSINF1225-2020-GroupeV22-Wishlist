@@ -34,13 +34,15 @@ import com.example.wishlist.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+/*
+ *  Need to be start with password and email pass in extra of its intent
+ */
 public class CreateProfileActivity extends AppCompatActivity implements AddPhotoDialog.OnPhotoReceivedListener {
     private String email;
     private String password;
     private final int MY_PERMISSIONS_REQUEST = 37;
     private Bitmap image;
     private CircleImageView profilePhoto;
-    private ImageView cameraLogo;
     private EditText editTextFirstName;
     private  EditText editTextLastName;
     private EditText editTextAddressLine1;
@@ -56,7 +58,12 @@ public class CreateProfileActivity extends AppCompatActivity implements AddPhoto
     private Spinner spinnerYear;
 
 
-
+    /**
+     * Get the user mail and password pass with extra to the intent
+     * Assign the views to their global variables
+     * Set the onClickListener of the camera logo
+     * @param savedInstanceState
+     */
     @TargetApi(21)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +77,7 @@ public class CreateProfileActivity extends AppCompatActivity implements AddPhoto
 
         //Set the different View/Edit/Spinner variable
         profilePhoto = findViewById(R.id.profilePhoto);
-        cameraLogo = findViewById(R.id.logoCamera);
+        ImageView cameraLogo = findViewById(R.id.logoCamera);
         editTextFirstName = findViewById(R.id.newmail);
         editTextLastName = findViewById(R.id.getLastName);
         editTextAddressLine1 = findViewById(R.id.getAddressLine1);
@@ -118,6 +125,13 @@ public class CreateProfileActivity extends AppCompatActivity implements AddPhoto
         onBackPressed();
     }
 
+    /**
+     * Check if the date is correct
+     * @param day
+     * @param month
+     * @param year
+     * @return boolean
+     */
     public boolean checkDate(int day, String month, int year) {
         if (day == 29 && month.equals( "February")) return year % 4 == 0;
         if (day > 29 && month.equals("February")) return false;
@@ -127,22 +141,24 @@ public class CreateProfileActivity extends AppCompatActivity implements AddPhoto
         return true;
     }
 
-    /*
-    *Check if the string without strange character as #/? is not empty
+    /**
+     * Check if the string without strange character as #/? is not empty
+     * @param str
+     * @return boolean
      */
     public boolean checkStringIsCorrect(String str) {
         str = str.replaceAll("[^\\w]", "");
         return str.length() > 0;
     }
 
-    /*
-     * Function called onclick of check mark
+    /**
      * Firstly we collect the information given by the user
      * Then we check if nothing necessary is missing and if birthdate is ok
-     * If something goes wrong we stay at this activity and put some information to help the user
-     * If nothing goes wrong we go to the main menu
+     * If something goes wrong stay at this activity and put some information to help the user
+     * If nothing goes wrong go to the main menu and put the userID in shared preference
+     * @param view
      */
-    public void createUser(View view) throws Exception{
+    public void createUser(View view) {
         int numberError = 0;
         //Get the information
         String firstName = editTextFirstName.getText().toString();
@@ -255,6 +271,10 @@ public class CreateProfileActivity extends AppCompatActivity implements AddPhoto
         }
     }
 
+    /**
+     * Set bitmap if it's not null in profile photo view and in global variable image
+     * @param bitmap image to set in profile photo
+     */
     @Override
     public void getBitmapImage(Bitmap bitmap) {
         if(bitmap!=null){
@@ -263,6 +283,11 @@ public class CreateProfileActivity extends AppCompatActivity implements AddPhoto
         }
     }
 
+    /**
+     * Transform the uri image to bitmap
+     * Set  this bitmap if it's not null in profile photo view and in global variable image
+     * @param uri image to set in profile photo
+     */
     @Override
     public void getUriImage(Uri uri) {
         if(uri!=null){
