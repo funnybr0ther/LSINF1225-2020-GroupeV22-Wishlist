@@ -16,13 +16,13 @@ import java.util.ArrayList;
 public class PurchaseDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String PURCHASE_TABLE_NAME = "purchase";
-    private static final String PURCHASE_COL0 = "numAchat";
-    private static final String PURCHASE_COL1 = "numAcheteur";
-    private static final String PURCHASE_COL2 = "numReceveur";
-    private static final String PURCHASE_COL3 = "Produit";
-    private static final String PURCHASE_COL4 = "quantité";
+    private static final String PURCHASE_COL0 = "purchaseID";
+    private static final String PURCHASE_COL1 = "giverID";
+    private static final String PURCHASE_COL2 = "receiverID";
+    private static final String PURCHASE_COL3 = "product";
+    private static final String PURCHASE_COL4 = "amount";
     private static final String PURCHASE_COL5 = "date";
-    private static final String DATABASE_NAME = "wishlit.db";
+    private static final String DATABASE_NAME = "wishlist.db";
 
     public PurchaseDatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -58,6 +58,9 @@ public class PurchaseDatabaseHelper extends SQLiteOpenHelper {
         String[] condition = {String.valueOf(UserID)};
         String selection = PURCHASE_COL1 +" =?";
         Cursor cursor = db.query(PURCHASE_TABLE_NAME,null,selection,condition,null,null,null);
+        /*if(cursor.getCount() == -1){
+            cursor.close();
+            return null; }*/
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             int purchaseID = cursor.getInt(cursor.getColumnIndex(PURCHASE_COL0));
