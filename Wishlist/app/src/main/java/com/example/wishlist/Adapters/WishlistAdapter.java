@@ -27,21 +27,42 @@ public class WishlistAdapter extends BaseAdapter {
         this.inflater = LayoutInflater.from(context);
     }
 
+    /**
+     * get the number wishlists
+     * @return size of the wishlists
+     */
     @Override
     public int getCount() {
         return wishlists.size();
     }
 
+    /**
+     * get wishlist with an index in the ArrayList
+     * @param position index of the wishlist
+     * @return Wishlist at this index
+     */
     @Override
     public Wishlist getItem(int position) {
         return wishlists.get(position);
     }
 
+    /**
+     * always return 0
+     * @param position Integer
+     * @return always 0
+     */
     @Override
     public long getItemId(int position) {
         return 0;
     }
 
+    /**
+     * Create a layout personalized for each wishlist
+     * @param position Integer
+     * @param view View
+     * @param parent ViewGrouo
+     * @return a View personalized for each wishlist
+     */
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         view = inflater.inflate(R.layout.adapter_wishlist, null);
@@ -51,19 +72,16 @@ public class WishlistAdapter extends BaseAdapter {
         itemNameView.setText(name);
 
         view.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Display the wishlist content
+             * @param v View
+             */
             @Override
             public void onClick(View v) {
-                /*Intent goToDetail = new Intent(context, DetailWishlistActivity.class);
-                goToDetail.putExtra("wishlistID",list.getWishlistID());
-                goToDetail.putExtra("userID",list.getUserID());
-                goToDetail.putExtra("wishlistName",name);
-                goToDetail.putExtra("isMyWishlist",context.);
-                context.startActivity(goToDetail);*/
                 ListWishlistActivity call = (ListWishlistActivity) context;
                 call.wishlistAdapterReturn(list.getWishlistID(), list.getUserID(), name);
             }
         });
-
         return view;
     }
 }

@@ -29,6 +29,13 @@ public class ChangeWishlistNameFragment extends DialogFragment {
     private int wishlistID;
     private int userID;
 
+    /**
+     * Creation of the fragment
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return a View
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -40,6 +47,10 @@ public class ChangeWishlistNameFragment extends DialogFragment {
         btnDelete = rootView.findViewById(R.id.buttonDeleteWishlist);
 
         btnChange.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Change the wishlist name.
+             * @param v Button
+             */
             @Override
             public void onClick(View v) {
                 String newName = txtName.getText().toString();
@@ -60,6 +71,10 @@ public class ChangeWishlistNameFragment extends DialogFragment {
         });
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
+            /**
+             * delete the wishlist
+             * @param v Button
+             */
             @Override
             public void onClick(View v) {
                 WishlistDatabaseHelper db = new WishlistDatabaseHelper(getActivity().getApplicationContext());

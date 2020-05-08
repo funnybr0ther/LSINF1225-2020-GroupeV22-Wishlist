@@ -22,7 +22,6 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
     <ScrollView
-        android:background="@drawable/gifts_blur"
         android:layout_marginTop="55dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -40,7 +39,7 @@
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:textSize="40sp"
-        android:textColor="@color/goldMarzia"
+        android:textColor="@color/white"
         android:onClick="myWishlist">
     </Button>
     <Button
@@ -52,7 +51,7 @@
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:textSize="40sp"
-        android:textColor="@color/goldMarzia"
+        android:textColor="@color/white"
         android:onClick="viewHistory">
     </Button>
     <Button
@@ -64,7 +63,7 @@
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:textSize="40sp"
-        android:textColor="@color/goldMarzia"
+        android:textColor="@color/white"
         android:onClick="viewFollowList">
     </Button>
     <Button
@@ -75,7 +74,7 @@
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:textSize="40sp"
-        android:textColor="@color/goldMarzia"
+        android:textColor="@color/white"
         android:onClick="viewAllUsers">
     </Button>
 
@@ -88,7 +87,7 @@
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:textSize="40sp"
-        android:textColor="@color/goldMarzia"
+        android:textColor="@color/white"
         android:onClick="changePasswordOrEmail">
     </Button>
         </LinearLayout>

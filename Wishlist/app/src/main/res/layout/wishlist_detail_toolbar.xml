@@ -56,7 +56,7 @@
             android:scaleType="fitCenter"
             android:text="@string/wishlistDetailToolbarText"
             android:textColor="@color/white"
-            android:textSize="20sp">
+            android:textSize="25sp">
         </TextView>
 
         <ImageButton
