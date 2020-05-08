@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/productItem_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:src="@mipmap/ic_product_list"
         android:contentDescription="TODO" />
 
@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:text="@string/productItem_defaultName"
         android:textColor="@color/colorPrimary"
         android:textSize="30dp" />
@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:text="@string/productItem_defaultPrice"
         android:textColor="@color/grey"
         android:textSize="30dp" />

@@ -2,10 +2,12 @@ package com.example.wishlist.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.wishlist.Activities.DetailWishlistActivity;
@@ -74,7 +76,10 @@ public class ProductAdapter extends BaseAdapter {
         itemNameView.setText(name);
         TextView price = view.findViewById(R.id.productItem_price);
         price.setText(product.getPrice() + " € ");
-
+        ImageView icon = view.findViewById(R.id.productItem_icon);
+        if(product.getPhoto() != null) {
+            icon.setImageBitmap(product.getPhoto());
+        }
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

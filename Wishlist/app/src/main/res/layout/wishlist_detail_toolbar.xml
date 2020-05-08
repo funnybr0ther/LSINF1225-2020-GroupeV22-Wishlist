@@ -65,6 +65,7 @@
             android:contentDescription="@string/backWishlistMenu"
             android:onClick="onBackPressed"
             app:srcCompat="@drawable/ic_arrow_back_white_30dp" />
+
     </RelativeLayout>
 
 
