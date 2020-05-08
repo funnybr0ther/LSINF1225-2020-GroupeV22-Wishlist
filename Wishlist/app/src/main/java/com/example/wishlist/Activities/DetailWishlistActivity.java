@@ -30,6 +30,10 @@ public class DetailWishlistActivity extends AppCompatActivity {
     private boolean isMyWishlist;
     private int receiverID;
 
+    /**
+     *Display a custom layout for the user
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +80,9 @@ public class DetailWishlistActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Uptade the layout
+     */
     public void layoutUpdate(){
         //Va chercher dans la BDD les product d'une wishlist grace a sa wishlistID
         ListView wishlistListView = findViewById(R.id.wishlist_DetailView);
@@ -83,6 +90,10 @@ public class DetailWishlistActivity extends AppCompatActivity {
         wishlistListView.setAdapter(new ProductAdapter(this, products));
     }
 
+    /**
+     * get a ArrayList with all the products in the wishlist
+     * @return ArrayList of product
+     */
     public ArrayList<Product> getProductArray(){
         ProductDatabaseHelper dbProduct = new ProductDatabaseHelper(getApplicationContext());
         ArrayList<Product> products = new ArrayList<Product>();
@@ -93,12 +104,20 @@ public class DetailWishlistActivity extends AppCompatActivity {
         return products;
     }
 
+    /**
+     * Start an activity for create a new product
+      * @param view add product button
+     */
     public void pressAddButton(View view){
         Intent intent = new Intent(this,EditProductActivity.class);
         intent.putExtra("productID",-1);
         startActivityForResult(intent,4);
     }
 
+    /**
+     * Start a fragment in which you can manage your wishlist
+     * @param view edit wishlist button
+     */
     public void pressChangeButton(View view){
         ChangeWishlistNameFragment dialog=new ChangeWishlistNameFragment();
         Bundle args = new Bundle();
@@ -108,11 +127,19 @@ public class DetailWishlistActivity extends AppCompatActivity {
         dialog.show(this.getSupportFragmentManager(),"Change name");
     }
 
+    /**
+     * Update the layout title
+     * @param newName new name of the wishlist
+     */
     public void fragmentReturn(String newName){
         TextView title = findViewById(R.id.wishlistToolbarTitle);
         title.setText(newName);
     }
 
+    /**
+     * Start an activity with the detail of a product
+     * @param productPosition position of the product in the wishlist
+     */
     public void productDetail(int productPosition){
         Intent intent1=new Intent(this, ViewProductActivity.class);
         intent1.putExtra("productID", dbWishlist.getProducts(wishlistID)[productPosition]);
@@ -122,6 +149,12 @@ public class DetailWishlistActivity extends AppCompatActivity {
         startActivityForResult(intent1,1);
     }
 
+    /**
+     * Manage the startActivityForResult
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -142,19 +175,28 @@ public class DetailWishlistActivity extends AppCompatActivity {
         }
     }
 
-    //methode appelé apres l'ajout d'un product
+    /**
+     * Update the layout when a product is add
+     */
     public void addProductReturn(){
         ListView wishlistListView = findViewById(R.id.wishlist_DetailView);
         products = getProductArray();
         wishlistListView.setAdapter(new ProductAdapter(this, products));
     }
 
+    /**
+     * keep the layout update
+     */
     @Override
     protected void onResume() {
         super.onResume();
         layoutUpdate();
     }
 
+    /**
+     * Back to the last activity
+     * @param view
+     */
     public void onBackPressed(View view) {
         onBackPressed();
     }
