@@ -1,7 +1,7 @@
 ### LSINF1225-2020-GroupeV22-Wishlist
 Ce répertoire contient les fichiers suivants : 
 
-* Wishlist :  ce dossier principal est composé du code java (Wishlist/app/src/main/java/com/example/wishlist), des différents layout (Wishlist/app/src/main/res/layout) et des différentes valeurs utilisées comme les couleurs, les logos, etc.. (Wishlist/app/src/main/res/values).
+* Wishlist :  ce dossier principal est composé du code java (Wishlist/app/src/main/java/com/example/wishlist), des différents layouts (Wishlist/app/src/main/res/layout) et des différentes valeurs utilisées comme les couleurs, les logos, etc.. (Wishlist/app/src/main/res/values).
 
 * userManual.txt : le document qui vous assure une prise en main rapide de notre application.
 
