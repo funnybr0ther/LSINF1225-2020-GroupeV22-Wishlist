@@ -77,8 +77,10 @@ public class ProductAdapter extends BaseAdapter {
         TextView price = view.findViewById(R.id.productItem_price);
         price.setText(product.getPrice() + " € ");
         ImageView icon = view.findViewById(R.id.productItem_icon);
-        if(product.getPhoto() != null) {
-            icon.setImageBitmap(product.getPhoto());
+        Bitmap photo = product.getPhoto();
+        if(photo != null) {
+            photo = Bitmap.createScaledBitmap(photo, 100,100,true);
+            icon.setImageBitmap(photo);
         }
         view.setOnClickListener(new View.OnClickListener() {
             @Override
