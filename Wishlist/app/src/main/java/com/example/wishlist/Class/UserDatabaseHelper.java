@@ -62,7 +62,11 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    //Add user in db return false if something went wrong
+    /**
+     * Add user in db
+     * @param user
+     * @return true except if something went wrong during adding
+     */
     public boolean addUser(User user){
         SQLiteDatabase db= getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -83,7 +87,12 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         return err!=-1;
     }
 
-    //Check if any user is register with this mail and this password
+    /**
+     * Check if any user is register with this mail and this password
+     * @param mail
+     * @param password
+     * @return if couple mail password is in table userID at same row, -1 otherwise
+     */
     public int checkUser(String mail, String password){
         SQLiteDatabase db= getReadableDatabase();
         String[] projection={USER_COL0, USER_COL1, USER_COL2};
@@ -106,7 +115,10 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    //Check if mail isn't used by another user
+    /**
+     * @param mail
+     * @return true if mail isn't used by another user, false otherwise
+     */
     public boolean checkMail(String mail){
         SQLiteDatabase db= getReadableDatabase();
         String[] projection={USER_COL0, USER_COL1, USER_COL2};
@@ -118,6 +130,10 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         return sol;
     }
 
+    /**
+     * @param userID
+     * @return User class relative to userID in database
+     */
     public User getUserFromID(int userID){
         SQLiteDatabase db= getReadableDatabase();
         String[] condition ={String.valueOf(userID)};
@@ -146,6 +162,11 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         return user;
     }
+
+    /**
+     * Get all user in table
+     * @return arrayList of all user in the database
+     */
     public ArrayList<User> getAllUser(){
         SQLiteDatabase db= getReadableDatabase();
         Cursor cursor=db.rawQuery("SELECT * FROM "+ USER_TABLE_NAME,null);
@@ -174,6 +195,12 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         return users;
     }
 
+    /**
+     * Update an user in database
+     * @param user updated user
+     * @param userID userID of user to update
+     * @return true if user was correctly updated, false otherwise
+     */
     public boolean updateUser(User user, int userID){
         SQLiteDatabase db= getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -193,13 +220,12 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         int err=db.update(USER_TABLE_NAME,contentValues, USER_COL0 +" = ?",new String[]{String.valueOf(userID)});
         return err!=-1;
     }
-    //Check if the couple password UserID is present in the db
+
 
     /**
-     *
      * @param userID
      * @param password
-     * @return
+     * @return true if the couple password UserID is present in the db, false otherwise
      */
     public boolean checkPassword(int userID, String password){
         SQLiteDatabase db= getReadableDatabase();
@@ -210,7 +236,12 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         return sol;
     }
-    //return number of row delete (here max 1 as userID is a primary key)
+
+    /**
+     * Delete userID
+     * @param userID
+     * @return number of row delete ( max 1 as userID is a primary key)
+     */
     public int delete(int userID){
         SQLiteDatabase db= getWritableDatabase();
         return db.delete(USER_TABLE_NAME, USER_COL0 +"=?",new String[]{String.valueOf(userID)});
