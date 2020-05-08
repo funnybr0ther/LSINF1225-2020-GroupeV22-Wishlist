@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.Objects;
 
 public class User {
-    private Address address;  //commentraire
+    private Address address;  //commentaire
     private String firstName;
     private String lastName;
     private String email;
@@ -145,18 +145,4 @@ public class User {
         this.size = size;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return userID ==user.getUserID();
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @Override
-    public int hashCode() {
-        return Objects.hash(address, firstName, lastName, email, birthDate, password, profilePhoto, notification, favoriteColor, size, shoeSize, userID);
-    }
 }
