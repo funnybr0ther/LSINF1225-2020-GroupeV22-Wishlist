@@ -133,10 +133,10 @@ public class OtherProfileMenuActivity extends AppCompatActivity {
                 FollowDatabaseHelper helper = new FollowDatabaseHelper(getApplicationContext());
                 String rel = sp.getSelectedItem().toString();
                 helper.addFollow(userID,receiverID,rel);
+                actualiseButtons();
             }
         });
         builder.create().show();
-        actualiseButtons();
     }
 
     public void unfollowCurrentUser(View view){
