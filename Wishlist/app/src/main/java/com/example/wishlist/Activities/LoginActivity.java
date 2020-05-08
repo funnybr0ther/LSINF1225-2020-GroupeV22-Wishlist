@@ -19,6 +19,12 @@ public class LoginActivity extends AppCompatActivity {
     private EditText editTextPassword;
     private TextView wrongLogin;
 
+    /**
+     * Look if any User is declared connected by shared preference
+     * -> Send user to it's main menu if any user connected
+     * -> Let user here otherwise and assign the different views to their global variable
+     * @param savedInstanceState
+     */
     @TargetApi(21)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,19 +37,20 @@ public class LoginActivity extends AppCompatActivity {
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_v2);
-        editTextMail= (EditText)findViewById(R.id.username);
-        editTextPassword=(EditText)findViewById(R.id.password);
-        wrongLogin=(TextView) findViewById(R.id.wrongLogin);
+        editTextMail = findViewById(R.id.username);
+        editTextPassword = findViewById(R.id.password);
+        wrongLogin = findViewById(R.id.wrongLogin);
     }
 
 
-    /*
-    * Check if couple mail-password exist then go to main menu if true with userID in Extra
+    /**
+     * Check if couple mail-password exist then go to main menu if true with userID in Extra
+     * @param view
      */
     public void checkUserAccess(View view){
 
         String mail= editTextMail.getText().toString();
-        String password=editTextPassword.getText().toString();
+        String password= editTextPassword.getText().toString();
         //TextView textViewMessage=(TextView) findViewById(R.id.wrongLogin);
         UserDatabaseHelper dbHelper=new UserDatabaseHelper(getApplicationContext());
         int userID=dbHelper.checkUser(mail,password);
@@ -59,7 +66,10 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    //function called onclick of text "Still not Register"
+    /**
+     * Start new CreateNewAccountActivity
+     * @param view
+     */
     public void newAccount(View view){
         Intent intent=new Intent(this,CreateNewAccountActivity.class);
         startActivity(intent);

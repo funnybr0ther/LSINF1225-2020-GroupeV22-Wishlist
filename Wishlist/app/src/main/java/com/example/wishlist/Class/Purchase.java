@@ -2,13 +2,13 @@ package com.example.wishlist.Class;
 
 
 public class Purchase {
-    private int buyer;
-    private int receiver;
-    private int quantity;
-    private DateWish date;
-    private int productID;
+    private final int buyer;
+    private final int receiver;
+    private final int quantity;
+    private final DateWish date;
+    private final int productID;
 
-    public Purchase(int acheteurID, int beneficiaireID, int productid, int quantity,  DateWish date) {
+    public Purchase(int acheteurID, int beneficiaireID, int productid, int quantity, DateWish date) {
         this.buyer = acheteurID;
         this.receiver = beneficiaireID;
         this.quantity = quantity;

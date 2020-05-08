@@ -41,9 +41,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MyProfileActivity extends AppCompatActivity implements EditPhotoDialog.OnPhotoReceivedListener {
     private User user;
     private int userID;
-    private int MY_PERMISSIONS_REQUEST=45;
+    private final int MY_PERMISSIONS_REQUEST=45;
     private Bitmap image;
-    private boolean editMode;
     //Button
     private ImageButton modifyButton;
     private ImageButton activeEditModeButton;
@@ -92,9 +91,11 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
     private RelativeLayout relativeLayoutFavoriteColor;
     private RelativeLayout relativeLayoutSpinnersDate;
 
-    /*
-     * get the index of a string in a specified spinner
-     * Set 0 (->default item of the spinner) if string isn't in the spinner
+    /**
+     * Function to get the index of a string in a spinner
+     * @param spinner
+     * @param myString
+     * @return the index if the string is in the spinner 0 (basic position of spinner) otherwise
      */
     private int getIndex(Spinner spinner, String myString){
         for (int i=0;i<spinner.getCount();i++){
@@ -110,78 +111,82 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
         onBackPressed();
     }
 
+    /**
+     * Look if any User is declared connected by shared preference
+     * -> If one user is connected :
+     *      - assign the views to their global variables and set the onClickListener of camera logo
+     *      - get user from his id and assign it to the global variable user
+     *      - fill the information about user
+     * -> Go to login activity otherwise
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_profile);
-        //Get the userID then create user with information in db relative to that ID
-        Intent intent=getIntent();
-
         //Get UserID and go back to login if there is no
         SharedPreferences prefs = this.getSharedPreferences(
                 "com.example.app", Context.MODE_PRIVATE);
         int tmpUserID=prefs.getInt("userID",-1);
         if (tmpUserID!=-1){
-            userID=tmpUserID;
+            userID =tmpUserID;
         }
         else{//If no userID go back to LoginActivity
             Toast toast=Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT);
             toast.show();
             Intent backToLogin=new Intent(this,LoginActivity.class);
         }
-
         UserDatabaseHelper dbHelper= new UserDatabaseHelper(getApplicationContext());
-
-        user=dbHelper.getUserFromID(userID);
+        user =dbHelper.getUserFromID(userID);
 
         //Rely variable with layout
-        profilePhoto=findViewById(R.id.profilePhoto);
-        modifyButton=findViewById(R.id.modifyProfile);
-        activeEditModeButton=findViewById(R.id.modifyMode);
-        backArrow=findViewById(R.id.backArrowEditProfile);
-        cameraLogo=findViewById(R.id.logoCamera);
+        profilePhoto = findViewById(R.id.profilePhoto);
+        modifyButton = findViewById(R.id.modifyProfile);
+        activeEditModeButton = findViewById(R.id.modifyMode);
+        backArrow = findViewById(R.id.backArrowEditProfile);
+        cameraLogo = findViewById(R.id.logoCamera);
 
-        textViewFirstName=findViewById(R.id.FirstName);
-        textViewLastName=findViewById(R.id.LastName);
-        textViewAddressLine1=findViewById(R.id.AddressLine1);
-        textViewCity=findViewById(R.id.City);
-        textViewPostalCode=findViewById(R.id.PostalCode);
-        textViewCountry=findViewById(R.id.Country);
-        textViewBirthDate=findViewById(R.id.BirthDate);
+        textViewFirstName = findViewById(R.id.FirstName);
+        textViewLastName = findViewById(R.id.LastName);
+        textViewAddressLine1 = findViewById(R.id.AddressLine1);
+        textViewCity = findViewById(R.id.City);
+        textViewPostalCode = findViewById(R.id.PostalCode);
+        textViewCountry = findViewById(R.id.Country);
+        textViewBirthDate = findViewById(R.id.BirthDate);
 
-        actualFirstName=findViewById(R.id.actualFirstName);
-        actualLastName=findViewById(R.id.actualLastName);
-        actualAddressLine1=findViewById(R.id.actualAddressLine1);
-        actualAddressLine2=findViewById(R.id.actualAddressLine2);
-        actualCity=findViewById(R.id.actualCity);
-        actualPostalCode=findViewById(R.id.actualPostalCode);
-        actualCountry=findViewById(R.id.actualCountry);
-        actualSize=findViewById(R.id.actualSize);
-        actualShoeSize=findViewById(R.id.actualShoeSize);
-        actualFavoriteColor=findViewById(R.id.actualFavoriteColor);
-        actualBirthDate=findViewById(R.id.wrongBirthdate);
+        actualFirstName = findViewById(R.id.actualFirstName);
+        actualLastName = findViewById(R.id.actualLastName);
+        actualAddressLine1 = findViewById(R.id.actualAddressLine1);
+        actualAddressLine2 = findViewById(R.id.actualAddressLine2);
+        actualCity = findViewById(R.id.actualCity);
+        actualPostalCode = findViewById(R.id.actualPostalCode);
+        actualCountry = findViewById(R.id.actualCountry);
+        actualSize = findViewById(R.id.actualSize);
+        actualShoeSize = findViewById(R.id.actualShoeSize);
+        actualFavoriteColor = findViewById(R.id.actualFavoriteColor);
+        actualBirthDate = findViewById(R.id.wrongBirthdate);
 
-        editTextFirstName=findViewById(R.id.editFirstName);
-        editTextLastName=findViewById(R.id.editLastName);
-        editTextAddressLine1=findViewById(R.id.editAddressLine1);
-        editTextAddressLine2=findViewById(R.id.editAddressLine2);
-        editTextCity=findViewById(R.id.editCity);
-        editTextPostalCode=findViewById(R.id.editPostalCode);
-        editTextCountry=findViewById(R.id.editCountry);
-        spinnerSize=findViewById(R.id.spinnerSize);
-        spinnerShoeSize=findViewById(R.id.spinnerShoeSize);
-        spinnerFavoriteColor=findViewById(R.id.spinnerFavoriteColor);
-        spinnerDay=findViewById(R.id.spinnerDay);
-        spinnerMonth=findViewById(R.id.spinnerMonth);
-        spinnerYear=findViewById(R.id.spinnerYear);
+        editTextFirstName = findViewById(R.id.editFirstName);
+        editTextLastName = findViewById(R.id.editLastName);
+        editTextAddressLine1 = findViewById(R.id.editAddressLine1);
+        editTextAddressLine2 = findViewById(R.id.editAddressLine2);
+        editTextCity = findViewById(R.id.editCity);
+        editTextPostalCode = findViewById(R.id.editPostalCode);
+        editTextCountry = findViewById(R.id.editCountry);
+        spinnerSize = findViewById(R.id.spinnerSize);
+        spinnerShoeSize = findViewById(R.id.spinnerShoeSize);
+        spinnerFavoriteColor = findViewById(R.id.spinnerFavoriteColor);
+        spinnerDay = findViewById(R.id.spinnerDay);
+        spinnerMonth = findViewById(R.id.spinnerMonth);
+        spinnerYear = findViewById(R.id.spinnerYear);
 
-        relativeLayoutAddressLine2=findViewById(R.id.layoutAddressLine2);
-        relativeLayoutFavoriteColor=findViewById(R.id.layoutFavoriteColor);
-        relativeLayoutShoeSize=findViewById(R.id.layoutShoeSize);
-        relativeLayoutSize=findViewById(R.id.layoutSize);
-        relativeLayoutSpinnersDate=findViewById(R.id.layoutSpinnersDate);
+        relativeLayoutAddressLine2 = findViewById(R.id.layoutAddressLine2);
+        relativeLayoutFavoriteColor = findViewById(R.id.layoutFavoriteColor);
+        relativeLayoutShoeSize = findViewById(R.id.layoutShoeSize);
+        relativeLayoutSize = findViewById(R.id.layoutSize);
+        relativeLayoutSpinnersDate = findViewById(R.id.layoutSpinnersDate);
         //Set the mode to view
-        if(!editMode)visibleMode();
+        visibleMode();
         //Set function onclick of camera logo
         cameraLogo.setOnClickListener(new View.OnClickListener() {
             //Check permission to take photo and access storage then create ChangePhotoDialogEdit
@@ -205,15 +210,14 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
         });
     }
 
-    /*
-     *Make some change in the layout to able edit profile :
-     * -change visibility of layout
-     * -change some text (add * for required information)
-     * -fill editTexts and spinners with actual information
-     * -eventually set some layout visible if there where not in view mode
+    /**
+     * Make some change in the layout to able edit profile :
+     *      - change visibility of layout
+     *      - change some text (add * for required information)
+     *      - fill editTexts and spinners with actual information
+     *      - eventually set some layout visible if there where not in view mode
      */
     public void editMode(){
-        editMode=true;
         activeEditModeButton.setVisibility(View.GONE);
         modifyButton.setVisibility(View.VISIBLE);
         //set visibleMode when click on backArrow (-> no change in profile)
@@ -263,36 +267,35 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
         actualBirthDate.setVisibility(View.GONE);
 
         //Fill in with actual information
-        editTextPostalCode.setText(String.format("%d",user.getAddress().getPostalCode()));
+        editTextPostalCode.setText(String.format("%d", user.getAddress().getPostalCode()));
         editTextCity.setText(user.getAddress().getCity());
         editTextCountry.setText(user.getAddress().getCountry());
         editTextAddressLine1.setText(user.getAddress().getAddressLine1());
         editTextFirstName.setText(user.getFirstName());
         editTextLastName.setText(user.getLastName());
-        String[] date=user.getBirthDate().toString().split(" ");
+        String[] date= user.getBirthDate().toString().split(" ");
         spinnerDay.setSelection(getIndex(spinnerDay,date[0]));
         spinnerMonth.setSelection(getIndex(spinnerMonth,date[1]));
         spinnerYear.setSelection(getIndex(spinnerYear,date[2]));
-        spinnerFavoriteColor.setSelection(getIndex(spinnerFavoriteColor,user.getFavoriteColor()));
-        spinnerSize.setSelection(getIndex(spinnerSize,user.getSize()));
-        spinnerShoeSize.setSelection(getIndex(spinnerShoeSize,user.getShoeSize()));
+        spinnerFavoriteColor.setSelection(getIndex(spinnerFavoriteColor, user.getFavoriteColor()));
+        spinnerSize.setSelection(getIndex(spinnerSize, user.getSize()));
+        spinnerShoeSize.setSelection(getIndex(spinnerShoeSize, user.getShoeSize()));
     }
 
     public void visibleMode(View view){
         visibleMode();
     }
 
-    /*
-     *Make some change in the layout for the view profile :
-     * -change visibility of layout
-     * -change some text (take off * of required information)
-     * -fill textViews with actual information
-     * -eventually set visibility of some layout to gone if we have no information about that
-     * (ex : shoesize is undefined -> we don't see "Shoe size :")
+    /**
+     * Make some change in the layout for the view profile :
+     *      - change visibility of layout
+     *      - change some text (take off * of required information)
+     *      - fill textViews with actual information
+     *      - eventually set visibility of some layout to gone if we have no information about that
+     *                                   (ex : shoesize is undefined -> we don't see "Shoe size :")
      */
     @TargetApi(21)
     public void visibleMode(){
-        editMode=false;
         textViewFirstName.setText(R.string.firstNameWithout);
         textViewLastName.setText(R.string.lastNameWithout);
         textViewAddressLine1.setText(R.string.addressLine1Without);
@@ -342,7 +345,7 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
         actualBirthDate.setVisibility(View.VISIBLE);
 
         //Fill in with actual information
-        actualPostalCode.setText(String.format("%d",user.getAddress().getPostalCode()));
+        actualPostalCode.setText(String.format("%d", user.getAddress().getPostalCode()));
         actualCity.setText(user.getAddress().getCity());
         actualCountry.setText(user.getAddress().getCountry());
         actualAddressLine1.setText(user.getAddress().getAddressLine1());
@@ -351,7 +354,7 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
         actualBirthDate.setTextColor(getResources().getColor(R.color.black));
         actualBirthDate.setText(user.getBirthDate().toString());
         relativeLayoutSpinnersDate.setVisibility(View.GONE);
-        String addressLine2=user.getAddress().getAddressLine2();
+        String addressLine2= user.getAddress().getAddressLine2();
         if(addressLine2==null||addressLine2.toLowerCase().equals("null")||addressLine2.equals("")){
             relativeLayoutAddressLine2.setVisibility(View.GONE);
         }
@@ -359,7 +362,7 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
             relativeLayoutAddressLine2.setVisibility(View.VISIBLE);
             actualAddressLine2.setText(addressLine2);
         }
-        String favoriteColor=user.getFavoriteColor();
+        String favoriteColor= user.getFavoriteColor();
         if(favoriteColor==null||favoriteColor.toLowerCase().equals("null")||
                 favoriteColor.toLowerCase().equals("undefined")||favoriteColor.equals("")){
             relativeLayoutFavoriteColor.setVisibility(View.GONE);
@@ -368,7 +371,7 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
             relativeLayoutFavoriteColor.setVisibility(View.VISIBLE);
             actualFavoriteColor.setText(favoriteColor);
         }
-        String size=user.getSize();
+        String size= user.getSize();
         if(size==null||size.toLowerCase().equals("null")||size.toLowerCase().equals("undefined")){
             relativeLayoutSize.setVisibility(View.GONE);
         }
@@ -376,7 +379,7 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
             relativeLayoutSize.setVisibility(View.VISIBLE);
             actualSize.setText(size);
         }
-        String shoeSize=user.getShoeSize();
+        String shoeSize= user.getShoeSize();
         if(shoeSize==null||shoeSize.toLowerCase().equals("null")||
                 shoeSize.toLowerCase().equals("undefined")||shoeSize.equals("")||shoeSize.equals("0")){
             relativeLayoutShoeSize.setVisibility(View.GONE);
@@ -387,6 +390,13 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
         }
     }
 
+    /**
+     * Check if the date is correct
+     * @param day
+     * @param month
+     * @param year
+     * @return boolean
+     */
     public boolean checkDate(int day, String month, int year) {
         if (day == 29 && month.equals( "February")) return year % 4 == 0;
         if (day > 29 && month.equals("February")) return false;
@@ -396,16 +406,26 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
         return true;
     }
 
+    /**
+     * Check if the string without strange character as #/? is not empty
+     * @param str
+     * @return boolean
+     */
     public boolean checkStringIsCorrect(String str) {
         str = str.replaceAll("[^\\w]", "");
         return str.length() > 0;
     }
 
-    public void editMode(View view){editMode();}
-    /*
+    public void editMode(View view){
+        editMode();
+    }
+
+
+    /**
      * Update User in the database with the new information collected
      * Give some information to the user if he doesn't fill anything well
      * Almost same function than createUser in CreateProfileActivity
+     * @param view
      */
     public void updateUser(View view){
         int numberError = 0;
@@ -418,13 +438,12 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
         String country = editTextCountry.getText().toString();
         int postalCode=0;
         try {
-            postalCode = (int) Integer.parseInt(editTextPostalCode.getText().toString());
+            postalCode = Integer.parseInt(editTextPostalCode.getText().toString());
             editTextPostalCode.setBackgroundColor(Color.rgb(255, 255, 255));
         } catch (NumberFormatException e) {
             editTextPostalCode.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
             numberError++;
         }
-
 
         String size = spinnerSize.getSelectedItem().toString();
         String shoeSize = spinnerShoeSize.getSelectedItem().toString();
@@ -500,8 +519,8 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
             user.setShoeSize(shoeSize);
 
             UserDatabaseHelper dbHelper= new UserDatabaseHelper(getApplicationContext());
-            if(dbHelper.updateUser(user,userID)){
-                if(userID==-1){
+            if(dbHelper.updateUser(user, userID)){
+                if(userID ==-1){
                     Toast toast=Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT);
                     toast.show();
                 }else{
@@ -519,9 +538,10 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
         }
     }
 
-    /*
-     * 2 functions to modify the profile photo of the user
-     * Called by ChangeDialogEdit (override public interface of this class)
+
+    /**
+     * Set bitmap if it's not null in profile photo view, in global variable image and in user
+     * @param bitmap image to set in profile photo
      */
     @TargetApi(21)
     @Override
@@ -531,17 +551,23 @@ public class MyProfileActivity extends AppCompatActivity implements EditPhotoDia
         }
         else {
             profilePhoto.setImageBitmap(bitmap);
-            image=bitmap;
+            image =bitmap;
             user.setProfilePhoto(image);
         }
     }
+
+    /**
+     * Transform the uri image to bitmap
+     * Set  this bitmap if it's not null in profile photo view, in global variable image and in user
+     * @param uri image to set in profile photo
+     */
     @TargetApi(21)
     @Override
     public void setUriImage(Uri uri) {
         if(uri!=null){
             profilePhoto.setImageURI(uri);
             try{
-                image= MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
                 user.setProfilePhoto(image);
             }
             catch (Exception e){

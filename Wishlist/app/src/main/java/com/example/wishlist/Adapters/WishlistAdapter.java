@@ -17,9 +17,9 @@ import java.util.ArrayList;
 
 public class WishlistAdapter extends BaseAdapter {
 
-    private Context context;
-    private ArrayList<Wishlist> wishlists;
-    private LayoutInflater inflater;
+    private final Context context;
+    private final ArrayList<Wishlist> wishlists;
+    private final LayoutInflater inflater;
 
     public WishlistAdapter(Context context, ArrayList<Wishlist> wishlists){
         this.context = context;

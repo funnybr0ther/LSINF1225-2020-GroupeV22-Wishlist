@@ -18,7 +18,8 @@
             app:srcCompat="@drawable/ic_arrow_back_white_30dp"
             android:background="?attr/selectableItemBackground"
             android:layout_centerVertical="true"
-            android:onClick="onBackPressed"/>
+            android:onClick="onBackPressed"
+            android:contentDescription="TODO" />
     </RelativeLayout>
     <TextView
         android:layout_width="0dp"
@@ -31,10 +32,10 @@
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"/>
     <TextView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="end"
-        android:layout_weight="17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
         android:text="NEXT"
         android:clickable="true"
         android:layout_marginRight="10pt"

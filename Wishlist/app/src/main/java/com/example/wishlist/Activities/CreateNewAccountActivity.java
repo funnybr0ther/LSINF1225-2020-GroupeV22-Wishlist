@@ -21,21 +21,22 @@ public class CreateNewAccountActivity extends AppCompatActivity {
     private TextView textViewEmail;
     private TextView textViewConfPassword;
 
+    /**
+     * Assign the views to their relative global variable
+     * @param savedInstanceState
+     */
     @Override
     @TargetApi(26)
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_new_account_v2);
         //Set different view/Edit
-        editTextMail= (EditText)findViewById(R.id.newmail);
-        editTextPassword= (EditText)findViewById(R.id.newPswrd);
-        editTextConfPswrd= (EditText) findViewById(R.id.confirmPswrd);
-        textViewPassword=(TextView) findViewById(R.id.wrongPassword);
-        textViewEmail=(TextView) findViewById(R.id.wrongEmail);
-        textViewConfPassword=(TextView) findViewById(R.id.wrongConfirmPassword);
-
-        //Je sais pas ce que c'est autofill mais ça à l'air stylé -> à voir plus tard
-        editTextMail.setAutofillHints(View.AUTOFILL_HINT_EMAIL_ADDRESS);
+        editTextMail = findViewById(R.id.newmail);
+        editTextPassword = findViewById(R.id.newPswrd);
+        editTextConfPswrd = findViewById(R.id.confirmPswrd);
+        textViewPassword = findViewById(R.id.wrongPassword);
+        textViewEmail = findViewById(R.id.wrongEmail);
+        textViewConfPassword = findViewById(R.id.wrongConfirmPassword);
     }
 
     public void onBackPressed(View view) {
@@ -49,12 +50,14 @@ public class CreateNewAccountActivity extends AppCompatActivity {
         return false;
     }
 
-    /*
-    *Check if password :
-    * is at least 5 char long
-    * contains at least a uppercase letter
-    * contains at least a number (digit ???)
-    * Show some text or not depending of that
+    /**
+     *Check if password :
+     * is at least 5 char long
+     * contains at least a uppercase letter
+     * contains at least a number (digit ???)
+     * Show some text or not depending of that
+     * @param password password to check
+     * @return boolean
      */
     public boolean checkPassword(String password){
         if (password.length()<5){
@@ -65,19 +68,22 @@ public class CreateNewAccountActivity extends AppCompatActivity {
             textViewPassword.setText("Your password must contain at least 1 uppercase letter");
             return false;
         }
-        boolean containsNumber=containsNumber(password);
+        boolean containsNumber= containsNumber(password);
         if (!containsNumber){
-            textViewPassword.setText("Your password must contain at least 1 number");//comment on dit chiffre?
+            textViewPassword.setText("Your password must contain at least 1 number");
             return false;
         }
         textViewPassword.setText("");
         return true;
     }
 
-    /*
-    *Check if email is at least 5 char long and contains an @
-    * Show some text or not depending of that
-    */
+    /**
+     * Check if email is at least 5 char long and contains an @
+     * Then check if email is not already used by another user
+     * Show some text to help the user or not depending of that
+     * @param email
+     * @return boolean
+     */
     public boolean checkEmail(String email){
         UserDatabaseHelper dbHelper= new UserDatabaseHelper(getApplicationContext());
         if(!email.contains("@")||email.length()<5){
@@ -94,16 +100,17 @@ public class CreateNewAccountActivity extends AppCompatActivity {
         }
     }
 
-    /*
-    *Check if mail and password are good then if the two password are the same
-    * Access to CreateProfile to finish registration if nothing goes wrong
-    * Do nothing in the other case (just show some text to help the user)
+    /**
+     * Check if the password and the email are correct and if the two password are the same
+     * If all is ok start CreateProfileActivity with the mail and password put in extra
+     * Show some text to help user otherwise
+     * @param view
      */
     public void checkSignInInfo(View view){
         String mail= editTextMail.getText().toString();
         String password= editTextPassword.getText().toString();
-        String confirmPassword=editTextConfPswrd.getText().toString();
-        if(checkEmail(mail)&checkPassword(password)){
+        String confirmPassword= editTextConfPswrd.getText().toString();
+        if(checkEmail(mail)& checkPassword(password)){
             if(password.equals(confirmPassword)){
                 Intent intent =new Intent(this,CreateProfileActivity.class);
                 intent.putExtra("mail",mail);

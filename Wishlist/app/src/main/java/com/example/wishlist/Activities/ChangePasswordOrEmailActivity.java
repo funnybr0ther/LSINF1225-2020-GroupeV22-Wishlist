@@ -27,26 +27,33 @@ public class ChangePasswordOrEmailActivity extends AppCompatActivity {
     private TextView textViewConfPassword;
     private int userID;
     private User user;
-    UserDatabaseHelper dbHelper;
+    private UserDatabaseHelper dbHelper;
+
+    /**
+     * Need nothing special as parameter to be created
+     * Look if any User is declared connected by shared preference
+     * -> Set the actual password and email of the user if any connected
+     * -> Go to login activity otherwise
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.change_password_or_email);
-        editTextPassword=findViewById(R.id.newPswrd);
-        editTextMail=findViewById(R.id.newmail);
-        editTextConfirmPassword=findViewById(R.id.confirmPswrd);
-        textViewEmail=findViewById(R.id.wrongEmail);
-        textViewPassword=findViewById(R.id.wrongPassword);
-        textViewConfPassword=findViewById(R.id.wrongConfirmPassword);
-        dbHelper= new UserDatabaseHelper(getApplicationContext());
-        Intent intent=getIntent();
+        editTextPassword = findViewById(R.id.newPswrd);
+        editTextMail = findViewById(R.id.newmail);
+        editTextConfirmPassword = findViewById(R.id.confirmPswrd);
+        textViewEmail = findViewById(R.id.wrongEmail);
+        textViewPassword = findViewById(R.id.wrongPassword);
+        textViewConfPassword = findViewById(R.id.wrongConfirmPassword);
+        dbHelper = new UserDatabaseHelper(getApplicationContext());
 
         //Get UserID and go back to login if there is no
         SharedPreferences prefs = this.getSharedPreferences(
                 "com.example.app", Context.MODE_PRIVATE);
         int tmpUserID=prefs.getInt("userID",-1);
         if (tmpUserID!=-1){
-            userID=tmpUserID;
+            userID =tmpUserID;
         }
         else{//If no userID go back to LoginActivity
             Toast toast=Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT);
@@ -54,18 +61,20 @@ public class ChangePasswordOrEmailActivity extends AppCompatActivity {
             Intent backToLogin=new Intent(this,LoginActivity.class);
         }
 
-        user=dbHelper.getUserFromID(userID);
+        user = dbHelper.getUserFromID(userID);
         editTextMail.setText(user.getEmail());
         editTextPassword.setText(user.getPassword());
         editTextConfirmPassword.setText(user.getPassword());
     }
 
-    /*
+    /**
      *Check if password :
      * is at least 5 char long
      * contains at least a uppercase letter
      * contains at least a number (digit ???)
      * Show some text or not depending of that
+     * @param password password to check
+     * @return boolean
      */
     public boolean checkPassword(String password){
         if (password.length()<5){
@@ -76,7 +85,7 @@ public class ChangePasswordOrEmailActivity extends AppCompatActivity {
             textViewPassword.setText("Your password must contain at least 1 uppercase letter");
             return false;
         }
-        boolean containsNumber=containsNumber(password);
+        boolean containsNumber= containsNumber(password);
         if (!containsNumber){
             textViewPassword.setText("Your password must contain at least 1 number");//comment on dit chiffre?
             return false;
@@ -85,6 +94,7 @@ public class ChangePasswordOrEmailActivity extends AppCompatActivity {
         return true;
     }
 
+
     public boolean containsNumber(String string){
         for (char c:string.toCharArray()){
             if(Character.isDigit(c))return true;
@@ -92,9 +102,12 @@ public class ChangePasswordOrEmailActivity extends AppCompatActivity {
         return false;
     }
 
-    /*
-     *Check if email is at least 5 char long and contains an @
-     * Show some text or not depending of that
+    /**
+     * Check if email is at least 5 char long and contains an @
+     * Then check if email is not already used by another user
+     * Show some text to help the user or not depending of that
+     * @param email
+     * @return boolean
      */
     public boolean checkEmail(String email){
         UserDatabaseHelper dbHelper= new UserDatabaseHelper(getApplicationContext());
@@ -114,19 +127,26 @@ public class ChangePasswordOrEmailActivity extends AppCompatActivity {
             return true;
         }
     }
+
+    /**
+     * Check if the password and the email are correct and if the two password are the same
+     * Then update the user with the (new) mail and password if all is ok
+     * Show some text to help user otherwise
+     * @param view
+     */
     public void updatePassword(View view){
-        String password=editTextPassword.getText().toString();
-        String confirmPassword=editTextConfirmPassword.getText().toString();
-        String mail=editTextMail.getText().toString();
-        if (checkEmail(mail)&checkPassword(password)){
+        String password= editTextPassword.getText().toString();
+        String confirmPassword= editTextConfirmPassword.getText().toString();
+        String mail= editTextMail.getText().toString();
+        if (checkEmail(mail)& checkPassword(password)){
             if (password.equals(confirmPassword)){
                 user.setPassword(password);
                 user.setEmail(mail);
-                dbHelper.updateUser(user,userID);
+                dbHelper.updateUser(user, userID);
                 Toast toast=Toast.makeText(this,"Account updated",Toast.LENGTH_SHORT);
                 toast.show();
                 Intent intent=new Intent(this,MainMenuActivity.class);
-                intent.putExtra("userID",userID);
+                intent.putExtra("userID", userID);
                 startActivity(intent);
             }
             else {

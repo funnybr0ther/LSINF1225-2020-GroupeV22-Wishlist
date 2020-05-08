@@ -5,8 +5,6 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import com.example.wishlist.Class.Address;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
@@ -153,7 +151,7 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return userID==user.getUserID();
+        return userID ==user.getUserID();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)

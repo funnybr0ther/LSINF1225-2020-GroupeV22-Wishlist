@@ -2,6 +2,7 @@ package com.example.wishlist.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,15 +21,15 @@ public class MainMenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent=getIntent();
+        Intent intent= getIntent();
         SharedPreferences prefs = this.getSharedPreferences(
                 "com.example.app", Context.MODE_PRIVATE);
         int tmpUserID=prefs.getInt("userID",-1);
-        if (tmpUserID!=-1){
-            userID=tmpUserID;
+        if (tmpUserID!=-1) {
+            userID = tmpUserID;
             setContentView(R.layout.activity_main_menu);
-            TextView textView=findViewById(R.id.textView);
-            textView.setText(Integer.toString(userID));
+            //TextView textView=findViewById(R.id.textView);
+            //textView.setText(Integer.toString(userID));
         }
         /*if (intent.hasExtra("userID")){
             userID= intent.getIntExtra("userID",-1);
@@ -44,13 +45,13 @@ public class MainMenuActivity extends AppCompatActivity {
     }
     public void MyProfile(View view){
         Intent intent=new Intent(this,MyProfileActivity.class);
-        intent.putExtra("userID",userID);
+        intent.putExtra("userID", userID);
         startActivity(intent);
     }
 
     public void myWishlist(View view){
         Intent gotToWishlist=new Intent(this,ListWishlistActivity.class);
-        gotToWishlist.putExtra("userID",userID);
+        gotToWishlist.putExtra("userID", userID);
         gotToWishlist.putExtra("isMyWishlist",true);
         startActivity(gotToWishlist);
     }
@@ -67,7 +68,7 @@ public class MainMenuActivity extends AppCompatActivity {
         Bundle args = new Bundle();
         args.putInt("userID", userID);
         dialog.setArguments(args);
-        dialog.show(MainMenuActivity.this.getSupportFragmentManager(),"he");
+        dialog.show(this.getSupportFragmentManager(),"he");
     }
 
     public void viewHistory(View view){
@@ -80,19 +81,25 @@ public class MainMenuActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
     public void viewAllUsers(View view){
         Intent intent = new Intent(this, FindFollowActivity.class);
         startActivity(intent);
     }
 
+//    public void goToFriendWishlist(View view){
+//        Intent intent = new Intent(this,ListWishlistActivity.class);
+//        intent.putExtra("receiverID",1); //id de celui a qui appartient les wishlist
+//        intent.putExtra("userID",userID); //id de celui qui consulte les wishlist de ses amis
+//        intent.putExtra("isMyWishlist",false);
+//        startActivity(intent);
+//    }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
 
-            if (resultCode == RESULT_OK) {
+            if (resultCode == Activity.RESULT_OK) {
                 int pID = data.getIntExtra("newProduct",-1);
                 Toast.makeText(this, "Product ID= "+pID, Toast.LENGTH_SHORT).show();
             }

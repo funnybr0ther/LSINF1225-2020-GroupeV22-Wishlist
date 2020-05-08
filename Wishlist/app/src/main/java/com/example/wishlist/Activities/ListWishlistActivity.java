@@ -27,7 +27,7 @@ public class ListWishlistActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wishlist_list);
-        Intent intent=getIntent();
+        Intent intent= getIntent();
 
         //check si l'activité recoit bien le userID
         if (intent.hasExtra("userID")){
@@ -53,7 +53,9 @@ public class ListWishlistActivity extends AppCompatActivity  {
             ((ViewGroup) addBtn.getParent()).removeView(addBtn);
             displayID = receiverID;
         }
+    }
 
+    public void layoutUpdate(){
         //Va chercher dans la BDD les wishlist d'un utilisateur grace a son userID
         WishlistDatabaseHelper db = new WishlistDatabaseHelper(getApplicationContext());
         ArrayList<Wishlist> list = db.getUserWishlist(displayID);
@@ -67,17 +69,13 @@ public class ListWishlistActivity extends AppCompatActivity  {
         Bundle args = new Bundle();
         args.putInt("userID", userID);
         dialog.setArguments(args);
-        dialog.show(ListWishlistActivity.this.getSupportFragmentManager(),"Add list");
+        dialog.show(this.getSupportFragmentManager(),"Add list");
 
     }
 
     //methode appelé apres l'ajout d'une wishlist
     public void fragmentReturn(){
-        WishlistDatabaseHelper db = new WishlistDatabaseHelper(getApplicationContext());
-        ArrayList<Wishlist> list = db.getUserWishlist(userID);
-
-        ListView wishlistListView = findViewById(R.id.wishlist_listview);
-        wishlistListView.setAdapter(new WishlistAdapter(this, list));
+        layoutUpdate();
     }
 
     public void wishlistAdapterReturn(int wishlistID, int receiverID, String wishlistName){
@@ -86,8 +84,14 @@ public class ListWishlistActivity extends AppCompatActivity  {
         goToDetail.putExtra("receiverID",receiverID);
         goToDetail.putExtra("userID", userID);
         goToDetail.putExtra("wishlistName",wishlistName);
-        goToDetail.putExtra("isMyWishlist",isMyWishlist);
+        goToDetail.putExtra("isMyWishlist", isMyWishlist);
         this.startActivity(goToDetail);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        layoutUpdate();
     }
 
     public void onBackPressed(View view) {

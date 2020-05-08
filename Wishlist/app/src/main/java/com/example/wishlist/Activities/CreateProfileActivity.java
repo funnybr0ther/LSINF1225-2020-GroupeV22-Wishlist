@@ -34,13 +34,15 @@ import com.example.wishlist.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+/*
+ *  Need to be start with password and email pass in extra of its intent
+ */
 public class CreateProfileActivity extends AppCompatActivity implements AddPhotoDialog.OnPhotoReceivedListener {
     private String email;
     private String password;
     private final int MY_PERMISSIONS_REQUEST = 37;
     private Bitmap image;
     private CircleImageView profilePhoto;
-    private ImageView cameraLogo;
     private EditText editTextFirstName;
     private  EditText editTextLastName;
     private EditText editTextAddressLine1;
@@ -56,7 +58,12 @@ public class CreateProfileActivity extends AppCompatActivity implements AddPhoto
     private Spinner spinnerYear;
 
 
-
+    /**
+     * Get the user mail and password pass with extra to the intent
+     * Assign the views to their global variables
+     * Set the onClickListener of the camera logo
+     * @param savedInstanceState
+     */
     @TargetApi(21)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,29 +71,29 @@ public class CreateProfileActivity extends AppCompatActivity implements AddPhoto
         setContentView(R.layout.create_profile);
 
         //Get information pass with Extra in intent
-        Intent intent=getIntent();
-        email=intent.getStringExtra("mail");
-        password=intent.getStringExtra("password");
+        Intent intent= getIntent();
+        email =intent.getStringExtra("mail");
+        password =intent.getStringExtra("password");
 
         //Set the different View/Edit/Spinner variable
-        profilePhoto= findViewById(R.id.profilePhoto);
-        cameraLogo = findViewById(R.id.logoCamera);
-        editTextFirstName = (EditText) findViewById(R.id.newmail);
-        editTextLastName = (EditText) findViewById(R.id.getLastName);
-        editTextAddressLine1 = (EditText) findViewById(R.id.getAddressLine1);
-        editTextAddressLine2 = (EditText) findViewById(R.id.getAddressLine2);
-        editTextCity = (EditText) findViewById(R.id.getLocality);
-        editTextCountry = (EditText) findViewById(R.id.getCountry);
-        editTextPostalCode = (EditText) findViewById(R.id.getPostalCode);
-        spinnerSize = (Spinner) findViewById(R.id.spinnerSize);
-        spinnerShoeSize = (Spinner) findViewById(R.id.spinnerShoeSize);
-        spinnerFavoriteColor = (Spinner) findViewById(R.id.spinnerFavoriteColor);
-        spinnerDay = (Spinner) findViewById(R.id.spinnerDay);
-        spinnerMonth = (Spinner) findViewById(R.id.spinnerMonth);
-        spinnerYear = (Spinner) findViewById(R.id.spinnerYear);
+        profilePhoto = findViewById(R.id.profilePhoto);
+        ImageView cameraLogo = findViewById(R.id.logoCamera);
+        editTextFirstName = findViewById(R.id.newmail);
+        editTextLastName = findViewById(R.id.getLastName);
+        editTextAddressLine1 = findViewById(R.id.getAddressLine1);
+        editTextAddressLine2 = findViewById(R.id.getAddressLine2);
+        editTextCity = findViewById(R.id.getLocality);
+        editTextCountry = findViewById(R.id.getCountry);
+        editTextPostalCode = findViewById(R.id.getPostalCode);
+        spinnerSize = findViewById(R.id.spinnerSize);
+        spinnerShoeSize = findViewById(R.id.spinnerShoeSize);
+        spinnerFavoriteColor = findViewById(R.id.spinnerFavoriteColor);
+        spinnerDay = findViewById(R.id.spinnerDay);
+        spinnerMonth = findViewById(R.id.spinnerMonth);
+        spinnerYear = findViewById(R.id.spinnerYear);
 
         //Set the default photo
-        if(image==null){
+        if(image ==null){
             profilePhoto.setImageDrawable(getDrawable(R.drawable.ic_default_photo));
         }
 
@@ -118,6 +125,13 @@ public class CreateProfileActivity extends AppCompatActivity implements AddPhoto
         onBackPressed();
     }
 
+    /**
+     * Check if the date is correct
+     * @param day
+     * @param month
+     * @param year
+     * @return boolean
+     */
     public boolean checkDate(int day, String month, int year) {
         if (day == 29 && month.equals( "February")) return year % 4 == 0;
         if (day > 29 && month.equals("February")) return false;
@@ -127,22 +141,24 @@ public class CreateProfileActivity extends AppCompatActivity implements AddPhoto
         return true;
     }
 
-    /*
-    *Check if the string without strange character as #/? is not empty
+    /**
+     * Check if the string without strange character as #/? is not empty
+     * @param str
+     * @return boolean
      */
     public boolean checkStringIsCorrect(String str) {
         str = str.replaceAll("[^\\w]", "");
         return str.length() > 0;
     }
 
-    /*
-     * Function called onclick of check mark
+    /**
      * Firstly we collect the information given by the user
      * Then we check if nothing necessary is missing and if birthdate is ok
-     * If something goes wrong we stay at this activity and put some information to help the user
-     * If nothing goes wrong we go to the main menu
+     * If something goes wrong stay at this activity and put some information to help the user
+     * If nothing goes wrong go to the main menu and put the userID in shared preference
+     * @param view
      */
-    public void createUser(View view) throws Exception{
+    public void createUser(View view) {
         int numberError = 0;
         //Get the information
         String firstName = editTextFirstName.getText().toString();
@@ -153,7 +169,7 @@ public class CreateProfileActivity extends AppCompatActivity implements AddPhoto
         String country = editTextCountry.getText().toString();
         int postalCode=0;
         try {
-            postalCode = (int) Integer.parseInt(editTextPostalCode.getText().toString());
+            postalCode = Integer.parseInt(editTextPostalCode.getText().toString());
             editTextPostalCode.setBackgroundColor(Color.rgb(255, 255, 255));
         } catch (NumberFormatException e) {
             editTextPostalCode.setBackgroundColor(getResources().getColor(R.color.wrongInformation));
@@ -225,14 +241,14 @@ public class CreateProfileActivity extends AppCompatActivity implements AddPhoto
             //Create a DateWish with representing birthdate
             DateWish birthdate=new DateWish(dayInt,month,yearInt);
             //create an User
-            User user=new User(userAddress,firstName,lastName,email,birthdate,password);
+            User user=new User(userAddress,firstName,lastName, email,birthdate, password);
             if (!favoriteColor.equals("Undefined"))user.setFavoriteColor(favoriteColor);
             if (!size.equals("Undefined")) user.setSize(size);
-            if(image!=null) user.setProfilePhoto(image);
+            if(image !=null) user.setProfilePhoto(image);
             if (!shoeSize.equals("Undefined")) user.setShoeSize(shoeSize);
             UserDatabaseHelper dbHelper= new UserDatabaseHelper(getApplicationContext());
             if(dbHelper.addUser(user)){
-                int userID=dbHelper.checkUser(email,password);
+                int userID=dbHelper.checkUser(email, password);
                 if(userID==-1){
                     Toast toast=Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT);
                     toast.show();
@@ -255,19 +271,28 @@ public class CreateProfileActivity extends AppCompatActivity implements AddPhoto
         }
     }
 
+    /**
+     * Set bitmap if it's not null in profile photo view and in global variable image
+     * @param bitmap image to set in profile photo
+     */
     @Override
     public void getBitmapImage(Bitmap bitmap) {
         if(bitmap!=null){
             profilePhoto.setImageBitmap(bitmap);
-            image=bitmap;
+            image =bitmap;
         }
     }
 
+    /**
+     * Transform the uri image to bitmap
+     * Set  this bitmap if it's not null in profile photo view and in global variable image
+     * @param uri image to set in profile photo
+     */
     @Override
     public void getUriImage(Uri uri) {
         if(uri!=null){
             try{
-                image= ImageHelper.compress(MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri));
+                image = ImageHelper.compress(MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri));
                 profilePhoto.setImageBitmap(image);
             }
             catch (Exception e){

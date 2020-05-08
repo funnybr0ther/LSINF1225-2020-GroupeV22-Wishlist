@@ -22,7 +22,7 @@ public class FollowDatabaseHelper extends SQLiteOpenHelper {
     private static final String FOLLOW_COL2 = "relation";
 
     public FollowDatabaseHelper (@Nullable Context context){
-        super(context,DATABASE_NAME,null,1);
+        super(context, DATABASE_NAME,null,1);
     }
 
     @Override
@@ -49,12 +49,12 @@ public class FollowDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        String sqlCommand="DROP IF TABLE EXISTS " +FOLLOW_TABLE_NAME;
+        String sqlCommand="DROP IF TABLE EXISTS " + FOLLOW_TABLE_NAME;
         onCreate(db);
     }
 
     public boolean addFollow(int followerID, int followedID, String relation){
-        SQLiteDatabase db=getWritableDatabase();
+        SQLiteDatabase db= getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(FOLLOW_COL0,followerID);
         contentValues.put(FOLLOW_COL1,followedID);
@@ -63,11 +63,27 @@ public class FollowDatabaseHelper extends SQLiteOpenHelper {
         return err!=-1;
     }
 
+    public boolean checkIfFollows(int followerID, int followedID){
+        SQLiteDatabase db = getReadableDatabase();
+        String selection = FOLLOW_COL0 + " =? AND " + FOLLOW_COL1 + " =?";
+        String[] condition = {String.valueOf(followerID),String.valueOf(followedID)};
+        Cursor cursor = db.query(FOLLOW_TABLE_NAME,null,selection,condition,null,null,null);
+        boolean ret = cursor.getCount() != 0;
+        cursor.close();
+        return ret;
+    }
+
+    public void unfollow(int followerID, int followedID){
+        SQLiteDatabase db = getWritableDatabase();
+        String sqlCommand = "DELETE FROM " + FOLLOW_TABLE_NAME + " WHERE " + FOLLOW_COL1 + "= " + followedID + " AND " + FOLLOW_COL0 + "= " + followerID;
+        db.execSQL(sqlCommand);
+    }
+
     public ArrayList<Integer> getFollows(int id){
         SQLiteDatabase db = getReadableDatabase();
         String[] condition = {String.valueOf(id)};
         String[] projection = {FOLLOW_COL1};
-        String selection = FOLLOW_COL0+" =?";
+        String selection = FOLLOW_COL0 +" =?";
 
         ArrayList<Integer> followList = new ArrayList<>();
         Cursor cursor = db.query(FOLLOW_TABLE_NAME,null,selection,condition,null,null,null);

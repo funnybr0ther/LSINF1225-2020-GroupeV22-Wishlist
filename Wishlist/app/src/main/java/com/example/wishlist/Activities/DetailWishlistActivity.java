@@ -1,5 +1,6 @@
 package com.example.wishlist.Activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,7 +35,7 @@ public class DetailWishlistActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wishlist_detail);
         dbWishlist = new WishlistDatabaseHelper(getApplicationContext());
-        Intent intent=getIntent();
+        Intent intent= getIntent();
 
         //check que les elements necessaire à l'activite sont present
         if (intent.hasExtra("userID")){
@@ -73,6 +74,9 @@ public class DetailWishlistActivity extends AppCompatActivity {
             ((ViewGroup) changeName.getParent()).removeView(changeName);
         }
 
+    }
+
+    public void layoutUpdate(){
         //Va chercher dans la BDD les product d'une wishlist grace a sa wishlistID
         ListView wishlistListView = findViewById(R.id.wishlist_DetailView);
         products = getProductArray();
@@ -101,7 +105,7 @@ public class DetailWishlistActivity extends AppCompatActivity {
         args.putInt("wishlistID", wishlistID);
         args.putInt("userID", userID);
         dialog.setArguments(args);
-        dialog.show(DetailWishlistActivity.this.getSupportFragmentManager(),"Change name");
+        dialog.show(this.getSupportFragmentManager(),"Change name");
     }
 
     public void fragmentReturn(String newName){
@@ -111,10 +115,10 @@ public class DetailWishlistActivity extends AppCompatActivity {
 
     public void productDetail(int productPosition){
         Intent intent1=new Intent(this, ViewProductActivity.class);
-        intent1.putExtra("productID",dbWishlist.getProducts(wishlistID)[productPosition]);
+        intent1.putExtra("productID", dbWishlist.getProducts(wishlistID)[productPosition]);
         intent1.putExtra("receiverID", receiverID);
         intent1.putExtra("userID", userID);
-        intent1.putExtra("isMyProduct",isMyWishlist);
+        intent1.putExtra("isMyProduct", isMyWishlist);
         startActivityForResult(intent1,1);
     }
 
@@ -122,16 +126,16 @@ public class DetailWishlistActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 4){
-            if (resultCode == RESULT_OK) {
+            if (resultCode == Activity.RESULT_OK) {
                 if(data.hasExtra("newProduct")) {
                     int productID = data.getIntExtra("newProduct", -1);
-                    dbWishlist.addProduct(productID,wishlistID);
+                    dbWishlist.addProduct(productID, wishlistID);
                     addProductReturn();
                 }
             }
         }
         else if(requestCode == 1){
-            if(resultCode == RESULT_OK){
+            if(resultCode == Activity.RESULT_OK){
                 Log.d("BILIBU", "onActivityResult: update to products view");
                 addProductReturn();
             }
@@ -145,6 +149,11 @@ public class DetailWishlistActivity extends AppCompatActivity {
         wishlistListView.setAdapter(new ProductAdapter(this, products));
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        layoutUpdate();
+    }
 
     public void onBackPressed(View view) {
         onBackPressed();

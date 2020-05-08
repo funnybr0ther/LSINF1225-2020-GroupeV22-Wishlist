@@ -33,10 +33,12 @@ import com.example.wishlist.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+/*
+ *  Need to be start with otherUser pass in extra of its intent
+ */
 public class OtherProfile extends AppCompatActivity {
     private User otherUser;
     private int userID;
-    private int otherUserID;
     //Button
     private ImageButton backArrow;
 
@@ -64,6 +66,15 @@ public class OtherProfile extends AppCompatActivity {
         onBackPressed();
     }
 
+    /**
+     * Look if any User is declared connected by shared preference
+     * -> If one user is connected :
+     *      - compare to otherUserID (-> go to myProfile if it's the same)
+     *      - get other user from his id and assign it to the global variable otherUser
+     *      - fill the information about other user
+     * -> Go to login activity otherwise
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,8 +91,8 @@ public class OtherProfile extends AppCompatActivity {
         }
         //Get the other userID then compare with the actual user ID (-> send user to MyProfile if it's the same)
         Intent intent = getIntent();
-        otherUserID=intent.getIntExtra("otherUserID",-1);
-        if(otherUserID==userID){
+        int otherUserID =intent.getIntExtra("otherUserID",-1);
+        if(otherUserID == userID){
             Intent myProfileIntent=new Intent(this,MyProfileActivity.class);
             startActivity(myProfileIntent);
         }
@@ -103,7 +114,7 @@ public class OtherProfile extends AppCompatActivity {
         actualShoeSize = findViewById(R.id.actualShoeSize);
         actualFavoriteColor = findViewById(R.id.actualFavoriteColor);
         actualBirthDate = findViewById(R.id.actualBirthDate);
-        titleToolbar=findViewById(R.id.TitleOtherProfileToolbar);
+        titleToolbar = findViewById(R.id.TitleOtherProfileToolbar);
 
         relativeLayoutAddressLine2 = findViewById(R.id.layoutAddressLine2);
         relativeLayoutFavoriteColor = findViewById(R.id.layoutFavoriteColor);
@@ -112,11 +123,11 @@ public class OtherProfile extends AppCompatActivity {
         visibleMode();
     }
 
-    /*
-     *Make some change in the layout for the view profile :
-     * -fill textViews with actual information
-     * -eventually set visibility of some layout to gone if we have no information about that
-     * (ex : shoesize is undefined -> we don't see "Shoe size :")
+    /**
+     * Fill the layout :
+     *      - fill textViews with actual information
+     *      - eventually set visibility of some layout to gone if we have no information about that
+     *                                   (ex : shoesize is undefined -> we don't see "Shoe size :")
      */
     @TargetApi(21)
     public void visibleMode(){
@@ -126,16 +137,16 @@ public class OtherProfile extends AppCompatActivity {
             profilePhoto.setImageDrawable(getDrawable(R.drawable.ic_default_photo));
         }
         //Fill in with actual information
-        actualPostalCode.setText(String.format("%d",otherUser.getAddress().getPostalCode()));
+        actualPostalCode.setText(String.format("%d", otherUser.getAddress().getPostalCode()));
         actualCity.setText(otherUser.getAddress().getCity());
         actualCountry.setText(otherUser.getAddress().getCountry());
         actualAddressLine1.setText(otherUser.getAddress().getAddressLine1());
         actualFirstName.setText(otherUser.getFirstName());
         actualLastName.setText(otherUser.getLastName());
         actualBirthDate.setText(otherUser.getBirthDate().toString());
-        String title=otherUser.getFirstName()+"'s Profile";
+        String title= otherUser.getFirstName()+"'s Details";
         titleToolbar.setText(title);
-        String addressLine2=otherUser.getAddress().getAddressLine2();
+        String addressLine2= otherUser.getAddress().getAddressLine2();
         if(addressLine2==null||addressLine2.toLowerCase().equals("null")||addressLine2.equals("")){
             relativeLayoutAddressLine2.setVisibility(View.GONE);
         }
@@ -143,7 +154,7 @@ public class OtherProfile extends AppCompatActivity {
             relativeLayoutAddressLine2.setVisibility(View.VISIBLE);
             actualAddressLine2.setText(addressLine2);
         }
-        String favoriteColor=otherUser.getFavoriteColor();
+        String favoriteColor= otherUser.getFavoriteColor();
         if(favoriteColor==null||favoriteColor.toLowerCase().equals("null")||
                 favoriteColor.toLowerCase().equals("undefined")||favoriteColor.equals("")){
             relativeLayoutFavoriteColor.setVisibility(View.GONE);
@@ -152,7 +163,7 @@ public class OtherProfile extends AppCompatActivity {
             relativeLayoutFavoriteColor.setVisibility(View.VISIBLE);
             actualFavoriteColor.setText(favoriteColor);
         }
-        String size=otherUser.getSize();
+        String size= otherUser.getSize();
         if(size==null||size.toLowerCase().equals("null")||size.toLowerCase().equals("undefined")){
             relativeLayoutSize.setVisibility(View.GONE);
         }
@@ -160,7 +171,7 @@ public class OtherProfile extends AppCompatActivity {
             relativeLayoutSize.setVisibility(View.VISIBLE);
             actualSize.setText(size);
         }
-        String shoeSize=otherUser.getShoeSize();
+        String shoeSize= otherUser.getShoeSize();
         if(shoeSize==null||shoeSize.toLowerCase().equals("null")||
                 shoeSize.toLowerCase().equals("undefined")||shoeSize.equals("")||shoeSize.equals("0")){
             relativeLayoutShoeSize.setVisibility(View.GONE);

@@ -18,7 +18,8 @@
             app:srcCompat="@drawable/ic_arrow_back_white_30dp"
             android:background="?attr/selectableItemBackground"
             android:layout_centerVertical="true"
-            android:onClick="onBackPressed"/>
+            android:onClick="onBackPressed"
+            android:contentDescription="TODO" />
     </RelativeLayout>
     <TextView
         android:layout_width="0dp"
@@ -36,7 +37,8 @@
         android:layout_weight="15"
         app:srcCompat="@drawable/ic_check_black_24dp"
         android:onClick="createUser"
-        android:background="?attr/selectableItemBackground"/>
+        android:background="?attr/selectableItemBackground"
+        android:contentDescription="TODO" />
 
 
 </LinearLayout>

@@ -6,7 +6,7 @@
     <string name="createUsername">Email :</string>
     <string name="createPassword">Password :</string>
     <string name="confirmPassword">Confirm Password :</string>
-    <string name="createAccount">Still not register ?</string>
+    <string name="createAccount">Still not registered?</string>
     <string name="next">Next</string>
     <string name="firstName">First name * :</string>
     <string name="firstNameWithout">First name :</string>
@@ -315,4 +315,5 @@
     <string name="changeWishlistButton">Change</string>
     <string name="strWishlistChange">New name of your wishlist :</string>
     <string name="changeWishlistDesc">change the name of your wishlist</string>
+    <string name="productItem_defaultPrice">0 €</string>
 </resources>

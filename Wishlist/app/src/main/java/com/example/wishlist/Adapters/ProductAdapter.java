@@ -19,9 +19,9 @@ import java.util.ArrayList;
 
 public class ProductAdapter extends BaseAdapter {
 
-    private Context context;
-    private ArrayList<Product> products;
-    private LayoutInflater inflater;
+    private final Context context;
+    private final ArrayList<Product> products;
+    private final LayoutInflater inflater;
 
     public ProductAdapter(Context context, ArrayList<Product> products){
         this.context = context;
@@ -51,6 +51,8 @@ public class ProductAdapter extends BaseAdapter {
         String name = product.getName();
         TextView itemNameView = view.findViewById(R.id.productItem_name);
         itemNameView.setText(name);
+        TextView price = view.findViewById(R.id.productItem_price);
+        price.setText(product.getPrice() + " € ");
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override

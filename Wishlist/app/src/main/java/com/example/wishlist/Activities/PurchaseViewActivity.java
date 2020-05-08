@@ -3,6 +3,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,7 +29,7 @@ public class PurchaseViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_viewhistorique);
         Log.d(TAG, "onCreate: started.");
-        ListView listViewPurchases=findViewById(R.id.HistoriqueItems);
+        ListView listViewPurchases= findViewById(R.id.HistoriqueItems);
         SharedPreferences prefs = this.getSharedPreferences(
                 "com.example.app", Context.MODE_PRIVATE);
         int userID=prefs.getInt("userID",-1);
@@ -45,5 +46,9 @@ public class PurchaseViewActivity extends AppCompatActivity {
         };
         Collections.sort(list,byDateNewestFirst);
         listViewPurchases.setAdapter(new PurchaseAdapter(this,list));
+    }
+
+    public void onBackPressed(View view) {
+        onBackPressed();
     }
 }
