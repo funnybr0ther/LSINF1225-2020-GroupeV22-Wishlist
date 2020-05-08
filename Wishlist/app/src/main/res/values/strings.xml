@@ -311,9 +311,9 @@
     <string name="wishlistItem_defaultName">Wishlist</string>
     <string name="productItem_defaultName">Product</string>
     <string name="wishlistDetailToolbarText">Products</string>
-    <string name="changeWishlistFragment">New wishlist name</string>
+    <string name="changeWishlistFragment">Edit your wishlist</string>
     <string name="changeWishlistButton">Change</string>
     <string name="strWishlistChange">New name of your wishlist :</string>
-    <string name="changeWishlistDesc">Edit your wishlist</string>
+    <string name="changeWishlistDesc">Change the name of your wishlist</string>
     <string name="productItem_defaultPrice">0 €</string>
 </resources>
