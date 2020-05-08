@@ -341,7 +341,7 @@ public class ViewProductActivity extends AppCompatActivity {
         else if(requestCode==2){
             if(resultCode== Activity.RESULT_OK){
                 final Wishlist[] chosenWishlist = {null};
-                final Integer[] chosenWishlistID = {null};
+                final Integer[] chosenWishlistID = {-1};
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 final int tempProductID = data.getIntExtra("newProduct",-1);
                 if(tempProductID==-1){
@@ -387,7 +387,7 @@ public class ViewProductActivity extends AppCompatActivity {
      * @param chosenWishlistID the ID of the selected wishlist.
      * @param productID the ID of the current product that shall be copied to the wishlist.
      */
-    void confirmSelectList(int chosenWishlistID, int productID){
+    void confirmSelectList(Integer chosenWishlistID, Integer productID){
         if(chosenWishlistID==-1){
             Log.d(TAG, "onActivityResult: chosenWishlist null");
         }
