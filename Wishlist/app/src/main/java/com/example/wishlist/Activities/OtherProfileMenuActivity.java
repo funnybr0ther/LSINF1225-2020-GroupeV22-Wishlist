@@ -3,12 +3,16 @@ package com.example.wishlist.Activities;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,6 +68,7 @@ public class OtherProfileMenuActivity extends AppCompatActivity {
     }
 
     public void actualiseButtons(){
+        //Makes unfollow button visible and hides follow button id user already followed and vice versa
         FollowDatabaseHelper dbHelperF = new FollowDatabaseHelper(getApplicationContext());
 
         if(dbHelperF.checkIfFollows(userID, receiverID)){
@@ -108,20 +113,35 @@ public class OtherProfileMenuActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
     public void followCurrentUser(View view){
-        FollowDatabaseHelper helper = new FollowDatabaseHelper(getApplicationContext());
-        String relationship;
+        String[] relationships = {"Friend","Family","Colleague"};
+        final ArrayAdapter<String> adp = new ArrayAdapter<String>(OtherProfileMenuActivity.this,
+                android.R.layout.simple_spinner_item, relationships);
 
         final Spinner sp = new Spinner(OtherProfileMenuActivity.this);
-        AlertDialog.Builder builder = new AlertDialog.Builder(OtherProfileMenuActivity.this);
+        sp.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        sp.setAdapter(adp);
 
-        //helper.addFollow(userID,receiverID,"Friend");
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(OtherProfileMenuActivity.this);
+        builder.setView(sp);
+        builder.setTitle("Choose relationship");
+        builder.setMessage("What is your relationship with "+otherUser.getFirstName()+"?");
+        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                FollowDatabaseHelper helper = new FollowDatabaseHelper(getApplicationContext());
+                String rel = sp.getSelectedItem().toString();
+                helper.addFollow(userID,receiverID,rel);
+            }
+        });
+        builder.create().show();
         actualiseButtons();
     }
 
     public void unfollowCurrentUser(View view){
         FollowDatabaseHelper helper = new FollowDatabaseHelper(getApplicationContext());
-        helper.unfollow(userID, receiverID);
+        helper.unfollow(userID,receiverID);
         actualiseButtons();
     }
 }
