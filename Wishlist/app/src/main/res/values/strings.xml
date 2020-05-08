@@ -6,7 +6,7 @@
     <string name="createUsername">Email :</string>
     <string name="createPassword">Password :</string>
     <string name="confirmPassword">Confirm Password :</string>
-    <string name="createAccount">Still not registered?</string>
+    <string name="createAccount">Register an account</string>
     <string name="next">Next</string>
     <string name="firstName">First name * :</string>
     <string name="firstNameWithout">First name :</string>
@@ -302,8 +302,8 @@
     <string name="followButton">Follow</string>
     <string name="unfollowButton">Unfollow</string>
 
-    <string name="wishlistToolbarText">Whishlist</string>
-    <string name="addWishlistDesc">add a Wishlist</string>
+    <string name="wishlistToolbarText">Wishlist</string>
+    <string name="addWishlistDesc">add a wishlist</string>
     <string name="backWishlistMenu">back to main menu</string>
     <string name="strWishlistName">Name of your wishlist:</string>
     <string name="NewWishlistFragment">Create a new wishlist :</string>
@@ -311,9 +311,9 @@
     <string name="wishlistItem_defaultName">Wishlist</string>
     <string name="productItem_defaultName">Product</string>
     <string name="wishlistDetailToolbarText">Products</string>
-    <string name="changeWishlistFragment">New wishlist name</string>
+    <string name="changeWishlistFragment">Edit your wishlist</string>
     <string name="changeWishlistButton">Change</string>
     <string name="strWishlistChange">New name of your wishlist :</string>
-    <string name="changeWishlistDesc">change the name of your wishlist</string>
+    <string name="changeWishlistDesc">Change the name of your wishlist</string>
     <string name="productItem_defaultPrice">0 €</string>
 </resources>

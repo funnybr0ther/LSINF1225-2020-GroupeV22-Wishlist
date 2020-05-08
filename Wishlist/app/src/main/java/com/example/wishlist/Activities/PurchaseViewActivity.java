@@ -25,6 +25,7 @@ public class PurchaseViewActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_viewhistorique);
         Log.d(TAG, "onCreate: started.");
@@ -34,8 +35,8 @@ public class PurchaseViewActivity extends AppCompatActivity {
         int userID=prefs.getInt("userID",-1);
 
         PurchaseDatabaseHelper dbHelper=new PurchaseDatabaseHelper(getApplicationContext());
-        ArrayList<Purchase> list=dbHelper.getUserHistory(userID);   // Historique quand user = bénéficiaire
-        ArrayList<Purchase> list2 = dbHelper.getAllPurchases(userID);   // Historique quand user = acheteur
+        ArrayList<Purchase> list=dbHelper.getUserHistory(userID);
+        ArrayList<Purchase> list2 = dbHelper.getAllPurchases(userID);
         list.addAll(list2);
         Comparator<Purchase> byDateNewestFirst=new Comparator<Purchase>() {
             @Override

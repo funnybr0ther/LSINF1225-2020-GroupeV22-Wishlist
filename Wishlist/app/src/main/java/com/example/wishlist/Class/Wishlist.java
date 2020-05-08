@@ -3,11 +3,19 @@ package com.example.wishlist.Class;
 public class Wishlist {
     private String name;
     private int size;
-    private int userID;  //pas dans le diagramme UML
+    private int userID;
     private int[] productsReferences;
     private int wishlistID;
 
 
+    /**
+     * Constructor for the Wishlist class
+     * @param name the name of the wishlist
+     * @param size the number of product in the wishlist
+     * @param userID the userID of the wishlist owner
+     * @param products list of product reference that compound the wishlist
+     * @param wishlistID number that is unique to the wishlist
+     */
     public Wishlist(String name, int size, int userID, int[] products, int wishlistID ){
         this.name = name;
         this.size = size;
