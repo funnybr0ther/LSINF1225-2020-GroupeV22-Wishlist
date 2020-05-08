@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:layout_weight="100"
+    android:background="@color/colorPrimary"
+    android:gravity="center_vertical"
+    android:id="@+id/FollowListToolbar"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="10"
+        android:layout_marginLeft="20dp">
+
+        <ImageButton
+            android:id="@+id/searchUser"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/ic_search_white_30dp"
+            android:background="?attr/selectableItemBackground"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:onClick="searchMode"/>
+
+        <TextView
+            android:id="@+id/followListToolbarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/backArrowFollowList"
+            android:gravity="center_vertical"
+            android:scaleType="fitCenter"
+            android:text="@string/searchUserTitle"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp" />
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/backArrowFollowList"
+            app:srcCompat="@drawable/ic_arrow_back_white_30dp"
+            android:background="?attr/selectableItemBackground"
+            android:layout_centerVertical="true"
+            android:onClick="onBackPressed"/>
+    </RelativeLayout>
+
+
+</LinearLayout>

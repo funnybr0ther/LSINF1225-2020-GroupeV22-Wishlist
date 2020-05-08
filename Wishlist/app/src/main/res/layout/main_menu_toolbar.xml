@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
@@ -17,30 +18,25 @@
             android:scaleY="2"
             android:rotation="180"
             android:id="@+id/backArrowEditProfile"
-            android:src="@drawable/ic_exit_to_app_black_24dp"
+            app:srcCompat="@drawable/ic_exit_to_app_black_24dp"
             android:background="?attr/selectableItemBackground"
             android:layout_centerVertical="true"
             android:onClick="disconnect"/>
     </RelativeLayout>
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="70"
-        android:text="Menu"
-        android:textColor="@color/white"
-        android:textSize="25sp"
-        android:gravity="center_vertical"
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"/>
-    <ImageButton
-        android:layout_width="0dp"
-        android:id="@+id/modifyProfile"
-        android:layout_height="wrap_content"
-        android:layout_weight="15"
-        android:visibility="gone"
-        android:src="@drawable/ic_check_black_24dp"
-        android:onClick="updateUser"
-        android:background="?attr/selectableItemBackground"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="70"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:text="Menu"
+            android:textColor="@color/goldMarzia"
+            android:textSize="25sp" >
+
+        </TextView>
 
     <ImageButton
         android:id="@+id/modifyMode"
@@ -51,7 +47,7 @@
         android:layout_weight="15"
         android:background="?attr/selectableItemBackground"
         android:onClick="MyProfile"
-        android:src="@drawable/ic_my_profile"
+        app:srcCompat="@drawable/ic_my_profile"
         android:visibility="visible" />
 
 

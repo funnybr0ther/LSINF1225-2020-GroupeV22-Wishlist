@@ -1,5 +1,6 @@
 package com.example.wishlist.Fragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -29,8 +30,8 @@ public class AddWishlistFragment extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate( R.layout.fragment_add_wishlist, container, false);
         userID = getArguments().getInt("userID");
-        txtName = (EditText) rootView.findViewById(R.id.nameCreateWishlist);
-        btnCreate = (Button) rootView.findViewById(R.id.buttonCreateWishlist);
+        txtName = rootView.findViewById(R.id.nameCreateWishlist);
+        btnCreate = rootView.findViewById(R.id.buttonCreateWishlist);
 
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,10 +47,16 @@ public class AddWishlistFragment extends DialogFragment {
                     Toast toast=Toast.makeText(getContext(),"Wishlist " + listName + " created !",Toast.LENGTH_SHORT);
                     toast.show();
                 }
+                /*
                 AddWishlistFragment.this.getDialog().dismiss();
                 Intent intent = new Intent(getContext(), ListWishlistActivity.class);
                 intent.putExtra("userID",userID);
                 startActivity(intent);
+            */
+                // A suprimer si le code en dessous fonctionne
+                ListWishlistActivity callingActivity = (ListWishlistActivity) getActivity();
+                callingActivity.fragmentReturn();
+                dismiss();
             }
         });
         return rootView;

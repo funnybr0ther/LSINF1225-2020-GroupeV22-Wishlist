@@ -28,15 +28,28 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/pictureField">
+                android:id="@+id/pictureField"
+                android:layout_marginTop="40dp">
+
+                <ImageView
+                    android:id="@+id/deleteImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/productEditPhoto"
+                    app:srcCompat="@drawable/ic_delete_forever_black_24dp"
+                    android:contentDescription="TODO">
+                </ImageView>
+
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/productEditPhoto"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="30dp"
                     app:civ_border_color="@color/black"
-                    app:civ_border_width="1dp"/>
+                    app:civ_border_width="1dp"
+                    android:layout_marginTop="30dp">
+                </de.hdodenhof.circleimageview.CircleImageView>
 
                 <ImageView
                     android:id="@+id/logoCamera"
@@ -45,7 +58,8 @@
                     android:layout_below="@+id/productEditPhoto"
                     android:layout_toRightOf="@id/productEditPhoto"
                     android:layout_marginLeft="20dp"
-                    app:srcCompat="@drawable/ic_image_black_24dp" />
+                    app:srcCompat="@drawable/ic_image_black_24dp"
+                    android:contentDescription="TODO" />
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -63,15 +77,18 @@
                     android:textSize="16sp" />
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginRight="20dp"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/newName"
                     android:layout_centerVertical="true"
                     android:layout_alignBaseline="@+id/newName"
                     android:textSize="16sp"
+                    android:inputType="text"
+                    android:singleLine="true"
                     android:textColor="@color/black"
                     android:id="@+id/newNameEdit"
+                    android:maxLength="40"
                     android:maxLines="1"/>
             </RelativeLayout>
             <RelativeLayout
@@ -87,7 +104,8 @@
                     android:textSize="16sp"
                     android:text="@string/newProductDescription"
                     android:layout_centerVertical="true"
-                    android:id="@+id/newDescription"/>
+                    android:id="@+id/newDescription">
+                </TextView>
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -99,7 +117,8 @@
                     android:layout_toRightOf="@id/newDescription"
                     android:layout_centerVertical="true"
                     android:id="@+id/newDescriptionEdit"
-                    android:inputType="text"/>
+                    android:maxLength="400">
+                </EditText>
             </RelativeLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -261,6 +280,7 @@
                         android:numStars="5"
                         android:stepSize="1.0"
                         android:isIndicator="false"
+                        style="@style/AppTheme"
                         ></RatingBar>
                 </LinearLayout>
             </LinearLayout>
@@ -293,7 +313,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:inputType="number"
-                        android:id="@+id/newReceived">
+                        android:id="@+id/newReceived"
+                        android:text="0">
                     </EditText>
                     <TextView
                         android:layout_width="wrap_content"
@@ -310,7 +331,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:inputType="number"
-                        android:id="@+id/newTotal">
+                        android:id="@+id/newTotal"
+                        android:text="1">
                     </EditText>
                 </LinearLayout>
             </RelativeLayout>

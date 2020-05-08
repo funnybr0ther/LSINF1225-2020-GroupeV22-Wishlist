@@ -6,27 +6,25 @@
     android:layout_weight="100"
     android:background="@color/colorPrimary"
     android:gravity="center_vertical"
+    android:id="@+id/FollowListToolbar"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="10">
+        android:layout_weight="10"
+        android:layout_marginLeft="20dp">
 
         <ImageButton
             android:id="@+id/searchUser"
-            android:layout_width="@dimen/contextMenuHeight"
-            android:layout_height="@dimen/contextMenuHeight"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/ic_search_white_30dp"
+            android:background="?attr/selectableItemBackground"
+            android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:onClick="onBackPressed"
-            android:scaleType="fitCenter"
-            app:srcCompat="@android:drawable/ic_menu_search" />
-        <!-- foutre une vraie fonction on click -->
+            android:layout_alignParentRight="true"
+            android:onClick="searchMode"/>
 
         <TextView
             android:id="@+id/followListToolbarTitle"
@@ -39,17 +37,18 @@
             android:scaleType="fitCenter"
             android:text="@string/followListToolbartext"
             android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:textSize="25sp"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp" />
 
         <ImageButton
-            android:id="@+id/backArrowFollowList"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_centerVertical="true"
+            android:id="@+id/backArrowFollowList"
+            app:srcCompat="@drawable/ic_arrow_back_white_30dp"
             android:background="?attr/selectableItemBackground"
-            android:contentDescription="TODO"
-            android:onClick="onBackPressed"
-            app:srcCompat="@drawable/ic_arrow_back_white_30dp" />
+            android:layout_centerVertical="true"
+            android:onClick="onBackPressed"/>
     </RelativeLayout>
 
 

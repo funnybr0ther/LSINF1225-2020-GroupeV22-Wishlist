@@ -24,7 +24,7 @@ public class ChangePasswordOrEmailDialog extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        userID=getArguments().getInt("userID");
+        userID = getArguments().getInt("userID");
         final UserDatabaseHelper dbHelper=new UserDatabaseHelper(getActivity().getApplicationContext());
         View view = inflater.inflate(R.layout.dialog_change_password_or_email, container, false);
         //Cancel
@@ -43,7 +43,7 @@ public class ChangePasswordOrEmailDialog extends DialogFragment {
                 String password = checkPassword.getText().toString();
                 if (dbHelper.checkPassword(userID, password)) {
                     Intent intent = new Intent(getContext(), ChangePasswordOrEmailActivity.class);
-                    intent.putExtra("userID",userID);
+                    intent.putExtra("userID", userID);
                     startActivity(intent);
                     ChangePasswordOrEmailDialog.this.getDialog().dismiss();
                 }

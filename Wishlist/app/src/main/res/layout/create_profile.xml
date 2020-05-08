@@ -49,7 +49,8 @@
                     android:id="@+id/profilePicture"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="30dp"
-                    android:visibility="gone"/>
+                    android:visibility="gone"
+                    android:contentDescription="TODO" />
 
                 <ImageView
                     android:id="@+id/logoCamera"
@@ -58,7 +59,8 @@
                     android:layout_below="@id/profilePhoto"
                     android:layout_toRightOf="@id/profilePhoto"
                     android:layout_marginLeft="20dp"
-                    app:srcCompat="@drawable/ic_camera" />
+                    app:srcCompat="@drawable/ic_camera"
+                    android:contentDescription="TODO" />
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"

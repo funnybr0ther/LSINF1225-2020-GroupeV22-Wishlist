@@ -49,7 +49,7 @@
                     android:layout_below="@id/profilePhoto"
                     android:layout_toRightOf="@id/profilePhoto"
                     android:layout_marginLeft="20dp"
-                    android:src="@drawable/ic_camera"
+                    app:srcCompat="@drawable/ic_camera"
                     android:visibility="invisible"/>
             </RelativeLayout>
             <RelativeLayout

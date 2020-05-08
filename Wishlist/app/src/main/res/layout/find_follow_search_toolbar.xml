@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:id="@+id/SearchToolbar"
+    android:background="@drawable/rectangle_white_with_grey_bord">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="100"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp">
+
+        <ImageButton
+            android:id="@+id/backArrowFollowList"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="back Button"
+            android:onClick="viewMode"
+            app:srcCompat="@drawable/ic_arrow_green_black_30dp" />
+
+        <EditText
+            android:id="@+id/SearchEditText"
+            android:layout_width="0dp"
+            android:layout_weight="70"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginVertical="5dp"
+            android:hint="Search"
+            android:gravity="center_vertical"
+            android:scaleType="fitCenter"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            android:inputType="text"
+            android:background="@color/white"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp" />
+
+        <ImageButton
+            android:id="@+id/searchUser"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/ic_search_green_30dp"
+            android:background="?attr/selectableItemBackground"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:contentDescription="TODO" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

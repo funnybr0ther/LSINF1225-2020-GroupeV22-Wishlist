@@ -31,9 +31,9 @@ public class LoginActivity extends AppCompatActivity {
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_v2);
-        editTextMail= (EditText)findViewById(R.id.username);
-        editTextPassword=(EditText)findViewById(R.id.password);
-        wrongLogin=(TextView) findViewById(R.id.wrongLogin);
+        editTextMail = findViewById(R.id.username);
+        editTextPassword = findViewById(R.id.password);
+        wrongLogin = findViewById(R.id.wrongLogin);
     }
 
 
@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     public void checkUserAccess(View view){
 
         String mail= editTextMail.getText().toString();
-        String password=editTextPassword.getText().toString();
+        String password= editTextPassword.getText().toString();
         //TextView textViewMessage=(TextView) findViewById(R.id.wrongLogin);
         UserDatabaseHelper dbHelper=new UserDatabaseHelper(getApplicationContext());
         int userID=dbHelper.checkUser(mail,password);

@@ -5,17 +5,10 @@
     android:layout_height="match_parent">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/wishlist_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
-            android:layout_marginLeft="0dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginRight="0dp">
-            <include layout="@layout/follow_list_toolbar" />
-        </androidx.appcompat.widget.Toolbar>
+        android:layout_height="?attr/actionBarSize">
+        <include layout="@layout/follow_list_toolbar" />
+        <include layout="@layout/follow_list_search_toolbar"
+            android:visibility="gone"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
