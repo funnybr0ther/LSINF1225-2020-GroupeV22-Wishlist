@@ -60,7 +60,7 @@ public class ChangePasswordOrEmailActivity extends AppCompatActivity {
         editTextConfirmPassword.setText(user.getPassword());
     }
 
-    /*
+    /**
      *Check if password :
      * is at least 5 char long
      * contains at least a uppercase letter
@@ -92,7 +92,7 @@ public class ChangePasswordOrEmailActivity extends AppCompatActivity {
         return false;
     }
 
-    /*
+    /**
      *Check if email is at least 5 char long and contains an @
      * Show some text or not depending of that
      */
