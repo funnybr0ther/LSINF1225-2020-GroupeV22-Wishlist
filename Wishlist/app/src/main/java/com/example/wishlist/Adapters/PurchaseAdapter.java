@@ -72,7 +72,7 @@ public class PurchaseAdapter extends BaseAdapter {
         String purchaseText;
         if (getUserID() == purchase.getSender()) {
             sender = "You ";
-            purchaseText = " bought " + product + " for ";
+            purchaseText =  product;
             textViewPurchaseSender.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -100,8 +100,8 @@ public class PurchaseAdapter extends BaseAdapter {
             });
         }
         else{
-            purchaseText = " bought " + product + " for ";
-            receiver = "you.";
+            purchaseText =product;
+            receiver = "you";
             textViewPurchaseReceiver.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

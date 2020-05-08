@@ -1,5 +1,6 @@
 package com.example.wishlist.Adapters;
 
+import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wishlist.Activities.OtherProfile;
+import com.example.wishlist.Class.FollowDatabaseHelper;
 import com.example.wishlist.Class.User;
 import com.example.wishlist.R;
 
@@ -20,10 +22,14 @@ public class FollowRecyclerAdapter extends RecyclerView.Adapter<FollowRecyclerAd
 
     private final ArrayList<User> followList;
     private final FollowerOnClickListener onClickListener;
+    private final Context context;
+    private final int userID;
 
-    public FollowRecyclerAdapter(ArrayList<User> follows , FollowerOnClickListener followerOnClickListener) {
+    public FollowRecyclerAdapter(ArrayList<User> follows , FollowerOnClickListener followerOnClickListener, Context context, int userID) {
         this.followList = follows;
-        this.onClickListener =followerOnClickListener;
+        this.onClickListener = followerOnClickListener;
+        this.context = context;
+        this.userID = userID;
     }
 
     @NonNull
@@ -36,9 +42,12 @@ public class FollowRecyclerAdapter extends RecyclerView.Adapter<FollowRecyclerAd
     @Override
     public void onBindViewHolder(@NonNull Viewholder holder, int position) {
 
+        FollowDatabaseHelper dbh = new FollowDatabaseHelper(context);
+
         String full_name = followList.get(position).getFirstName()+" "+ followList.get(position).getLastName();
         holder.name.setText(full_name);
         holder.picture.setImageBitmap(followList.get(position).getProfilePhoto());
+        holder.rel.setText(dbh.getRelationship(userID,followList.get(position).getUserID())); //////////////////////////////////////////////////////////////////////////////
     }
 
     @Override
@@ -48,6 +57,7 @@ public class FollowRecyclerAdapter extends RecyclerView.Adapter<FollowRecyclerAd
      class Viewholder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView name;
+        TextView rel;
         ImageView picture;
         FollowerOnClickListener followerOnClickListener;
 
@@ -55,6 +65,7 @@ public class FollowRecyclerAdapter extends RecyclerView.Adapter<FollowRecyclerAd
             super(itemView);
              name = itemView.findViewById(R.id.followName);
              picture = itemView.findViewById(R.id.followPicture);
+             rel = itemView.findViewById(R.id.followRelation);
             this.followerOnClickListener=followerOnClickListener;
             itemView.setOnClickListener(this);
         }

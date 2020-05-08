@@ -301,6 +301,7 @@
     <string name="seeOtherUsersWishlistsButton">See wishlists</string>
     <string name="followButton">Follow</string>
     <string name="unfollowButton">Unfollow</string>
+    <string name="confirm">Done</string>
 
     <string name="wishlistToolbarText">Wishlist</string>
     <string name="addWishlistDesc">add a wishlist</string>

@@ -13,20 +13,23 @@ public class DateWish {
     SimpleDateFormat formatter = new SimpleDateFormat("d MMMM yyyy", Locale.ENGLISH);
     SimpleDateFormat formatterDateAndHour = new SimpleDateFormat("EEE MMM dd h:mm a yyyy", Locale.ENGLISH);
 
+    // 3 Constructor : create from a date, create from day (int), month (String) and year (int) or just create
     public DateWish(Date date) {
         this.date = date;
     }
     public DateWish(int day, String month, int year){
         setDate( day,  month,  year);
     }
-
     public DateWish() {
     }
 
     public Date getDate() {
         return date;
     }
+    public int compareTo(DateWish date2) {return date.compareTo(date2.getDate()); }
 
+/*--------------------------------------------------------------------------------------------------------------*/
+    //SETTER AND TO STRING FOR DATE TYPE "D MMMM YYYY" (ex: "13 February 1978")
     public void setDate(int day, String month, int year ){
         try{
             String dateStr= day + " "+month+" "+ year;
@@ -47,6 +50,8 @@ public class DateWish {
 
         }
     }
+ /*--------------------------------------------------------------------------------------------------------------*/
+    //SETTER AND TO STRING FOR DATE TYPE "EEE MMM dd h:mm a yyyy" (ex: "Fri May 08 10:34 PM 2020")
     public void setDateAndHour(Date time){
         date =time;
     }
@@ -57,7 +62,6 @@ public class DateWish {
         }catch (Exception e){}
     }
 
-    public int compareTo(DateWish date2) {return date.compareTo(date2.getDate()); }
     public String dateAndHourToString(){
         if(this.date ==null) return "Error";
         Log.d(TAG, "toD&HString: ");
