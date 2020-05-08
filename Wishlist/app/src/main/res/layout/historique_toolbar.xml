@@ -11,7 +11,7 @@
         android:id="@+id/backArrowEditproduct"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
         android:background="?attr/selectableItemBackground"
         android:contentDescription="TODO"
         android:onClick="onBackPressed"
