@@ -16,13 +16,13 @@ import java.util.ArrayList;
 public class PurchaseDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String PURCHASE_TABLE_NAME = "purchase";
-    private static final String PURCHASE_COL0 = "numAchat";
-    private static final String PURCHASE_COL1 = "numAcheteur";
-    private static final String PURCHASE_COL2 = "numReceveur";
-    private static final String PURCHASE_COL3 = "Produit";
-    private static final String PURCHASE_COL4 = "quantité";
+    private static final String PURCHASE_COL0 = "purchaseID";
+    private static final String PURCHASE_COL1 = "giverID";
+    private static final String PURCHASE_COL2 = "receiverID";
+    private static final String PURCHASE_COL3 = "product";
+    private static final String PURCHASE_COL4 = "amount";
     private static final String PURCHASE_COL5 = "date";
-    private static final String DATABASE_NAME = "wishlit.db";
+    private static final String DATABASE_NAME = "wishlist.db";
 
     public PurchaseDatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -32,9 +32,9 @@ public class PurchaseDatabaseHelper extends SQLiteOpenHelper {
         String sqlCommand = "CREATE TABLE IF NOT EXISTS "+
                 PURCHASE_TABLE_NAME + " (" +
                 PURCHASE_COL0 + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
-                PURCHASE_COL1 + " INTEGER NOT NULL REFERENCES utilisateur(userId), " +  // Acheteur
-                PURCHASE_COL2 + " INTEGER NOT NULL REFERENCES utilisateur(userId), " +  // Bénéficiaire
-                PURCHASE_COL3 + " INTEGER NOT NULL REFERENCES produit (numProduit), " +
+                PURCHASE_COL1 + " INTEGER NOT NULL REFERENCES user(userID), " +  // Acheteur
+                PURCHASE_COL2 + " INTEGER NOT NULL REFERENCES user(userID), " +  // Bénéficiaire
+                PURCHASE_COL3 + " INTEGER NOT NULL REFERENCES product (productID), " +
                 PURCHASE_COL4 + " INTEGER NOT NULL," +
                 PURCHASE_COL5 + " STRING NOT NULL )";
         db.execSQL(sqlCommand);
