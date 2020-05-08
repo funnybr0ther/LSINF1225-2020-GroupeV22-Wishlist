@@ -79,8 +79,21 @@ public class ProductAdapter extends BaseAdapter {
         ImageView icon = view.findViewById(R.id.productItem_icon);
         Bitmap photo = product.getPhoto();
         if(photo != null) {
-            photo = Bitmap.createScaledBitmap(photo, 100,100,true);
-            icon.setImageBitmap(photo);
+            int w = photo.getWidth();
+            int h = photo.getHeight();
+            if(w > 2000 || h > 2000){
+                photo = Bitmap.createScaledBitmap(photo, photo.getWidth() / 20, photo.getHeight() / 20, true);
+                icon.setImageBitmap(photo);
+            }
+            else if(w > 1000 || h > 1000) {
+                photo = Bitmap.createScaledBitmap(photo, photo.getWidth() / 10, photo.getHeight() / 10, true);
+                icon.setImageBitmap(photo);
+            }else if(w > 300 || h > 300) {
+                photo = Bitmap.createScaledBitmap(photo, photo.getWidth() / 3, photo.getHeight() / 3, true);
+                icon.setImageBitmap(photo);
+            }else{
+                icon.setImageBitmap(photo);
+            }
         }
         view.setOnClickListener(new View.OnClickListener() {
             @Override
