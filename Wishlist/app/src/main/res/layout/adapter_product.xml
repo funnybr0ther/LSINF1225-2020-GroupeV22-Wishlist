@@ -4,11 +4,11 @@
     android:layout_height="match_parent">
 
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/productItem_icon"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:src="@mipmap/ic_product_list"
+        android:src="@mipmap/ic_product_list_circular"
         android:contentDescription="TODO" />
 
     <TextView
