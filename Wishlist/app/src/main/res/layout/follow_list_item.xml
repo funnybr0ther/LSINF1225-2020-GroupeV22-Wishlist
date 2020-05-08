@@ -28,7 +28,6 @@
             android:gravity="top"
             android:layout_gravity="top"
             android:textSize="25sp"
-            android:text="TEST"
             android:layout_marginLeft="50dp" />
     </LinearLayout>
 
